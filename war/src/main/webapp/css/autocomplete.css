@@ -1,0 +1,18 @@
+.completionListItem {
+        border: 1px dotted #ACACAC;
+        color: #006699;
+        cursor: pointer;
+        padding: 0 0 3px 3px;
+     }
+    .completionListItem:hover {
+        background-color: #A5A5A5;
+        color: White;
+        cursor: pointer;
+     }
+    .completionListElement {
+        background-color: White;
+        border: 1px solid #ACACAC;
+        font-family: Arial,sans-serif;
+        font-size: 9pt;
+        width: 376px
+    }

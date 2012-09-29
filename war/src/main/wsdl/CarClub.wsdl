@@ -1,0 +1,446 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions name="CarClubWSService" targetNamespace="http://mobics.criticalsoftware.com/CarClub" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://mobics.criticalsoftware.com/CarClub" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://mobics.criticalsoftware.com/CarClub" xmlns:tns="http://mobics.criticalsoftware.com/CarClub" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="getAddOnsFromCarClub" type="tns:getAddOnsFromCarClub"/>
+  <xs:element name="getAddOnsFromCarClubResponse" type="tns:getAddOnsFromCarClubResponse"/>
+  <xs:element name="getCarClubByCarClubCode" type="tns:getCarClubByCarClubCode"/>
+  <xs:element name="getCarClubByCarClubCodeResponse" type="tns:getCarClubByCarClubCodeResponse"/>
+  <xs:element name="getCarClubImageByCarClubCode" type="tns:getCarClubImageByCarClubCode"/>
+  <xs:element name="getCarClubImageByCarClubCodeResponse" type="tns:getCarClubImageByCarClubCodeResponse"/>
+  <xs:element name="getCarClubSmallImageByCarClubCode" type="tns:getCarClubSmallImageByCarClubCode"/>
+  <xs:element name="getCarClubSmallImageByCarClubCodeResponse" type="tns:getCarClubSmallImageByCarClubCodeResponse"/>
+  <xs:element name="getCustomerCarClub" type="tns:getCustomerCarClub"/>
+  <xs:element name="getCustomerCarClubResponse" type="tns:getCustomerCarClubResponse"/>
+  <xs:element name="getLocationsByCarClubCode" type="tns:getLocationsByCarClubCode"/>
+  <xs:element name="getLocationsByCarClubCodeResponse" type="tns:getLocationsByCarClubCodeResponse"/>
+  <xs:element name="getParksByCarClubCodeAndLocationCode" type="tns:getParksByCarClubCodeAndLocationCode"/>
+  <xs:element name="getParksByCarClubCodeAndLocationCodeResponse" type="tns:getParksByCarClubCodeAndLocationCodeResponse"/>
+  <xs:element name="getZonesByCarClubCode" type="tns:getZonesByCarClubCode"/>
+  <xs:element name="getZonesByCarClubCodeResponse" type="tns:getZonesByCarClubCodeResponse"/>
+  <xs:element name="validateCarClub" type="tns:validateCarClub"/>
+  <xs:element name="validateCarClubCode" type="tns:validateCarClubCode"/>
+  <xs:element name="validateCarClubCodeResponse" type="tns:validateCarClubCodeResponse"/>
+  <xs:element name="validateCarClubResponse" type="tns:validateCarClubResponse"/>
+  <xs:complexType name="getAddOnsFromCarClub">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="carClubName" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getAddOnsFromCarClubResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:addOnDTO"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="addOnDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="id" type="xs:int"/>
+      <xs:element minOccurs="0" name="name" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getZonesByCarClubCode">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="carClubCode" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getZonesByCarClubCodeResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:zoneDTO"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="zoneDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="category" type="tns:zoneCategoryEnum"/>
+      <xs:element minOccurs="0" name="description" type="xs:string"/>
+      <xs:element minOccurs="0" name="id" type="xs:int"/>
+      <xs:element minOccurs="0" name="location" type="xs:string"/>
+      <xs:element minOccurs="0" name="parentZone" type="xs:string"/>
+      <xs:element minOccurs="0" name="zone" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getCustomerCarClub">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:complexType name="getCustomerCarClubResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:carClubSimpleDTO"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="carClubSimpleDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="carClubCode" type="xs:string"/>
+      <xs:element minOccurs="0" name="carClubColorScheme" type="xs:string"/>
+      <xs:element minOccurs="0" name="carClubName" type="xs:string"/>
+      <xs:element minOccurs="0" name="carClubTheme" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="validateCarClub">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="carClubName" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="validateCarClubResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getParksByCarClubCodeAndLocationCode">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="carClubCode" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="locationCode" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getParksByCarClubCodeAndLocationCodeResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:zoneDTO"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="validateCarClubCode">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="carClubCode" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="validateCarClubCodeResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getLocationsByCarClubCode">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="carClubCode" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getLocationsByCarClubCodeResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:locationDTO"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="locationDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="code" type="xs:string"/>
+      <xs:element minOccurs="0" name="name" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getCarClubByCarClubCode">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="carClubCode" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getCarClubByCarClubCodeResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:carClubSimpleDTO"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getCarClubSmallImageByCarClubCode">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="carClubCode" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getCarClubSmallImageByCarClubCodeResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:base64Binary"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getCarClubImageByCarClubCode">
+    <xs:sequence>
+      <xs:element form="qualified" minOccurs="0" name="carClubCode" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getCarClubImageByCarClubCodeResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:base64Binary"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="zoneCategoryEnum">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="NORMAL"/>
+      <xs:enumeration value="SPECIAL"/>
+      <xs:enumeration value="UNWANTED"/>
+      <xs:enumeration value="FORBIDDEN"/>
+      <xs:enumeration value="PARKING"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="CarClubCodeNotFoundException" type="tns:CarClubCodeNotFoundException"/>
+  <xs:complexType name="CarClubCodeNotFoundException">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:element name="LocationCodeNotFoundException" type="tns:LocationCodeNotFoundException"/>
+  <xs:complexType name="LocationCodeNotFoundException">
+    <xs:sequence/>
+  </xs:complexType>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getCarClubByCarClubCodeResponse">
+    <wsdl:part element="tns:getCarClubByCarClubCodeResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="validateCarClub">
+    <wsdl:part element="tns:validateCarClub" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getCarClubImageByCarClubCodeResponse">
+    <wsdl:part element="tns:getCarClubImageByCarClubCodeResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getCarClubSmallImageByCarClubCode">
+    <wsdl:part element="tns:getCarClubSmallImageByCarClubCode" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getParksByCarClubCodeAndLocationCodeResponse">
+    <wsdl:part element="tns:getParksByCarClubCodeAndLocationCodeResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getCarClubSmallImageByCarClubCodeResponse">
+    <wsdl:part element="tns:getCarClubSmallImageByCarClubCodeResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getZonesByCarClubCodeResponse">
+    <wsdl:part element="tns:getZonesByCarClubCodeResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAddOnsFromCarClub">
+    <wsdl:part element="tns:getAddOnsFromCarClub" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getLocationsByCarClubCodeResponse">
+    <wsdl:part element="tns:getLocationsByCarClubCodeResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="validateCarClubResponse">
+    <wsdl:part element="tns:validateCarClubResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="CarClubCodeNotFoundException">
+    <wsdl:part element="tns:CarClubCodeNotFoundException" name="CarClubCodeNotFoundException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getCarClubImageByCarClubCode">
+    <wsdl:part element="tns:getCarClubImageByCarClubCode" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getLocationsByCarClubCode">
+    <wsdl:part element="tns:getLocationsByCarClubCode" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="validateCarClubCode">
+    <wsdl:part element="tns:validateCarClubCode" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAddOnsFromCarClubResponse">
+    <wsdl:part element="tns:getAddOnsFromCarClubResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="LocationCodeNotFoundException">
+    <wsdl:part element="tns:LocationCodeNotFoundException" name="LocationCodeNotFoundException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getParksByCarClubCodeAndLocationCode">
+    <wsdl:part element="tns:getParksByCarClubCodeAndLocationCode" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getCarClubByCarClubCode">
+    <wsdl:part element="tns:getCarClubByCarClubCode" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getZonesByCarClubCode">
+    <wsdl:part element="tns:getZonesByCarClubCode" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getCustomerCarClub">
+    <wsdl:part element="tns:getCustomerCarClub" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="validateCarClubCodeResponse">
+    <wsdl:part element="tns:validateCarClubCodeResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getCustomerCarClubResponse">
+    <wsdl:part element="tns:getCustomerCarClubResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="CarClub">
+    <wsdl:operation name="getAddOnsFromCarClub">
+      <wsdl:input message="tns:getAddOnsFromCarClub" name="getAddOnsFromCarClub">
+    </wsdl:input>
+      <wsdl:output message="tns:getAddOnsFromCarClubResponse" name="getAddOnsFromCarClubResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getZonesByCarClubCode">
+      <wsdl:input message="tns:getZonesByCarClubCode" name="getZonesByCarClubCode">
+    </wsdl:input>
+      <wsdl:output message="tns:getZonesByCarClubCodeResponse" name="getZonesByCarClubCodeResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCustomerCarClub">
+      <wsdl:input message="tns:getCustomerCarClub" name="getCustomerCarClub">
+    <wsp:PolicyReference URI="#SecurityServiceUsernameHashPasswordPolicy"/>
+    </wsdl:input>
+      <wsdl:output message="tns:getCustomerCarClubResponse" name="getCustomerCarClubResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="validateCarClub">
+      <wsdl:input message="tns:validateCarClub" name="validateCarClub">
+    </wsdl:input>
+      <wsdl:output message="tns:validateCarClubResponse" name="validateCarClubResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getParksByCarClubCodeAndLocationCode">
+      <wsdl:input message="tns:getParksByCarClubCodeAndLocationCode" name="getParksByCarClubCodeAndLocationCode">
+    </wsdl:input>
+      <wsdl:output message="tns:getParksByCarClubCodeAndLocationCodeResponse" name="getParksByCarClubCodeAndLocationCodeResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:LocationCodeNotFoundException" name="LocationCodeNotFoundException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:CarClubCodeNotFoundException" name="CarClubCodeNotFoundException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="validateCarClubCode">
+      <wsdl:input message="tns:validateCarClubCode" name="validateCarClubCode">
+    </wsdl:input>
+      <wsdl:output message="tns:validateCarClubCodeResponse" name="validateCarClubCodeResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getLocationsByCarClubCode">
+      <wsdl:input message="tns:getLocationsByCarClubCode" name="getLocationsByCarClubCode">
+    </wsdl:input>
+      <wsdl:output message="tns:getLocationsByCarClubCodeResponse" name="getLocationsByCarClubCodeResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCarClubByCarClubCode">
+      <wsdl:input message="tns:getCarClubByCarClubCode" name="getCarClubByCarClubCode">
+    </wsdl:input>
+      <wsdl:output message="tns:getCarClubByCarClubCodeResponse" name="getCarClubByCarClubCodeResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCarClubSmallImageByCarClubCode">
+      <wsdl:input message="tns:getCarClubSmallImageByCarClubCode" name="getCarClubSmallImageByCarClubCode">
+    </wsdl:input>
+      <wsdl:output message="tns:getCarClubSmallImageByCarClubCodeResponse" name="getCarClubSmallImageByCarClubCodeResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCarClubImageByCarClubCode">
+      <wsdl:input message="tns:getCarClubImageByCarClubCode" name="getCarClubImageByCarClubCode">
+    </wsdl:input>
+      <wsdl:output message="tns:getCarClubImageByCarClubCodeResponse" name="getCarClubImageByCarClubCodeResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CarClubWSServiceSoapBinding" type="tns:CarClub">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getAddOnsFromCarClub">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getAddOnsFromCarClub">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getAddOnsFromCarClubResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getZonesByCarClubCode">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getZonesByCarClubCode">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getZonesByCarClubCodeResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCustomerCarClub">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getCustomerCarClub">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getCustomerCarClubResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getParksByCarClubCodeAndLocationCode">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getParksByCarClubCodeAndLocationCode">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getParksByCarClubCodeAndLocationCodeResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="LocationCodeNotFoundException">
+        <soap:fault name="LocationCodeNotFoundException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="CarClubCodeNotFoundException">
+        <soap:fault name="CarClubCodeNotFoundException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="validateCarClub">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="validateCarClub">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="validateCarClubResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getLocationsByCarClubCode">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getLocationsByCarClubCode">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getLocationsByCarClubCodeResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="validateCarClubCode">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="validateCarClubCode">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="validateCarClubCodeResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCarClubByCarClubCode">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getCarClubByCarClubCode">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getCarClubByCarClubCodeResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCarClubSmallImageByCarClubCode">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getCarClubSmallImageByCarClubCode">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getCarClubSmallImageByCarClubCodeResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCarClubImageByCarClubCode">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getCarClubImageByCarClubCode">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getCarClubImageByCarClubCodeResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CarClubWSService">
+    <wsdl:port binding="tns:CarClubWSServiceSoapBinding" name="CarClubPort">
+      <soap:address location="http://localhost:8080/mobics-webservices/CarClub"/>
+    </wsdl:port>
+  </wsdl:service>
+    <wsp:Policy wsu:Id="SecurityServiceUsernameHashPasswordPolicy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+  <wsp:ExactlyOne>
+    <wsp:All>
+      <sp:SupportingTokens xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702">
+        <wsp:Policy>
+          <sp:UsernameToken sp:IncludeToken="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/AlwaysToRecipient">
+            <wsp:Policy>
+              <sp:HashPassword/>
+            </wsp:Policy>
+          </sp:UsernameToken>
+        </wsp:Policy>
+      </sp:SupportingTokens>
+    </wsp:All>
+  </wsp:ExactlyOne>
+</wsp:Policy>
+</wsdl:definitions>

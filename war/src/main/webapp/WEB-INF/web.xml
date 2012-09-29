@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app
+    version="3.0"
+    xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+
+    <display-name>mobiCS</display-name>
+
+    <context-param>
+        <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
+        <param-value>StripesResources</param-value>
+    </context-param>
+
+    <listener>
+        <listener-class>com.criticalsoftware.mobics.presentation.ContextListener</listener-class>
+    </listener>
+
+    <filter>
+        <filter-name>imagesCache</filter-name>
+        <filter-class>com.samaxes.filter.CacheFilter</filter-class>
+        <init-param>
+            <param-name>static</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>expirationTime</param-name>
+            <param-value>2592000</param-value>
+        </init-param>
+    </filter>
+    <filter>
+        <filter-name>cssCache</filter-name>
+        <filter-class>com.samaxes.filter.CacheFilter</filter-class>
+        <init-param>
+            <param-name>expirationTime</param-name>
+            <param-value>604800</param-value>
+        </init-param>
+    </filter>
+    <filter>
+        <filter-name>jsCache</filter-name>
+        <filter-class>com.samaxes.filter.CacheFilter</filter-class>
+        <init-param>
+            <param-name>private</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>expirationTime</param-name>
+            <param-value>216000</param-value>
+        </init-param>
+    </filter>
+
+    <filter>
+        <filter-name>noCache</filter-name>
+        <filter-class>com.samaxes.filter.NoCacheFilter</filter-class>
+    </filter>
+
+    <filter>
+        <filter-name>noEtag</filter-name>
+        <filter-class>com.samaxes.filter.NoETagFilter</filter-class>
+    </filter>
+
+    <filter>
+        <description>
+            Provides essential configuration and request processing services for the Stripes framework.
+        </description>
+        <display-name>Stripes Filter</display-name>
+        <filter-name>StripesFilter</filter-name>
+        <filter-class>net.sourceforge.stripes.controller.StripesFilter</filter-class>
+        <init-param>
+            <param-name>Stripes.EncryptionKey</param-name>
+            <param-value>mobi cs encryption key!!!</param-value>
+        </init-param>
+        <init-param>
+            <param-name>FileUpload.MaximumPostSize</param-name>
+            <param-value>10MB</param-value>
+        </init-param>
+        <init-param>
+            <param-name>LocalePicker.Locales</param-name>
+            <param-value>en:UTF-8,pt:UTF-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>ActionResolver.Packages</param-name>
+            <param-value>com.criticalsoftware.mobics.presentation.action</param-value>
+        </init-param>
+        <init-param>
+            <param-name>ExceptionHandler.Class</param-name>
+            <param-value>net.sourceforge.stripes.exception.DelegatingExceptionHandler</param-value>
+        </init-param>
+        <init-param>
+            <param-name>Extension.Packages</param-name>
+            <param-value>
+                com.criticalsoftware.mobics.presentation.extension,
+                com.samaxes.stripes.inject
+            </param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>imagesCache</filter-name>
+        <url-pattern>/img/*</url-pattern>
+        <url-pattern>/favicon.ico</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>cssCache</filter-name>
+        <url-pattern>*.css</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>jsCache</filter-name>
+        <url-pattern>*.js</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>noCache</filter-name>
+        <servlet-name>StripesDispatcher</servlet-name>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>noEtag</filter-name>
+        <servlet-name>default</servlet-name>
+    </filter-mapping>
+
+    <filter-mapping>
+        <filter-name>StripesFilter</filter-name>
+        <servlet-name>StripesDispatcher</servlet-name>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>ERROR</dispatcher>
+    </filter-mapping>
+
+    <servlet>
+        <servlet-name>StripesDispatcher</servlet-name>
+        <servlet-class>net.sourceforge.stripes.controller.DispatcherServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>StripesDispatcher</servlet-name>
+        <url-pattern>*.action</url-pattern>
+    </servlet-mapping>
+
+    <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
+
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+
+    <!-- Custom Error Pages -->
+    <error-page>
+        <error-code>400</error-code>
+        <location>/Error.action?httpError=400</location>
+    </error-page>
+    <error-page>
+        <error-code>401</error-code>
+        <location>/Error.action?httpError=401</location>
+    </error-page>
+    <error-page>
+        <error-code>403</error-code>
+        <location>/Error.action?httpError=403</location>
+    </error-page>
+    <error-page>
+        <error-code>404</error-code>
+        <location>/Error.action?httpError=404</location>
+    </error-page>
+    <error-page>
+        <error-code>408</error-code>
+        <location>/Error.action?httpError=408</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/Error.action?httpError=500</location>
+    </error-page>
+    <error-page>
+        <error-code>503</error-code>
+        <location>/Error.action?httpError=503</location>
+    </error-page>
+<!-- 
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Restricted</web-resource-name>
+            <url-pattern>*.action</url-pattern>
+            <url-pattern>*.jsp</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>frameworkuser</role-name>
+        </auth-constraint>
+        <user-data-constraint>
+            <transport-guarantee>NONE</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Open</web-resource-name>
+            <url-pattern>/Login.action</url-pattern>
+            <url-pattern>/WEB-INF/error.jsp</url-pattern>
+        </web-resource-collection>
+        <user-data-constraint>
+            <transport-guarantee>NONE</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
+
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <realm-name>frameworkRealm</realm-name>
+        <form-login-config>
+            <form-login-page>/Login.action</form-login-page>
+            <form-error-page>/Login.action?error=true</form-error-page>
+        </form-login-config>
+    </login-config>
+
+    <security-role>
+        <role-name>frameworkuser</role-name>
+    </security-role>
+    
+     -->
+    
+</web-app>

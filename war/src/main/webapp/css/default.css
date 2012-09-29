@@ -1,0 +1,264 @@
+/* Apply a natural box layout model to all elements */
+* {
+    -webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+ul, li, h1 {
+	padding: 0;
+	margin: 0;
+}
+
+a {
+    text-decoration: none;
+}
+/* Main Elements */
+body {
+	background-color: #E4E4E4;
+}
+
+article {
+
+}
+
+section#logo {
+	Min-height: 60px;
+	Max-height: 250px;
+	Width: 250px;
+	margin: 10px auto;
+	background-color: rgba(0, 0, 0, 0.5);
+	display: block;
+}
+
+header {
+	color: #FFF;
+	line-height: 45px;
+	text-align: center;
+}
+
+header > h1 {
+    font-size: x-large;
+    padding-right: 40px;
+}
+
+footer {
+	font-weight: bold;
+	font-size: normal;
+	text-shadow: 0px -1px 1px rgba(0, 0, 0, 0.5);
+	text-align: center;
+	color: #FFF;
+}
+
+fieldset {
+
+}
+
+nav#menu ul {
+	margin-top: -10px;
+	margin-bottom: 10px;
+}
+
+nav#menu ul li {
+	background: #515151 url(../img/fakeIco2.png) no-repeat 10px 50%;
+	font-weight: bold;
+	font-size: normal;
+	line-height: 45px;
+	border-bottom: 1px solid #797979;
+}
+
+nav#menu ul li:first-child {
+	background-image: url(../img/fakeIco2.png), url(../img/sombra_menus_10px.png);
+	background-repeat: no-repeat, repeat-x;
+	background-position: 10px 50%, top left;
+}
+
+nav#menu ul li:last-child {
+	border-bottom: 0;
+}
+
+nav#menu ul li a {
+	display: block;
+	color: #E4E4E4;
+	padding-left: 50px;
+}
+
+section > nav ul {
+	margin: 0 10px 15px;
+	background: #FFF;
+	border: 1px solid #E5E5E5;
+	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
+	border-radius: 4px;
+}
+
+section > nav ul li {
+	line-height: 45px;
+	text-align: left;
+	font-size: large;
+	font-weight: bold;
+	border-bottom: 1px solid #E5E5E5;
+	background-image: url(../img/fakeIco.png), url(../img/seta.png);
+	background-repeat: no-repeat, no-repeat;
+	background-position: 10px 50%, 100% 50%;
+	list-style: none outside none;
+}
+
+section > nav ul li:last-child {
+	border-bottom: 0;
+}
+
+section > nav ul li a {
+	color: #333;
+	padding-left: 40px;
+	display: block;
+}
+
+form {
+	width: 250px;
+	margin: 0 auto;
+}
+
+form>div {
+	float: left;
+	background: #FFF;
+	border: 1px solid #E5E5E5;
+	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
+	border-radius: 4px;
+}
+
+form>div>input  {
+	float: left;
+	width: 100%;
+	padding-left: 10px;
+	line-height: 45px;
+	height: 45px;
+	border: 0;
+	border-top: 1px solid #D7D7D7;
+	font-size: normal;
+	color: #333;
+}
+
+form>div:first-child {
+	border-top: 0;
+}
+
+form>div>label {
+	float: left;
+	width: 35%;
+	height: 45px;
+	line-height: 45px;
+	color: #999;
+	border-top: 1px solid #D7D7D7;
+	font-size: normal;
+	padding-left: 10px;
+}
+
+/* Util classes */
+.clear {
+    clear: both;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Application Classes */
+.bottomShadow {
+	height: 5px;
+	background: transparent url(../img/sombra_menus_10px.png) repeat-x top left;
+	margin-bottom: 5px;
+}
+.menuBtn {
+	width: 30px;
+	height: 30px;
+	border: 1px solid rgba(0, 0, 0, 0.3);
+	border-radius: 4px;
+	float: left;
+	margin-top: 7px;
+	margin-left: 10px;
+	background: transparent url(../img/bt_up_30px.png) no-repeat top left;
+}
+
+.menuBtn:active {
+	border: 1px solid rgba(0, 0, 0, 0.5);
+	background: transparent url(../img/bt_down_30px.png) no-repeat top left;
+}
+
+.logoutBtn {
+	width: 30px;
+	height: 30px;
+	border: 1px solid rgba(0, 0, 0, 0.3);
+	border-radius: 4px;
+	float: right;
+	margin-top: 7px;
+	margin-right: 10px;
+	background: transparent url(../img/bt_up_30px.png) no-repeat top left;
+}
+
+.logoutBtn:active {
+	border: 1px solid rgba(0, 0, 0, 0.5);
+	background: transparent url(../img/bt_down_30px.png) no-repeat top left;
+}
+
+.greenBtn {
+	background: #288b07 url(../img/bt_up_90px.png) repeat-x top left;
+	border-radius: 4px;
+	font-weight: bold;
+	font-size: xx-large;
+	text-align: center;
+	color: #FFF;
+	line-height: 90px;
+	display: block;
+	margin: 0 10px;
+	border: 1px solid rgba(0, 0, 0, 0.3);
+	text-shadow: 0px -1px 1px rgba(0, 0, 0, 0.5);
+}
+
+.greenBtn:active {
+	background: #288b07 url(../img/bt_down_90px.png) repeat-x top left;
+	border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.loginBtn {
+	border-radius: 4px;
+	font-size: large;
+    font-weight: bold;
+	text-shadow: 0px -1px 1px rgba(0, 0, 0, 0.5);
+	text-align: center;
+	color: #FFF;
+	line-height: 45px;
+	height: 45px;
+	width: 250px;
+	display: block;
+	margin: 10px auto;
+	background-image: url(../img/bt_up_45px.png);
+	background-repeat: repeat-x;
+	background-position: top left;
+	border: 1px solid rgba(0, 0, 0, 0.3);
+	float: left;
+}
+
+.loginBtn:active {
+	background-image: url(../img/bt_down_45px.png);
+	border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+/* Theme Classes */
+.orangeTheme,
+.orangeTheme .loginBtn {
+	background-color: #EF9000;
+}
+
+.redTheme,
+.redTheme .loginBtn {
+	background-color: red;
+}
+
+.greenTheme,
+.greenTheme .loginBtn {
+	background-color: green;
+}
+
+.uppercase {
+	text-transform: uppercase;
+}
