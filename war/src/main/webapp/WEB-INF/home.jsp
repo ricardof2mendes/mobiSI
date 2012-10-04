@@ -5,7 +5,7 @@
 <t:main title="${title}" hideFooter="true">
 	<article>
 		<section>
-			<nav>
+			<nav class="simpleList">
 				<ul>
 					<li>
 						<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.HomeActionBean" event="bookCarForNow">

@@ -12,86 +12,77 @@
  */
 package com.criticalsoftware.mobics.presentation.action.book;
 
+import java.io.IOException;
+import java.math.BigDecimal;
 import java.rmi.RemoteException;
 
-import org.apache.axis2.AxisFault;
+import javax.activation.DataHandler;
 
 import net.sourceforge.stripes.action.DefaultHandler;
+import net.sourceforge.stripes.action.DontValidate;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.StreamingResolution;
-import net.sourceforge.stripes.validation.Validate;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.criticalsoftware.mobics.fleet.CarDTO;
-import com.criticalsoftware.mobics.presentation.action.BaseActionBean;
 import com.criticalsoftware.mobics.presentation.security.MobiCSSecure;
+import com.criticalsoftware.mobics.presentation.util.CarType;
 import com.criticalsoftware.mobics.presentation.util.Configuration;
+import com.criticalsoftware.mobics.proxy.fleet.CarValidationExceptionException;
 import com.criticalsoftware.mobics.proxy.fleet.FleetWSServiceStub;
+import com.criticalsoftware.mobics.proxy.fleet.IOExceptionException;
 
 /**
  * @author ltiago
  * @version $Revision: $
  */
 @MobiCSSecure
-public class LicensePlateActionBean extends BaseActionBean {
+public class LicensePlateActionBean extends CarDetailsActionBean {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(LicensePlateActionBean.class);
 
     private CarDTO[] cars;
 
-    @Validate
-    private String licensePlate;
-
-    @Validate
-    private String q;
-
-    private CarDTO car;
-
     @DefaultHandler
+    @DontValidate
     public Resolution main() {
         return new ForwardResolution("/WEB-INF/book/licensePlate.jsp");
     }
 
-    public Resolution carDetails() throws RemoteException {
-        car = new FleetWSServiceStub(Configuration.FLEET_ENDPOINT).getCarsByLicensePlate(licensePlate.toUpperCase())[0];
-        return new ForwardResolution("/WEB-INF/book/licensePlateDetails.jsp");
+    public Resolution licensePlateBook() throws RemoteException, CarValidationExceptionException {
+        car = new FleetWSServiceStub(Configuration.FLEET_ENDPOINT).getCarsByLicensePlate(licensePlate.toUpperCase(),
+                CarType.NORMAL.name(), new BigDecimal(latitude), new BigDecimal(longitude))[0];
+
+        return new ForwardResolution("/WEB-INF/book/licensePlateBook.jsp");
     }
 
     public Resolution autocomplete() throws RemoteException {
-        StringBuilder results = new StringBuilder();
-        q = q.toUpperCase();
         if (q != null) {
-            cars = new FleetWSServiceStub(Configuration.FLEET_ENDPOINT).getCarsByLicensePlate(q);
-            System.out.println(cars);
-            if (cars != null) {
-                for (int i = 0; i < cars.length; i++) {
-                    if (cars[i].getLicensePlate().indexOf(q) != -1) {
-                        results.append(cars[i].getLicensePlate()).append("\n");
-                    }
-                }
+            try {
+                cars = new FleetWSServiceStub(Configuration.FLEET_ENDPOINT).getCarsByLicensePlate(q.toUpperCase(),
+                        CarType.NORMAL.name(), new BigDecimal(latitude), new BigDecimal(longitude));
+                getContext().getResponse().setHeader("Stripes-Success", "OK");
+            } catch (CarValidationExceptionException e) {
+                LOGGER.error("Car validation exception.", e);
             }
         }
-        System.out.println(results.toString());
-        return new StreamingResolution("text/plain", results.toString());
+        return new ForwardResolution("/WEB-INF/book/carList.jsp");
+    }
+
+    public Resolution getCarImage() throws RemoteException, IOException, IOExceptionException {
+        DataHandler handler = new FleetWSServiceStub(Configuration.FLEET_ENDPOINT)
+                .getCarThumbnail(licensePlate, 58, 58);
+        return new StreamingResolution(handler.getContentType(), handler.getInputStream());
+
     }
 
     /**
-     * @return the car
+     * @return the cars
      */
-    public CarDTO getCar() {
-        return car;
+    public CarDTO[] getCars() {
+        return cars;
     }
-
-    /**
-     * @param licensePlate the licensePlate to set
-     */
-    public void setLicensePlate(String licensePlate) {
-        this.licensePlate = licensePlate;
-    }
-
-    /**
-     * @param q the q to set
-     */
-    public void setQ(String q) {
-        this.q = q;
-    }
-
 }

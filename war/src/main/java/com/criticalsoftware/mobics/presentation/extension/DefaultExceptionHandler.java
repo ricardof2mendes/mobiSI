@@ -29,6 +29,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.criticalsoftware.mobics.presentation.action.ErrorActionBean;
+import com.criticalsoftware.mobics.proxy.fleet.CarClassNotFoundExceptionException;
+import com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException;
+import com.criticalsoftware.mobics.proxy.fleet.CarTypeNotFoundExceptionException;
+import com.criticalsoftware.mobics.proxy.fleet.CarValidationExceptionException;
+import com.criticalsoftware.mobics.proxy.fleet.FuelTypeNotFoundExceptionException;
 
 /**
  * Handles the exceptions thrown by the application.
@@ -52,7 +57,6 @@ public class DefaultExceptionHandler implements AutoExceptionHandler {
      */
     public Resolution handle(Throwable throwable, HttpServletRequest request, HttpServletResponse response) {
         LOGGER.error(throwable.getMessage(), throwable);
-
         return new RedirectResolution(ErrorActionBean.class);
     }
 
@@ -94,19 +98,7 @@ public class DefaultExceptionHandler implements AutoExceptionHandler {
     public Resolution handle(Exception exception, HttpServletRequest request,
             HttpServletResponse response) {
         LOGGER.error(exception.getMessage(), exception);
-        resources = ResourceBundle.getBundle("StripesResources", request.getLocale());
-        ActionBean bean = (ActionBean) request.getAttribute(StripesConstants.REQ_ATTR_ACTION_BEAN);
-        Resolution resolution;
-
-        if (bean != null && StringUtils.isNotBlank(bean.getContext().getSourcePage())) {
-            bean.getContext().getValidationErrors().addGlobalError(new LocalizableError("error.BusinessException"));
-            resolution = new ForwardResolution(bean.getContext().getSourcePage());
-        } else {
-            request.setAttribute("error", resources.getString("error.BusinessException"));
-            resolution = new ForwardResolution(ErrorActionBean.class);
-        }
-
-        return resolution;
+        return insideJob("error.BusinessException", request, response);
     }
     
     /**
@@ -121,15 +113,96 @@ public class DefaultExceptionHandler implements AutoExceptionHandler {
     public Resolution handle(RemoteException exception, HttpServletRequest request,
             HttpServletResponse response) {
         LOGGER.error(exception.getMessage(), exception);
+        return insideJob("error.RemoteException", request, response);
+    }
+    
+    /**
+     * If there's an ActionBean present, send the user back where they came from with a stern warning, otherwise send
+     * them to the global error page.
+     * 
+     * @param exception a Car Validation Exception
+     * @param request The HttpServletRequest
+     * @param response The HttpServletResponse
+     * @return A ForwardResolution
+     */
+    public Resolution handle(CarValidationExceptionException exception, HttpServletRequest request,
+            HttpServletResponse response) {
+        LOGGER.error(exception.getMessage(), exception);
+        return insideJob("error.CarValidationExceptionException", request, response);
+    }
+    
+    /**
+     * If there's an ActionBean present, send the user back where they came from with a stern warning, otherwise send
+     * them to the global error page.
+     * 
+     * @param exception a Car License Plate Not Found 
+     * @param request The HttpServletRequest
+     * @param response The HttpServletResponse
+     * @return A ForwardResolution
+     */
+    public Resolution handle(CarLicensePlateNotFoundExceptionException exception, HttpServletRequest request,
+            HttpServletResponse response) {
+        LOGGER.error(exception.getMessage(), exception);
+        return insideJob("error.CarLicensePlateNotFoundExceptionException", request, response);
+    }
+    
+    
+    /**
+     * If there's an ActionBean present, send the user back where they came from with a stern warning, otherwise send
+     * them to the global error page.
+     * 
+     * @param exception a Fuel Type Not Found 
+     * @param request The HttpServletRequest
+     * @param response The HttpServletResponse
+     * @return A ForwardResolution
+     */
+    public Resolution handle(FuelTypeNotFoundExceptionException exception, HttpServletRequest request,
+            HttpServletResponse response) {
+        LOGGER.error(exception.getMessage(), exception);
+        return insideJob("error.FuelTypeNotFoundExceptionException", request, response);
+    }
+    
+    /**
+     * If there's an ActionBean present, send the user back where they came from with a stern warning, otherwise send
+     * them to the global error page.
+     * 
+     * @param exception a Car Class Not Found
+     * @param request The HttpServletRequest
+     * @param response The HttpServletResponse
+     * @return A ForwardResolution
+     */
+    public Resolution handle(CarClassNotFoundExceptionException exception, HttpServletRequest request,
+            HttpServletResponse response) {
+        LOGGER.error(exception.getMessage(), exception);
+        return insideJob("error.CarClassNotFoundExceptionException", request, response);
+    }
+
+    /**
+     * If there's an ActionBean present, send the user back where they came from with a stern warning, otherwise send
+     * them to the global error page.
+     * 
+     * @param exception a Car Type Not Found
+     * @param request The HttpServletRequest
+     * @param response The HttpServletResponse
+     * @return A ForwardResolution
+     */
+    public Resolution handle(CarTypeNotFoundExceptionException exception, HttpServletRequest request,
+            HttpServletResponse response) {
+        LOGGER.error(exception.getMessage(), exception);
+        return insideJob("error.CarTypeNotFoundExceptionException", request, response);
+    }
+    
+    private Resolution insideJob(String resourceKey, HttpServletRequest request,
+            HttpServletResponse response) {
         resources = ResourceBundle.getBundle("StripesResources", request.getLocale());
         ActionBean bean = (ActionBean) request.getAttribute(StripesConstants.REQ_ATTR_ACTION_BEAN);
         Resolution resolution;
 
         if (bean != null && StringUtils.isNotBlank(bean.getContext().getSourcePage())) {
-            bean.getContext().getValidationErrors().addGlobalError(new LocalizableError("error.RemoteException"));
+            bean.getContext().getValidationErrors().addGlobalError(new LocalizableError(resourceKey));
             resolution = new ForwardResolution(bean.getContext().getSourcePage());
         } else {
-            request.setAttribute("error", resources.getString("error.RemoteException"));
+            request.setAttribute("error", resources.getString(resourceKey));
             resolution = new ForwardResolution(ErrorActionBean.class);
         }
 

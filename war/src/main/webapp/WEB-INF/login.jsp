@@ -7,17 +7,15 @@
 		<section id="logo">
 		
 		</section>
-		<section>
-			<form action="${contextPath}/Login.action" method="post">
+		<section id="login">
+			<stripes:form class="loginForm" beanclass="com.criticalsoftware.mobics.presentation.action.LoginActionBean" method="post">
+			    <stripes:errors/>
 				<div>
-		            <span style="display: ${param.error ? 'block' : 'none'}" >
-		            	<fmt:message key="login.error" />	                    
-					</span>
-					<input type="text" id="username" name="username" autofocus="autofocus" placeholder="<fmt:message key="login.j_username" />"></input>
-					<input type="password" id="password" name="password" placeholder="<fmt:message key="login.j_password" />"></input>
+					<input type="text" id="username" name="username" placeholder="<fmt:message key="login.j_username" />"/>
+					<input type="password" id="password" name="password" placeholder="<fmt:message key="login.j_password" />"/>
 				</div>
-				<input type="submit" id="authenticate" name="authenticate" class="loginBtn" value="<fmt:message key="login.submit"/>" />
-			</form>
+				<stripes:submit id="authenticate" name="authenticate" class="loginBtn"><fmt:message key="login.submit"/></stripes:submit>
+			</stripes:form>
 		</section>
 	</article>
 	<footer class="clear">

@@ -1,16 +1,3 @@
-/*!
- * $Id: default.js,v 1.5 2012/09/17 14:21:01 ssantos Exp $
- *
- * Copyright (c) Present Technologies Lda., All Rights Reserved.
- * (www.present-technologies.com)
- *
- * This software is the proprietary information of Present Technologies Lda.
- * Use is subject to license terms.
- *
- * Last changed on $Date: 2012/09/17 14:21:01 $
- * Last changed by $Author: ssantos $
- */
- 
 $(document).ready(function() {
 	'use strict';
 
@@ -32,20 +19,12 @@ $(document).ready(function() {
 		if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition(
 					function(position) {
-						$('#latitude').attr('value', position.coords.latitude);
-						$('#longitude').attr('value', position.coords.longitude);
+						$('#latitude').val(position.coords.latitude);
+						$('#longitude').val(position.coords.longitude);
 						$('#geolocation').submit();
 					}, 
 					function (err) {
-						if (err.code == 1) {
-							alert('The user denied the request for location information.');
-						} else if (err.code == 2) {
-							alert('Your location information is unavailable.');
-						} else if (err.code == 3) {
-							alert('The request to get your location timed out.');
-						} else {
-							alert('An unknown error occurred while requesting your location.');
-						}
+						treatGeolocationError(err);
 					});
 		} else {
 			alert("Geolocation is not supported by this browser.");
@@ -53,44 +32,81 @@ $(document).ready(function() {
 	});
 	
 	// license plate autocomplete
-	 	$('#licensePlate').on('keyup', function() {
-	 		if($('#licensePlate').val().length >= 2) {
-	 			var returnData = null;
-	 			$
-	 			.ajax({
-			 		type : 'GET',
-	 				url : contextPath+'/book/LicensePlate.action?autocomplete=&q='+$('#licensePlate').val(),
-		 			dataType : 'text',
-	 				cache : false,
-	 				success : function(data) {
-	 					returnData = data;
-	 				},
-	 				error : function(jqXHR, textStatus, errorThrown) {
-	 					alert(xhr.status + ' ' + textStatus + ' ' + errorThrown);
-	 				},
-	 				complete : function(jqXHR, textStatus) {
-	 					if (textStatus == 'success') {
-	 						if (returnData != null) {
-	 							alert(returnData);
-	 	 						var divHtml = "";
-	 	 			            var onClk = "itemClick(this,'autocompleteContainer')";
-	 	 			            $.each(returnData, function() {
-	 	 			                divHtml += "<div onclick=" + onClk + " class='completionListItem'>" + this + "</div>";
-	 	 			            });
-	 	 			            $("#autocompleteContainer").html(divHtml);
-	 	 			            $("#autocompleteContainer").css("display", "block");
-	 	 						
-	 						} else {
-	 							
-	 						}
-	 					}
-	 				}
-	 			});
-			
-	 		}
-	 	});
-	
-//	$('#licensePlate').autocomplete(
-//			contextPath+'/book/LicensePlate.action?autocomplete='
-//	);
+ 	$('#licensePlate').on('keyup', function() {
+ 		if($('#licensePlate').val().length >= 2) {
+ 			if($('#latitude').val().length == 0 && $('#longitude').val().length == 0){
+	 			if (navigator.geolocation) {
+	 				navigator.geolocation.getCurrentPosition(
+	 						function(position) {
+	 							$('#latitude').val(position.coords.latitude);
+	 							$('#longitude').val(position.coords.longitude);
+	 							autocompleteList();
+	 						}, 
+	 						function (err) {
+	 							treatGeolocationError(err);
+	 						});
+	 			} else {
+	 				alert("Geolocation is not supported by this browser.");
+	 			}
+ 			} else {
+ 				autocompleteList();
+ 			}
+ 		} else {
+ 			$("#autocompleteContainer").html('');
+	        $("#autocompleteContainer").css("display", "none");
+ 		}
+ 	});
+ 	
+ 	$("#licensePlateBookButton").on('click', function(e){
+ 		e.preventDefault();
+ 		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(
+					function(position) {
+						$('#latitude').attr('value', position.coords.latitude);
+						$('#longitude').attr('value', position.coords.longitude);
+						$('#licensePlateBookForm').submit();
+					}, 
+					function (err) {
+						treatGeolocationError(err);
+					});
+		} else {
+			alert("Geolocation is not supported by this browser.");
+		}
+ 	});
+ 	
 });
+
+
+function autocompleteList() {
+	
+	var url = contextPath+'/book/LicensePlate.action?autocomplete=&q='+$('#licensePlate').val()+'&latitude='+$('#latitude').val()+'&longitude='+$('#longitude').val();
+	
+	$.get(url, function(data, textStatus, jqXHR){
+		if (jqXHR.getResponseHeader('Stripes-Success') === 'OK') {
+            if (data.indexOf('<html') == -1) {
+                $('#articleContainer').html(data);
+                $("#articleContainer").css("display", "block");
+            } else {
+                $('html').html(data);
+            }
+        } else {
+            console.log('An error has occurred or the user\'s session has expired!');
+            $('html').html(data);
+        }
+    }, function(data, textStatus, jqXHR) {
+        $('html').html(data.responseText);
+    });
+}
+
+function treatGeolocationError(err) {
+	if (err.code == 1) {
+		alert('The user denied the request for location information.');
+	} else if (err.code == 2) {
+		alert('Your location information is unavailable.');
+	} else if (err.code == 3) {
+		alert('The request to get your location timed out.');
+	} else {
+		alert('An unknown error occurred while requesting your location.');
+	}
+}
+

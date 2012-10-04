@@ -10,9 +10,12 @@ import java.io.UnsupportedEncodingException;
 import java.rmi.RemoteException;
 
 import net.sourceforge.stripes.action.DefaultHandler;
+import net.sourceforge.stripes.action.DontValidate;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.RedirectResolution;
 import net.sourceforge.stripes.action.Resolution;
+import net.sourceforge.stripes.validation.EmailTypeConverter;
+import net.sourceforge.stripes.validation.LocalizableError;
 import net.sourceforge.stripes.validation.Validate;
 
 import org.apache.axis2.AxisFault;
@@ -25,23 +28,22 @@ import com.criticalsoftware.mobics.proxy.carclub.CarClubWSServiceStub;
 
 /**
  * Sign-in action bean.
- *
+ * 
  * @author Samuel Santos
  * @version $Revision: 1.3 $
  */
 public class LoginActionBean extends BaseActionBean {
-    
-    
-    
+
     private CarClubWSServiceStub carClubWSServiceStub;
-    
-    @Validate
+
+    @Validate(required = true, on = "authenticate", converter = EmailTypeConverter.class)
     private String username;
-    
-    @Validate
+
+    @Validate(required = true, on = "authenticate")
     private String password;
-    
+
     @DefaultHandler
+    @DontValidate
     public Resolution login() {
         return new ForwardResolution("/WEB-INF/login.jsp");
     }
@@ -59,7 +61,8 @@ public class LoginActionBean extends BaseActionBean {
             }
         } catch (AxisFault e) {
             if(e.getMessage().startsWith(Configuration.AUTHENTICATION_FAILURE_STRING)) {
-                resolution = new ForwardResolution("/WEB-INF/login.jsp").addParameter("error", true);
+                this.getContext().getValidationErrors().addGlobalError(new LocalizableError("login.error"));
+                resolution = new ForwardResolution("/WEB-INF/login.jsp");
             } else {
                 throw e;
             }
@@ -94,6 +97,5 @@ public class LoginActionBean extends BaseActionBean {
     public void setPassword(String password) {
         this.password = password;
     }
-    
-    
+
 }

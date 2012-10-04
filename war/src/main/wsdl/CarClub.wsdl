@@ -23,7 +23,7 @@
   <xs:element name="validateCarClubResponse" type="tns:validateCarClubResponse"/>
   <xs:complexType name="getAddOnsFromCarClub">
     <xs:sequence>
-      <xs:element form="qualified" minOccurs="0" name="carClubName" type="xs:string"/>
+      <xs:element form="qualified" minOccurs="0" name="carClubCode" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="getAddOnsFromCarClubResponse">
@@ -33,7 +33,7 @@
   </xs:complexType>
   <xs:complexType name="addOnDTO">
     <xs:sequence>
-      <xs:element minOccurs="0" name="id" type="xs:int"/>
+      <xs:element minOccurs="0" name="code" type="xs:string"/>
       <xs:element minOccurs="0" name="name" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
@@ -51,7 +51,6 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="category" type="tns:zoneCategoryEnum"/>
       <xs:element minOccurs="0" name="description" type="xs:string"/>
-      <xs:element minOccurs="0" name="id" type="xs:int"/>
       <xs:element minOccurs="0" name="location" type="xs:string"/>
       <xs:element minOccurs="0" name="parentZone" type="xs:string"/>
       <xs:element minOccurs="0" name="zone" type="xs:string"/>

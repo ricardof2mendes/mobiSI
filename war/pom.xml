@@ -63,7 +63,8 @@
 						</goals>
 						<configuration>
 							<packageName>com.criticalsoftware.mobics.proxy.booking</packageName>
-							<wsdlFile>src/main/wsdl/Booking.wsdl</wsdlFile>
+							<wsdlFile>http://mobics02.critical.pt:8080/mobics-webservices/Booking?wsdl</wsdlFile>
+							<!--wsdlFile>src/main/wsdl/Booking.wsdl</wsdlFile-->
 							<unwrap>true</unwrap>
 							<overWrite>true</overWrite>
 							<unpackClasses>true</unpackClasses>
@@ -79,7 +80,7 @@
 						</goals>
 						<configuration>
 							<packageName>com.criticalsoftware.mobics.proxy.fleet</packageName>
-							<wsdlFile>src/main/wsdl/Fleet.wsdl</wsdlFile>
+							<wsdlFile>http://mobics02.critical.pt:8080/mobics-webservices/Fleet?wsdl</wsdlFile>
 							<unwrap>true</unwrap>
 							<overWrite>true</overWrite>
 							<unpackClasses>true</unpackClasses>
@@ -92,7 +93,7 @@
 						</goals>
 						<configuration>
 							<packageName>com.criticalsoftware.mobics.proxy.customer</packageName>
-							<wsdlFile>src/main/wsdl/Customer.wsdl</wsdlFile>
+							<wsdlFile>http://mobics02.critical.pt:8080/mobics-webservices/Customer?wsdl</wsdlFile>
 							<unwrap>true</unwrap>
 							<overWrite>true</overWrite>
 							<unpackClasses>true</unpackClasses>
@@ -105,7 +106,7 @@
 						</goals>
 						<configuration>
 							<packageName>com.criticalsoftware.mobics.proxy.carclub</packageName>
-							<wsdlFile>src/main/wsdl/CarClub.wsdl</wsdlFile>
+							<wsdlFile>http://mobics02.critical.pt:8080/mobics-webservices/CarClub?wsdl</wsdlFile>
 							<unwrap>true</unwrap>
 							<overWrite>true</overWrite>
 							<unpackClasses>true</unpackClasses>
@@ -118,7 +119,7 @@
 						</goals>
 						<configuration>
 							<packageName>com.criticalsoftware.mobics.proxy.miscellaneous</packageName>
-							<wsdlFile>src/main/wsdl/Miscellaneous.wsdl</wsdlFile>
+							<wsdlFile>http://mobics02.critical.pt:8080/mobics-webservices/Miscellaneous?wsdl</wsdlFile>
 							<unwrap>true</unwrap>
 							<overWrite>true</overWrite>
 							<unpackClasses>true</unpackClasses>

@@ -23,10 +23,12 @@ import net.sourceforge.stripes.validation.Validate;
 import com.criticalsoftware.mobics.fleet.CarDTO;
 import com.criticalsoftware.mobics.presentation.action.BaseActionBean;
 import com.criticalsoftware.mobics.presentation.security.MobiCSSecure;
+import com.criticalsoftware.mobics.presentation.util.CarType;
 import com.criticalsoftware.mobics.presentation.util.Configuration;
 import com.criticalsoftware.mobics.presentation.util.GeolocationUtil;
 import com.criticalsoftware.mobics.presentation.util.OrderBy;
 import com.criticalsoftware.mobics.proxy.fleet.CarClassNotFoundExceptionException;
+import com.criticalsoftware.mobics.proxy.fleet.CarTypeNotFoundExceptionException;
 import com.criticalsoftware.mobics.proxy.fleet.CarValidationExceptionException;
 import com.criticalsoftware.mobics.proxy.fleet.FleetWSServiceStub;
 import com.criticalsoftware.mobics.proxy.fleet.FuelTypeNotFoundExceptionException;
@@ -36,76 +38,31 @@ import com.criticalsoftware.mobics.proxy.fleet.FuelTypeNotFoundExceptionExceptio
  * @version $Revision: $
  */
 @MobiCSSecure
-public class NearestCarActionBean extends BaseActionBean {
+public class NearestCarActionBean extends CarDetailsActionBean {
 
     private static final int MAX_RESULTS = 1;
-
-    @Validate
-    private String latitude;
-
-    @Validate
-    private String longitude;
-
-    private CarDTO car;
-
-    private String location;
-
-    private FleetWSServiceStub fleet;
+    
 
     @DefaultHandler
-    public Resolution main() throws RemoteException {
+    public Resolution nearestCarBook() throws RemoteException, FuelTypeNotFoundExceptionException,
+            CarClassNotFoundExceptionException, CarTypeNotFoundExceptionException, CarValidationExceptionException {
 
-        fleet = new FleetWSServiceStub(Configuration.FLEET_ENDPOINT);
-        try {
-            // Get the first car
-            car = fleet.searchCars(null, null, "", "", OrderBy.DISTANCE.name(), MAX_RESULTS, new BigDecimal(latitude),
-                    new BigDecimal(longitude))[0];
-            // Get the location
-            location = GeolocationUtil.getAddressFromCoordinates(car.getLatitude().toString(), car.getLongitude()
-                    .toString());
+        // Get the first car
+        car = new FleetWSServiceStub(Configuration.FLEET_ENDPOINT).searchCars(null, null, "", "",
+                OrderBy.DISTANCE.name(), MAX_RESULTS, new BigDecimal(latitude), new BigDecimal(longitude), CarType.NORMAL.name())[0];
 
-        } catch (CarValidationExceptionException e) {
-            // TODO ltiago
-            e.printStackTrace();
-        } catch (FuelTypeNotFoundExceptionException e) {
-            // TODO ltiago: Auto-generated catch block. This code MUST be changed to the appropriate statements in order
-            // to handle the exception.
-            e.printStackTrace();
-        } catch (CarClassNotFoundExceptionException e) {
-            // TODO ltiago: Auto-generated catch block. This code MUST be changed to the appropriate statements in order
-            // to handle the exception.
-            e.printStackTrace();
-        }
-
-        return new ForwardResolution("/WEB-INF/book/nearestCarDetails.jsp");
+        return new ForwardResolution("/WEB-INF/book/nearestCarBook.jsp");
     }
 
-    /**
-     * @param latitude the latitude to set
-     */
-    public void setLatitude(String latitude) {
-        this.latitude = latitude;
-    }
-
-    /**
-     * @param longitude the longitude to set
-     */
-    public void setLongitude(String longitude) {
-        this.longitude = longitude;
-    }
-
-    /**
-     * @return the car
-     */
-    public CarDTO getCar() {
-        return car;
+    public Resolution carLocation() {
+        return new ForwardResolution("/WEB-INF/book/carLocation.jsp").addParameter("licensePlate", licensePlate);
     }
 
     /**
      * @return the location
      */
     public String getLocation() {
-        return location;
+        return GeolocationUtil.getAddressFromCoordinates(car.getLatitude().toString(), car.getLongitude().toString());
     }
 
 }
