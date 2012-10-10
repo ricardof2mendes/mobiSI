@@ -32,4 +32,12 @@ public class Configuration {
     
     public static final String GEOLOCATION_SERVER_NAME = "nominatim.openstreetmap.org";
 
+    public static final int CAR_THUMBNAIL_WITDH = 58;
+    
+    public static final int CAR_THUMBNAIL_HEIGHT = 58;
+    
+    public static final int MIN_RESULTS = 1;
+    
+    public static final int MAX_RESULTS = 99;
+
 }

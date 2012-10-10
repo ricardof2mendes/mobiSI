@@ -7,7 +7,7 @@
 			<ul>
 				<c:forEach items="${actionBean.cars}" var="car">
 					<li>
-						<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.book.LicensePlateActionBean" event="licensePlateBook">
+						<stripes:link beanclass="${actionBean.actionBean}" event="licensePlateBook">
 							<stripes:param name="licensePlate" value="${car.licensePlate}"/>
 							<stripes:param name="latitude" value="${actionBean.latitude}"/>
 							<stripes:param name="longitude" value="${actionBean.longitude}"/>

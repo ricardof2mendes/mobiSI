@@ -10,7 +10,7 @@
 					<li>
 						<stripes:link href="#">
 							<div>
-								<img src="${contextPath}/book/LicensePlate.action?getCarImage=&licensePlate=${actionBean.car.licensePlate}" />
+								<img src="${contextPath}/book/CarDetails.action?getCarImage=&licensePlate=${actionBean.car.licensePlate}" />
 							</div>
 							<div>
 								<div>
@@ -30,7 +30,7 @@
 						</span>
 					</li>
 					<li class="detail">
-						<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.book.LicensePlateActionBean" event="carLocation">
+						<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.book.CarDetailsActionBean" event="carLocation">
 							<stripes:param name="licensePlate">${actionBean.car.licensePlate}</stripes:param>
 							<span>
 								<fmt:message key="car.details.location"/>

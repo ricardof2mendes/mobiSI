@@ -25,12 +25,8 @@
 				</ul>
 			</nav>
 			
-			<stripes:form id="geolocation" beanclass="com.criticalsoftware.mobics.presentation.action.book.NearestCarActionBean" method="GET" >
-				<stripes:hidden id="latitude" name="latitude"/>
-				<stripes:hidden id="longitude" name="longitude"/>
-			</stripes:form>
-			
-			<stripes:link href="#" id="nearestCar" class="greenBtn">
+			<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.book.NearestCarActionBean" 
+						  id="nearestCar" name="nearestCar" event="nearestCarBook" class="greenBtn">
 				<fmt:message key="nearest.car.button"/>
 			</stripes:link>			
 		</section>

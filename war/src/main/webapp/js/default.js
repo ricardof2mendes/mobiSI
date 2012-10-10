@@ -16,65 +16,77 @@ $(document).ready(function() {
 	// nearest car location
 	$('#nearestCar').on('click', function(e) {
 		e.preventDefault();
-		if (navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition(
-					function(position) {
-						$('#latitude').val(position.coords.latitude);
-						$('#longitude').val(position.coords.longitude);
-						$('#geolocation').submit();
-					}, 
-					function (err) {
-						treatGeolocationError(err);
-					});
-		} else {
-			alert("Geolocation is not supported by this browser.");
-		}
+		var element = $(this); 
+		fillGeoposition(function(position) {
+							var url = element.attr('href')
+									+ "&latitude=" + position.coords.latitude
+									+ "&longitude=" + position.coords.longitude;
+							window.location.href = url;
+						});
 	});
 	
 	// license plate autocomplete
  	$('#licensePlate').on('keyup', function() {
  		if($('#licensePlate').val().length >= 2) {
  			if($('#latitude').val().length == 0 && $('#longitude').val().length == 0){
-	 			if (navigator.geolocation) {
-	 				navigator.geolocation.getCurrentPosition(
-	 						function(position) {
-	 							$('#latitude').val(position.coords.latitude);
-	 							$('#longitude').val(position.coords.longitude);
-	 							autocompleteList();
-	 						}, 
-	 						function (err) {
-	 							treatGeolocationError(err);
-	 						});
-	 			} else {
-	 				alert("Geolocation is not supported by this browser.");
-	 			}
+	 			fillGeoposition(function(position) {
+			 				$('#latitude').val(position.coords.latitude);
+			 				$('#longitude').val(position.coords.longitude);
+			 				autocompleteList();
+	 					});
  			} else {
  				autocompleteList();
  			}
  		} else {
- 			$("#autocompleteContainer").html('');
-	        $("#autocompleteContainer").css("display", "none");
+ 			$('#articleContainer').html('');
+ 			$('#articleContainer').css("display", "none");
  		}
  	});
  	
  	$("#licensePlateBookButton").on('click', function(e){
  		e.preventDefault();
- 		if (navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition(
-					function(position) {
+ 		fillGeoposition(function(position) {
 						$('#latitude').attr('value', position.coords.latitude);
 						$('#longitude').attr('value', position.coords.longitude);
 						$('#licensePlateBookForm').submit();
-					}, 
-					function (err) {
-						treatGeolocationError(err);
 					});
-		} else {
-			alert("Geolocation is not supported by this browser.");
-		}
+ 	});
+ 	
+ 	// Search for cars
+ 	$("#searchCarsForBook").on('click', function(e){
+ 		e.preventDefault();
+ 		fillGeoposition(function(position) {
+							$('#latitude').val(position.coords.latitude);
+							$('#longitude').val(position.coords.longitude);
+							$('#searchForm').submit();
+						});
+ 	});
+ 	
+ 	// Order cars
+ 	$('.orderCriteria ul li a').each(function(){
+ 		var element = $(this); 
+ 		fillGeoposition(function(position) {
+							var url = element.attr('href') + "&latitude=" + position.coords.latitude + "&longitude=" + position.coords.longitude;
+							window.location.href=url;
+						});
  	});
  	
 });
+
+function fillGeoposition(callback) {
+	if (navigator.geolocation) {
+		navigator.geolocation.getCurrentPosition(
+				callback, 
+				function (err) {
+					treatGeolocationError(err);
+				}, {
+					maximumAge: 60000,
+					enableHighAccuracy: true 
+				});
+	} else {
+		alert("Geolocation is not supported by this browser.");
+	}
+}
 
 
 function autocompleteList() {

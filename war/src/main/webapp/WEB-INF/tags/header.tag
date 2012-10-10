@@ -4,7 +4,7 @@
 
 <header class="${theme}Theme">
 	<a href="#" class="menuBtn"></a>
-	<a href="${contextPath}/Logout.action" class="logoutBtn"></a>
+	
 	<h1>${title}</h1>
 </header>
 <div class="bottomShadow"></div>
@@ -20,6 +20,10 @@
 		<li><a href="#">Messages</a></li>
 		<li><a href="#">Contacts</a></li>
 		<li><a href="#">Preferences</a></li>
-		<li><a href="#">Account</a></li>
+		<li>
+			<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.account.AccountActionBean">
+				<fmt:message key="account.title"/>
+			</stripes:link>
+		</li>
 	</ul>
 </nav>

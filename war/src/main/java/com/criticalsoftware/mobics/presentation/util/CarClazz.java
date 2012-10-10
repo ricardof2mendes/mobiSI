@@ -16,6 +16,22 @@ package com.criticalsoftware.mobics.presentation.util;
  * @author ltiago
  * @version $Revision: $
  */
-public enum OrderBy {
-    DISTANCE, PRICE, CLASS
+public enum CarClazz {
+    A("A"), B("B"), C("C"), NOT_SPECIFIED("");
+
+    private String clazz;
+
+    /**
+     * @param class
+     */
+    private CarClazz(String clazz) {
+        this.clazz = clazz;
+    }
+
+    /**
+     * @return the clazz
+     */
+    public String getClazz() {
+        return clazz;
+    }
 }

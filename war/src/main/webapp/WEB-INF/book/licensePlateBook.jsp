@@ -1,6 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@include file="/WEB-INF/common/taglibs.jsp"%>
-<c:set var="title" scope="page"><fmt:message key="license.plate.title" /></c:set>
+<c:set var="title" scope="page"><fmt:message key='nearest.car.title' /></c:set>
 
 <t:main title="${title}" hideFooter="true">
 	<article>
@@ -15,8 +15,8 @@
 							<div>
 								<div>
 									<span>${actionBean.car.licensePlate}</span>
-									<span>${actionBean.car.carBrandName}&nbsp;${car.carModelName}</span>
-									<span>${actionBean.car.fuelType}&nbsp;(${car.distance})</span>
+									<span>${actionBean.car.carBrandName}&nbsp;${actionBean.car.carModelName}</span>
+									<span>${actionBean.car.fuelType}&nbsp;(${actionBean.car.range})</span>
 								</div>
 							</div>
 						</stripes:link>
@@ -26,10 +26,25 @@
 							<fmt:message key="car.details.distance"/> 
 						</span>
 						<span>
-							${actionBean.car.distance},&nbsp;TODO
+							<c:choose>
+								<c:when test="${actionBean.car.distanceThreshold < 1000}">
+									<fmt:message key="car.details.distance.meter">
+										<fmt:param>
+											<fmt:formatNumber value="${actionBean.car.distanceThreshold}" maxFractionDigits="0"/>
+										</fmt:param>
+									</fmt:message>
+								</c:when>
+								<c:otherwise>
+									<fmt:message key="car.details.distance.kilometer">
+										<fmt:param>
+											<fmt:formatNumber value="${actionBean.car.distanceThreshold * 0.001}" maxFractionDigits="1"/>
+										</fmt:param>
+									</fmt:message>
+								</c:otherwise>
+							</c:choose>
 						</span>
 					</li>
-					<li class="detail">
+					<li class="link">
 						<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.book.LicensePlateActionBean" event="carLocation">
 							<stripes:param name="licensePlate">${actionBean.car.licensePlate}</stripes:param>
 							<span>
@@ -58,6 +73,7 @@
 					</li>
 				</ul>			 
 			</nav>
+			<div class="cleaner"></div>
 			<stripes:link href="#" id="nearestCar" class="greenBtn">
 				<stripes:param name="licensePlate">${actionBean.car.licensePlate}</stripes:param>
 				<fmt:message key="book.now.submit"/>

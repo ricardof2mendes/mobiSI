@@ -164,8 +164,8 @@ form.loginForm>div>label {
 	background: transparent url(../img/bt_down_30px.png) no-repeat top left;
 }
 
+.redBtn,
 .greenBtn {
-	background: #288b07 url(../img/bt_up_90px.png) repeat-x top left;
 	border-radius: 4px;
 	font-weight: bold;
 	font-size: xx-large;
@@ -174,13 +174,29 @@ form.loginForm>div>label {
 	line-height: 90px;
 	display: block;
 	margin: 0 10px;
-	border: 1px solid rgba(0, 0, 0, 0.3);
 	text-shadow: 0px -1px 1px rgba(0, 0, 0, 0.5);
+	border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.greenBtn {
+	background: #288b07 url(../img/bt_up_90px.png) repeat-x top left;
+}
+
+.redBtn {
+	background: red url(../img/bt_up_90px.png) repeat-x top left;
+}
+
+.redBtn:active,
+.greenBtn:active {
+	border: 1px solid rgba(0, 0, 0, 0.5);
 }
 
 .greenBtn:active {
 	background: #288b07 url(../img/bt_down_90px.png) repeat-x top left;
-	border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.redBtn:active {
+	background: red url(../img/bt_down_90px.png) repeat-x top left;
 }
 
 .loginBtn {
@@ -236,6 +252,52 @@ section > nav.simpleList ul li.title {
 	font-weight: normal;
 	color: #666;
 }
+
+
+
+
+
+
+
+
+section > nav.bookList ul li.link {
+	background: #f4f4f4 url(../img/seta.png) no-repeat 100% 50%;
+}
+
+
+section > nav.bookList ul li.link a {
+	padding: 0;
+	height: 45px;
+	line-height: 45px;
+}
+
+
+section > nav.bookList ul li.link span:nth-child(1) {
+	text-align: right;
+    width: 30%;
+	float: left;
+	display: inline-block;
+}
+
+section > nav.bookList ul li.link span:nth-child(2) {
+	text-align: left;
+	width: 70%;
+	display: inline-block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+    white-space: nowrap;
+	padding-right: 15px;
+	color: #666666;
+    font-weight: normal;
+    padding-left: 10px;
+
+}
+
+
+
+
+
+
 
 section > nav.bookList ul li.detail,
 section > nav.simpleList ul li.filter {
@@ -373,6 +435,42 @@ nav.threeColumnList  ul li a > div:nth-child(2) > div:nth-child(2) > span:nth-ch
 	color: #999;
 }
 
+section > nav.orderCriteria ul {
+	width: 300px;
+	margin: auto;
+}
+
+nav.orderCriteria ul li {
+	float: left;
+	margin: 0;
+	padding: 0 0 10px 0;
+	text-align: center;
+}
+
+nav.orderCriteria ul li a{
+	width: 100px;
+	display:block;
+	color: #666;
+	font-weight: bold;
+	background: #F4F4F4;
+	border: 1px solid #CCC;
+	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
+	padding: 8px;
+}
+
+nav.orderCriteria ul li a.selected,
+nav.orderCriteria ul li a:active {
+	background: #CCC;
+}
+
+nav.orderCriteria ul li:first-child a{
+	border-radius: 4px 0 0 4px;
+}
+
+nav.orderCriteria ul li:last-child a {
+	border-radius: 0 4px 4px 0;
+}
+
 /* Custom selectBox */
 .customComboBox > select {
 	border: 0;
@@ -380,12 +478,6 @@ nav.threeColumnList  ul li a > div:nth-child(2) > div:nth-child(2) > span:nth-ch
 	background: #f4f4f4 url('../img/setas.png') no-repeat right 50%;
 	min-width: 150px;
 }
-
-
-
-
-
-
 
 /*-----------------------------------------------------*/
 

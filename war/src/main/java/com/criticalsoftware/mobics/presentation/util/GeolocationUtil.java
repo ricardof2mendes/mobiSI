@@ -47,7 +47,7 @@ public class GeolocationUtil {
      */
     public static synchronized String getAddressFromCoordinates(String latitude, String longitude) {
 
-        String address = "";
+        String address = null;
 
         String url = MessageFormat.format(GEOLOCATION_URL, Configuration.GEOLOCATION_SERVER_NAME, latitude, longitude);
 

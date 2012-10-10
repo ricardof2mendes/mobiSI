@@ -15,17 +15,17 @@ package com.criticalsoftware.mobics.presentation.action.book;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
 
+import net.sourceforge.stripes.action.After;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.Resolution;
-import net.sourceforge.stripes.validation.Validate;
+import net.sourceforge.stripes.controller.LifecycleStage;
 
-import com.criticalsoftware.mobics.fleet.CarDTO;
-import com.criticalsoftware.mobics.presentation.action.BaseActionBean;
 import com.criticalsoftware.mobics.presentation.security.MobiCSSecure;
+import com.criticalsoftware.mobics.presentation.util.CarClazz;
 import com.criticalsoftware.mobics.presentation.util.CarType;
 import com.criticalsoftware.mobics.presentation.util.Configuration;
-import com.criticalsoftware.mobics.presentation.util.GeolocationUtil;
+import com.criticalsoftware.mobics.presentation.util.FuelType;
 import com.criticalsoftware.mobics.presentation.util.OrderBy;
 import com.criticalsoftware.mobics.proxy.fleet.CarClassNotFoundExceptionException;
 import com.criticalsoftware.mobics.proxy.fleet.CarTypeNotFoundExceptionException;
@@ -34,35 +34,48 @@ import com.criticalsoftware.mobics.proxy.fleet.FleetWSServiceStub;
 import com.criticalsoftware.mobics.proxy.fleet.FuelTypeNotFoundExceptionException;
 
 /**
+ * Nearest car action bean
+ * 
  * @author ltiago
  * @version $Revision: $
  */
 @MobiCSSecure
 public class NearestCarActionBean extends CarDetailsActionBean {
 
-    private static final int MAX_RESULTS = 1;
-    
-
+    /**
+     * Nearest car
+     * 
+     * @return the booking page resolution of the nearest car
+     */
     @DefaultHandler
-    public Resolution nearestCarBook() throws RemoteException, FuelTypeNotFoundExceptionException,
-            CarClassNotFoundExceptionException, CarTypeNotFoundExceptionException, CarValidationExceptionException {
-
-        // Get the first car
-        car = new FleetWSServiceStub(Configuration.FLEET_ENDPOINT).searchCars(null, null, "", "",
-                OrderBy.DISTANCE.name(), MAX_RESULTS, new BigDecimal(latitude), new BigDecimal(longitude), CarType.NORMAL.name())[0];
-
+    public Resolution nearestCarBook() {
         return new ForwardResolution("/WEB-INF/book/nearestCarBook.jsp");
     }
 
-    public Resolution carLocation() {
-        return new ForwardResolution("/WEB-INF/book/carLocation.jsp").addParameter("licensePlate", licensePlate);
+    /**
+     * Fill data
+     * 
+     * @throws RemoteException
+     * @throws FuelTypeNotFoundExceptionException
+     * @throws CarClassNotFoundExceptionException
+     * @throws CarTypeNotFoundExceptionException
+     * @throws CarValidationExceptionException
+     */
+    @After(on = "nearestCarBook", stages = LifecycleStage.BindingAndValidation)
+    public void fillData() throws RemoteException, FuelTypeNotFoundExceptionException,
+            CarClassNotFoundExceptionException, CarTypeNotFoundExceptionException, CarValidationExceptionException {
+        car = new FleetWSServiceStub(Configuration.FLEET_ENDPOINT).searchCars(null, null,
+                CarClazz.NOT_SPECIFIED.getClazz(), FuelType.NOT_SPECIFIED.getType(), OrderBy.DISTANCE.name(),
+                Configuration.MIN_RESULTS, latitude, longitude, CarType.NORMAL.name())[0];
     }
 
     /**
-     * @return the location
+     * Car location on map
+     * 
+     * @return the car location page resolution
      */
-    public String getLocation() {
-        return GeolocationUtil.getAddressFromCoordinates(car.getLatitude().toString(), car.getLongitude().toString());
+    public Resolution carLocation() {
+        return new ForwardResolution("/WEB-INF/book/carLocation.jsp").addParameter("licensePlate", licensePlate);
     }
 
 }

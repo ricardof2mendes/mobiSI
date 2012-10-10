@@ -16,6 +16,22 @@ package com.criticalsoftware.mobics.presentation.util;
  * @author ltiago
  * @version $Revision: $
  */
-public enum OrderBy {
-    DISTANCE, PRICE, CLASS
+public enum FuelType {
+    PETROL("PETROL"), DIESEL("DIESEL"), GPL("GPL"), HYBRID("HYBRID"), ELECTRIC("ELECTRIC"), NOT_SPECIFIED("");
+    
+    private String type;
+
+    /**
+     * @param type
+     */
+    private FuelType(String type) {
+        this.type = type;
+    }
+
+    /**
+     * @return the type
+     */
+    public String getType() {
+        return type;
+    }
 }

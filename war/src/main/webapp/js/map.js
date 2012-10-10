@@ -2,6 +2,27 @@ var map;
 var mapProjection = new OpenLayers.Projection("EPSG:900913");
 var mapDisplayProjection = new OpenLayers.Projection("EPSG:4326");
 
+var layerStyle = OpenLayers.Util.extend({}, OpenLayers.Feature.Vector.style['default']);
+// we want opaque and outer line
+layerStyle.strokeColor = '#000000';
+layerStyle.fillOpacity = 0.2;
+layerStyle.graphicOpacity = 1; 
+
+var greenStyle = OpenLayers.Util.extend({}, layerStyle);
+greenStyle.fillColor = "green";
+
+var yellowStyle = OpenLayers.Util.extend({}, layerStyle);
+yellowStyle.fillColor = "yellow";
+
+var redStyle = OpenLayers.Util.extend({}, layerStyle);
+redStyle.fillColor = "red";
+
+var grayStyle = OpenLayers.Util.extend({}, layerStyle);
+grayStyle.fillColor = 'light-grey';
+
+var carMarker = OpenLayers.Util.extend({}, layerStyle);
+carMarker.fillOpacity = 1;
+
 var Map = function(licensePlate) {
 	
 	// crete the map, add navigation and zoom controls, add basic layer open street map
@@ -20,9 +41,6 @@ var Map = function(licensePlate) {
         numZoomLevels: 18
 	});
 		
-	// add my location to the map
-	addMyLocation();
-	
 	// process data attached to license plate
 	fetchData(licensePlate);
 };
@@ -32,11 +50,10 @@ var Map = function(licensePlate) {
  * 
  * @param map
  */
-function addMyLocation() {
+function addMyLocation(vectorLayer) {
 	if (navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition(
 			function(position) {
-				var vectorLayer = new OpenLayers.Layer.Vector("mylocation");
 				var feature = new OpenLayers.Feature.Vector(
 						new OpenLayers.Geometry.Point(position.coords.longitude, position.coords.latitude).transform(mapDisplayProjection, map.getProjectionObject()), {
 									some : 'data'
@@ -47,9 +64,7 @@ function addMyLocation() {
 								});
 				vectorLayer.addFeatures(feature);
 				map.addLayer(vectorLayer);
-				// center the map on the car
-				var mapCenter = new OpenLayers.LonLat(position.coords.longitude, position.coords.latitude);
-				map.setCenter (mapCenter.transform(mapDisplayProjection, map.getProjectionObject()), 14);	
+				map.zoomToExtent(vectorLayer.getDataExtent()); 	
 			}, 
 			function (err) {
 				if (err.code == 1) {
@@ -61,6 +76,9 @@ function addMyLocation() {
 				} else {
 					alert('An unknown error occurred while requesting your location.');
 				}
+			}, {
+				maximumAge: 60000,
+				enableHighAccuracy: true 
 			});
 	} else {
 		alert("Geolocation is not supported by this browser.");
@@ -72,25 +90,14 @@ function addMyLocation() {
  * @param licensePlate
  */
 function fetchData(licensePlate) {
-	var returnData = null;
-	$.ajax({
-		type : 'GET',
-		url : contextPath + '/book/CarDetails.action?ajax=&q=' + licensePlate,
-		dataType : 'text',
-		cache : false,
-		success : function(data) {
-			returnData = data;
-		},
-		error : function(jqXHR, textStatus, errorThrown) {
-			// TODO
-			alert(xhr.status + ' ' + textStatus + ' ' + errorThrown);
-		},
-		complete : function(jqXHR, textStatus) {
-			if (textStatus == 'success' && returnData != null) {
-				processData(eval(returnData));
-			}
-		}
-	});
+	$.get(contextPath + '/book/CarDetails.action?ajax=&q=' + licensePlate, 
+			function(data, textStatus, jqXHR){
+				if (jqXHR.getResponseHeader('Stripes-Success') === 'OK') {
+					processData(eval(data));
+		        } else {
+		            console.log('An error has occurred or the user\'s session has expired!');
+		        }
+		    });	
 }
 
 /**
@@ -98,43 +105,57 @@ function fetchData(licensePlate) {
  * @param returnData
  */
 function processData(returnData) {
-	// car coordinates
-	var layer_style = OpenLayers.Util.extend({}, OpenLayers.Feature.Vector.style['default']);
 	
+	// car coordinates
 	if(returnData.coordinate) {
-		// we want opaque and outer line
-		layer_style.fillOpacity = 1;
-		layer_style.strokeColor = '#000000';
+		
 		// create the car vector
-		var carlocationVector = new OpenLayers.Layer.Vector("carlocation", {style: layer_style});
+		var objectVector = new OpenLayers.Layer.Vector("objects", {style: carMarker});
 		var feature = new OpenLayers.Feature.Vector(
-				new OpenLayers.Geometry.Point(returnData.coordinate.longitude, returnData.coordinate.latitude).transform(mapDisplayProjection, map.getProjectionObject()), {
-							some : 'data'
-								
-						});
-		carlocationVector.addFeatures(feature);
-		map.addLayer(carlocationVector);
+				new OpenLayers.Geometry.Point(returnData.coordinate.longitude, returnData.coordinate.latitude).transform(mapDisplayProjection, map.getProjectionObject()));
+		objectVector.addFeatures(feature);
+		map.addLayer(objectVector);
 		// center the map on the car
 		var mapCenter = new OpenLayers.LonLat(returnData.coordinate.longitude, returnData.coordinate.latitude);
-		map.setCenter (mapCenter.transform(mapDisplayProjection, map.getProjectionObject()), 14);		
+		map.setCenter (mapCenter.transform(mapDisplayProjection, map.getProjectionObject()), 14);	
+		
+		// add my location to the map
+		addMyLocation(objectVector);
 	}
 	
 	// zones delimiters
 	if(returnData.zones && returnData.zones.length > 0) {
-		var style_green = OpenLayers.Util.extend({}, layer_style);
-		style_green.fillColor = "green";
-		var style_yellow = OpenLayers.Util.extend({}, layer_style);
-		style_yellow.fillColor = "yellow";
-		var style_grey = OpenLayers.Util.extend({}, layer_style);
-		style_grey.fillColor = 'light-grey';
-		
-		var zonesVector = new OpenLayers.Layer.Vector("zones");
 		
 		$(returnData.zones).each(function() {
+			var zonesVector;
+			if(this.category.value == 'NORMAL') {
+				zonesVector = new OpenLayers.Layer.Vector("zones", {style: greenStyle});
+			} else if(this.category.value == 'SPECIAL') {
+				zonesVector = new OpenLayers.Layer.Vector("zones", {style: greenStyle});
+			} else if(this.category.value == 'UNWANTED') {
+				zonesVector = new OpenLayers.Layer.Vector("zones", {style: yellowStyle});
+			} else if(this.category.value == 'FORBIDDEN') {
+				zonesVector = new OpenLayers.Layer.Vector("zones", {style: grayStyle});
+			} else {
+				// PARKING
+				zonesVector = new OpenLayers.Layer.Vector("zones", {style: greenStyle});
+			}
 			
+			 var pointList = [];
+			 $(this.polygon.coordenates).each(function() {
+				 var newPoint = new OpenLayers.Geometry.Point(this.longitude, this.latitude).transform(mapDisplayProjection, map.getProjectionObject());
+				 pointList.push(newPoint);
+			 });
+			 pointList.push(pointList[0]);
+			 var linearRing = new OpenLayers.Geometry.LinearRing(pointList);
+			 var polygonFeature = new OpenLayers.Feature.Vector(
+					 new OpenLayers.Geometry.Polygon([linearRing])); 
+			 zonesVector.addFeatures(polygonFeature);
+			 
+			 map.addLayer(zonesVector);
 		});
+		
 	}
-	
 }
 
 /**

@@ -9,73 +9,87 @@
 		<section>
 			<nav class="simpleList">
 				<ul>
-					<li><stripes:link
-							id="nearestCar" href="#">
+					<li>
+						<stripes:link
+							beanclass="com.criticalsoftware.mobics.presentation.action.book.NearestCarActionBean" 
+							id="nearestCar" name="nearestCarBook" event="carBook">
 							<fmt:message key="nearest.car.title" />
-						</stripes:link></li>
-					<li><stripes:link
+						</stripes:link>
+					</li>
+					<li>
+						<stripes:link
 							beanclass="com.criticalsoftware.mobics.presentation.action.book.LicensePlateActionBean">
 							<fmt:message key="license.plate.title" />
-						</stripes:link></li>
+						</stripes:link>
+					</li>
 				</ul>
 			</nav>
 		</section>
 		<section>
-			<h2><fmt:message key="book.now.search"/></h2>
-			<nav class="simpleList">
-				<ul>
-					<li><a href="#"><fmt:message key="book.now.search.list"/></a></li>
-					<li class="title"><fmt:message key="book.now.search.limit"/></li>
-					<li class="filter">
-						<span><fmt:message key="book.now.search.price"/></span>
-						<span class="customComboBox">
-							<select>
-								<option>Up to €8/h</option>
-								<option>Valor 2</option>
-								<option>Valor 3</option>
-								<option>Valor 4</option>
-								<option>Valor 5</option>
-								<option>Valor 6</option>
-							</select>
-						</span>
-					</li>
-					<li class="filter">
-						<span><fmt:message key="book.now.search.distance"/></span>
-						<span class="customComboBox">
-							<select>
-								<option>Within 1km</option>
-								<option>Valor 2</option>
-								<option>Valor 3</option>
-								<option>Valor 4</option>
-								<option>Valor 5</option>
-								<option>Valor 6</option>
-							</select>
-						</span>
-					</li>
-					<li class="filter">
-						<span><fmt:message key="book.now.search.class"/></span>
-						<span class="customComboBox">
-							<select>
-								<option>Any class</option>
-								<option>Valor 2</option>
-								<option>Valor 3</option>
-								<option>Valor 4</option>
-								<option>Valor 5</option>
-								<option>Valor 6</option>
-							</select>
-						</span>
-					</li>
-				</ul>
-			</nav>
-		</section>
+			
+				<h2><fmt:message key="book.now.search"/></h2>
+				<nav class="simpleList">
+					<stripes:form id="searchForm" name="main" beanclass="com.criticalsoftware.mobics.presentation.action.book.SearchCarsActionBean" method="get">
+						<stripes:hidden id="latitude" name="latitude"/>
+						<stripes:hidden id="longitude" name="longitude"/>
+						<stripes:hidden name="orderBy" value="DISTANCE"/>
+						<ul>
+							<li>
+								<stripes:link id="searchCarsForBook" name="searchCarsForBook" href="#">
+									<fmt:message key="book.now.search.list"/>
+								</stripes:link>
+							</li>
+							<li class="title"><fmt:message key="book.now.search.limit"/></li>
+							<li class="filter">
+								<span><fmt:message key="book.now.search.price"/></span>
+								<span class="customComboBox">
+									<stripes:select name="price" value="8">
+										<stripes:option value=""><fmt:message key="book.now.search.price.any"/></stripes:option>
+										<c:forEach begin="5" end="25" var="index">
+											<stripes:option value="${index}" >
+												<fmt:message key="book.now.search.price.label">
+													<fmt:param value="${index}"/>
+												</fmt:message>
+											</stripes:option>
+										</c:forEach>
+									</stripes:select>								
+								</span>
+							</li>
+							<li class="filter">
+								<span><fmt:message key="book.now.search.distance"/></span>
+								<span class="customComboBox">
+									<stripes:select name="distance" value="1">
+										<stripes:option value="">
+											<fmt:message key="book.now.search.distance.any"/>
+										</stripes:option>
+										<stripes:option value="500" >
+											<fmt:message key="book.now.search.distance.label.meters"><fmt:param value="500"/></fmt:message>
+										</stripes:option>
+										<stripes:option value="1000" >
+											<fmt:message key="book.now.search.distance.label"><fmt:param value="1"/></fmt:message>
+										</stripes:option>
+										<stripes:option value="3000" >
+											<fmt:message key="book.now.search.distance.label"><fmt:param value="3"/></fmt:message>
+										</stripes:option>
+										<stripes:option value="100000" >
+											<fmt:message key="book.now.search.distance.label"><fmt:param value="100"/></fmt:message>
+										</stripes:option>
+									</stripes:select>
+								</span>
+							</li>
+							<li class="filter">
+								<span><fmt:message key="book.now.search.class"/></span>
+								<span class="customComboBox">
+									<stripes:select name="clazz" value="">
+										<stripes:options-enumeration enum="com.criticalsoftware.mobics.presentation.util.CarClazz" sort="clazz" />
+									</stripes:select>
+								</span>
+							</li>
+						</ul>
+					</stripes:form>  
+				</nav>
+			</section>
 	</article>
-
-	<stripes:form id="geolocation"
-		beanclass="com.criticalsoftware.mobics.presentation.action.book.NearestCarActionBean"
-		method="GET">
-		<stripes:hidden id="latitude" name="latitude" />
-		<stripes:hidden id="longitude" name="longitude" />
-	</stripes:form>
 
 </t:main>
 
