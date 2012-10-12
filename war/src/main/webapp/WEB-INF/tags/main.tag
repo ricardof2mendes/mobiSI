@@ -35,6 +35,7 @@
         <!-- TODO JS -->
         <script>var contextPath = '${contextPath}';</script>
         <script src="${contextPath}/js/zepto.js"></script>
+        <script src="${contextPath}/js/zepto-gfx.js"></script>
         <script src="${contextPath}/js/default.js"></script>
     </body>
 </html>

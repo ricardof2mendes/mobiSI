@@ -2,21 +2,39 @@
 <%@include file="/WEB-INF/common/taglibs.jsp"%>
 <c:set var="title" scope="page"><fmt:message key='error.title' /></c:set>
 
-<t:main title="${title}">
-    <div class="errors">
-        <c:choose>
-            <c:when test="${not empty param.httpError}">
-                <fmt:message key="error.http.${param.httpError}" />
-            </c:when>
-            <c:when test="${not empty requestScope.error}">
-                ${requestScope.error}
-            </c:when>
-            <c:when test="${not empty actionBean.context.validationErrors}">
-                <stripes:errors />
-            </c:when>
-            <c:otherwise>
-                <fmt:message key="error.internal" />
-            </c:otherwise>
-        </c:choose>
-    </div>
+<t:main title="${title}" hideFooter="true">
+	<div class="globalErrors">
+		<c:choose>
+		    <c:when test="${not empty param.httpError}">
+		    	<section class="errors">
+					<ul>
+						<li>
+							<fmt:message key="error.http.${param.httpError}" />
+						</li>
+					</ul>
+				</section>
+		    </c:when>
+		    <c:when test="${not empty requestScope.error}">
+		    	<section class="errors">
+					<ul>
+						<li>
+		        			${requestScope.error}
+	        			</li>
+	       			</ul>
+	     		</section>
+		    </c:when>
+		    <c:when test="${not empty actionBean.context.validationErrors}">
+		        	<stripes:errors />
+		    </c:when>
+		    <c:otherwise>
+		    	<section class="errors">
+					<ul>
+						<li>
+		        			<fmt:message key="error.internal" />
+		        		</li>
+	       			</ul>
+	     		</section>
+		    </c:otherwise>
+		</c:choose>
+	</div>
 </t:main>

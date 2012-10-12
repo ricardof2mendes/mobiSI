@@ -3,7 +3,6 @@ var mapProjection = new OpenLayers.Projection("EPSG:900913");
 var mapDisplayProjection = new OpenLayers.Projection("EPSG:4326");
 
 var layerStyle = OpenLayers.Util.extend({}, OpenLayers.Feature.Vector.style['default']);
-// we want opaque and outer line
 layerStyle.strokeColor = '#000000';
 layerStyle.fillOpacity = 0.2;
 layerStyle.graphicOpacity = 1; 
@@ -90,7 +89,7 @@ function addMyLocation(vectorLayer) {
  * @param licensePlate
  */
 function fetchData(licensePlate) {
-	$.get(contextPath + '/book/CarDetails.action?ajax=&q=' + licensePlate, 
+	$.get(contextPath + '/booking/ImmediateBooking.action?carData=&q=' + licensePlate, 
 			function(data, textStatus, jqXHR){
 				if (jqXHR.getResponseHeader('Stripes-Success') === 'OK') {
 					processData(eval(data));

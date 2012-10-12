@@ -18,50 +18,29 @@ package com.criticalsoftware.mobics.presentation.util;
  */
 public enum Theme {
 
-    DEFAULT("", "", "red"),
-    GREEN("", "krakatoa", "green"),
-    ORANGE("", "localhost", "orange");
-
-    private String carClub;
+    DEFAULT("", "solid orange"),
+    GREEN("krakatoa", "map green"),
+    ORANGE("localhost", "map darkred");
 
     private String host;
 
     private String theme;
 
-    private Theme(String carClub, String host, String theme) {
-        this.carClub = carClub;
+    private Theme(String host, String theme) {
         this.host = host;
         this.theme = theme;
     }
 
-    public static String getTheme(String host, String carClub) {
+    public static String getTheme(String host) {
         String theme = DEFAULT.theme;
-        boolean weHaveHost = false;
         for (Theme e : Theme.values()) {
             if (e.getHost().equals(host)) {
                 theme = e.getTheme();
-                weHaveHost = true;
                 break;
             }
         }
 
-        if (!weHaveHost && carClub != null) {
-            for (Theme e : Theme.values()) {
-                if (e.getCarClub().equals(carClub)) {
-                    theme = e.getTheme();
-                    break;
-                }
-            }
-        }
-
         return theme;
-    }
-
-    /**
-     * @return the carClub
-     */
-    public String getCarClub() {
-        return carClub;
     }
 
     /**
@@ -77,4 +56,6 @@ public enum Theme {
     public String getTheme() {
         return theme;
     }
+    
+    
 }

@@ -5,20 +5,24 @@
 </c:set>
 
 <t:main title="${title}" hideFooter="true">
+	<div class="globalErrors">
+		<stripes:errors/>
+	</div>
 	<article>
 		<section>
 			<nav class="simpleList">
 				<ul>
 					<li>
 						<stripes:link
-							beanclass="com.criticalsoftware.mobics.presentation.action.book.NearestCarActionBean" 
-							id="nearestCar" name="nearestCarBook" event="carBook">
+							beanclass="com.criticalsoftware.mobics.presentation.action.booking.ImmediateBookingActionBean" 
+							id="nearestCar"  name="nearestCarBook" event="nearestCarBook" addSourcePage="true">
 							<fmt:message key="nearest.car.title" />
 						</stripes:link>
 					</li>
 					<li>
 						<stripes:link
-							beanclass="com.criticalsoftware.mobics.presentation.action.book.LicensePlateActionBean">
+							beanclass="com.criticalsoftware.mobics.presentation.action.booking.ImmediateBookingActionBean"
+									event="licensePlateSearch">
 							<fmt:message key="license.plate.title" />
 						</stripes:link>
 					</li>
@@ -29,7 +33,8 @@
 			
 				<h2><fmt:message key="book.now.search"/></h2>
 				<nav class="simpleList">
-					<stripes:form id="searchForm" name="main" beanclass="com.criticalsoftware.mobics.presentation.action.book.SearchCarsActionBean" method="get">
+					<stripes:form id="searchForm" name="main" beanclass="com.criticalsoftware.mobics.presentation.action.booking.ImmediateBookingActionBean" method="get">
+						<input type="hidden" name="_eventName" value="searchCars"/>
 						<stripes:hidden id="latitude" name="latitude"/>
 						<stripes:hidden id="longitude" name="longitude"/>
 						<stripes:hidden name="orderBy" value="DISTANCE"/>
@@ -70,9 +75,6 @@
 										</stripes:option>
 										<stripes:option value="3000" >
 											<fmt:message key="book.now.search.distance.label"><fmt:param value="3"/></fmt:message>
-										</stripes:option>
-										<stripes:option value="100000" >
-											<fmt:message key="book.now.search.distance.label"><fmt:param value="100"/></fmt:message>
 										</stripes:option>
 									</stripes:select>
 								</span>

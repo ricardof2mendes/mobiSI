@@ -7,9 +7,13 @@
 		<section id="logo">
 		
 		</section>
+		<section id="loginErrors">
+			<div class="globalErrors">
+				<stripes:errors/>
+			</div>
+		</section>
 		<section id="login">
 			<stripes:form class="loginForm" beanclass="com.criticalsoftware.mobics.presentation.action.LoginActionBean" method="post">
-			    <stripes:errors/>
 				<div>
 					<input type="text" id="username" name="username" placeholder="<fmt:message key="login.j_username" />"/>
 					<input type="password" id="password" name="password" placeholder="<fmt:message key="login.j_password" />"/>

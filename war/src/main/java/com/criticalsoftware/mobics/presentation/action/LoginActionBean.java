@@ -14,13 +14,14 @@ import net.sourceforge.stripes.action.DontValidate;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.RedirectResolution;
 import net.sourceforge.stripes.action.Resolution;
-import net.sourceforge.stripes.validation.EmailTypeConverter;
 import net.sourceforge.stripes.validation.LocalizableError;
 import net.sourceforge.stripes.validation.Validate;
+import net.sourceforge.stripes.validation.ValidationErrors;
+import net.sourceforge.stripes.validation.ValidationMethod;
 
 import org.apache.axis2.AxisFault;
-import org.apache.commons.lang.StringUtils;
 
+import com.criticalsoftware.mobics.carclub.CarClubSimpleDTO;
 import com.criticalsoftware.mobics.presentation.security.AuthenticationUtil;
 import com.criticalsoftware.mobics.presentation.security.User;
 import com.criticalsoftware.mobics.presentation.util.Configuration;
@@ -36,10 +37,10 @@ public class LoginActionBean extends BaseActionBean {
 
     private CarClubWSServiceStub carClubWSServiceStub;
 
-    @Validate(required = true, on = "authenticate", converter = EmailTypeConverter.class)
+    @Validate
     private String username;
 
-    @Validate(required = true, on = "authenticate")
+    @Validate
     private String password;
 
     @DefaultHandler
@@ -47,20 +48,31 @@ public class LoginActionBean extends BaseActionBean {
     public Resolution login() {
         return new ForwardResolution("/WEB-INF/login.jsp");
     }
+    
+    @ValidationMethod(on = "authenticate")
+    public void validate(ValidationErrors errors) {
+        if(username == null || password == null) {
+            errors.addGlobalError(new LocalizableError("login.error"));
+        }
+    }
 
     public Resolution authenticate() throws UnsupportedEncodingException, RemoteException {
         Resolution resolution = new RedirectResolution(HomeActionBean.class);
 
         carClubWSServiceStub = new CarClubWSServiceStub(Configuration.CAR_CLUB_ENDPOINT);
-        carClubWSServiceStub._getServiceClient().addHeader(AuthenticationUtil.getAuthenticationHeader(username,  password));
-        
+        carClubWSServiceStub._getServiceClient().addHeader(
+                AuthenticationUtil.getAuthenticationHeader(username, password));
+
         try {
-            String carClubName = carClubWSServiceStub.getCustomerCarClub().getCarClubName();
-            if(StringUtils.isNotEmpty(carClubName)){
-                this.getContext().setUser(new User(username, password, carClubName));
+            CarClubSimpleDTO carClubDTO = carClubWSServiceStub.getCustomerCarClub();
+
+            if (carClubDTO != null) {
+                this.getContext().setUser(
+                        new User(username, password, carClubDTO.getCarClubName(), carClubDTO.getCarClubColorScheme(),
+                                carClubDTO.getCarClubTheme()));
             }
         } catch (AxisFault e) {
-            if(e.getMessage().startsWith(Configuration.AUTHENTICATION_FAILURE_STRING)) {
+            if (e.getMessage().startsWith(Configuration.AUTHENTICATION_FAILURE_STRING)) {
                 this.getContext().getValidationErrors().addGlobalError(new LocalizableError("login.error"));
                 resolution = new ForwardResolution("/WEB-INF/login.jsp");
             } else {

@@ -47,9 +47,18 @@ public abstract class BaseActionBean implements ActionBean {
         this.context = (MobiCSActionBeanContext) context;
     }
 
+    /**
+     * Get the theme
+     * @return
+     */
     public final String getTheme() {
-        return Theme.getTheme(this.getContext().getRequest().getServerName(),
-                this.getContext().getUser() == null ? null : this.getContext().getUser().getCarClub());
+        String theme;
+        if(this.getContext().getUser() != null) {
+            theme = this.getContext().getUser().getCarClubStyle();
+        } else {
+            theme = Theme.getTheme(this.getContext().getRequest().getServerName());
+        }
+        return theme;
     }
 
 }

@@ -11,7 +11,7 @@
 				<ul>
 					<li>
 						<stripes:link class="${actionBean.orderBy == 'DISTANCE' ? 'selected' : '' }"
-									  beanclass="com.criticalsoftware.mobics.presentation.action.book.SearchCarsActionBean" event="searchCars">
+									  beanclass="com.criticalsoftware.mobics.presentation.action.booking.ImmediateBookingActionBean" event="searchCars">
 							<stripes:param name="price" value="${actionBean.price}"/>
 							<stripes:param name="distance" value="${actionBean.distance}"/>
 							<stripes:param name="clazz" value="${actionBean.clazz}"/>
@@ -22,7 +22,7 @@
 					</li>
 					<li>
 						<stripes:link class="${actionBean.orderBy == 'PRICE' ? 'selected' : '' }"
-									  beanclass="com.criticalsoftware.mobics.presentation.action.book.SearchCarsActionBean" event="searchCars">
+									  beanclass="com.criticalsoftware.mobics.presentation.action.booking.ImmediateBookingActionBean" event="searchCars">
 							<stripes:param name="price" value="${actionBean.price}"/>
 							<stripes:param name="distance" value="${actionBean.distance}"/>
 							<stripes:param name="clazz" value="${actionBean.clazz}"/>
@@ -33,7 +33,7 @@
 					</li>
 					<li>
 						<stripes:link class="${actionBean.orderBy == 'CLASS' ? 'selected' : '' }"
-									  beanclass="com.criticalsoftware.mobics.presentation.action.book.SearchCarsActionBean" event="searchCars">
+									  beanclass="com.criticalsoftware.mobics.presentation.action.booking.ImmediateBookingActionBean" event="searchCars">
 							<stripes:param name="price" value="${actionBean.price}"/>
 							<stripes:param name="distance" value="${actionBean.distance}"/>
 							<stripes:param name="clazz" value="${actionBean.clazz}"/>

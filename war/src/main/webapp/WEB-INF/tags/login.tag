@@ -18,7 +18,7 @@
         <link rel="stylesheet" href="${contextPath}/css/default.css" />
         <link rel="stylesheet" href="${contextPath}/css/normalize.css" />
     </head>
-    <body class="${theme}Theme">
+    <body class="${theme}">
         <jsp:doBody/>
     </body>
     

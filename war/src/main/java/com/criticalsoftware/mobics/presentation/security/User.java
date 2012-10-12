@@ -22,18 +22,21 @@ public class User {
     
     private String password;
 
-    private String carClub;
-
+    private String carClubName;
+    
+    private String carClubStyle;
+    
     /**
      * Class constructor
      * 
      * @param username
-     * @param carClub
+     * @param carClubName
      */
-    public User(String username, String password, String carClub) {
+    public User(String username, String password, String carClubName, String carClubColor, String carClubTheme) {
         this.username = username;
         this.password = password;
-        this.carClub = carClub;
+        this.carClubName = carClubName;
+        this.carClubStyle = new StringBuilder(carClubTheme.replaceAll(" ", "")).append(" ").append(carClubColor.replaceAll(" ", "")).toString().toLowerCase();
     }
 
     /**
@@ -51,10 +54,17 @@ public class User {
     }
 
     /**
-     * @return the carClub
+     * @return the carClubName
      */
-    public String getCarClub() {
-        return carClub;
+    public String getCarClubName() {
+        return carClubName;
+    }
+
+    /**
+     * @return the carClubColor
+     */
+    public String getCarClubStyle() {
+        return carClubStyle;
     }
 
 }

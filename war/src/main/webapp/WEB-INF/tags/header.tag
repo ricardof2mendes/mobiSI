@@ -2,7 +2,7 @@
 <%@include file="/WEB-INF/common/taglibs.jsp" %>
 <%@attribute name="title" required="true" %>
 
-<header class="${theme}Theme">
+<header class="${theme}">
 	<a href="#" class="menuBtn"></a>
 	
 	<h1>${title}</h1>

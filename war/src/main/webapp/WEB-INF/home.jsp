@@ -3,6 +3,9 @@
 <c:set var="title" scope="page"><fmt:message key='home.title' /></c:set>
 
 <t:main title="${title}" hideFooter="true">
+	<div class="globalErrors">
+		<stripes:errors/>
+	</div>
 	<article>
 		<section>
 			<nav class="simpleList">
@@ -25,8 +28,8 @@
 				</ul>
 			</nav>
 			
-			<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.book.NearestCarActionBean" 
-						  id="nearestCar" name="nearestCar" event="nearestCarBook" class="greenBtn">
+			<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.booking.ImmediateBookingActionBean" 
+						  id="nearestCar" name="nearestCar" event="nearestCarBook" class="greenBtn" addSourcePage="true">
 				<fmt:message key="nearest.car.button"/>
 			</stripes:link>			
 		</section>

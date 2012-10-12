@@ -223,7 +223,6 @@ form.loginForm>div>label {
 	border: 1px solid rgba(0, 0, 0, 0.5);
 }
 /* Lists */
-section > nav.bookList ul, 
 section > nav.simpleList ul {
 	margin: 0 10px 15px;
 	background: #FFF;
@@ -253,33 +252,26 @@ section > nav.simpleList ul li.title {
 	color: #666;
 }
 
-
-
-
-
-
-
-
-section > nav.bookList ul li.link {
+section > nav.simpleList ul li.link {
 	background: #f4f4f4 url(../img/seta.png) no-repeat 100% 50%;
 }
 
 
-section > nav.bookList ul li.link a {
+section > nav.simpleList ul li.link a {
 	padding: 0;
 	height: 45px;
 	line-height: 45px;
 }
 
 
-section > nav.bookList ul li.link span:nth-child(1) {
+section > nav.simpleList ul li.link span:nth-child(1) {
 	text-align: right;
     width: 30%;
 	float: left;
 	display: inline-block;
 }
 
-section > nav.bookList ul li.link span:nth-child(2) {
+section > nav.simpleList ul li.link span:nth-child(2) {
 	text-align: left;
 	width: 70%;
 	display: inline-block;
@@ -290,40 +282,32 @@ section > nav.bookList ul li.link span:nth-child(2) {
 	color: #666666;
     font-weight: normal;
     padding-left: 10px;
-
 }
 
-
-
-
-
-
-
-section > nav.bookList ul li.detail,
 section > nav.simpleList ul li.filter {
 	background: none;
 	background-color: #f4f4f4;
 }
 
-section > nav.bookList ul li.detail span,
 section > nav.simpleList ul li.filter > span {
 	display: inline-block;
 }
 
-section > nav.bookList ul li.detail span:nth-child(1),
 section > nav.simpleList ul li.filter span:nth-child(1) {
 	text-align: right;
 	width: 30%;
+	float: left;
+	display: inline-block;
 }
 
-section > nav.bookList ul li.detail span:nth-child(2),
 section > nav.simpleList ul li.filter span:nth-child(2) {
+	width: 70%;
+	display: inline-block;
 	padding-left: 10px;
 	color: #666;
 	font-weight: normal;
 }
 
-section > nav.bookList ul li:last-child,
 section > nav.simpleList ul li:last-child {
 	border-bottom: 0;
 }
@@ -344,18 +328,60 @@ nav.threeColumnList ul li a {
 	padding: 5px 0;
 }
 
-nav.bookList ul li:not(:first-child) {
-	line-height: 45px;
-	text-align: left;
-	font-size: large;
-	font-weight: bold;
-	border-bottom: 1px solid #E5E5E5;
+/*-----------*/
+
+
+section > nav.bookList ul {
+	margin: 0 10px 15px;
+	background: #FFF;
+	border: 1px solid #E5E5E5;
+	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
+	border-radius: 4px;
 }
 
 nav.bookList ul li a {
 	color: #000;
 	display: block;
 	background: url(../img/seta.png) no-repeat 100% 50%;
+}
+
+section > nav.bookList ul li.link {
+	background: #f4f4f4 url(../img/seta.png) no-repeat 100% 50%;
+}
+
+
+section > nav.bookList ul li.link a {
+	padding: 0;
+	height: 45px;
+	line-height: 45px;
+}
+
+section > nav.bookList ul li.link span:nth-child(1) {
+	text-align: right;
+    width: 30%;
+	float: left;
+	display: inline-block;
+}
+
+section > nav.bookList ul li.link span:nth-child(2) {
+	text-align: left;
+	width: 70%;
+	display: inline-block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+    white-space: nowrap;
+	padding-right: 15px;
+	color: #666666;
+    font-weight: normal;
+    padding-left: 10px;
+}
+
+nav.bookList ul li:not(:first-child) {
+	line-height: 45px;
+	text-align: left;
+	font-size: large;
+	font-weight: bold;
+	border-bottom: 1px solid #E5E5E5;
 }
 
 nav.bookList ul li:first-child {	
@@ -370,7 +396,78 @@ nav.bookList ul li:first-child a {
 	padding: 5px 0;
 }
 
-nav.bookList  ul li:first-child a > div:nth-child(1),
+section > nav.bookList ul li.detail {
+	background: none;
+	background-color: #f4f4f4;
+}
+
+section > nav.bookList ul li.detail span {
+	display: inline-block;
+}
+
+section > nav.bookList ul li.detail span:nth-child(1) {
+	text-align: right;
+	width: 30%;
+}
+
+section > nav.bookList ul li.detail span:nth-child(2) {
+	padding-left: 10px;
+	color: #666;
+	font-weight: normal;
+}
+
+section > nav.bookList ul li:last-child{
+	border-bottom: 0;
+}
+
+nav.bookList  ul li:first-child a > div:nth-child(1){
+	width: 60px;
+	height: 60px;
+	border-radius: 4px ;
+	border: 1px solid rgba(0, 0, 0, 0.6);
+	margin: 0 10px;
+	float: left;
+}
+
+nav.bookList  ul li:first-child a > div:nth-child(2){
+	height: 60px;
+	margin-left: 80px;
+	margin-right: 25px;
+}
+
+nav.bookList  ul li:first-child a > div:nth-child(2) > div:nth-child(1){
+	width: 60%;
+	float: left;
+}
+
+nav.bookList ul li:first-child a > div:nth-child(2) > div:nth-child(1) > span {
+	font-size: normal;
+	float: left;
+	width: 100%;
+}
+nav.bookList ul li:first-child a > div:nth-child(2) > div:nth-child(1) > span:nth-child(1){
+	font-weight: bold;
+	color: #333;
+}
+nav.bookList  ul li:first-child a > div:nth-child(2) > div:nth-child(1) > span:nth-child(2){
+	color: #333;
+}
+
+nav.bookList  ul li:first-child a > div:nth-child(2) > div:nth-child(1) > span:nth-child(3){
+	color: #999;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 nav.threeColumnList  ul li a > div:nth-child(1) {
 	width: 60px;
 	height: 60px;
@@ -380,36 +477,30 @@ nav.threeColumnList  ul li a > div:nth-child(1) {
 	float: left;
 }
 
-nav.bookList  ul li:first-child a > div:nth-child(2),
 nav.threeColumnList  ul li a > div:nth-child(2) {
 	height: 60px;
 	margin-left: 80px;
 	margin-right: 25px;
 }
 
-nav.bookList  ul li:first-child a > div:nth-child(2) > div:nth-child(1),
 nav.threeColumnList  ul li a > div:nth-child(2) > div:nth-child(1) {
 	width: 60%;
 	float: left;
 }
 
-nav.bookList ul li:first-child a > div:nth-child(2) > div:nth-child(1) > span,
 nav.threeColumnList  ul li a > div:nth-child(2) > div:nth-child(1) > span {
 	font-size: normal;
 	float: left;
 	width: 100%;
 }
-nav.bookList ul li:first-child a > div:nth-child(2) > div:nth-child(1) > span:nth-child(1),
 nav.threeColumnList  ul li a > div:nth-child(2) > div:nth-child(1) > span:nth-child(1) {
 	font-weight: bold;
 	color: #333;
 }
-nav.bookList  ul li:first-child a > div:nth-child(2) > div:nth-child(1) > span:nth-child(2),
 nav.threeColumnList  ul li a > div:nth-child(2) > div:nth-child(1) > span:nth-child(2) {
 	color: #333;
 }
 
-nav.bookList  ul li:first-child a > div:nth-child(2) > div:nth-child(1) > span:nth-child(3), 
 nav.threeColumnList  ul li a > div:nth-child(2) > div:nth-child(1) > span:nth-child(3) {
 	color: #999;
 }
@@ -433,6 +524,10 @@ nav.threeColumnList  ul li a > div:nth-child(2) > div:nth-child(2) > span:nth-ch
 
 nav.threeColumnList  ul li a > div:nth-child(2) > div:nth-child(2) > span:nth-child(2) {
 	color: #999;
+}
+
+nav.threeColumnList  ul li a > div:nth-child(2) > div:nth-child(2) > span.unavailable {
+	color: red;
 }
 
 section > nav.orderCriteria ul {
@@ -476,13 +571,53 @@ nav.orderCriteria ul li:last-child a {
 	border: 0;
 	color: #666;
 	background: #f4f4f4 url('../img/setas.png') no-repeat right 50%;
-	min-width: 150px;
+	width: 100%;
 }
 
 /*-----------------------------------------------------*/
 
-.autocomplete {
+article.simpleArticle {
 	padding: 0 10px 10px 10px;
+}
+
+article.simpleArticle div.carDetails {
+	margin: auto;
+	text-align: center;	
+}
+
+article.simpleArticle div.carDetails label {
+	font-size: normal;
+	display: block;
+}
+
+article.simpleArticle div.carDetails label:nth-child(1) {
+	font-weight: bold;
+	color: #333;
+}
+
+article.simpleArticle div.carDetails label:nth-child(2) {
+	color: #333;
+}
+
+article.simpleArticle div.carDetails label:nth-child(3) {
+	color: #999;
+}
+	
+article.simpleArticle form > div {
+	background: #FFF;
+	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
+	border-radius: 4px;
+	overflow: hidden; 
+}
+
+article.simpleArticle form > div > input {
+	width: 100%;
+	padding-left: 10px;
+	line-height: 45px;
+	height: 45px;
+	border: 0;
+	font-size: normal;
+	color: #333;
 }
 
 form.licensePlate > div{
@@ -531,75 +666,127 @@ form.licensePlate > input[type="button"]:active {
 /*-----------------------------------------------------*/
 
 .warningMessage {
-	padding-top: 5px;
+	padding: 10px 0 10px 0;
 	text-align: center;
-	margin: 0 auto;
 	color: #999;
 }
 
 /* Errors */
-#login .errors{
+#loginErrors .errors{
 	width: 250px;
 	margin: 10px auto;
 }
 
+.messages,
 .errors {
-	background: #FABDA7 url(../img/error.png) no-repeat top left;
-	border: 1px solid #EE6D6F;
 	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
 	border-radius: 4px 4px 4px 4px;
 	min-height: 45px;
 	padding-left: 45px;
-	margin: 0 10px 15px;
+	margin: 0 10px 10px;
+}
+
+.errors {
+	border: 1px solid #EE6D6F;
+	background: #FABDA7 url(../img/error.png) no-repeat top left;
 }
 
 .errors div {
 	font: bold 14px Helvetica, Arial, sans-serif;
-	margin: 10px 10px 10px 0;
+	padding-top: 10px;
 	text-align: left;
 	color: #CC0000;
 }
 
+.globalErrors .errors div {
+	display: none;
+}
+
 .errors li {
+	color: #b72222;
 	font: 14px Helvetica, Arial, sans-serif;
 	list-style: none;
+}
+
+.globalErrors .errors li {
+	color: #CC0000;
+	font: bold 14px Helvetica, Arial, sans-serif;
+	padding-top: 10px;
 }
 
 .errors li:last-child {
 	margin-bottom: 10px;
 }
 
-/* Logout */
-.logoutBtn {
-	width: 30px;
-	height: 30px;
-	border: 1px solid rgba(0, 0, 0, 0.3);
-	border-radius: 4px;
-	float: right;
-	margin-top: 7px;
-	margin-right: 10px;
-	background: transparent url(../img/bt_up_30px.png) no-repeat top left;
+.messages {
+	border: 1px solid #AACE65;
+	background: #DDFF85 url(../img/success.png) no-repeat top left;
 }
 
-.logoutBtn:active {
-	border: 1px solid rgba(0, 0, 0, 0.5);
-	background: transparent url(../img/bt_down_30px.png) no-repeat top left;
+.messages li {
+	color: #669900;
+	font: bold 14px Helvetica, Arial, sans-serif;
+	padding: 15px 0 10px 0;
 }
 
 /* Theme Classes */
-.orangeTheme,.orangeTheme .loginBtn {
-	background-color: #EF9000;
+.solid {
 }
 
-body.orangeTheme {
+.warm {
+}
+
+.map {
 	background-image: url(../img/webapp-splash-map-normal.png);
 	background-size: 100%;
 }
 
-.redTheme,.redTheme .loginBtn {
-	background-color: red;
+.darkred,
+.darkred .loginBtn {
+	background-color: #660000;
 }
 
-.greenTheme,.greenTheme .loginBtn {
-	background-color: green;
+.red,
+.red .loginBtn {
+      background-color: #CC1A1A
+}
+
+.orange,
+.orange .loginBtn {
+    background-color: #F09000
+}
+
+.lightgreen,
+.lightgreen .loginBtn {
+    background-color: #78CC0A
+}
+
+.darkgreen,
+.darkgreen .loginBtn {
+    background-color: #095909
+}
+
+.lightblue,
+.lightblue .loginBtn {
+    background-color: #008BE8
+}
+
+.darkblue,
+.darkblue .loginBtn {
+    background-color: #161694
+}
+
+.purple,
+.purple .loginBtn {
+    background-color: #4A0D86
+}
+
+.pink,
+.pink .loginBtn {
+    background-color: #CC00CC
+}
+
+.darkgray,
+.darkgray .loginBtn {
+    background-color: #1A1A1A
 }

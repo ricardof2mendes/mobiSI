@@ -3,19 +3,17 @@
 <c:set var="title" scope="page"><fmt:message key="license.plate.title"/></c:set>
 
 <t:main title="${title}" hideFooter="true">
-	<article class="autocomplete">
+	<stripes:errors/>
+	<article class="simpleArticle">
 		<section>
-			<div>
-				<stripes:form class="licensePlate" id="licensePlateBookForm" name="licensePlateBook" 
-							  beanclass="com.criticalsoftware.mobics.presentation.action.book.LicensePlateActionBean" method="GET">
-					<stripes:submit id="licensePlateBook" name="licensePlateBook"><fmt:message key="license.plate.button"/></stripes:submit>
-					<div>
-						<input type="text" name="licensePlate" id="licensePlate" placeholder="<fmt:message key="license.plate.input" />" autocomplete="off"/>						
-					</div>
+			<stripes:form class="licensePlate" id="licensePlateBookForm" name="licensePlateBook" 
+						  beanclass="com.criticalsoftware.mobics.presentation.action.booking.ImmediateBookingActionBean" method="GET">
+				<div>
+					<input type="text" name="licensePlate" id="licensePlate" placeholder="<fmt:message key="license.plate.input" />" autocomplete="off"/>						
 					<stripes:hidden id="latitude" name="latitude"/>
 					<stripes:hidden id="longitude" name="longitude"/>
-				</stripes:form>			
-			</div>
+				</div>
+			</stripes:form>			
 		</section>
 	</article>
 	<article id="articleContainer">

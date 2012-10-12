@@ -11,9 +11,6 @@ import net.sourceforge.stripes.action.DontValidate;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.Resolution;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.criticalsoftware.mobics.presentation.security.MobiCSSecure;
 
 /**
@@ -24,8 +21,6 @@ import com.criticalsoftware.mobics.presentation.security.MobiCSSecure;
  */
 @MobiCSSecure
 public class HomeActionBean extends BaseActionBean {
-
-    private static Logger LOGGER = LoggerFactory.getLogger(HomeActionBean.class);
 
     @DefaultHandler
     @DontValidate
