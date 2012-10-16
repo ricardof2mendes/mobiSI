@@ -35,8 +35,9 @@
         <!-- TODO JS -->
         <script>var contextPath = '${contextPath}';</script>
         <script src="${contextPath}/js/zepto.js"></script>
+        <script src="${contextPath}/js/zepto-gfx.js"></script>
+        <script src="${contextPath}/js/default.js"></script> 
         <script src="${contextPath}/js/OpenLayers.mobile.js"></script>
         <script src="${contextPath}/js/map.js"></script>
-        <script src="${contextPath}/js/default.js"></script>
     </body>
 </html>
