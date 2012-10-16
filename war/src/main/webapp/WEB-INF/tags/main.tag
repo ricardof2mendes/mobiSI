@@ -28,6 +28,8 @@
 
         <jsp:doBody/>
 
+		<div class="modal"><!-- Place at bottom of page --></div>
+		
         <c:if test="${not hideFooter}">
             <t:footer />
         </c:if>

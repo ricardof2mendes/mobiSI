@@ -15,6 +15,7 @@
 							<stripes:param name="price" value="${actionBean.price}"/>
 							<stripes:param name="distance" value="${actionBean.distance}"/>
 							<stripes:param name="clazz" value="${actionBean.clazz}"/>
+							<stripes:param name="fuel" value="${actionBean.fuel}"/>
 							<stripes:param name="orderBy" value="DISTANCE"/>
 							
 							<fmt:message key="book.now.search.distance"/>
@@ -26,6 +27,7 @@
 							<stripes:param name="price" value="${actionBean.price}"/>
 							<stripes:param name="distance" value="${actionBean.distance}"/>
 							<stripes:param name="clazz" value="${actionBean.clazz}"/>
+							<stripes:param name="fuel" value="${actionBean.fuel}"/>
 							<stripes:param name="orderBy" value="PRICE"/>
 							
 							<fmt:message key="book.now.search.price"/>
@@ -37,6 +39,7 @@
 							<stripes:param name="price" value="${actionBean.price}"/>
 							<stripes:param name="distance" value="${actionBean.distance}"/>
 							<stripes:param name="clazz" value="${actionBean.clazz}"/>
+							<stripes:param name="fuel" value="${actionBean.fuel}"/>
 							<stripes:param name="orderBy" value="CLASS"/>
 							
 							<fmt:message key="book.now.search.class"/>

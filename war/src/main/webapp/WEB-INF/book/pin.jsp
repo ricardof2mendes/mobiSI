@@ -18,11 +18,11 @@
 	<article class="simpleArticle">
 		<section>
 			<div>
-				<stripes:form class="licensePlate"
+				<stripes:form id="pinForm"
 							  beanclass="com.criticalsoftware.mobics.presentation.action.booking.ImmediateBookingActionBean" method="POST">
 					<stripes:submit id="book" name="book"><fmt:message key="license.plate.button"/></stripes:submit>
 					<div>
-						<input type="password" name="pin" id="pin" maxlength="4" placeholder="<fmt:message key="pin.customer.input" />" autocomplete="off"/>						
+						<input type="number" name="pin" id="pin" maxlength="4" placeholder="<fmt:message key="pin.customer.input" />" autocomplete="off"/>						
 					</div>
 					<stripes:hidden name="licensePlate"/>
 					<stripes:hidden name="car.licensePlate"/>

@@ -17,6 +17,12 @@ li {
 a {
     text-decoration: none;
 }
+
+input:-moz-placeholder,
+input::-webkit-input-placeholder {
+	font-weight: normal;
+}
+
 /* Main Elements */
 body {
 	background-color: #E4E4E4;
@@ -222,6 +228,7 @@ form.loginForm>div>label {
 	background-image: url(../img/bt_down_45px.png);
 	border: 1px solid rgba(0, 0, 0, 0.5);
 }
+
 /* Lists */
 section > nav.simpleList ul {
 	margin: 0 10px 15px;
@@ -319,7 +326,7 @@ section > nav.simpleList ul li a {
 }
 
 nav.threeColumnList ul li {
-	background: #FFF  url(../img/seta.png) no-repeat 100% 50%;
+	background: #FFF url(../img/seta.png) no-repeat 100% 50%;
 	border-bottom: 1px solid #CCC;
 }
 
@@ -352,8 +359,6 @@ section > nav.bookList ul li.link {
 
 section > nav.bookList ul li.link a {
 	padding: 0;
-	height: 45px;
-	line-height: 45px;
 }
 
 section > nav.bookList ul li.link span:nth-child(1) {
@@ -367,9 +372,7 @@ section > nav.bookList ul li.link span:nth-child(2) {
 	text-align: left;
 	width: 70%;
 	display: inline-block;
-	overflow: hidden;
-	text-overflow: ellipsis;
-    white-space: nowrap;
+    white-space: break-word;
 	padding-right: 15px;
 	color: #666666;
     font-weight: normal;
@@ -377,7 +380,7 @@ section > nav.bookList ul li.link span:nth-child(2) {
 }
 
 nav.bookList ul li:not(:first-child) {
-	line-height: 45px;
+	padding: 11px 0 11px 0;
 	text-align: left;
 	font-size: large;
 	font-weight: bold;
@@ -451,6 +454,10 @@ nav.bookList ul li:first-child a > div:nth-child(2) > div:nth-child(1) > span:nt
 }
 nav.bookList  ul li:first-child a > div:nth-child(2) > div:nth-child(1) > span:nth-child(2){
 	color: #333;
+	display: inline-block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 nav.bookList  ul li:first-child a > div:nth-child(2) > div:nth-child(1) > span:nth-child(3){
@@ -466,7 +473,7 @@ nav.bookList  ul li:first-child a > div:nth-child(2) > div:nth-child(1) > span:n
 
 
 
-
+/** Three column list **/
 
 nav.threeColumnList  ul li a > div:nth-child(1) {
 	width: 60px;
@@ -499,6 +506,10 @@ nav.threeColumnList  ul li a > div:nth-child(2) > div:nth-child(1) > span:nth-ch
 }
 nav.threeColumnList  ul li a > div:nth-child(2) > div:nth-child(1) > span:nth-child(2) {
 	color: #333;
+	display: inline-block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 nav.threeColumnList  ul li a > div:nth-child(2) > div:nth-child(1) > span:nth-child(3) {
@@ -527,7 +538,7 @@ nav.threeColumnList  ul li a > div:nth-child(2) > div:nth-child(2) > span:nth-ch
 }
 
 nav.threeColumnList  ul li a > div:nth-child(2) > div:nth-child(2) > span.unavailable {
-	color: red;
+	color: #FF0000;
 }
 
 section > nav.orderCriteria ul {
@@ -572,6 +583,7 @@ nav.orderCriteria ul li:last-child a {
 	color: #666;
 	background: #f4f4f4 url('../img/setas.png') no-repeat right 50%;
 	width: 100%;
+	margin-right: 10px;
 }
 
 /*-----------------------------------------------------*/
@@ -620,23 +632,49 @@ article.simpleArticle form > div > input {
 	color: #333;
 }
 
-form.licensePlate > div{
+#licensePlateBookForm > div{
+	background: #FFF;
+	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
+	border-radius: 12px;
+	overflow: hidden; 
+}
+
+#licensePlateBookForm > div > input {
+	padding: 0 12px 0 10px;
+	line-height: 24px;
+	height: 24px;
+	border: 0;
+	font-size: normal;
+	color: #999;
+	float: left;
+	width: 90%;
+}
+
+#licensePlateBookForm > div > input.autocomplete {
+	background: #fff url('../img/ajax-loader-input.gif') no-repeat right 50%;
+}
+
+#licensePlateBookForm > div > div {
+	background: #fff;
+	padding: 12px;
+	width: 10%;
+	float: right;
+}
+
+#licensePlateBookForm > div > div.delete {
+	background: #fff url('../img/clear.png') no-repeat right 50%;
+	cursor: pointer;
+}
+
+
+#pinForm > div {
 	background: #FFF;
 	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
 	border-radius: 4px;
 	overflow: hidden; 
 }
-form.licensePlate > div > input {
-	width: 100%;
-	padding-left: 10px;
-	line-height: 45px;
-	height: 45px;
-	border: 0;
-	font-size: normal;
-	color: #333;
-}
 
-form.licensePlate > input[type="submit"] {
+#pinForm > input[type="submit"] {
 	border-radius: 4px;
 	font-size: large;
     font-weight: bold;
@@ -657,10 +695,11 @@ form.licensePlate > input[type="submit"] {
 	margin-left: 10px;
 }
 
-form.licensePlate > input[type="button"]:active {
+#pinForm > input[type="button"]:active {
 	background-image: url(../img/bt_down_45px.png);
 	border: 1px solid rgba(0, 0, 0, 0.5);
 }
+
 
 
 /*-----------------------------------------------------*/
@@ -789,4 +828,24 @@ form.licensePlate > input[type="button"]:active {
 .darkgray,
 .darkgray .loginBtn {
     background-color: #1A1A1A
+}
+
+/* MODAL */
+.modal {
+    display:    none;
+    position:   fixed;
+    z-index:    1000;
+    top:        0;
+    left:       0;
+    height:     100%;
+    width:      100%;
+    background: rgba( 255, 255, 255, .8 ) url('../img/ajax-loader.gif') 50% 50% no-repeat;
+}
+
+body.loading {
+    overflow: hidden;   
+}
+
+body.loading .modal {
+    display: block;
 }

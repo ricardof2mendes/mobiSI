@@ -2,7 +2,6 @@ $(document).ready(function() {
 	'use strict';
 
 	$('.customComboBox').on('click', function() {
-		
 		$('.comboList').toggle();
 	});
 
@@ -30,7 +29,7 @@ $(document).ready(function() {
 	$('#nearestCar').on('click', function(e) {
 		e.preventDefault();
 		var element = $(this); 
-		fillGeoposition(function(position) {
+		fillGeopositionWithLoading(function(position) {
 							var url = element.prop('href')
 									+ "&latitude=" + position.coords.latitude
 									+ "&longitude=" + position.coords.longitude;
@@ -45,8 +44,28 @@ $(document).ready(function() {
 
 	// license plate autocomplete
  	$('#licensePlate').on('keyup', function(e) {
+ 		$('#licensePlate').css('text-transform', 'uppercase');
+ 		// put cross to delete input content
+ 		if($('#licensePlate').val().length >= 1){
+ 			$('#licensePlateBookForm > div > div').addClass('delete')
+ 				.on('click', function() {
+ 					$('#licensePlate').val('');
+ 					$('#articleContainer').html('').css("display", "none");
+ 					$('#licensePlateBookForm > div > div').removeClass('delete').off('click');
+ 					$('#licensePlate').css('text-transform', 'none');
+ 			});
+ 		} else {
+ 			$('#licensePlateBookForm > div > div').removeClass('delete').off('click');
+ 			$('#licensePlate').css('text-transform', 'none');
+ 		}
  		
- 			if($('#licensePlate').val().length >= 2) {
+ 		// add the autocomplete
+		if($('#licensePlate').val().length >= 2) {
+			// first clear the delay
+			clearTimeout(this.timeout);
+			// then create the delay call
+			this.timeout = setTimeout(function(){
+				$('#licensePlate').addClass('autocomplete');
 	 			if($('#latitude').val().length == 0 && $('#longitude').val().length == 0){
 		 			fillGeoposition(function(position) {
 				 				$('#latitude').val(position.coords.latitude);
@@ -56,25 +75,17 @@ $(document).ready(function() {
 	 			} else {
 	 				autocompleteList();
 	 			}
-	 		} else {
-	 			$('#articleContainer').html('');
-	 			$('#articleContainer').css("display", "none");
-	 		}
- 	});
- 	
- 	$("#licensePlateBookButton").on('click', function(e){
- 		e.preventDefault();
- 		fillGeoposition(function(position) {
-						$('#latitude').prop('value', position.coords.latitude);
-						$('#longitude').prop('value', position.coords.longitude);
-						$('#licensePlateBookForm').submit();
-					});
+			}, 1000);
+			
+ 		} else {
+ 			$('#articleContainer').html('').css("display", "none");
+ 		}
  	});
  	
  	// Search for cars
  	$("#searchCarsForBook").on('click', function(e){
  		e.preventDefault();
- 		fillGeoposition(function(position) {
+ 		fillGeopositionWithLoading(function(position) {
 							$('#latitude').val(position.coords.latitude);
 							$('#longitude').val(position.coords.longitude);
 							$('#searchForm').submit();
@@ -86,7 +97,7 @@ $(document).ready(function() {
  		var element = $(this);
  		$(this).on('click', function(e) {
  						e.preventDefault();
- 						fillGeoposition(function(position) {
+ 						fillGeopositionWithLoading(function(position) {
 							var url = element.prop('href') + "&latitude=" + position.coords.latitude + "&longitude=" + position.coords.longitude;
 							window.location.href = url;
 						});
@@ -94,19 +105,38 @@ $(document).ready(function() {
  	});
 });
 
+/**
+ * Obtain geopostion and after execute the callback function
+ * @param callback
+ */
 function fillGeoposition(callback) {
 	if (navigator.geolocation) {
-		navigator.geolocation.getCurrentPosition(
-				callback, 
-				function (err) {
-					treatGeolocationError(err);
-				}, {
-					maximumAge: 60000,
-					enableHighAccuracy: true 
-				});
+		geoposition(callback);
 	} else {
 		alert("Geolocation is not supported by this browser.");
 	}
+}
+
+/**
+ * Obtain geopostion with loading and waiting screen, after execute the callback function
+ * @param callback
+ */
+function fillGeopositionWithLoading(callback) {
+	if (navigator.geolocation) {
+		$('body').addClass("loading"); 
+		geoposition(callback);
+	} else {
+		alert("Geolocation is not supported by this browser.");
+	}
+}
+
+function geoposition(callback) {
+	navigator.geolocation.getCurrentPosition(callback, function(err) {
+		treatGeolocationError(err);
+	}, {
+		maximumAge : 60000,
+		enableHighAccuracy : true
+	});
 }
 
 
@@ -119,8 +149,9 @@ function autocompleteList() {
 	$.get(url, function(data, textStatus, jqXHR){
 		if (jqXHR.getResponseHeader('Stripes-Success') === 'OK') {
             if (data.indexOf('<html') == -1) {
-                $('#articleContainer').html(data);
+            	$('#articleContainer').html(data);
                 $("#articleContainer").css("display", "block");
+                $('#licensePlate').removeClass('autocomplete');
             } else {
                 $('html').html(data);
             }

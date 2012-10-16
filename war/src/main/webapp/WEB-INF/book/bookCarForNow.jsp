@@ -87,6 +87,14 @@
 									</stripes:select>
 								</span>
 							</li>
+							<li class="filter">
+								<span><fmt:message key="book.now.search.fuel"/></span>
+								<span class="customComboBox">
+									<stripes:select name="fuel" value="">
+										<stripes:options-enumeration enum="com.criticalsoftware.mobics.presentation.util.FuelType" sort="type" />
+									</stripes:select>
+								</span>
+							</li>
 						</ul>
 					</stripes:form>  
 				</nav>
