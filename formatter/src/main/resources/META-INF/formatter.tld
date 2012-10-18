@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib version="2.1" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd">
+	<description>Number formatter JSP Taglibrary.</description>
+	<display-name>Formatter JSP Taglibrary</display-name>
+	<tlib-version>1.0</tlib-version>
+	<short-name>formatter</short-name>
+	<uri>http://www.criticalsoftware.com/taglib/formatter</uri>
+	<tag>
+		<description>Formats a numeric value as a currency, or distance</description>
+		<name>formatMobics</name>
+		<tag-class>com.criticalsoftware.mobics.format.FormatMobics</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<description>Numeric value to be formatted.</description>
+			<name>value</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Specifies whether the value is to be formatted as number, currency, or distance.</description>
+			<name>type</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Custom formatting pattern.</description>
+			<name>pattern</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>Distance km formatting pattern.</description>
+			<name>pattern2</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>A valid ISO language code. These codes are the lower-case, two-letter codes as defined by ISO-639. Full list of codes: http://www.loc.gov/standards/iso639-2/englangn.html.</description>
+			<name>locale</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+</taglib>
