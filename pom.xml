@@ -41,6 +41,7 @@
 
 	<modules>
 		<module>build-tools</module>
+		<module>formatter</module>
 		<module>war</module>
 	</modules>
 
@@ -346,6 +347,11 @@
 				<artifactId>json-simple</artifactId>
 				<version>1.1.1</version>
 			</dependency>
+			<dependency>
+                <groupId>com.criticalsoftware.mobics</groupId>
+                <artifactId>mobics-formatter</artifactId>
+                <version>${project.version}</version>
+            </dependency>
 		</dependencies>
 	</dependencyManagement>
 

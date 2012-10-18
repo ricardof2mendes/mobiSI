@@ -4,7 +4,7 @@
 	<fmt:message key='book.now.title' />
 </c:set>
 
-<t:main title="${title}" hideFooter="true">
+<t:main title="${title}">
 	<div class="globalErrors">
 		<stripes:errors/>
 	</div>

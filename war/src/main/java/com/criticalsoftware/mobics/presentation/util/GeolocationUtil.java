@@ -49,7 +49,7 @@ public class GeolocationUtil {
 
         String address = null;
 
-        String url = MessageFormat.format(GEOLOCATION_URL, Configuration.GEOLOCATION_SERVER_NAME, latitude, longitude);
+        String url = MessageFormat.format(GEOLOCATION_URL, Configuration.INSTANCE.getGeolocationServer(), latitude, longitude);
 
         HttpMethod method = new GetMethod(url);
 

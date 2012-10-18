@@ -4,11 +4,9 @@
 	<fmt:message key='location.title' />
 </c:set>
 
-<t:map title="${title}" hideFooter="true">
+<t:map title="${title}">
 	
-	<div id="content">
-		<div id="map" class="olMap"></div>
-	</div>	
+	<div id="map" class="olMap"></div>
 		
 </t:map>
 

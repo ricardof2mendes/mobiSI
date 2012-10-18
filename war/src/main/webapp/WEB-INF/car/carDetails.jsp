@@ -1,6 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@include file="/WEB-INF/common/taglibs.jsp"%>
-<c:set var="title" scope="page"><fmt:message key='book.title.${param.title}' /></c:set>
+<c:set var="title" scope="page"><fmt:message key='car.detail.title' /></c:set>
 
 <t:main title="${title}">
 	<stripes:errors/>
@@ -15,7 +15,7 @@
 							</div>
 							<div>
 								<div>
-									<span>${actionBean.car.licensePlate} </span>
+									<span>${actionBean.car.licensePlate}</span>
 									<span>${actionBean.car.carBrandName}&nbsp;${actionBean.car.carModelName}</span>
 									<span>${actionBean.car.fuelType}&nbsp;(${actionBean.car.range})</span>
 								</div>
@@ -27,11 +27,22 @@
 							<fmt:message key="car.details.distance"/> 
 						</span>
 						<span>
-							<mobi:formatMobics value="${actionBean.car.distance}" type="distance" 
-											   locale="${applicationScope.configuration.locale}" 
-											   pattern="${applicationScope.configuration.meterPattern}" 
-											   pattern2="${applicationScope.configuration.kilometerPattern}" />
-							
+							<c:choose>
+								<c:when test="${actionBean.car.distance < 1000}">
+									<fmt:message key="car.details.distance.meter">
+										<fmt:param>
+											<fmt:formatNumber value="${actionBean.car.distance}" maxFractionDigits="0"/>
+										</fmt:param>
+									</fmt:message>
+								</c:when>
+								<c:otherwise>
+									<fmt:message key="car.details.distance.kilometer">
+										<fmt:param>
+											<fmt:formatNumber value="${actionBean.car.distance * 0.001}" maxFractionDigits="1"/>
+										</fmt:param>
+									</fmt:message>
+								</c:otherwise>
+							</c:choose>
 						</span>
 					</li>
 					<li class="link">
@@ -50,9 +61,7 @@
 							<fmt:message key="car.details.price.use"/>
 						</span>
 						<span>
-							<mobi:formatMobics value="${actionBean.car.priceInUse}" type="currency" 
-											   locale="${applicationScope.configuration.locale}" 
-											   pattern="${applicationScope.configuration.currencyPattern}"/>
+							<fmt:message key="car.details.price.hour"><fmt:param value="${actionBean.car.priceInUse}"/></fmt:message>
 						</span>
 					</li>
 					<li class="detail">
@@ -60,9 +69,7 @@
 							<fmt:message key="car.details.price.locked"/>
 						</span>
 						<span>
-							<mobi:formatMobics value="${actionBean.car.priceReserved}" type="currency" 
-											   locale="${applicationScope.configuration.locale}" 
-											   pattern="${applicationScope.configuration.currencyPattern}"/>
+							<fmt:message key="car.details.price.hour"><fmt:param value="${actionBean.car.priceReserved}"/></fmt:message>
 						</span>
 					</li>
 				</ul>			 

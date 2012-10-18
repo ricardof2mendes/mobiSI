@@ -1,28 +1,24 @@
+/*
+ * Default Script
+ */
 $(document).ready(function() {
 	'use strict';
+	
+	// preventCacheOnIos();
 
+	// Combo box open/close
 	$('.customComboBox').on('click', function() {
 		$('.comboList').toggle();
 	});
 
+	// Put Combo box value on input
 	$('.comboList > ul > li').on('click', function(e) {
 		$('.customComboBox .comboValue').text($(this).text());
 	});
 
+	// Menu open/close
 	$('.menuBtn').on('click', function(e) {
-		if($('#menu').css('display') == 'none') {
-			$('#menu').gfxFadeIn({
-				duration : 500,
-				easing : 'ease-in',
-			});
-			
-		} else {
-			$('#menu').gfxFadeOut({
-				duration : 400,
-				easing : 'ease-out',
-			});
-		}
-		// $('#menu').toggle();
+		toggleFx('#menu');
 	});
 
 	// nearest car location
@@ -93,16 +89,16 @@ $(document).ready(function() {
  	});
  	
  	// Search Criteria cars
- 	$('.orderCriteria ul li a').each(function(){
- 		var element = $(this);
- 		$(this).on('click', function(e) {
- 						e.preventDefault();
- 						fillGeopositionWithLoading(function(position) {
-							var url = element.prop('href') + "&latitude=" + position.coords.latitude + "&longitude=" + position.coords.longitude;
-							window.location.href = url;
-						});
- 		});
- 	});
+// 	$('.orderCriteria ul li a').each(function(){
+// 		var element = $(this);
+// 		$(this).on('click', function(e) {
+// 						e.preventDefault();
+// 						fillGeopositionWithLoading(function(position) {
+//							var url = element.prop('href') + "&latitude=" + position.coords.latitude + "&longitude=" + position.coords.longitude;
+//							window.location.href = url;
+//						});
+// 		});
+// 	});
 });
 
 /**
@@ -173,6 +169,36 @@ function treatGeolocationError(err) {
 		alert('The request to get your location timed out.');
 	} else {
 		alert('An unknown error occurred while requesting your location.');
+	}
+}
+
+function toggleFx(element) {
+	//$('div.bottomShadow').toggle();
+	if($(element).css('display') == 'none') {
+		$(element).gfxFadeIn({
+			duration : 500,
+			easing : 'ease-in',
+		});
+		
+	} else {
+		$(element).gfxFadeOut({
+			duration : 400,
+			easing : 'ease-out',
+		});
+	}
+}
+
+function preventCacheOnIos() {
+	if ((/iphone|ipod|ipad.*os 5/gi).test(navigator.appVersion)) {
+		window.onpageshow = function(evt) {
+			// If persisted then it is in the page cache, force a reload of the page.
+			if (evt.persisted) {
+				document.body.style.display = "none";
+				location.reload();
+			}	
+		};
+	} else {
+		$(window).bind('unload', function(){});
 	}
 }
 

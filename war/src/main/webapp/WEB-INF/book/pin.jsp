@@ -2,7 +2,7 @@
 <%@include file="/WEB-INF/common/taglibs.jsp"%>
 <c:set var="title" scope="page"><fmt:message key='pin.title' /></c:set>
 
-<t:main title="${title}" hideFooter="true">
+<t:main title="${title}">
 
 	<stripes:errors/>
 	

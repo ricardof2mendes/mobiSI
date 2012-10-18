@@ -170,6 +170,27 @@ form.loginForm>div>label {
 	background: transparent url(../img/bt_down_30px.png) no-repeat top left;
 }
 
+/* Legend */
+.legendBtn {
+	height: 30px;
+	line-height: 30px;
+	float: right;
+	margin: -38px 10px 0 0;
+	border: 1px solid rgba(0, 0, 0, 0.3);
+	background: transparent;
+	border-radius: 4px;
+	font-weight: bold;
+	text-align: center;
+	color: #FFF;
+	text-shadow: 0px -1px 1px rgba(0, 0, 0, 0.5);
+	padding: 0 5px;
+}
+
+.legendBtn:active {
+	border: 1px solid rgba(0, 0, 0, 0.5);
+	background: transparent url(../img/bt_down_90px.png) no-repeat top left;
+}
+
 .redBtn,
 .greenBtn {
 	border-radius: 4px;
@@ -325,17 +346,36 @@ section > nav.simpleList ul li a {
 	display: block;
 }
 
-nav.threeColumnList ul li {
-	background: #FFF url(../img/seta.png) no-repeat 100% 50%;
-	border-bottom: 1px solid #CCC;
-}
+/******************************* */
+ #legend nav.simpleList ul li {
+ 	background: none;
+ 	padding-left: 10px;
+ }
+ 
+ #legend nav.simpleList ul li span {
+ 	padding-left: 30px;
+ 	display: block;
+ 	height: 45px;
+ }
+ 
+ #legend nav.simpleList ul li:nth-child(1) span {
+ 	background: #fff url(../img/mylocation.png) no-repeat 0 50%;
+ }
+ 
+ #legend nav.simpleList ul li:nth-child(2) span {
+ 	background: #fff url(../img/car-location.png) no-repeat 0 50%;
+ }
+ 
+  #legend nav.simpleList ul li:nth-child(3) span {
+ 	background: #fff url(../img/regular-zone.png) no-repeat 0 50%;
+ }
+ 
+  #legend nav.simpleList ul li:nth-child(4) span {
+ 	background: #fff url(../img/undesirable-zone.png) no-repeat 0 50%;
+ }
+ 
 
-nav.threeColumnList ul li a {
-	display: block;
-	padding: 5px 0;
-}
-
-/*-----------*/
+/****************************** Booking screen list **/
 
 
 section > nav.bookList ul {
@@ -438,11 +478,6 @@ nav.bookList  ul li:first-child a > div:nth-child(2){
 	margin-right: 25px;
 }
 
-nav.bookList  ul li:first-child a > div:nth-child(2) > div:nth-child(1){
-	width: 60%;
-	float: left;
-}
-
 nav.bookList ul li:first-child a > div:nth-child(2) > div:nth-child(1) > span {
 	font-size: normal;
 	float: left;
@@ -464,16 +499,17 @@ nav.bookList  ul li:first-child a > div:nth-child(2) > div:nth-child(1) > span:n
 	color: #999;
 }
 
+/****************************** Three column list **/
 
+nav.threeColumnList ul li {
+	background: #FFF url(../img/seta.png) no-repeat 100% 50%;
+	border-bottom: 1px solid #CCC;
+}
 
-
-
-
-
-
-
-
-/** Three column list **/
+nav.threeColumnList ul li a {
+	display: block;
+	padding: 5px 0;
+}
 
 nav.threeColumnList  ul li a > div:nth-child(1) {
 	width: 60px;
@@ -541,41 +577,59 @@ nav.threeColumnList  ul li a > div:nth-child(2) > div:nth-child(2) > span.unavai
 	color: #FF0000;
 }
 
+/************************************ Order navigation bar*/
+
+nav.orderCriteria {
+	height: 40px;
+	margin-bottom: 2px;
+	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
+}
+
 section > nav.orderCriteria ul {
-	width: 300px;
+	width: 226px;
 	margin: auto;
 }
 
 nav.orderCriteria ul li {
 	float: left;
-	margin: 0;
-	padding: 0 0 10px 0;
-	text-align: center;
+	text-align: center;		
 }
 
 nav.orderCriteria ul li a{
-	width: 100px;
 	display:block;
-	color: #666;
+	color: #333;
 	font-weight: bold;
-	background: #F4F4F4;
-	border: 1px solid #CCC;
-	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
-	padding: 8px;
+	height: 30px;
+	width: 74px;
+	border: 1px solid rgba(0, 0, 0, 0.6);
+	font: bold 12px/30px Helvetica, Arial, sans-serif;
+	background: url('../img/bt_up_30px-height.png');
 }
 
-nav.orderCriteria ul li a.selected,
-nav.orderCriteria ul li a:active {
-	background: #CCC;
+nav.orderCriteria ul li a.selected{
+	background: url('../img/bt_down_30px-height.png');
 }
 
 nav.orderCriteria ul li:first-child a{
+	width: 76px;
 	border-radius: 4px 0 0 4px;
+	
 }
 
 nav.orderCriteria ul li:last-child a {
+	width: 76px;
 	border-radius: 0 4px 4px 0;
 }
+
+section#noresults {
+	margin: auto;
+	text-align: center;
+	height: 30px;
+	color: #333;
+	font: italic 12px/30px Helvetica, Arial, sans-serif;
+}
+
+
 
 /* Custom selectBox */
 .customComboBox > select {
@@ -782,7 +836,7 @@ article.simpleArticle form > div > input {
 
 .darkred,
 .darkred .loginBtn {
-	background-color: #660000;
+	background-color: #660000 !important;
 }
 
 .red,
@@ -848,4 +902,9 @@ body.loading {
 
 body.loading .modal {
     display: block;
+}
+
+#licsearch {
+	margin-bottom: 2px;
+	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
 }

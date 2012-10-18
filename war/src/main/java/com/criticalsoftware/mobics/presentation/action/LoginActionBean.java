@@ -59,7 +59,7 @@ public class LoginActionBean extends BaseActionBean {
     public Resolution authenticate() throws UnsupportedEncodingException, RemoteException {
         Resolution resolution = new RedirectResolution(HomeActionBean.class);
 
-        carClubWSServiceStub = new CarClubWSServiceStub(Configuration.CAR_CLUB_ENDPOINT);
+        carClubWSServiceStub = new CarClubWSServiceStub(Configuration.INSTANCE.getCarClubEndpoint());
         carClubWSServiceStub._getServiceClient().addHeader(
                 AuthenticationUtil.getAuthenticationHeader(username, password));
 
@@ -72,7 +72,7 @@ public class LoginActionBean extends BaseActionBean {
                                 carClubDTO.getCarClubTheme()));
             }
         } catch (AxisFault e) {
-            if (e.getMessage().startsWith(Configuration.AUTHENTICATION_FAILURE_STRING)) {
+            if (e.getMessage().startsWith(Configuration.INSTANCE.getAuthenticationFailureString())) {
                 this.getContext().getValidationErrors().addGlobalError(new LocalizableError("login.error"));
                 resolution = new ForwardResolution("/WEB-INF/login.jsp");
             } else {

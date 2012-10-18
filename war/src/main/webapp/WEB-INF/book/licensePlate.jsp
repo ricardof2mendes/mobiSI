@@ -2,9 +2,9 @@
 <%@include file="/WEB-INF/common/taglibs.jsp"%>
 <c:set var="title" scope="page"><fmt:message key="license.plate.title"/></c:set>
 
-<t:main title="${title}" hideFooter="true">
+<t:main title="${title}">
 	<stripes:errors/>
-	<article class="simpleArticle">
+	<article id="licsearch" class="simpleArticle">
 		<section>
 			<stripes:form id="licensePlateBookForm" 
 						  beanclass="com.criticalsoftware.mobics.presentation.action.booking.ImmediateBookingActionBean" method="GET">

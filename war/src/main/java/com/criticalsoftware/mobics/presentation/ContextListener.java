@@ -10,6 +10,8 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+import com.criticalsoftware.mobics.presentation.util.Configuration;
+
 
 /**
  * Context Listener.
@@ -24,8 +26,7 @@ public class ContextListener implements ServletContextListener {
     @Override
     public void contextInitialized(ServletContextEvent event) {
         context = event.getServletContext();
-        // FIXME no configuration here
-        //context.setAttribute("configuration", Configuration.getInstance());
+        context.setAttribute("configuration", Configuration.INSTANCE);
     }
 
     @Override

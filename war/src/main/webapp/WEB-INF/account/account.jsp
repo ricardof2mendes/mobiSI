@@ -2,7 +2,7 @@
 <%@include file="/WEB-INF/common/taglibs.jsp"%>
 <c:set var="title" scope="page"><fmt:message key="account.title" /></c:set>
 
-<t:main title="${title}" hideFooter="true">
+<t:main title="${title}">
 	<article>
 		<section>
 			<h2><fmt:message key="account.identification"/></h2>

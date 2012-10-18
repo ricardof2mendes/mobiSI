@@ -22,7 +22,35 @@ grayStyle.fillColor = 'light-grey';
 var carMarker = OpenLayers.Util.extend({}, layerStyle);
 carMarker.fillOpacity = 1;
 
+$(document).ready(function() {
+	//Menu button
+	$('.menuBtn').on('click', function(e) {
+		$('#map').css('top', '45px');
+		if($('#legend').css('display') != 'none') {
+			toggleFx('#legend');
+		} else {
+			toggleFx('div.bottomShadow');
+			$('#map').css('top', '376px');
+		}
+		toggleFx('#menu');
+	});
+	
+	// Legend button
+	$('.legendBtn').on('click', function(e) {
+		if($('#menu').css('display') != 'none') {
+			toggleFx('#menu');
+		} else {
+			toggleFx('div.bottomShadow');
+		}
+		toggleFx('#legend');
+	});
+});
+
+
 var Map = function(licensePlate) {
+	
+	// remove spacing
+	$('div.bottomShadow').css('display', 'none');
 	
 	// crete the map, add navigation and zoom controls, add basic layer open street map
 	map = new OpenLayers.Map({
@@ -38,6 +66,19 @@ var Map = function(licensePlate) {
 			transitionEffect : 'resize'
 		}) ],
         numZoomLevels: 18
+	});
+	
+	// change button color according to header
+	var background = $('body > header').css('background-color');
+	var normal = 'none repeat scroll 0 0 rgba('+background.substring(background.indexOf('(')+1, background.indexOf(')')) + ', 0.5)';
+	var hover = 'none repeat scroll 0 0 rgba('+background.substring(background.indexOf('(')+1, background.indexOf(')')) + ', 0.7)';
+	
+	$('div.olControlZoom a').css('background', normal);
+	$('div.olControlZoom a').on('mouseover', function(){
+		$(this).css('background', hover);
+		$(this).on('mouseout', function(){
+			$(this).css('background', normal);
+		});
 	});
 		
 	// process data attached to license plate
@@ -171,7 +212,23 @@ function addPolygons(map) {
 	
 }
 
-$.fn.map.defaults = {
-
-
-};
+function toggleFx(element) {
+	if($(element).css('display') == 'none') {
+		if(element.indexOf('menu') > 0) {
+			$('#map').css('top', '376px');
+		}else {
+			$('#map').css('top', '255px');
+		}
+		$(element).gfxFadeIn({
+			duration : 500,
+			easing : 'ease-in',
+		});
+		
+	} else {
+		$('#map').css('top', '45px');
+		$(element).gfxFadeOut({
+			duration : 100,
+			easing : 'ease-out',
+		});
+	}
+}

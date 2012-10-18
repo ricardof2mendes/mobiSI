@@ -4,7 +4,7 @@
 	<fmt:message key='list.search.title' />
 </c:set>
 
-<t:main title="${title}" hideFooter="true">
+<t:main title="${title}">
 	<article>
 		<section>
 			<nav class="orderCriteria">
@@ -16,6 +16,8 @@
 							<stripes:param name="distance" value="${actionBean.distance}"/>
 							<stripes:param name="clazz" value="${actionBean.clazz}"/>
 							<stripes:param name="fuel" value="${actionBean.fuel}"/>
+							<stripes:param name="latitude" value="${actionBean.latitude}"/>
+							<stripes:param name="longitude" value="${actionBean.longitude}"/>
 							<stripes:param name="orderBy" value="DISTANCE"/>
 							
 							<fmt:message key="book.now.search.distance"/>
@@ -28,6 +30,8 @@
 							<stripes:param name="distance" value="${actionBean.distance}"/>
 							<stripes:param name="clazz" value="${actionBean.clazz}"/>
 							<stripes:param name="fuel" value="${actionBean.fuel}"/>
+							<stripes:param name="latitude" value="${actionBean.latitude}"/>
+							<stripes:param name="longitude" value="${actionBean.longitude}"/>
 							<stripes:param name="orderBy" value="PRICE"/>
 							
 							<fmt:message key="book.now.search.price"/>
@@ -40,6 +44,8 @@
 							<stripes:param name="distance" value="${actionBean.distance}"/>
 							<stripes:param name="clazz" value="${actionBean.clazz}"/>
 							<stripes:param name="fuel" value="${actionBean.fuel}"/>
+							<stripes:param name="latitude" value="${actionBean.latitude}"/>
+							<stripes:param name="longitude" value="${actionBean.longitude}"/>
 							<stripes:param name="orderBy" value="CLASS"/>
 							
 							<fmt:message key="book.now.search.class"/>

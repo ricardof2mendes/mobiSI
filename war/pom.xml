@@ -216,6 +216,10 @@
 			<groupId>com.googlecode.json-simple</groupId>
 			<artifactId>json-simple</artifactId>
 		</dependency>
+		<dependency>
+            <groupId>com.criticalsoftware.mobics</groupId>
+            <artifactId>mobics-formatter</artifactId>
+        </dependency>
 	</dependencies>
 
 	<reporting>

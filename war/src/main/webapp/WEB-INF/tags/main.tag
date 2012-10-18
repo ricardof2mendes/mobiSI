@@ -1,8 +1,6 @@
 <%@tag description="Main page template" pageEncoding="UTF-8" %>
 <%@include file="/WEB-INF/common/taglibs.jsp"%>
 <%@attribute name="title" required="true" %>
-<%@attribute name="hideHeader" type="java.lang.Boolean" %>
-<%@attribute name="hideFooter" type="java.lang.Boolean" %>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -22,15 +20,10 @@
         <link rel="stylesheet" href="${contextPath}/css/default.css" />
     </head>
     <body>
-        <c:if test="${not hideHeader}">
-            <t:header title="${title}"/>
-        </c:if>
+
+        <t:header title="${title}" showLegend="false"/>
 
         <jsp:doBody/>
-		
-        <c:if test="${not hideFooter}">
-            <t:footer />
-        </c:if>
 
 		<div class="modal"><!-- Place at bottom of page --></div>
 
