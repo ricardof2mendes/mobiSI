@@ -32,10 +32,5 @@
 			<name>pattern2</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
-		<attribute>
-			<description>A valid ISO language code. These codes are the lower-case, two-letter codes as defined by ISO-639. Full list of codes: http://www.loc.gov/standards/iso639-2/englangn.html.</description>
-			<name>locale</name>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
 	</tag>
 </taglib>

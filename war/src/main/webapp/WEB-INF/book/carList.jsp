@@ -15,7 +15,7 @@
 										<stripes:param name="latitude" value="${actionBean.latitude}"/>
 										<stripes:param name="longitude" value="${actionBean.longitude}"/>
 										<div>
-											<img src="${contextPath}/booking/ImmediateBooking.action?getCarImage=&licensePlate=${car.licensePlate}" />
+											<img src="${contextPath}/booking/ImmediateBooking.action?getCarImage=&licensePlate=${car.licensePlate}&${car.licensePlate}.png" />
 										</div>
 										<div>
 											<div>
@@ -25,28 +25,13 @@
 											</div>
 											<div>
 												<span>
-												
-													<fmt:message key="car.details.price.hour">
-														<fmt:param value="${car.priceInUse}"/>
-													</fmt:message>
+													<mobi:formatMobics value="${car.priceInUse}" type="currency" 
+																	   pattern="${applicationScope.configuration.currencyPattern}"/>
 												</span>
 												<span>
-													<c:choose>
-														<c:when test="${car.distance < 1000}">
-															<fmt:message key="car.details.distance.meter">
-																<fmt:param>
-																	<fmt:formatNumber value="${car.distance}" maxFractionDigits="0"/>
-																</fmt:param>
-															</fmt:message>
-														</c:when>
-														<c:otherwise>
-															<fmt:message key="car.details.distance.kilometer">
-																<fmt:param>
-																	<fmt:formatNumber value="${car.distance * 0.001}" maxFractionDigits="1"/>
-																</fmt:param>
-															</fmt:message>
-														</c:otherwise>
-													</c:choose>
+													<mobi:formatMobics value="${car.distance}" type="distance" 
+																	   pattern="${applicationScope.configuration.meterPattern}" 
+																	   pattern2="${applicationScope.configuration.kilometerPattern}" />
 												</span>
 											</div>
 										</div>

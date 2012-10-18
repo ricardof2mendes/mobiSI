@@ -13,7 +13,7 @@
 
     <artifactId>mobics-build-tools</artifactId>
     <packaging>jar</packaging>
-    <name>Mobi Car Sharing  - Build Tools</name>
+    <name>Mobi Car Sharing - Build Tools</name>
 
     <build>
         <plugins>

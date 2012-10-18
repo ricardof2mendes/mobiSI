@@ -28,7 +28,6 @@
 						</span>
 						<span>
 							<mobi:formatMobics value="${actionBean.car.distance}" type="distance" 
-											   locale="${applicationScope.configuration.locale}" 
 											   pattern="${applicationScope.configuration.meterPattern}" 
 											   pattern2="${applicationScope.configuration.kilometerPattern}" />
 							
@@ -51,7 +50,6 @@
 						</span>
 						<span>
 							<mobi:formatMobics value="${actionBean.car.priceInUse}" type="currency" 
-											   locale="${applicationScope.configuration.locale}" 
 											   pattern="${applicationScope.configuration.currencyPattern}"/>
 						</span>
 					</li>
@@ -61,7 +59,6 @@
 						</span>
 						<span>
 							<mobi:formatMobics value="${actionBean.car.priceReserved}" type="currency" 
-											   locale="${applicationScope.configuration.locale}" 
 											   pattern="${applicationScope.configuration.currencyPattern}"/>
 						</span>
 					</li>

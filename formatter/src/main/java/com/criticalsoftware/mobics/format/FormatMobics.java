@@ -26,8 +26,12 @@ import javax.servlet.jsp.JspTagException;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 
 import org.apache.taglibs.standard.resources.Resources;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
+ * Formats distance, prices
+ * 
  * @author ltiago
  * @version $Revision: $
  */
@@ -36,13 +40,14 @@ public class FormatMobics extends BodyTagSupport {
     /** */
     private static final long serialVersionUID = 1L;
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(FormatMobics.class);
+
     private static final String DISTANCE = "distance";
 
-    private Object value; // 'value' attribute
-    private String type; // 'type' attribute
-    private String pattern; // 'pattern' attribute
+    private Object value;
+    private String type;
+    private String pattern;
     private String pattern2;
-    private String locale;
     private ResourceBundle resources;
 
     public FormatMobics() {
@@ -51,15 +56,16 @@ public class FormatMobics extends BodyTagSupport {
     }
 
     private void init() {
-        value = type = pattern = locale = null;
+        value = type = pattern = pattern2 = null;
         resources = ResourceBundle.getBundle("Resources");
     }
 
     public int doEndTag() throws JspException {
         String formatted = null;
 
-        if ((value == null) || value.equals("") || type == null || type.equals("") || pattern == null
+        if (value == null || value.equals("") || type == null || type.equals("") || pattern == null
                 || pattern.equals("")) {
+            LOGGER.warn("One or more required fields are not present");
             return EVAL_PAGE;
         }
 
@@ -69,9 +75,9 @@ public class FormatMobics extends BodyTagSupport {
         if (value instanceof String) {
             try {
                 if (((String) value).indexOf('.') != -1) {
-                    value = Double.valueOf((String) value);
+                    value = BigDecimal.valueOf(Double.valueOf((String) value));
                 } else {
-                    value = Long.valueOf((String) value);
+                    value = BigDecimal.valueOf(Long.valueOf((String) value));
                 }
             } catch (NumberFormatException nfe) {
                 throw new JspException(Resources.getMessage("FORMAT_NUMBER_PARSE_ERROR", value), nfe);
@@ -80,8 +86,8 @@ public class FormatMobics extends BodyTagSupport {
 
         // If locale is null check for the system property
         Locale locale = null;
-        if (this.locale != null) {
-            locale = new Locale(this.locale);
+        if (System.getProperty("mobics.config.locale") != null) {
+            locale = new Locale(System.getProperty("mobics.config.locale"));
         } else {
             locale = pageContext.getRequest().getLocale();
         }
@@ -96,34 +102,25 @@ public class FormatMobics extends BodyTagSupport {
             DecimalFormatSymbols symbols = new DecimalFormatSymbols(locale);
             NumberFormat formatter = new DecimalFormat(pattern, symbols);
             String key = "price.hour";
-            
-            if(DISTANCE.equals(type)) {
+
+            if (DISTANCE.equals(type)) {
                 key = "distance.meter";
-                formatter = new DecimalFormat(pattern2, symbols);
-                if(value instanceof Double) {
-                    if((Double) value > 1000){
-                        key = "distance.kilometer";
-                        value = (Double) value * 0.001; 
+                if (((BigDecimal) value).compareTo(new BigDecimal(1000)) >= 0) {
+                    if (pattern2 == null || pattern2.equals("")) {
+                        LOGGER.warn("Kilometer pattern not supplied! Formatting with meter pattern.");
+                    } else {
+                        formatter = new DecimalFormat(pattern2, symbols);
                     }
-                } else if(value instanceof Long){
-                    if((Long) value > 1000){
-                        key = "distance.kilometer";
-                        value = (Long) value * 0.001; 
-                    }
-                } else {
-                    if(((BigDecimal) value).compareTo(new BigDecimal(1000)) >= 0) {
-                        key = "distance.kilometer";
-                        value = ((BigDecimal) value).multiply(new BigDecimal(0.001));
-                    }
+                    key = "distance.kilometer";
+                    value = ((BigDecimal) value).multiply(new BigDecimal(0.001));
                 }
             }
-            
             formatted = MessageFormat.format(resources.getString(key), formatter.format(value));
         } else {
             // no formatting locale available, use toString()
             formatted = value.toString();
         }
-        
+
         try {
             pageContext.getOut().print(formatted);
         } catch (IOException ioe) {
@@ -173,20 +170,6 @@ public class FormatMobics extends BodyTagSupport {
      */
     public void setPattern(String pattern) {
         this.pattern = pattern;
-    }
-
-    /**
-     * @return the locale
-     */
-    public String getLocale() {
-        return locale;
-    }
-
-    /**
-     * @param locale the locale to set
-     */
-    public void setLocale(String localeString) {
-        this.locale = localeString;
     }
 
     /**

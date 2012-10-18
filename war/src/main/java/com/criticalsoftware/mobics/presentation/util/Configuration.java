@@ -93,21 +93,21 @@ public class Configuration {
      * @return the meterPattern
      */
     public String getMeterPattern() {
-        return meterPattern;
+        return getValue("mobics.config.meter.pattern", meterPattern);
     }
 
     /**
      * @return the kilometerPattern
      */
     public String getKilometerPattern() {
-        return kilometerPattern;
+        return getValue("mobics.config.kilometer.pattern", kilometerPattern);
     }
 
     /**
      * @return the currencyPattern
      */
     public String getCurrencyPattern() {
-        return currencyPattern;
+        return getValue("mobics.config.currency.pattern", currencyPattern);
     }
 
     /**
