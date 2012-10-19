@@ -15,13 +15,13 @@
 										<stripes:param name="latitude" value="${actionBean.latitude}"/>
 										<stripes:param name="longitude" value="${actionBean.longitude}"/>
 										<div>
-											<img src="${contextPath}/booking/ImmediateBooking.action?getCarImage=&licensePlate=${car.licensePlate}&${car.licensePlate}.png" />
+											<img src="${contextPath}/booking/ImmediateBooking.action?getCarImage=&licensePlate=${car.licensePlate}#${car.licensePlate}.png" />
 										</div>
 										<div>
 											<div>
 												<span>${car.licensePlate}</span>
 												<span>${car.carBrandName}&nbsp;${car.carModelName}</span>
-												<span>${car.fuelType}&nbsp;(${car.range})</span>
+												<span><fmt:message key="FuelType.${car.fuelType}"/>&nbsp;(${car.range})</span>
 											</div>
 											<div>
 												<span>
@@ -38,9 +38,12 @@
 									</stripes:link>
 								</c:when>
 								<c:otherwise>
-									<stripes:link href="#">
+									<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.booking.ImmediateBookingActionBean" event="carDetails">
+										<stripes:param name="licensePlate" value="${car.licensePlate}"/>
+										<stripes:param name="latitude" value="${actionBean.latitude}"/>
+										<stripes:param name="longitude" value="${actionBean.longitude}"/>
 										<div>
-											<img src="${contextPath}/booking/ImmediateBooking.action?getCarImage=&licensePlate=${car.licensePlate}" />
+											<img src="${contextPath}/booking/ImmediateBooking.action?getCarImage=&licensePlate=${car.licensePlate}&${car.licensePlate}.png" />
 										</div>
 										<div>
 											<div>

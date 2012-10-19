@@ -9,15 +9,18 @@
 			<nav class="bookList">
 				<ul>
 					<li>
-						<stripes:link href="#">
+						<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.booking.ImmediateBookingActionBean" event="carDetails">
+							<stripes:param name="licensePlate" value="${actionBean.car.licensePlate}"/>
+							<stripes:param name="latitude" value="${actionBean.latitude}"/>
+							<stripes:param name="longitude" value="${actionBean.longitude}"/>
 							<div>
-								<img src="${contextPath}/booking/ImmediateBooking.action?getCarImage=&licensePlate=${actionBean.car.licensePlate}" />
+								<img src="${contextPath}/booking/ImmediateBooking.action?getCarImage=&licensePlate=${actionBean.car.licensePlate}#${actionBean.car.licensePlate}.png" />
 							</div>
 							<div>
 								<div>
 									<span>${actionBean.car.licensePlate} </span>
 									<span>${actionBean.car.carBrandName}&nbsp;${actionBean.car.carModelName}</span>
-									<span>${actionBean.car.fuelType}&nbsp;(${actionBean.car.range})</span>
+									<span><fmt:message key="FuelType.${actionBean.car.fuelType}"/>&nbsp;(${actionBean.car.range})</span>
 								</div>
 							</div>
 						</stripes:link>
