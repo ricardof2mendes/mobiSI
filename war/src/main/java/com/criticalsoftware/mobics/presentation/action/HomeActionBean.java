@@ -40,6 +40,6 @@ public class HomeActionBean extends BaseActionBean {
 
     @DontValidate
     public Resolution bookInAdvance() {
-        return new ForwardResolution("/WEB-INF/book/findCarForLater.jsp");
+        return new ForwardResolution("/WEB-INF/book/bookCarInAdvance.jsp");
     }
 }

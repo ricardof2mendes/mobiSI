@@ -16,11 +16,13 @@ import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.Resolution;
 
 import com.criticalsoftware.mobics.presentation.action.BaseActionBean;
+import com.criticalsoftware.mobics.presentation.security.MobiCSSecure;
 
 /**
  * @author ltiago
  * @version $Revision: $
  */
+@MobiCSSecure
 public class RecentHistoryActionBean extends BaseActionBean {
     
     public Resolution recent() {

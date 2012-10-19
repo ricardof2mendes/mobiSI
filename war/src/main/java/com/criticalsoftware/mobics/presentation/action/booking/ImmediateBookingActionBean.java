@@ -280,7 +280,7 @@ public class ImmediateBookingActionBean extends BaseActionBean {
      * @return the car detail page
      */
     public Resolution carDetails() {
-        return new ForwardResolution("/WEB-INF/book/carDetails.jsp");
+        return new ForwardResolution("/WEB-INF/car/carDetails.jsp");
     }
 
     /**
@@ -343,7 +343,7 @@ public class ImmediateBookingActionBean extends BaseActionBean {
      * @throws CarValidationExceptionException
      * @throws CarLicensePlateNotFoundExceptionException
      */
-    @ValidationMethod(on = { "licensePlateBook", "showPin" }, when = ValidationState.NO_ERRORS)
+    @ValidationMethod(on = { "licensePlateBook", "showPin", "carDetails" }, when = ValidationState.NO_ERRORS)
     public void validateLicensePlateCar(ValidationErrors errors) throws RemoteException,
             CarLicensePlateNotFoundExceptionException {
         car = new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint()).getCarDetails(
