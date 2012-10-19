@@ -1,0 +1,36 @@
+<!--
+    Add System Properties to support GZip compression and URIEncoding.
+    To be added after the </extensions> block.
+-->
+<system-properties>
+		<!--jboss props-->
+		<property name="org.apache.catalina.connector.URI_ENCODING" value="UTF-8"/>
+        <property name="org.apache.catalina.connector.USE_BODY_ENCODING_FOR_QUERY_STRING" value="true"/>
+        <property name="org.apache.coyote.http11.Http11Protocol.COMPRESSION" value="on"/>
+        <property name="org.apache.coyote.http11.Http11Protocol.COMPRESSION_MIME_TYPES" value="text/html,text/xml,text/plain,text/css,text/javascript,application/xhtml+xml,application/xml,application/javascript,application/json"/>
+        <!--mobics props-->
+		<property name="mobics.config.locale" value="pt"/>
+        <property name="mobics.config.meter.pattern" value="#"/>
+        <property name="mobics.config.kilometer.pattern" value="#,##0.0"/>
+        <property name="mobics.config.currency.pattern" value="#,##0.00"/>
+        <property name="mobics.config.authentication.failure.string" value="Failed Authentication"/>
+        <property name="mobics.config.endpoint.fleet" value="http://mobics02.critical.pt:8080/mobics-webservices/Fleet"/>
+        <property name="mobics.config.endpoint.booking" value="http://mobics02.critical.pt:8080/mobics-webservices/Booking"/>
+        <property name="mobics.config.endpoint.miscellaneous" value="http://mobics02.critical.pt:8080/mobics-webservices/Miscellaneous"/>
+        <property name="mobics.config.endpoint.carclub" value="http://mobics02.critical.pt:8080/mobics-webservices/CarClub"/>
+        <property name="mobics.config.endpoint.customer" value="http://mobics02.critical.pt:8080/mobics-webservices/Customer"/>
+        <property name="mobics.config.geolocation.server" value="nominatim.openstreetmap.org"/>
+        <property name="mobics.config.thumbnail.width" value="58"/>
+        <property name="mobics.config.thumbnail.height" value="58"/>
+        <property name="mobics.config.max.results" value="99"/>
+        <property name="mobics.config.min.results" value="1"/>
+</system-properties>
+
+<!--
+    Disable the default 'welcome' content, which is deployed in the root context by default.
+    Set enable-welcome-root="false" to disable the root context in the subsystem "urn:jboss:domain:web:1.0".
+-->
+<virtual-server name="default-host" enable-welcome-root="false">
+    <alias name="localhost"/>
+    <alias name="mobics"/>
+</virtual-server>
