@@ -499,6 +499,123 @@ nav.bookList  ul li:first-child a > div:nth-child(2) > div:nth-child(1) > span:n
 	color: #999;
 }
 
+/****************************** Booking screen list **/
+
+
+#carDetails section > nav ul {
+	margin: 0 10px 15px;
+	background: #FFF;
+	border: 1px solid #E5E5E5;
+	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
+	border-radius: 4px;
+}
+
+#carDetails nav ul li a {
+	color: #000;
+	display: block;
+	background: #f4f4f4 url(../img/seta.png) no-repeat 100% 50%;
+	padding: 0;
+}
+
+#carDetails nav ul li.link span:nth-child(1) {
+	text-align: right;
+    width: 30%;
+	float: left;
+	display: inline-block;
+}
+
+#carDetails nav ul li.link span:nth-child(2) {
+	text-align: left;
+	width: 70%;
+	display: inline-block;
+    white-space: break-word;
+	padding-right: 15px;
+	color: #666666;
+    font-weight: normal;
+    padding-left: 10px;
+}
+
+nav.detailBody ul li {
+	padding: 11px 0 11px 0;
+	text-align: left;
+	font-size: large;
+	font-weight: bold;
+	border-bottom: 1px solid #E5E5E5;
+	background: none repeat scroll 0 0 #F4F4F4;
+}
+
+nav.detailHeader ul li:first-child {	
+	border-bottom: 1px solid #CCC;
+}
+
+nav.detailBody ul li:last-child {	
+	border-bottom: none;
+}
+
+nav.detailHeader ul li {
+	padding: 5px 0;
+}
+
+#carDetails nav ul li.detail {
+	background: none;
+	background-color: #f4f4f4;
+}
+
+#carDetails ul li.detail span {
+	display: inline-block;
+}
+
+#carDetails ul li.detail span:nth-child(1) {
+	text-align: right;
+	width: 30%;
+}
+
+#carDetails ul li.detail span:nth-child(2) {
+	padding-left: 10px;
+	color: #666;
+	font-weight: normal;
+}
+
+#carDetails ul li:last-child {
+	border-bottom: 0;
+}
+
+#carDetails nav.detailHeader ul li > div:nth-child(1){
+	width: 60px;
+	height: 60px;
+	border-radius: 4px ;
+	border: 1px solid rgba(0, 0, 0, 0.6);
+	margin: 0 10px;
+	float: left;
+}
+
+#carDetails nav.detailHeader ul li > div:nth-child(2){
+	height: 60px;
+	margin-left: 80px;
+	margin-right: 25px;
+}
+
+#carDetails nav.detailHeader ul li > div:nth-child(2) > div:nth-child(1) > span {
+	font-size: normal;
+	float: left;
+	width: 100%;
+}
+#carDetails nav.detailHeader ul li > div:nth-child(2) > div:nth-child(1) > span:nth-child(1){
+	font-weight: bold;
+	color: #333;
+}
+#carDetails nav.detailHeader ul li > div:nth-child(2) > div:nth-child(1) > span:nth-child(2){
+	color: #333;
+	display: inline-block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#carDetails nav.detailHeader ul li > div:nth-child(2) > div:nth-child(1) > span:nth-child(3){
+	color: #999;
+}
+
 /****************************** Three column list **/
 
 nav.threeColumnList ul li {
@@ -629,15 +746,15 @@ section#noresults {
 	font: italic 12px/30px Helvetica, Arial, sans-serif;
 }
 
-
-
 /* Custom selectBox */
+.customComboBox {
+	padding-right: 5px;
+}
 .customComboBox > select {
 	border: 0;
 	color: #666;
 	background: #f4f4f4 url('../img/setas.png') no-repeat right 50%;
 	width: 100%;
-	margin-right: 10px;
 }
 
 /*-----------------------------------------------------*/
@@ -841,37 +958,37 @@ article.simpleArticle form > div > input {
 
 .red,
 .red .loginBtn {
-      background-color: #CC1A1A
+      background-color: #CC1A1A !important
 }
 
 .orange,
 .orange .loginBtn {
-    background-color: #F09000
+    background-color: #F09000 !important 
 }
 
 .lightgreen,
 .lightgreen .loginBtn {
-    background-color: #78CC0A
+    background-color: #78CC0A !important
 }
 
 .darkgreen,
 .darkgreen .loginBtn {
-    background-color: #095909
+    background-color: #095909 !important
 }
 
 .lightblue,
 .lightblue .loginBtn {
-    background-color: #008BE8
+    background-color: #008BE8 !important
 }
 
 .darkblue,
 .darkblue .loginBtn {
-    background-color: #161694
+    background-color: #161694 !important
 }
 
 .purple,
 .purple .loginBtn {
-    background-color: #4A0D86
+    background-color: #4A0D86 !important
 }
 
 .pink,
