@@ -84,8 +84,8 @@
 						</span>
 						<span>
 							<c:choose>
-								<c:when test="${actionBean.car.range != null}">(${actionBean.car.range})</c:when>
-								<c:otherwise>(<fmt:message key="application.value.not.available"/>)</c:otherwise>
+								<c:when test="${actionBean.car.range != null}">${actionBean.car.range}</c:when>
+								<c:otherwise><fmt:message key="application.value.not.available"/></c:otherwise>
 							</c:choose>
 						</span>
 					</li>
@@ -141,27 +141,31 @@
 			<section>
 				<nav class="panel">
 					<ul>
-						<li class="link">
-							<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.booking.ImmediateBookingActionBean" event="carLocation">
-								<stripes:param name="licensePlate">${actionBean.car.licensePlate}</stripes:param>
-								<span>
-									<fmt:message key="car.details.location"/>
-								</span>
-								<span>
-									${actionBean.location}
-								</span>	
-							</stripes:link>
-						</li>
-						<li class="detail">
-							<span>
-								<fmt:message key="car.details.distance"/> 
-							</span>
-							<span>
-								<mobi:formatMobics value="${actionBean.car.distance}" type="distance" 
-												   pattern="${applicationScope.configuration.meterPattern}" 
-												   pattern2="${applicationScope.configuration.kilometerPattern}" />
-							</span>
-						</li>
+						<c:choose>
+							<c:when test="${actionBean.car.zones != null}">
+								<li class="link">
+									<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.booking.AdvanceBookingActionBean" event="parkLocation" addSourcePage="true">
+										<stripes:param name="licensePlate">${actionBean.car.licensePlate}</stripes:param>
+										<span>
+											<fmt:message key="car.details.park"/>
+										</span>
+										<span>
+											${actionBean.car.zones[0].zone} 
+										</span>	
+									</stripes:link>
+								</li>
+							</c:when>
+							<c:otherwise>
+								<li class="detail">
+									<span>
+										<fmt:message key="car.details.park"/>
+									</span>
+									<span>
+										<fmt:message key="application.value.not.available"/>
+									</span>	
+								</li>	
+							</c:otherwise>
+						</c:choose>
 					</ul>
 				</nav>
 			</section>
