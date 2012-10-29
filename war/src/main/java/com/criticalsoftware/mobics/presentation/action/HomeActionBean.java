@@ -11,6 +11,7 @@ import net.sourceforge.stripes.action.DontValidate;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.Resolution;
 
+import com.criticalsoftware.mobics.presentation.action.booking.AdvanceBookingActionBean;
 import com.criticalsoftware.mobics.presentation.security.MobiCSSecure;
 
 /**
@@ -40,6 +41,6 @@ public class HomeActionBean extends BaseActionBean {
 
     @DontValidate
     public Resolution bookInAdvance() {
-        return new ForwardResolution("/WEB-INF/book/bookCarInAdvance.jsp");
+        return new ForwardResolution(AdvanceBookingActionBean.class);
     }
 }

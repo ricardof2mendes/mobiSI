@@ -18,7 +18,7 @@ package com.criticalsoftware.mobics.presentation.util;
  */
 public enum Theme {
 
-    DEFAULT("", "solid orange"),
+    DEFAULT("", " orange"),
     GREEN("krakatoa", "map green"),
     ORANGE("localhost", "map darkred");
 

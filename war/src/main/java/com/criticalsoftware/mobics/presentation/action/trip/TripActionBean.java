@@ -10,8 +10,10 @@
  * Last changed on: $Date: $
  * Last changed by: $Author: $
  */
-package com.criticalsoftware.mobics.presentation.action.booking;
+package com.criticalsoftware.mobics.presentation.action.trip;
 
+import net.sourceforge.stripes.action.DefaultHandler;
+import net.sourceforge.stripes.action.DontValidate;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.Resolution;
 
@@ -23,18 +25,12 @@ import com.criticalsoftware.mobics.presentation.security.MobiCSSecure;
  * @version $Revision: $
  */
 @MobiCSSecure
-public class RecentHistoryActionBean extends BaseActionBean {
-    
-    public Resolution recent() {
+public class TripActionBean extends BaseActionBean {
+
+    @DefaultHandler
+    @DontValidate
+    public Resolution main() {
         return new ForwardResolution("/WEB-INF/book/recent.jsp");
-    }
-    
-    public Resolution currentTrip() {
-        return new ForwardResolution("/WEB-INF/book/currentTrip.jsp");
-    }
-    
-    public Resolution lastTrip() {
-        return new ForwardResolution("/WEB-INF/book/lastTrip.jsp");
     }
 
 }

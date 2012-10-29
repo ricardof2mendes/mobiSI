@@ -12,27 +12,20 @@
  */
 package com.criticalsoftware.mobics.presentation.action.booking;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
 
-import javax.activation.DataHandler;
-
-import net.sourceforge.stripes.action.After;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.DontValidate;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.LocalizableMessage;
 import net.sourceforge.stripes.action.RedirectResolution;
 import net.sourceforge.stripes.action.Resolution;
-import net.sourceforge.stripes.action.StreamingResolution;
 import net.sourceforge.stripes.ajax.JavaScriptResolution;
-import net.sourceforge.stripes.controller.LifecycleStage;
 import net.sourceforge.stripes.validation.EnumeratedTypeConverter;
 import net.sourceforge.stripes.validation.LocalizableError;
 import net.sourceforge.stripes.validation.Validate;
-import net.sourceforge.stripes.validation.ValidateNestedProperties;
 import net.sourceforge.stripes.validation.ValidationErrors;
 import net.sourceforge.stripes.validation.ValidationMethod;
 import net.sourceforge.stripes.validation.ValidationState;
@@ -44,11 +37,10 @@ import com.criticalsoftware.mobics.fleet.CarDTO;
 import com.criticalsoftware.mobics.fleet.CarTypeEnum;
 import com.criticalsoftware.mobics.fleet.CoordinateDTO;
 import com.criticalsoftware.mobics.fleet.ZoneWithPolygonDTO;
-import com.criticalsoftware.mobics.presentation.action.BaseActionBean;
+import com.criticalsoftware.mobics.presentation.action.recent.RecentHistoryActionBean;
 import com.criticalsoftware.mobics.presentation.security.AuthenticationUtil;
 import com.criticalsoftware.mobics.presentation.security.MobiCSSecure;
 import com.criticalsoftware.mobics.presentation.util.CarClazz;
-import com.criticalsoftware.mobics.presentation.util.CarState;
 import com.criticalsoftware.mobics.presentation.util.Configuration;
 import com.criticalsoftware.mobics.presentation.util.CoordinateZonesDTO;
 import com.criticalsoftware.mobics.presentation.util.FuelType;
@@ -66,7 +58,6 @@ import com.criticalsoftware.mobics.proxy.fleet.CarTypeNotFoundExceptionException
 import com.criticalsoftware.mobics.proxy.fleet.CarValidationExceptionException;
 import com.criticalsoftware.mobics.proxy.fleet.FleetWSServiceStub;
 import com.criticalsoftware.mobics.proxy.fleet.FuelTypeNotFoundExceptionException;
-import com.criticalsoftware.mobics.proxy.fleet.IOExceptionException;
 
 /**
  * Booking action bean
@@ -75,21 +66,9 @@ import com.criticalsoftware.mobics.proxy.fleet.IOExceptionException;
  * @version $Revision: $
  */
 @MobiCSSecure
-public class ImmediateBookingActionBean extends BaseActionBean {
+public class ImmediateBookingActionBean extends BookingActionBean {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ImmediateBookingActionBean.class);
-
-    @Validate(required = true, on = { "getCarImage", "carLocation", "licensePlateBook", "showPin", "book" })
-    protected String licensePlate;
-
-    @Validate(required = true, on = { "getData", "ajax" })
-    protected String q;
-
-    @Validate(required = true, on = { "nearestCarBook", "licensePlateBook", "searchCars" })
-    protected String latitude;
-
-    @Validate(required = true, on = { "nearestCarBook", "licensePlateBook", "searchCars" })
-    protected String longitude;
 
     @Validate
     private BigDecimal price;
@@ -105,13 +84,6 @@ public class ImmediateBookingActionBean extends BaseActionBean {
 
     @Validate(required = true, on = "searchCars", converter = EnumeratedTypeConverter.class)
     private OrderBy orderBy;
-
-    @Validate(required = true, on = "book")
-    private String pin;
-
-    @ValidateNestedProperties({ @Validate(field = "licensePlate"), @Validate(field = "carBrandName"),
-            @Validate(field = "carModelName"), @Validate(field = "fuelType"), @Validate(field = "range") })
-    protected CarDTO car;
 
     private CarDTO[] cars;
 
@@ -137,7 +109,7 @@ public class ImmediateBookingActionBean extends BaseActionBean {
      */
     @DontValidate
     public Resolution licensePlateSearch() {
-        return new ForwardResolution("/WEB-INF/book/licensePlate.jsp");
+        return new ForwardResolution("/WEB-INF/book/searchLicensePlate.jsp");
     }
 
     /**
@@ -146,7 +118,7 @@ public class ImmediateBookingActionBean extends BaseActionBean {
      * @return the page resolution
      */
     public Resolution licensePlateBook() {
-        return new ForwardResolution("/WEB-INF/book/carBook.jsp").addParameter("title", 1);
+        return new ForwardResolution("/WEB-INF/book/carBookImmediate.jsp").addParameter("title", 1);
     }
 
     /**
@@ -156,17 +128,17 @@ public class ImmediateBookingActionBean extends BaseActionBean {
      * @throws RemoteException a jax-b webservice exception
      */
     public Resolution licensePlateAutocomplete() throws RemoteException {
-        if (q != null) {
+        if (licensePlate != null) {
             try {
-                cars = new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint()).getCarsByLicensePlate(q
-                        .toUpperCase(), CarTypeEnum.NORMAL.getValue(), new BigDecimal(latitude), new BigDecimal(
-                        longitude));
+                cars = new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint()).getCarsByLicensePlate(
+                        licensePlate, CarTypeEnum.NORMAL.getValue(), new BigDecimal(latitude),
+                        new BigDecimal(longitude));
                 getContext().getResponse().setHeader("Stripes-Success", "OK");
             } catch (CarValidationExceptionException e) {
                 LOGGER.error("Car validation exception.", e);
             }
         }
-        return new ForwardResolution("/WEB-INF/book/carList.jsp");
+        return new ForwardResolution("/WEB-INF/book/carListImmediate.jsp");
     }
 
     // --------------------------------------------------
@@ -179,7 +151,7 @@ public class ImmediateBookingActionBean extends BaseActionBean {
      * @return the booking page resolution
      */
     public Resolution nearestCarBook() {
-        return new ForwardResolution("/WEB-INF/book/carBook.jsp").addParameter("title", 2);
+        return new ForwardResolution("/WEB-INF/book/carBookImmediate.jsp").addParameter("title", 2);
     }
 
     /**
@@ -198,15 +170,11 @@ public class ImmediateBookingActionBean extends BaseActionBean {
                 CarClazz.NOT_SPECIFIED.getClazz(), FuelType.NOT_SPECIFIED.getType(), OrderBy.DISTANCE.name(),
                 Configuration.INSTANCE.getMinResults(), new BigDecimal(latitude), new BigDecimal(longitude),
                 CarTypeEnum.NORMAL.getValue());
-        // FIXME service should have car state on queries
-        for (CarDTO carDto : dtos) {
-            if (CarState.AVAILABLE.name().equals(carDto.getState())) {
-                car = carDto;
-                break;
+        if (dtos != null) {
+            car = dtos[0];
+            if (car == null) {
+                errors.addGlobalError(new LocalizableError("car.details.validation.car.not.found"));
             }
-        }
-        if (car == null) {
-            errors.addGlobalError(new LocalizableError("car.details.validation.car.not.found"));
         }
     }
 
@@ -217,41 +185,47 @@ public class ImmediateBookingActionBean extends BaseActionBean {
     /**
      * Search cars resolution
      * 
-     * @return the page resolution
-     */
-    public Resolution searchCars() {
-        return new ForwardResolution("/WEB-INF/book/searchCars.jsp");
-    }
-
-    /**
-     * Fill data for search cars
-     * 
      * @throws RemoteException
      * @throws FuelTypeNotFoundExceptionException
      * @throws CarClassNotFoundExceptionException
      * @throws CarTypeNotFoundExceptionException
      * @throws CarValidationExceptionException
+     * @return the page resolution
      */
-    @After(on = "searchCars", stages = LifecycleStage.BindingAndValidation)
-    public void fillSearchData() throws RemoteException, FuelTypeNotFoundExceptionException,
+    public Resolution searchCars() throws RemoteException, FuelTypeNotFoundExceptionException,
             CarClassNotFoundExceptionException, CarTypeNotFoundExceptionException, CarValidationExceptionException {
         cars = new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint()).searchCars(price, distance,
                 clazz.getClazz(), fuel.getType(), orderBy.name(), Configuration.INSTANCE.getMaxResults(),
                 new BigDecimal(latitude), new BigDecimal(longitude), CarTypeEnum.NORMAL.getValue());
+        return new ForwardResolution("/WEB-INF/book/searchImmediate.jsp");
     }
 
     // --------------------------------------------------
     // Bookin Resolutions
     // --------------------------------------------------
+
     /**
      * Show PIN resolution
      * 
      * @return the pin page resolution
      */
     public Resolution showPin() {
-        return new ForwardResolution("/WEB-INF/book/pin.jsp");
+        return new ForwardResolution("/WEB-INF/book/pinImmediate.jsp");
     }
 
+    /**
+     * Booking resolution
+     * 
+     * @return
+     * @throws RemoteException
+     * @throws UnsupportedEncodingException
+     * @throws InvalidCustomerPinExceptionException
+     * @throws com.criticalsoftware.mobics.proxy.booking.CarNotFoundExceptionException
+     * @throws CarNotAvailableForBookingExceptionException
+     * @throws UnauthorizedCustomerExceptionException
+     * @throws com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException
+     * @throws ForbiddenZoneExceptionException
+     */
     public Resolution book() throws RemoteException, UnsupportedEncodingException,
             InvalidCustomerPinExceptionException,
             com.criticalsoftware.mobics.proxy.booking.CarNotFoundExceptionException,
@@ -264,10 +238,11 @@ public class ImmediateBookingActionBean extends BaseActionBean {
         bookingWSServiceStub._getServiceClient().addHeader(
                 AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
                         .getPassword()));
-        bookingWSServiceStub.createImmediateBookingWithCustomerPin(licensePlate, pin);
+        // TODO validations
+        bookingWSServiceStub.createImmediateBookingWithCustomerPin(licensePlate, String.valueOf(pin));
         getContext().getMessages().add(new LocalizableMessage("car.details.book.done"));
 
-        return new RedirectResolution(RecentHistoryActionBean.class).addParameter("_eventName", "current").flash(this);
+        return new RedirectResolution(RecentHistoryActionBean.class).flash(this);
     }
 
     // --------------------------------------------------
@@ -293,21 +268,6 @@ public class ImmediateBookingActionBean extends BaseActionBean {
     }
 
     /**
-     * Get the car image
-     * 
-     * @return the image stream resolution
-     * @throws RemoteException a jax-b webservice exception
-     * @throws IOException a exception with car validation
-     * @throws IOExceptionException a exception with car validation
-     */
-    public Resolution getCarImage() throws RemoteException, IOException, IOExceptionException {
-        DataHandler handler = new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint()).getCarThumbnail(
-                licensePlate, Configuration.INSTANCE.getCarThumbnailWidth(),
-                Configuration.INSTANCE.getCarThumbnailHeight());
-        return new StreamingResolution(handler.getContentType(), handler.getInputStream());
-    }
-
-    /**
      * Data for build maps
      * 
      * @return a json object containing car data for display in map
@@ -320,8 +280,8 @@ public class ImmediateBookingActionBean extends BaseActionBean {
         CoordinateDTO coordinate = null;
         ZoneWithPolygonDTO[] zones = null;
         try {
-            coordinate = fleet.getCarCoordinatesByLicensePlate(q);
-            zones = fleet.getCarZonesWithPolygons(q);
+            coordinate = fleet.getCarCoordinatesByLicensePlate(licensePlate);
+            zones = fleet.getCarZonesWithPolygons(licensePlate);
             getContext().getResponse().setHeader("Stripes-Success", "OK");
         } catch (CarNotFoundExceptionException e) {
             LOGGER.error("Car not found", e);
@@ -332,23 +292,14 @@ public class ImmediateBookingActionBean extends BaseActionBean {
         return new JavaScriptResolution(new CoordinateZonesDTO(coordinate, zones));
     }
 
-    // --------------------------------------------------
     // Validation Methods
-    // --------------------------------------------------
-
-    /**
-     * Validate the car
-     * 
-     * @throws RemoteException
-     * @throws CarValidationExceptionException
-     * @throws CarLicensePlateNotFoundExceptionException
-     */
-    @ValidationMethod(on = { "licensePlateBook", "showPin", "carDetails" }, when = ValidationState.NO_ERRORS)
-    public void validateLicensePlateCar(ValidationErrors errors) throws RemoteException,
-            CarLicensePlateNotFoundExceptionException {
-        car = new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint()).getCarDetails(
-                licensePlate.toUpperCase(), new BigDecimal(latitude), new BigDecimal(longitude));
-        if (car == null) {
+    @ValidationMethod(
+            on = { "licensePlateBook", "showPin", "carDetails" },
+            when = ValidationState.NO_ERRORS,
+            priority = 2)
+    public void validateCarType(ValidationErrors errors) throws RemoteException,
+            com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException {
+        if (!CarTypeEnum.NORMAL.equals(car.getCarType())) {
             errors.addGlobalError(new LocalizableError("car.details.validation.car.not.available"));
         }
     }
@@ -360,62 +311,6 @@ public class ImmediateBookingActionBean extends BaseActionBean {
      */
     public String getLocation() {
         return GeolocationUtil.getAddressFromCoordinates(car.getLatitude().toString(), car.getLongitude().toString());
-    }
-
-    /**
-     * @param q the q to set
-     */
-    public void setQ(String q) {
-        this.q = q;
-    }
-
-    /**
-     * @param latitude the latitude to set
-     */
-    public void setLatitude(String latitude) {
-        this.latitude = latitude;
-    }
-
-    /**
-     * @param longitude the longitude to set
-     */
-    public void setLongitude(String longitude) {
-        this.longitude = longitude;
-    }
-
-    /**
-     * @return the latitude
-     */
-    public String getLatitude() {
-        return latitude;
-    }
-
-    /**
-     * @return the longitude
-     */
-    public String getLongitude() {
-        return longitude;
-    }
-
-    /**
-     * @param licensePlate the licensePlate to set
-     */
-    public void setLicensePlate(String licensePlate) {
-        this.licensePlate = licensePlate;
-    }
-
-    /**
-     * @return the car
-     */
-    public CarDTO getCar() {
-        return car;
-    }
-
-    /**
-     * @param car the car to set
-     */
-    public void setCar(CarDTO car) {
-        this.car = car;
     }
 
     /**
@@ -493,27 +388,6 @@ public class ImmediateBookingActionBean extends BaseActionBean {
      */
     public void setFuel(FuelType fuel) {
         this.fuel = fuel;
-    }
-
-    /**
-     * @return the pin
-     */
-    public String getPin() {
-        return pin;
-    }
-
-    /**
-     * @param pin the pin to set
-     */
-    public void setPin(String customerPin) {
-        this.pin = customerPin;
-    }
-
-    /**
-     * @return the licensePlate
-     */
-    public String getLicensePlate() {
-        return licensePlate;
     }
 
 }

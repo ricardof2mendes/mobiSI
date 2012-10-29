@@ -48,10 +48,10 @@ public class LoginActionBean extends BaseActionBean {
     public Resolution login() {
         return new ForwardResolution("/WEB-INF/login.jsp");
     }
-    
+
     @ValidationMethod(on = "authenticate")
     public void validate(ValidationErrors errors) {
-        if(username == null || password == null) {
+        if (username == null || password == null) {
             errors.addGlobalError(new LocalizableError("login.error"));
         }
     }
@@ -68,8 +68,8 @@ public class LoginActionBean extends BaseActionBean {
 
             if (carClubDTO != null) {
                 this.getContext().setUser(
-                        new User(username, password, carClubDTO.getCarClubName(), carClubDTO.getCarClubColorScheme(),
-                                carClubDTO.getCarClubTheme()));
+                        new User(username, password, carClubDTO.getCarClubName(), carClubDTO.getCarClubCode(),
+                                carClubDTO.getCarClubColorScheme(), carClubDTO.getCarClubTheme()));
             }
         } catch (AxisFault e) {
             if (e.getMessage().startsWith(Configuration.INSTANCE.getAuthenticationFailureString())) {
