@@ -77,29 +77,65 @@ nav#menu ul {
 }
 
 nav#menu ul li {
-	background: #515151 url(../img/fakeIco2.png) no-repeat 10px 50%;
+	background-color: #515151;
 	font-weight: bold;
 	font-size: normal;
 	line-height: 45px;
 	border-bottom: 1px solid #797979;
 }
 
-nav#menu ul li:first-child {
-	background-image: url(../img/fakeIco2.png), url(../img/sombra_menus_10px.png);
+nav#menu ul li.book {
+	background-image: url(../img/menu/bookacar-active.png), url(../img/sombra_menus_10px.png);
 	background-repeat: no-repeat, repeat-x;
 	background-position: 10px 50%, top left;
 }
 
-nav#menu ul li:last-child {
+nav#menu ul li.trip {
+	background-image: url(../img/menu/trip-active.png);
+	background-repeat: no-repeat;
+	background-position: 10px 50%;
+}
+
+nav#menu ul li.recent {
+	background-image: url(../img/menu/recent-active.png);
+	background-repeat: no-repeat;
+	background-position: 10px 50%;
+}
+
+
+nav#menu ul li.mess {
+	background-image: url(../img/menu/messages-active.png);
+	background-repeat: no-repeat;
+	background-position: 10px 50%;
+}
+
+
+nav#menu ul li.contacts {
+	background-image: url(../img/menu/contacts-active.png);
+	background-repeat: no-repeat;
+	background-position: 10px 50%;
+}
+
+nav#menu ul li.preferences {
+	background-image: url(../img/menu/preferences-active.png);
+	background-repeat: no-repeat;
+	background-position: 10px 50%;
+}
+
+nav#menu ul li.account {
+	background-image: url(../img/menu/account-active.png);
+	background-repeat: no-repeat;
+	background-position: 10px 50%;
 	border-bottom: 0;
 }
 
 nav#menu ul li a {
 	display: block;
 	color: #E4E4E4;
-	padding-left: 50px;
+	padding-left: 60px;
 }
 
+/************************************************ Login */
 form.loginForm {
 	width: 250px;
 	margin: 0 auto;
@@ -110,7 +146,11 @@ form.loginForm>div {
 	background: #FFF;
 	border: 1px solid #E5E5E5;
 	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
+	-moz-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
+	-webkit-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
 	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
 }
 form.loginForm>div>input  {
 	float: left;
@@ -159,6 +199,8 @@ form.loginForm>div>label {
 	height: 30px;
 	border: 1px solid rgba(0, 0, 0, 0.3);
 	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
 	float: left;
 	margin-top: 7px;
 	margin-left: 10px;
@@ -179,6 +221,8 @@ form.loginForm>div>label {
 	border: 1px solid rgba(0, 0, 0, 0.3);
 	background: transparent;
 	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
 	font-weight: bold;
 	text-align: center;
 	color: #FFF;
@@ -191,63 +235,84 @@ form.loginForm>div>label {
 	background: transparent url(../img/bt_down_90px.png) no-repeat top left;
 }
 
-.redBtn,
-.greenBtn {
+.linkBtn {
+	display: block;
+	height: 45px;
+	line-height: 45px;
 	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
 	font-weight: bold;
-	font-size: xx-large;
 	text-align: center;
 	color: #FFF;
-	line-height: 90px;
-	display: block;
-	margin: 0 10px;
+	margin: 0 10px 10px 10px;
 	text-shadow: 0px -1px 1px rgba(0, 0, 0, 0.5);
-	border: 1px solid rgba(0, 0, 0, 0.3);
+	border: 1px solid rgba(0, 0, 0, 0.3);	
+	background-image: url(../img/bt_up_45px.png);
+	background-repeat: repeat-x;
+	background-position: top left;
 }
 
-.greenBtn {
-	background: #288b07 url(../img/bt_up_90px.png) repeat-x top left;
-}
-
-.redBtn {
-	background: red url(../img/bt_up_90px.png) repeat-x top left;
-}
-
-.redBtn:active,
-.greenBtn:active {
+.linkBtn:active {
 	border: 1px solid rgba(0, 0, 0, 0.5);
+	background-image: url(../img/bt_down_45px.png);
 }
 
-.greenBtn:active {
-	background: #288b07 url(../img/bt_down_90px.png) repeat-x top left;
+.bigBtn {
+	background-color: #288b07;
+	font-size: xx-large;
+	height: 90px;
+	line-height: 90px;
+	background-image: url(../img/bt_up_90px.png);
 }
 
-.redBtn:active {
-	background: red url(../img/bt_down_90px.png) repeat-x top left;
+.bigBtn:active {
+	border: 1px solid rgba(0, 0, 0, 0.5);
+	background-image: url(../img/bt_down_95px.png);
 }
 
-.loginBtn {
+.green {
+	background-color: #288b07;
+}
+
+.red {
+	background-color: red;
+}
+
+section.submit {
+	padding: 0 10px;
+}
+
+.submitBtn {
 	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
 	font-size: large;
     font-weight: bold;
 	text-shadow: 0px -1px 1px rgba(0, 0, 0, 0.5);
 	text-align: center;
 	color: #FFF;
-	line-height: 45px;
 	height: 45px;
-	width: 250px;
+	line-height: 45px;
+	width: 100%;
 	display: block;
-	margin: 10px auto;
+	border: 1px solid rgba(0, 0, 0, 0.3);
+	background-color: lightgray;
 	background-image: url(../img/bt_up_45px.png);
 	background-repeat: repeat-x;
 	background-position: top left;
-	border: 1px solid rgba(0, 0, 0, 0.3);
-	float: left;
+	margin-bottom: 10px;
 }
 
-.loginBtn:active {
+.submitBtn:active {
 	background-image: url(../img/bt_down_45px.png);
 	border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.loginBtn {
+	float: left;
+	width: 250px;
+	margin: 10px auto;
 }
 
 /* Lists */
@@ -256,7 +321,11 @@ section > nav.simpleList ul {
 	background: #FFF;
 	border: 1px solid #E5E5E5;
 	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
+	-moz-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
+	-webkit-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
 	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
 }
 
 section > nav.simpleList ul li {
@@ -269,6 +338,18 @@ section > nav.simpleList ul li {
 	background-repeat: no-repeat, no-repeat;
 	background-position: 10px 50%, 100% 50%;
 }
+
+section > nav.simpleList ul li:first-child {
+	border-radius: 4px 4px 0 0;
+	-moz-border-radius: 4px 4px 0 0;
+	-webkit-border-radius: 4px 4px 0 0;
+}
+section > nav.simpleList ul li:last-child {
+	border-radius: 0 0 4px 4px;
+	-moz-border-radius: 0 0 4px;
+	-webkit-border-radius: 0 0 4px;
+}
+
 
 section > nav.simpleList ul li.title {
 	line-height: 26px;
@@ -292,10 +373,9 @@ section > nav.simpleList ul li.link a {
 }
 
 
-section > nav.simpleList ul li.link span:nth-child(1) {
+section > nav.simpleList ul li span:nth-child(1) {
 	text-align: right;
-    width: 30%;
-	float: left;
+    width: 28%;
 	display: inline-block;
 }
 
@@ -313,19 +393,10 @@ section > nav.simpleList ul li.link span:nth-child(2) {
 }
 
 section > nav.simpleList ul li.filter {
+	line-height: normal;
+	padding: 10px 0;
 	background: none;
 	background-color: #f4f4f4;
-}
-
-section > nav.simpleList ul li.filter > span {
-	display: inline-block;
-}
-
-section > nav.simpleList ul li.filter span:nth-child(1) {
-	text-align: right;
-	width: 30%;
-	float: left;
-	display: inline-block;
 }
 
 section > nav.simpleList ul li.filter span:nth-child(2) {
@@ -346,69 +417,78 @@ section > nav.simpleList ul li a {
 	display: block;
 }
 
-/******************************* */
- #legend nav.simpleList ul li {
- 	background: none;
- 	padding-left: 10px;
- }
- 
- #legend nav.simpleList ul li span {
- 	padding-left: 30px;
- 	display: block;
- 	height: 45px;
- }
- 
- #legend nav.simpleList ul li:nth-child(1) span {
- 	background: #fff url(../img/mylocation.png) no-repeat 0 50%;
- }
- 
- #legend nav.simpleList ul li:nth-child(2) span {
- 	background: #fff url(../img/car-location.png) no-repeat 0 50%;
- }
- 
-  #legend nav.simpleList ul li:nth-child(3) span {
- 	background: #fff url(../img/regular-zone.png) no-repeat 0 50%;
- }
- 
-  #legend nav.simpleList ul li:nth-child(4) span {
- 	background: #fff url(../img/undesirable-zone.png) no-repeat 0 50%;
- }
- 
+/******************************* Map Legend*/
+#legend nav.simpleList ul li {
+	background: none;
+	padding-left: 10px;
+	width: 100%;
+}
 
-/****************************** Booking screen list **/
+#legend nav.simpleList ul li span {
+	padding-left: 30px;
+	display: block;
+	height: 45px;
+	width: 100%;
+	text-align: left;
+}
 
+#legend nav.simpleList ul li:nth-child(1) span {
+	background: #fff url(../img/map/mylocation.png) no-repeat 0 50%;
+}
 
-section > nav.bookList ul {
+#legend nav.simpleList ul li:nth-child(2) span {
+	background: #fff url(../img/map/car-location.png) no-repeat 0 50%;
+}
+
+#legend nav.simpleList ul li:nth-child(3) span {
+	background: #fff url(../img/map/regular-zone.png) no-repeat 0 50%;
+}
+
+#legend nav.simpleList ul li:nth-child(4) span {
+	background: #fff url(../img/map/undesirable-zone.png) no-repeat 0 50%;
+}
+
+#legend nav.simpleList ul li:nth-child(5) span {
+	background: #fff url(../img/map/forbidden-zone.png) no-repeat 0 50%;
+}
+
+/****************************** Panel detail **/
+section > nav.panel ul {
 	margin: 0 10px 15px;
 	background: #FFF;
 	border: 1px solid #E5E5E5;
 	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
+	-moz-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
+	-webkit-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
 	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	overflow: hidden;
 }
 
-nav.bookList ul li a {
+nav.panel ul li a {
 	color: #000;
 	display: block;
 	background: url(../img/seta.png) no-repeat 100% 50%;
 }
 
-section > nav.bookList ul li.link {
+section > nav.panel ul li.link {
 	background: #f4f4f4 url(../img/seta.png) no-repeat 100% 50%;
 }
 
 
-section > nav.bookList ul li.link a {
+section > nav.panel ul li.link a {
 	padding: 0;
 }
 
-section > nav.bookList ul li.link span:nth-child(1) {
+section > nav.panel ul li.link span:nth-child(1) {
 	text-align: right;
     width: 30%;
 	float: left;
 	display: inline-block;
 }
 
-section > nav.bookList ul li.link span:nth-child(2) {
+section > nav.panel ul li.link span:nth-child(2) {
 	text-align: left;
 	width: 70%;
 	display: inline-block;
@@ -419,75 +499,82 @@ section > nav.bookList ul li.link span:nth-child(2) {
     padding-left: 10px;
 }
 
-nav.bookList ul li:not(:first-child) {
-	padding: 11px 0 11px 0;
+nav.panel ul li.detail,
+nav.panel ul li.link {
+	padding: 10px 0;
 	text-align: left;
 	font-size: large;
 	font-weight: bold;
 	border-bottom: 1px solid #E5E5E5;
 }
 
-nav.bookList ul li:first-child {	
+nav.panel ul li.image {	
+	padding: 5px 0;
 	border-bottom: 1px solid #CCC;
 }
 
-nav.bookList ul li:last-child {	
+nav.panel ul li:last-child {	
 	border-bottom: none;
 }
 
-nav.bookList ul li:first-child a {
-	padding: 5px 0;
-}
-
-section > nav.bookList ul li.detail {
+section > nav.panel ul li.detail {
 	background: none;
 	background-color: #f4f4f4;
 }
 
-section > nav.bookList ul li.detail span {
+section > nav.panel ul li.detail span {
 	display: inline-block;
 }
 
-section > nav.bookList ul li.detail span:nth-child(1) {
+section > nav.panel ul li.detail span:nth-child(1) {
 	text-align: right;
 	width: 30%;
 }
 
-section > nav.bookList ul li.detail span:nth-child(2) {
+section > nav.panel ul li.detail span:nth-child(2) {
 	padding-left: 10px;
 	color: #666;
 	font-weight: normal;
 }
 
-section > nav.bookList ul li:last-child{
+section > nav.panel ul li:last-child{
 	border-bottom: 0;
 }
 
-nav.bookList  ul li:first-child a > div:nth-child(1){
+nav.panel ul li.image > div:nth-child(1),
+nav.panel ul li.image a > div:nth-child(1){
 	width: 60px;
 	height: 60px;
 	border-radius: 4px ;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
 	border: 1px solid rgba(0, 0, 0, 0.6);
 	margin: 0 10px;
 	float: left;
 }
 
-nav.bookList  ul li:first-child a > div:nth-child(2){
+nav.panel  ul li.image > div:nth-child(2),
+nav.panel  ul li.image a > div:nth-child(2){
 	height: 60px;
 	margin-left: 80px;
 	margin-right: 25px;
 }
 
-nav.bookList ul li:first-child a > div:nth-child(2) > div:nth-child(1) > span {
+nav.panel ul li.image > div:nth-child(2) > div:nth-child(1) > span,
+nav.panel ul li.image a > div:nth-child(2) > div:nth-child(1) > span {
 	font-size: normal;
 	float: left;
 	width: 100%;
 }
-nav.bookList ul li:first-child a > div:nth-child(2) > div:nth-child(1) > span:nth-child(1){
+
+nav.panel ul li.image > div:nth-child(2) > div:nth-child(1) > span:nth-child(1),
+nav.panel ul li.image a > div:nth-child(2) > div:nth-child(1) > span:nth-child(1) {
 	font-weight: bold;
 	color: #333;
 }
-nav.bookList  ul li:first-child a > div:nth-child(2) > div:nth-child(1) > span:nth-child(2){
+
+nav.panel  ul li.image > div:nth-child(2) > div:nth-child(1) > span:nth-child(2),
+nav.panel  ul li.image a > div:nth-child(2) > div:nth-child(1) > span:nth-child(2) {
 	color: #333;
 	display: inline-block;
 	overflow: hidden;
@@ -495,124 +582,8 @@ nav.bookList  ul li:first-child a > div:nth-child(2) > div:nth-child(1) > span:n
     white-space: nowrap;
 }
 
-nav.bookList  ul li:first-child a > div:nth-child(2) > div:nth-child(1) > span:nth-child(3){
-	color: #999;
-}
-
-/****************************** Booking screen list **/
-
-
-#carDetails section > nav ul {
-	margin: 0 10px 15px;
-	background: #FFF;
-	border: 1px solid #E5E5E5;
-	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
-	border-radius: 4px;
-}
-
-#carDetails nav ul li a {
-	color: #000;
-	display: block;
-	background: #f4f4f4 url(../img/seta.png) no-repeat 100% 50%;
-	padding: 0;
-}
-
-#carDetails nav ul li.link span:nth-child(1) {
-	text-align: right;
-    width: 30%;
-	float: left;
-	display: inline-block;
-}
-
-#carDetails nav ul li.link span:nth-child(2) {
-	text-align: left;
-	width: 70%;
-	display: inline-block;
-    white-space: break-word;
-	padding-right: 15px;
-	color: #666666;
-    font-weight: normal;
-    padding-left: 10px;
-}
-
-nav.detailBody ul li {
-	padding: 11px 0 11px 0;
-	text-align: left;
-	font-size: large;
-	font-weight: bold;
-	border-bottom: 1px solid #E5E5E5;
-	background: none repeat scroll 0 0 #F4F4F4;
-}
-
-nav.detailHeader ul li:first-child {	
-	border-bottom: 1px solid #CCC;
-}
-
-nav.detailBody ul li:last-child {	
-	border-bottom: none;
-}
-
-nav.detailHeader ul li {
-	padding: 5px 0;
-}
-
-#carDetails nav ul li.detail {
-	background: none;
-	background-color: #f4f4f4;
-}
-
-#carDetails ul li.detail span {
-	display: inline-block;
-}
-
-#carDetails ul li.detail span:nth-child(1) {
-	text-align: right;
-	width: 30%;
-}
-
-#carDetails ul li.detail span:nth-child(2) {
-	padding-left: 10px;
-	color: #666;
-	font-weight: normal;
-}
-
-#carDetails ul li:last-child {
-	border-bottom: 0;
-}
-
-#carDetails nav.detailHeader ul li > div:nth-child(1){
-	width: 60px;
-	height: 60px;
-	border-radius: 4px ;
-	border: 1px solid rgba(0, 0, 0, 0.6);
-	margin: 0 10px;
-	float: left;
-}
-
-#carDetails nav.detailHeader ul li > div:nth-child(2){
-	height: 60px;
-	margin-left: 80px;
-	margin-right: 25px;
-}
-
-#carDetails nav.detailHeader ul li > div:nth-child(2) > div:nth-child(1) > span {
-	font-size: normal;
-	float: left;
-	width: 100%;
-}
-#carDetails nav.detailHeader ul li > div:nth-child(2) > div:nth-child(1) > span:nth-child(1){
-	font-weight: bold;
-	color: #333;
-}
-#carDetails nav.detailHeader ul li > div:nth-child(2) > div:nth-child(1) > span:nth-child(2){
-	color: #333;
-	display: inline-block;
-	overflow: hidden;
-	text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-#carDetails nav.detailHeader ul li > div:nth-child(2) > div:nth-child(1) > span:nth-child(3){
+nav.panel  ul li.image > div:nth-child(2) > div:nth-child(1) > span:nth-child(3),
+nav.panel  ul li.image a > div:nth-child(2) > div:nth-child(1) > span:nth-child(3) {
 	color: #999;
 }
 
@@ -632,6 +603,8 @@ nav.threeColumnList  ul li a > div:nth-child(1) {
 	width: 60px;
 	height: 60px;
 	border-radius: 4px ;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
 	border: 1px solid rgba(0, 0, 0, 0.6);
 	margin: 0 10px;
 	float: left;
@@ -700,6 +673,8 @@ nav.orderCriteria {
 	height: 40px;
 	margin-bottom: 2px;
 	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
+	-moz-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
+	-webkit-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
 }
 
 section > nav.orderCriteria ul {
@@ -730,14 +705,19 @@ nav.orderCriteria ul li a.selected{
 nav.orderCriteria ul li:first-child a{
 	width: 76px;
 	border-radius: 4px 0 0 4px;
+	-moz-border-radius: 4px 0 0 4px;
+	-webkit-border-radius: 4px 0 0 4px;
 	
 }
 
 nav.orderCriteria ul li:last-child a {
 	width: 76px;
 	border-radius: 0 4px 4px 0;
+	-moz-border-radius: 0 4px 4px 0;
+	-webkit-border-radius: 0 4px 4px 0;
 }
 
+/* No result list */
 section#noresults {
 	margin: auto;
 	text-align: center;
@@ -750,6 +730,7 @@ section#noresults {
 .customComboBox {
 	padding-right: 5px;
 }
+.customComboBox > input, 
 .customComboBox > select {
 	border: 0;
 	color: #666;
@@ -757,43 +738,52 @@ section#noresults {
 	width: 100%;
 }
 
-/*-----------------------------------------------------*/
+/*---------------------------------- PIN --*/
 
-article.simpleArticle {
+article.pin {
 	padding: 0 10px 10px 10px;
 }
 
-article.simpleArticle div.carDetails {
+article.pin div{
 	margin: auto;
 	text-align: center;	
 }
 
-article.simpleArticle div.carDetails label {
+article.pin div > label {
 	font-size: normal;
 	display: block;
 }
 
-article.simpleArticle div.carDetails label:nth-child(1) {
+article.pin  div > label:nth-child(1) {
 	font-weight: bold;
 	color: #333;
 }
 
-article.simpleArticle div.carDetails label:nth-child(2) {
+article.pin div > label:nth-child(2) {
 	color: #333;
 }
 
-article.simpleArticle div.carDetails label:nth-child(3) {
+article.pin div > label:nth-child(3) {
+	color: #666;
+}
+
+article.pin div > label:nth-child(4) {
+	font-size: small;
 	color: #999;
 }
 	
-article.simpleArticle form > div {
+article.pin form > div {
 	background: #FFF;
 	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
+	-moz-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
+	-webkit-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
 	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
 	overflow: hidden; 
 }
 
-article.simpleArticle form > div > input {
+article.pin form > div > input {
 	width: 100%;
 	padding-left: 10px;
 	line-height: 45px;
@@ -803,33 +793,49 @@ article.simpleArticle form > div > input {
 	color: #333;
 }
 
+/** ************************************************/
+
+#licsearch > section{
+	padding-bottom: 10px;
+	border-bottom: 1px solid #E5E5E5;
+	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
+	-moz-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
+	-webkit-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
+}
+
 #licensePlateBookForm > div{
 	background: #FFF;
 	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
+	-moz-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
+	-webkit-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
 	border-radius: 12px;
+	-moz-border-radius: 12px;
+	-webkit-border-radius: 12px;
 	overflow: hidden; 
+	position: relative;
+	margin: 0 10px;
+	padding: 0 10px 0 10px;
 }
 
 #licensePlateBookForm > div > input {
-	padding: 0 12px 0 10px;
 	line-height: 24px;
 	height: 24px;
 	border: 0;
 	font-size: normal;
 	color: #999;
-	float: left;
-	width: 90%;
+	width: 100%;
 }
 
 #licensePlateBookForm > div > input.autocomplete {
-	background: #fff url('../img/ajax-loader-input.gif') no-repeat right 50%;
+	background: #fff url('../img/ajax-loader-input.gif') no-repeat 100% 50%;
 }
 
 #licensePlateBookForm > div > div {
 	background: #fff;
 	padding: 12px;
-	width: 10%;
-	float: right;
+	position: absolute;
+	right: 10px;
+	top: 0;
 }
 
 #licensePlateBookForm > div > div.delete {
@@ -841,12 +847,18 @@ article.simpleArticle form > div > input {
 #pinForm > div {
 	background: #FFF;
 	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
+	-moz-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
+	-webkit-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
 	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
 	overflow: hidden; 
 }
 
 #pinForm > input[type="submit"] {
 	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
 	font-size: large;
     font-weight: bold;
 	text-shadow: 0px -1px 1px rgba(0, 0, 0, 0.5);
@@ -876,7 +888,7 @@ article.simpleArticle form > div > input {
 /*-----------------------------------------------------*/
 
 .warningMessage {
-	padding: 10px 0 10px 0;
+	margin-bottom: 10px;
 	text-align: center;
 	color: #999;
 }
@@ -890,7 +902,11 @@ article.simpleArticle form > div > input {
 .messages,
 .errors {
 	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
-	border-radius: 4px 4px 4px 4px;
+	-moz-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
+	-webkit-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
 	min-height: 45px;
 	padding-left: 45px;
 	margin: 0 10px 10px;
@@ -947,7 +963,7 @@ article.simpleArticle form > div > input {
 }
 
 .map {
-	background-image: url(../img/webapp-splash-map-normal.png);
+	background-image: url(../img/webapp-splash-map-transparent.png);
 	background-size: 100%;
 }
 
@@ -1010,7 +1026,7 @@ article.simpleArticle form > div > input {
     left:       0;
     height:     100%;
     width:      100%;
-    background: rgba( 255, 255, 255, .8 ) url('../img/ajax-loader.gif') 50% 50% no-repeat;
+    background: rgba( 0, 0, 0, .8 ) url('../img/ajax-loader.gif') 50% 50% no-repeat;
 }
 
 body.loading {
@@ -1019,9 +1035,4 @@ body.loading {
 
 body.loading .modal {
     display: block;
-}
-
-#licsearch {
-	margin-bottom: 2px;
-	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
 }
