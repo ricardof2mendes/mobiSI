@@ -3,21 +3,16 @@ var mapProjection = new OpenLayers.Projection("EPSG:900913");
 var mapDisplayProjection = new OpenLayers.Projection("EPSG:4326");
 
 var layerStyle = OpenLayers.Util.extend({}, OpenLayers.Feature.Vector.style['default']);
-layerStyle.strokeColor = '#000000';
 layerStyle.fillOpacity = 0.2;
 layerStyle.graphicOpacity = 1; 
 
 var greenStyle = OpenLayers.Util.extend({}, layerStyle);
-greenStyle.fillColor = "green";
+greenStyle.fillColor = "#ACE228";
+greenStyle.strokeColor = '#94C222';
 
 var yellowStyle = OpenLayers.Util.extend({}, layerStyle);
-yellowStyle.fillColor = "yellow";
-
-var redStyle = OpenLayers.Util.extend({}, layerStyle);
-redStyle.fillColor = "red";
-
-var grayStyle = OpenLayers.Util.extend({}, layerStyle);
-grayStyle.fillColor = 'light-grey';
+yellowStyle.fillColor = "#FFF000";
+yellowStyle.strokeColor = '#B7AD00';
 
 var carMarker = OpenLayers.Util.extend({}, layerStyle);
 carMarker.fillOpacity = 1;
@@ -25,12 +20,10 @@ carMarker.fillOpacity = 1;
 $(document).ready(function() {
 	//Menu button
 	$('.menuBtn').on('click', function(e) {
-		$('#map').css('top', '45px');
 		if($('#legend').css('display') != 'none') {
 			toggleFx('#legend');
 		} else {
 			toggleFx('div.bottomShadow');
-			$('#map').css('top', '376px');
 		}
 		toggleFx('#menu');
 	});
@@ -47,8 +40,24 @@ $(document).ready(function() {
 });
 
 
-var Map = function(licensePlate) {
-	
+var MapACar = function(licensePlate) {
+	//Build parts
+	buildCommon();
+	// process data attached to license plate
+	fetchCarData(licensePlate);
+};
+
+var MapAPark = function(licensePlate) {
+	//Build parts
+	buildCommon();
+	// process data attached to park
+	fetchParkData(licensePlate);
+};
+
+/**
+ * Build common map and controls
+ */
+function buildCommon() {
 	// remove spacing
 	$('div.bottomShadow').css('display', 'none');
 	
@@ -80,10 +89,7 @@ var Map = function(licensePlate) {
 			$(this).css('background', normal);
 		});
 	});
-		
-	// process data attached to license plate
-	fetchData(licensePlate);
-};
+}
 
 /**
  * Determine My location and add it to the map
@@ -98,13 +104,14 @@ function addMyLocation(vectorLayer) {
 						new OpenLayers.Geometry.Point(position.coords.longitude, position.coords.latitude).transform(mapDisplayProjection, map.getProjectionObject()), {
 									some : 'data'
 								}, {
-									externalGraphic : '../img/mylocation.png',
+									externalGraphic : '../img/map/mylocation.png',
 									graphicHeight : 25,
 									graphicWidth : 21
 								});
 				vectorLayer.addFeatures(feature);
 				map.addLayer(vectorLayer);
-				map.zoomToExtent(vectorLayer.getDataExtent()); 	
+				map.zoomToExtent(vectorLayer.getDataExtent());
+				map.zoomTo(map.getZoom()-1);
 			}, 
 			function (err) {
 				if (err.code == 1) {
@@ -129,8 +136,23 @@ function addMyLocation(vectorLayer) {
  * Fetch data from server related to given license plate
  * @param licensePlate
  */
-function fetchData(licensePlate) {
-	$.get(contextPath + '/booking/ImmediateBooking.action?carData=&q=' + licensePlate, 
+function fetchCarData(licensePlate) {
+	$.get(contextPath + '/booking/ImmediateBooking.action?carData=&licensePlate=' + licensePlate, 
+			function(data, textStatus, jqXHR){
+				if (jqXHR.getResponseHeader('Stripes-Success') === 'OK') {
+					processData(eval(data));
+		        } else {
+		            console.log('An error has occurred or the user\'s session has expired!');
+		        }
+		    });	
+}
+
+/**
+ * Fetch data from server related to given park
+ * @param licensePlate
+ */
+function fetchParkData(licensePlate) {
+	$.get(contextPath + '/booking/AdvanceBooking.action?parkData=&licensePlate=' + licensePlate, 
 			function(data, textStatus, jqXHR){
 				if (jqXHR.getResponseHeader('Stripes-Success') === 'OK') {
 					processData(eval(data));
@@ -145,6 +167,8 @@ function fetchData(licensePlate) {
  * @param returnData
  */
 function processData(returnData) {
+	
+	var addedMyLocation = false;
 	
 	// car coordinates
 	if(returnData.coordinate) {
@@ -161,6 +185,7 @@ function processData(returnData) {
 		
 		// add my location to the map
 		addMyLocation(objectVector);
+		addedMyLocation = true;
 	}
 	
 	// zones delimiters
@@ -191,25 +216,17 @@ function processData(returnData) {
 			 var polygonFeature = new OpenLayers.Feature.Vector(
 					 new OpenLayers.Geometry.Polygon([linearRing])); 
 			 zonesVector.addFeatures(polygonFeature);
-			 
 			 map.addLayer(zonesVector);
+			 
+			 if(!addedMyLocation) {
+				// add my location to the map
+				addMyLocation(zonesVector);
+				addedMyLocation = true;
+			 }
+			 
 		});
 		
 	}
-}
-
-/**
- * Add cars to the map
- * 
- * @param map
- *            the car array
- */
-function addCars(map, options) {
-	
-}
-
-function addPolygons(map) {
-	
 }
 
 function toggleFx(element) {
@@ -217,7 +234,7 @@ function toggleFx(element) {
 		if(element.indexOf('menu') > 0) {
 			$('#map').css('top', '376px');
 		}else {
-			$('#map').css('top', '255px');
+			$('#map').css('top', height);
 		}
 		$(element).gfxFadeIn({
 			duration : 500,
