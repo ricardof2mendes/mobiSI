@@ -55,6 +55,6 @@
 			</nav>
 		</section>
 		<div class="clear"></div>
-		<c:import url="./carList.jsp"></c:import>
+		<c:import url="./carListImmediate.jsp"></c:import>
 	</article>
 </t:main>

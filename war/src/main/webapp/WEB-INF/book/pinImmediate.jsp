@@ -6,21 +6,26 @@
 
 	<stripes:errors/>
 	
-	<article class="simpleArticle">
+	<article class="pin">
 		<section>
-			<div class="carDetails">
+			<div>
 				<label>${actionBean.car.licensePlate}</label>
 				<label>${actionBean.car.carBrandName}&nbsp;${actionBean.car.carModelName}</label>
-				<label>${actionBean.car.fuelType}&nbsp;(${actionBean.car.range})</label>
+				<label>${actionBean.car.fuelType}&nbsp;
+					<c:choose>
+						<c:when test="${actionBean.car.range != null}">(${actionBean.car.range})</c:when>
+						<c:otherwise>(<fmt:message key="application.value.not.available"/>)</c:otherwise>
+					</c:choose>
+				</label>					
 			</div>
 		</section>
 	</article>
-	<article class="simpleArticle">
+	<article class="pin">
 		<section>
 			<div>
 				<stripes:form id="pinForm"
 							  beanclass="com.criticalsoftware.mobics.presentation.action.booking.ImmediateBookingActionBean" method="POST">
-					<stripes:submit id="book" name="book"><fmt:message key="license.plate.button"/></stripes:submit>
+					<stripes:submit id="book" name="book"><fmt:message key="pin.button"/></stripes:submit>
 					<div>
 						<input type="number" name="pin" id="pin" maxlength="4" placeholder="<fmt:message key="pin.customer.input" />" autocomplete="off"/>						
 					</div>

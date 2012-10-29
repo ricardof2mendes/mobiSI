@@ -15,13 +15,18 @@
 										<stripes:param name="latitude" value="${actionBean.latitude}"/>
 										<stripes:param name="longitude" value="${actionBean.longitude}"/>
 										<div>
-											<img src="${contextPath}/booking/ImmediateBooking.action?getCarImage=&licensePlate=${car.licensePlate}#${car.licensePlate}.png" />
+											<img src="${contextPath}/booking/ImmediateBooking.action?getCarImage=&licensePlate=${car.licensePlate}" />
 										</div>
 										<div>
 											<div>
 												<span>${car.licensePlate}</span>
 												<span>${car.carBrandName}&nbsp;${car.carModelName}</span>
-												<span><fmt:message key="FuelType.${car.fuelType}"/>&nbsp;(${car.range})</span>
+												<span><fmt:message key="FuelType.${car.fuelType}"/>&nbsp;
+													<c:choose>
+														<c:when test="${car.range != null}">(${car.range})</c:when>
+														<c:otherwise>(<fmt:message key="application.value.not.available"/>)</c:otherwise>
+													</c:choose>
+												</span>
 											</div>
 											<div>
 												<span>
@@ -43,13 +48,18 @@
 										<stripes:param name="latitude" value="${actionBean.latitude}"/>
 										<stripes:param name="longitude" value="${actionBean.longitude}"/>
 										<div>
-											<img src="${contextPath}/booking/ImmediateBooking.action?getCarImage=&licensePlate=${car.licensePlate}&${car.licensePlate}.png" />
+											<img src="${contextPath}/booking/ImmediateBooking.action?getCarImage=&licensePlate=${car.licensePlate}" />
 										</div>
 										<div>
 											<div>
 												<span>${car.licensePlate}</span>
 												<span>${car.carBrandName}&nbsp;${car.carModelName}</span>
-												<span>${car.fuelType}&nbsp;(${car.range})</span>
+												<span>${car.fuelType}&nbsp;
+													<c:choose>
+														<c:when test="${actionBean.car.range != null}">(${actionBean.car.range})</c:when>
+														<c:otherwise>(<fmt:message key="application.value.not.available"/>)</c:otherwise>
+													</c:choose>
+												</span>
 											</div>
 											<div>
 												<span class="unavailable">
