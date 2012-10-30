@@ -478,7 +478,7 @@ section > nav.panel ul li.link {
 
 
 section > nav.panel ul li.link a {
-	padding: 0;
+	padding: 10px 0;
 }
 
 section > nav.panel ul li.link span:nth-child(1) {
@@ -501,7 +501,6 @@ section > nav.panel ul li.link span:nth-child(2) {
 
 nav.panel ul li.detail,
 nav.panel ul li.link {
-	padding: 10px 0;
 	text-align: left;
 	font-size: large;
 	font-weight: bold;
@@ -518,6 +517,7 @@ nav.panel ul li:last-child {
 }
 
 section > nav.panel ul li.detail {
+	padding: 10px 0;
 	background: none;
 	background-color: #f4f4f4;
 }
@@ -544,7 +544,7 @@ section > nav.panel ul li:last-child{
 nav.panel ul li.image > div:nth-child(1),
 nav.panel ul li.image a > div:nth-child(1){
 	width: 60px;
-	height: 60px;
+	Max-height: 60px;
 	border-radius: 4px ;
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
@@ -601,7 +601,7 @@ nav.threeColumnList ul li a {
 
 nav.threeColumnList  ul li a > div:nth-child(1) {
 	width: 60px;
-	height: 60px;
+	max-height: 60px;
 	border-radius: 4px ;
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
