@@ -43,6 +43,8 @@ public class FormatMobics extends BodyTagSupport {
     private static final Logger LOGGER = LoggerFactory.getLogger(FormatMobics.class);
 
     private static final String DISTANCE = "distance";
+    
+    private static final String TIME = "time";
 
     private Object value;
     private String type;
@@ -82,7 +84,7 @@ public class FormatMobics extends BodyTagSupport {
             } catch (NumberFormatException nfe) {
                 throw new JspException(Resources.getMessage("FORMAT_NUMBER_PARSE_ERROR", value), nfe);
             }
-        }
+        } 
 
         // If locale is null check for the system property
         Locale locale = null;
@@ -105,17 +107,43 @@ public class FormatMobics extends BodyTagSupport {
 
             if (DISTANCE.equals(type)) {
                 key = "distance.meter";
-                if (((BigDecimal) value).compareTo(new BigDecimal(1000)) >= 0) {
-                    if (pattern2 == null || pattern2.equals("")) {
-                        LOGGER.warn("Kilometer pattern not supplied! Formatting with meter pattern.");
-                    } else {
-                        formatter = new DecimalFormat(pattern2, symbols);
+                // If distance comes in BigDecimal
+                if(value instanceof BigDecimal) {
+                    if (((BigDecimal) value).compareTo(new BigDecimal(1000)) >= 0) {
+                        if (pattern2 == null || pattern2.equals("")) {
+                            LOGGER.warn("Kilometer pattern not supplied! Formatting with meter pattern.");
+                        } else {
+                            formatter = new DecimalFormat(pattern2, symbols);
+                        }
+                        key = "distance.kilometer";
+                        value = ((BigDecimal) value).multiply(new BigDecimal(0.001));
                     }
-                    key = "distance.kilometer";
-                    value = ((BigDecimal) value).multiply(new BigDecimal(0.001));
+                }else 
+                 // If distance comes in Integer
+                    if(value instanceof Integer) {
+                    if (((Integer) value) >= 1000) {
+                        if (pattern2 == null || pattern2.equals("")) {
+                            LOGGER.warn("Kilometer pattern not supplied! Formatting with meter pattern.");
+                        } else {
+                            formatter = new DecimalFormat(pattern2, symbols);
+                        }
+                        key = "distance.kilometer";
+                        value = ((Integer) value) * 0.001;
+                    }
                 }
+                formatted = MessageFormat.format(resources.getString(key), formatter.format(value));
+            } else if (TIME.equals(type)) {
+                key = "time.minutes";
+                Integer minutes = (((Integer) value) % 3600) / 60;
+                formatted = MessageFormat.format(resources.getString(key), minutes);
+                if (((Integer) value) >= 3600) {
+                    key = "time.hours";
+                    Integer hours = ((Integer) value) / 3600;
+                    formatted = MessageFormat.format(resources.getString(key), hours, minutes);
+                }
+            } else {
+                formatted = MessageFormat.format(resources.getString(key), formatter.format(value));
             }
-            formatted = MessageFormat.format(resources.getString(key), formatter.format(value));
         } else {
             // no formatting locale available, use toString()
             formatted = value.toString();
