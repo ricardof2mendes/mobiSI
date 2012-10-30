@@ -60,5 +60,13 @@ public abstract class BaseActionBean implements ActionBean {
         }
         return theme;
     }
+    
+    /**
+     * Check if action bean it has validation field errors
+     * @return
+     */
+    public boolean getFieldErrors(){
+        return this.context.getValidationErrors().hasFieldErrors();
+    }
 
 }

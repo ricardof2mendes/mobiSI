@@ -30,7 +30,7 @@ public class RecentHistoryActionBean extends BaseActionBean {
     @DefaultHandler
     @DontValidate
     public Resolution main() {
-        return new ForwardResolution("/WEB-INF/book/recent.jsp");
+        return new ForwardResolution("/WEB-INF/recent/recentHistory.jsp");
     }
 
 }

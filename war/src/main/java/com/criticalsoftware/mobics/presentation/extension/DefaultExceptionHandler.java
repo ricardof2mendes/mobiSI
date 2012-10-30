@@ -6,6 +6,7 @@
  */
 package com.criticalsoftware.mobics.presentation.extension;
 
+import java.io.UnsupportedEncodingException;
 import java.rmi.RemoteException;
 import java.util.List;
 import java.util.Map.Entry;
@@ -29,11 +30,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.criticalsoftware.mobics.presentation.action.ErrorActionBean;
-import com.criticalsoftware.mobics.proxy.fleet.CarClassNotFoundExceptionException;
-import com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException;
-import com.criticalsoftware.mobics.proxy.fleet.CarTypeNotFoundExceptionException;
-import com.criticalsoftware.mobics.proxy.fleet.CarValidationExceptionException;
-import com.criticalsoftware.mobics.proxy.fleet.FuelTypeNotFoundExceptionException;
 
 /**
  * Handles the exceptions thrown by the application.
@@ -101,6 +97,20 @@ public class DefaultExceptionHandler implements AutoExceptionHandler {
         LOGGER.error(exception.getMessage(), exception);
         return insideJobToError("error.BusinessException", request, response);
     }
+    
+    /**
+     * If there's an ActionBean present, send the user back where they came from with a stern warning, otherwise send
+     * them to the global error page.
+     * 
+     * @param UnsupportedEncodingException A generic exception
+     * @param request The HttpServletRequest
+     * @param response The HttpServletResponse
+     * @return A ForwardResolution
+     */
+    public Resolution handle(UnsupportedEncodingException exception, HttpServletRequest request, HttpServletResponse response) {
+        LOGGER.error(exception.getMessage(), exception);
+        return insideJobToError("error.UnsupportedEncodingException", request, response);
+    }
 
     /**
      * If there's an ActionBean present, send the user back where they came from with a stern warning, otherwise send
@@ -126,7 +136,7 @@ public class DefaultExceptionHandler implements AutoExceptionHandler {
      * @return A ForwardResolution
      */
     public Resolution handle(
-            CarValidationExceptionException exception,
+            com.criticalsoftware.mobics.proxy.fleet.CarValidationExceptionException exception,
             HttpServletRequest request,
             HttpServletResponse response) {
         LOGGER.error(exception.getMessage(), exception);
@@ -143,7 +153,7 @@ public class DefaultExceptionHandler implements AutoExceptionHandler {
      * @return A ForwardResolution
      */
     public Resolution handle(
-            CarLicensePlateNotFoundExceptionException exception,
+            com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException exception,
             HttpServletRequest request,
             HttpServletResponse response) {
         LOGGER.error(exception.getMessage(), exception);
@@ -160,7 +170,7 @@ public class DefaultExceptionHandler implements AutoExceptionHandler {
      * @return A ForwardResolution
      */
     public Resolution handle(
-            FuelTypeNotFoundExceptionException exception,
+            com.criticalsoftware.mobics.proxy.fleet.FuelTypeNotFoundExceptionException exception,
             HttpServletRequest request,
             HttpServletResponse response) {
         LOGGER.error(exception.getMessage(), exception);
@@ -177,12 +187,31 @@ public class DefaultExceptionHandler implements AutoExceptionHandler {
      * @return A ForwardResolution
      */
     public Resolution handle(
-            CarClassNotFoundExceptionException exception,
+            com.criticalsoftware.mobics.proxy.fleet.CarClassNotFoundExceptionException exception,
             HttpServletRequest request,
             HttpServletResponse response) {
         LOGGER.error(exception.getMessage(), exception);
         return insideJobToError("error.CarClassNotFoundExceptionException", request, response);
     }
+    
+    /**
+     * Send them to the global error page.
+     * 
+     * @param exception a Car Type Not Found
+     * @param request The HttpServletRequest
+     * @param response The HttpServletResponse
+     * @return A ForwardResolution
+     */
+    public Resolution handle(
+            com.criticalsoftware.mobics.proxy.fleet.CarTypeNotFoundExceptionException exception,
+            HttpServletRequest request,
+            HttpServletResponse response) {
+        LOGGER.error(exception.getMessage(), exception);
+        return insideJobToError("error.CarTypeNotFoundExceptionException", request, response);
+    }
+    
+    /* --------------------------------------------------------- Booking */
+    
     
     /**
      * If there's an ActionBean present, send the user back where they came from with a stern warning, otherwise send
@@ -197,25 +226,8 @@ public class DefaultExceptionHandler implements AutoExceptionHandler {
             com.criticalsoftware.mobics.proxy.booking.InvalidCustomerPinExceptionException exception,
             HttpServletRequest request,
             HttpServletResponse response) {
-        LOGGER.error("fall here");
         LOGGER.error(exception.getMessage(), exception);
         return insideJob("error.InvalidCustomerPinExceptionException", request, response);
-    }
-
-    /**
-     * Send them to the global error page.
-     * 
-     * @param exception a Car Type Not Found
-     * @param request The HttpServletRequest
-     * @param response The HttpServletResponse
-     * @return A ForwardResolution
-     */
-    public Resolution handle(
-            CarTypeNotFoundExceptionException exception,
-            HttpServletRequest request,
-            HttpServletResponse response) {
-        LOGGER.error(exception.getMessage(), exception);
-        return insideJobToError("error.CarTypeNotFoundExceptionException", request, response);
     }
 
     /**
@@ -247,7 +259,39 @@ public class DefaultExceptionHandler implements AutoExceptionHandler {
             HttpServletRequest request,
             HttpServletResponse response) {
         LOGGER.error(exception.getMessage(), exception);
-        return insideJobToError("error.CarNotAvailableForBookingExceptionException", request, response);
+        return insideJob("error.CarNotAvailableForBookingExceptionException", request, response);
+    }
+    
+    /**
+     * Send them to the global error page.
+     * 
+     * @param exception a Car Type Not Found
+     * @param request The HttpServletRequest
+     * @param response The HttpServletResponse
+     * @return A ForwardResolution
+     */
+    public Resolution handle(
+            com.criticalsoftware.mobics.proxy.booking.ForbiddenZoneExceptionException exception,
+            HttpServletRequest request,
+            HttpServletResponse response) {
+        LOGGER.error(exception.getMessage(), exception);
+        return insideJob("error.ForbiddenZoneExceptionException", request, response);
+    }
+    
+    /**
+     * Send them to the global error page.
+     * 
+     * @param exception a Car Type Not Found
+     * @param request The HttpServletRequest
+     * @param response The HttpServletResponse
+     * @return A ForwardResolution
+     */
+    public Resolution handle(
+            com.criticalsoftware.mobics.proxy.booking.IllegalDateExceptionException exception,
+            HttpServletRequest request,
+            HttpServletResponse response) {
+        LOGGER.error(exception.getMessage(), exception);
+        return insideJobToError("error.IllegalDateExceptionException", request, response);
     }
 
     /**
@@ -263,7 +307,7 @@ public class DefaultExceptionHandler implements AutoExceptionHandler {
             HttpServletRequest request,
             HttpServletResponse response) {
         LOGGER.error(exception.getMessage(), exception);
-        return insideJobToError("error.UnauthorizedCustomerExceptionException", request, response);
+        return insideJob("error.UnauthorizedCustomerExceptionException", request, response);
     }
 
     /**
@@ -281,7 +325,16 @@ public class DefaultExceptionHandler implements AutoExceptionHandler {
         LOGGER.error(exception.getMessage(), exception);
         return insideJobToError("error.CarLicensePlateNotFoundExceptionException", request, response);
     }
-
+    
+    
+    /**
+     * Return the action bean page with errors displayed
+     * 
+     * @param resourceKey
+     * @param request
+     * @param response
+     * @return
+     */
     private Resolution insideJob(String resourceKey, HttpServletRequest request, HttpServletResponse response) {
         resources = ResourceBundle.getBundle("StripesResources", request.getLocale());
         ActionBean bean = (ActionBean) request.getAttribute(StripesConstants.REQ_ATTR_ACTION_BEAN);
@@ -298,6 +351,14 @@ public class DefaultExceptionHandler implements AutoExceptionHandler {
         return resolution;
     }
 
+    /**
+     * Return the error page with errors displayed
+     * 
+     * @param resourceKey
+     * @param request
+     * @param response
+     * @return
+     */
     private Resolution insideJobToError(String resourceKey, HttpServletRequest request, HttpServletResponse response) {
         resources = ResourceBundle.getBundle("StripesResources", request.getLocale());
         request.setAttribute("error", resources.getString(resourceKey));

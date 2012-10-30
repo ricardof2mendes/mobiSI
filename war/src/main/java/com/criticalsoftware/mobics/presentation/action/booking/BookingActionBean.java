@@ -29,7 +29,7 @@ import net.sourceforge.stripes.validation.ValidationState;
 
 import com.criticalsoftware.mobics.fleet.CarDTO;
 import com.criticalsoftware.mobics.presentation.action.BaseActionBean;
-import com.criticalsoftware.mobics.presentation.util.CarState;
+import com.criticalsoftware.mobics.presentation.extension.ZoneDTOTypeConverter;
 import com.criticalsoftware.mobics.presentation.util.Configuration;
 import com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException;
 import com.criticalsoftware.mobics.proxy.fleet.CarValidationExceptionException;
@@ -43,7 +43,8 @@ import com.criticalsoftware.mobics.proxy.fleet.IOExceptionException;
 public abstract class BookingActionBean extends BaseActionBean {
 
     @ValidateNestedProperties({ @Validate(field = "licensePlate"), @Validate(field = "carBrandName"),
-            @Validate(field = "carModelName"), @Validate(field = "fuelType"), @Validate(field = "range") })
+            @Validate(field = "carModelName"), @Validate(field = "fuelType"), @Validate(field = "range"),
+            @Validate(field = "zones", converter = ZoneDTOTypeConverter.class) })
     protected CarDTO car;
 
     @Validate(required = true, on = { "getCarImage", "carLocation", "licensePlateBook", "showPin", "book",
@@ -83,18 +84,19 @@ public abstract class BookingActionBean extends BaseActionBean {
      * @throws com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException
      */
     @ValidationMethod(
-            on = { "licensePlateBook", "showPin", "carDetails" },
+            on = { "licensePlateBook", "showPin", "carDetails", "licensePlateBookAdvance" },
             when = ValidationState.NO_ERRORS,
             priority = 1)
     public void validateLicensePlateCar(ValidationErrors errors) throws RemoteException,
             com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException {
-        car = new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint()).getCarDetails(
-                licensePlate.toUpperCase(), new BigDecimal(0), new BigDecimal(0));
-        if (car == null || !CarState.AVAILABLE.name().equals(car.getState())) {
+        car = new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint()).getCarDetails(licensePlate
+                .toUpperCase(), latitude == null ? null : new BigDecimal(latitude), longitude == null ? null
+                : new BigDecimal(longitude));
+        if (car == null) {
             errors.addGlobalError(new LocalizableError("car.details.validation.car.not.available"));
         }
     }
-
+    
     /**
      * Get the car image
      * 

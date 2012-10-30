@@ -78,13 +78,13 @@ public class AdvanceBookingActionBean extends BookingActionBean {
 
     @Validate(
             required = true,
-            on = { "searchCarsAdvance", "licensePlateBookAdvance" },
+            on = { "searchCarsAdvance", "licensePlateBookAdvance", "parkLocation", "showPin" },
             converter = DatetimeTypeConverter.class)
     private Date startDate;
 
     @Validate(
             required = true,
-            on = { "searchCarsAdvance", "licensePlateBookAdvance" },
+            on = { "searchCarsAdvance", "licensePlateBookAdvance", "parkLocation", "showPin" },
             converter = DatetimeTypeConverter.class)
     private Date endDate;
 
@@ -146,15 +146,13 @@ public class AdvanceBookingActionBean extends BookingActionBean {
      */
     public Resolution licensePlateBookAdvance() throws RemoteException, CarValidationExceptionException,
             com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException {
-        car = new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint()).getCarDetails(licensePlate, null, null);
-
         return new ForwardResolution("/WEB-INF/book/carBookAdvance.jsp");
     }
 
     // --------------------------------------------------
     // Bookin Resolutions
     // --------------------------------------------------
-    
+
     /**
      * Show PIN resolution
      * 
@@ -163,9 +161,27 @@ public class AdvanceBookingActionBean extends BookingActionBean {
     public Resolution showPin() {
         return new ForwardResolution("/WEB-INF/book/pinAdvance.jsp");
     }
-    
+
+    @ValidationMethod(on = "book", when = ValidationState.NO_ERRORS, priority = 1)
+    public void validateAdvanceBook(ValidationErrors errors) throws RemoteException, UnsupportedEncodingException,
+            CustomerNotFoundExceptionException, IllegalDateExceptionException {
+        Calendar start = Calendar.getInstance(), end = Calendar.getInstance();
+        start.setTime(startDate);
+        end.setTime(endDate);
+
+        BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
+                Configuration.INSTANCE.getBookingEndpoint());
+        bookingWSServiceStub._getServiceClient().addHeader(
+                AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
+                        .getPassword()));
+
+        if (!bookingWSServiceStub.checkOverlappedBookingForCustomer(start, end)) {
+            errors.addGlobalError(new LocalizableError("book.advance.validation.overlapped.book"));
+        }
+    }
+
     /**
-     * Booking 
+     * Booking
      * 
      * @return
      * @throws RemoteException
@@ -183,10 +199,9 @@ public class AdvanceBookingActionBean extends BookingActionBean {
             CarNotAvailableForBookingExceptionException, ForbiddenZoneExceptionException,
             IllegalDateExceptionException, UnauthorizedCustomerExceptionException,
             CarLicensePlateNotFoundExceptionException {
-
         Calendar start = Calendar.getInstance(), end = Calendar.getInstance();
-        start.setTime(startDate);
-        end.setTime(endDate);
+        start.setTimeInMillis(startDate.getTime());
+        end.setTimeInMillis(endDate.getTime());
 
         BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
                 Configuration.INSTANCE.getBookingEndpoint());
@@ -211,8 +226,32 @@ public class AdvanceBookingActionBean extends BookingActionBean {
         return new ForwardResolution("/WEB-INF/car/carDetailsAdvance.jsp");
     }
 
+    /**
+     * Park location
+     * 
+     * @return the map page
+     */
     public Resolution parkLocation() {
         return new ForwardResolution("/WEB-INF/book/carLocation.jsp").addParameter("zone", licensePlate);
+    }
+
+    @ValidationMethod(on = "parkLocation", when = ValidationState.NO_ERRORS)
+    public void validateCarAvailability(ValidationErrors errors) throws RemoteException,
+            CustomerNotFoundExceptionException, IllegalDateExceptionException,
+            CarLicensePlateNotFoundExceptionException, UnsupportedEncodingException {
+        Calendar start = Calendar.getInstance(), end = Calendar.getInstance();
+        start.setTimeInMillis(startDate.getTime());
+        end.setTimeInMillis(endDate.getTime());
+        BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
+                Configuration.INSTANCE.getBookingEndpoint());
+        bookingWSServiceStub._getServiceClient().addHeader(
+                AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
+                        .getPassword()));
+        
+        if (!bookingWSServiceStub.checkIfAdvanceBookingIsPermitted(
+                licensePlate, start, end)) {
+            errors.addGlobalError(new LocalizableError("car.details.validation.car.not.available"));
+        }
     }
 
     /**
