@@ -3,13 +3,22 @@
 <c:set var="title" scope="page"><fmt:message key='book.title.${param.title}' /></c:set>
 
 <t:main title="${title}">
-	<stripes:errors/>
+	<c:choose>
+		<c:when test="${actionBean.fieldErrors}">
+			<stripes:errors/>
+		</c:when>
+		<c:otherwise>
+			<div class="globalErrors">
+				<stripes:errors/>
+			</div>
+		</c:otherwise>
+	</c:choose>
 	<article>
 		<section>
 			<nav class="panel">
 				<ul>
 					<li class="image">
-						<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.booking.ImmediateBookingActionBean" event="carDetails">
+						<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.booking.ImmediateBookingActionBean" event="carDetails" addSourcePage="true">
 							<stripes:param name="licensePlate" value="${actionBean.car.licensePlate}"/>
 							<stripes:param name="latitude" value="${actionBean.latitude}"/>
 							<stripes:param name="longitude" value="${actionBean.longitude}"/>
@@ -42,7 +51,7 @@
 						</span>
 					</li>
 					<li class="link">
-						<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.booking.ImmediateBookingActionBean" event="carLocation">
+						<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.booking.ImmediateBookingActionBean" event="carLocation" addSourcePage="true">
 							<stripes:param name="licensePlate">${actionBean.car.licensePlate}</stripes:param>
 							<span>
 								<fmt:message key="car.details.location"/>

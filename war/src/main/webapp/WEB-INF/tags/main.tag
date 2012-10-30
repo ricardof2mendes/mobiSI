@@ -23,7 +23,6 @@
         <!-- Calendar -->
         <c:if test="${addCalendar}">
 	        <link rel="stylesheet" href="${contextPath}/css/mobiscroll.core-2.0.3.css" />
-	        <link rel="stylesheet" href="${contextPath}/css/mobiscroll.android-ics-2.0.css" />
 	        <link rel="stylesheet" href="${contextPath}/css/mobiscroll.ios-2.0.2.css" />
         </c:if>
     </head>

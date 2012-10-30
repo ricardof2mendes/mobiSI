@@ -18,7 +18,7 @@
 					<input type="text" id="username" name="username" placeholder="<fmt:message key="login.j_username" />"/>
 					<input type="password" id="password" name="password" placeholder="<fmt:message key="login.j_password" />"/>
 				</div>
-				<stripes:submit id="authenticate" name="authenticate" class="loginBtn"><fmt:message key="login.submit"/></stripes:submit>
+				<stripes:submit id="authenticate" name="authenticate" class="submitBtn loginBtn"><fmt:message key="login.submit"/></stripes:submit>
 			</stripes:form>
 		</section>
 	</article>

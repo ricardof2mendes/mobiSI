@@ -5,6 +5,18 @@
 </c:set>
 
 <t:main title="${title}">
+
+	<c:choose>
+		<c:when test="${actionBean.fieldErrors}">
+			<stripes:errors/>
+		</c:when>
+		<c:otherwise>
+			<div class="globalErrors">
+				<stripes:errors/>
+			</div>
+		</c:otherwise>
+	</c:choose>
+
 	<article>
 		<section>
 			<nav class="orderCriteria">

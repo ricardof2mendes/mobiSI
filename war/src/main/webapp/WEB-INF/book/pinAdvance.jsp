@@ -4,7 +4,16 @@
 
 <t:main title="${title}">
 
-	<stripes:errors/>
+	<c:choose>
+		<c:when test="${actionBean.fieldErrors}">
+			<stripes:errors/>
+		</c:when>
+		<c:otherwise>
+			<div class="globalErrors">
+				<stripes:errors/>
+			</div>
+		</c:otherwise>
+	</c:choose>
 	
 	<article class="pin">
 		<section>
@@ -44,7 +53,7 @@
 					<stripes:hidden name="car.carModelName"/>
 					<stripes:hidden name="car.carBrandName"/>
 					<stripes:hidden name="car.fuelType"/>
-					<stripes:hidden name="car.zones"/>
+					<input type="hidden" name="car.zones" value="${actionBean.car.zones[0].zone}"/>
 					
 					<input type="hidden" name="startDate" value="<fmt:formatDate value="${actionBean.startDate}" pattern="${applicationScope.configuration.dateTimePattern}"/>"/>
 					<input type="hidden" name="endDate" value="<fmt:formatDate value="${actionBean.endDate}" pattern="${applicationScope.configuration.dateTimePattern}"/>"/>

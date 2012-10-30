@@ -6,7 +6,7 @@
 	<article>
 		<section>
 			<h2><fmt:message key="account.identification"/></h2>
-			<nav class="bookList">
+			<nav class="panel">
 				<ul>
 					<li class="detail">
 						<span>
@@ -45,7 +45,7 @@
 		</section>		
 		<section>
 			<h2><fmt:message key="account.contact"/></h2>
-			<nav class="bookList">
+			<nav class="panel">
 				<ul>
 					<li class="detail">
 						<span>
@@ -76,7 +76,7 @@
 		</section>
 		<section>
 			<h2><fmt:message key="account.payment"/></h2>
-			<nav class="bookList">
+			<nav class="panel">
 				<ul>
 					<li class="detail">
 						<span>
@@ -115,7 +115,7 @@
 		</section>			
 	</article>	
 		
-	<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.LogoutActionBean" class="redBtn">
+	<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.LogoutActionBean" class="linkBtn red">
 		<fmt:message key="main.logout"/>
 	</stripes:link>
 </t:main>

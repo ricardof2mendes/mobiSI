@@ -3,7 +3,18 @@
 <c:set var="title" scope="page"><fmt:message key="license.plate.title"/></c:set>
 
 <t:main title="${title}">
-	<stripes:errors/>
+	
+	<c:choose>
+		<c:when test="${actionBean.fieldErrors}">
+			<stripes:errors/>
+		</c:when>
+		<c:otherwise>
+			<div class="globalErrors">
+				<stripes:errors/>
+			</div>
+		</c:otherwise>
+	</c:choose>
+	
 	<article id="licsearch" class="simpleArticle">
 		<section>
 			<stripes:form id="licensePlateBookForm" 

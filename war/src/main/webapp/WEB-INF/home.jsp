@@ -3,9 +3,16 @@
 <c:set var="title" scope="page"><fmt:message key='home.title' /></c:set>
 
 <t:main title="${title}">
-	<div class="globalErrors">
-		<stripes:errors/>
-	</div>
+	<c:choose>
+		<c:when test="${actionBean.fieldErrors}">
+			<stripes:errors/>
+		</c:when>
+		<c:otherwise>
+			<div class="globalErrors">
+				<stripes:errors/>
+			</div>
+		</c:otherwise>
+	</c:choose>
 	<article>
 		<section>
 			<nav class="simpleList">
@@ -29,7 +36,7 @@
 			</nav>
 			
 			<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.booking.ImmediateBookingActionBean" 
-						  id="nearestCar" name="nearestCar" event="nearestCarBook" class="greenBtn" addSourcePage="true">
+						  id="nearestCar" name="nearestCar" event="nearestCarBook" class="linkBtn bigBtn green" addSourcePage="true">
 				<fmt:message key="nearest.car.button"/>
 			</stripes:link>			
 		</section>

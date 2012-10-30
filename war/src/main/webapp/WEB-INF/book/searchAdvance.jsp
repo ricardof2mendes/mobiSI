@@ -5,7 +5,16 @@
 </c:set>
 
 <t:main title="${title}" addCalendar="true">
-	<stripes:errors/>
+	<c:choose>
+		<c:when test="${actionBean.fieldErrors}">
+			<stripes:errors/>
+		</c:when>
+		<c:otherwise>
+			<div class="globalErrors">
+				<stripes:errors/>
+			</div>
+		</c:otherwise>
+	</c:choose>
 
 	<stripes:form beanclass="com.criticalsoftware.mobics.presentation.action.booking.AdvanceBookingActionBean" method="get">
 		<article>

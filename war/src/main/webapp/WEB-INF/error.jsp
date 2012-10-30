@@ -24,7 +24,16 @@
 	     		</section>
 		    </c:when>
 		    <c:when test="${not empty actionBean.context.validationErrors}">
-		        	<stripes:errors />
+        		<c:choose>
+					<c:when test="${actionBean.fieldErrors}">
+						<stripes:errors/>
+					</c:when>
+					<c:otherwise>
+						<div class="globalErrors">
+							<stripes:errors/>
+						</div>
+					</c:otherwise>
+				</c:choose>
 		    </c:when>
 		    <c:otherwise>
 		    	<section class="errors">
