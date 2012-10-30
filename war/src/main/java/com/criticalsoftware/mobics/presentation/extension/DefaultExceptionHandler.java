@@ -130,23 +130,6 @@ public class DefaultExceptionHandler implements AutoExceptionHandler {
      * If there's an ActionBean present, send the user back where they came from with a stern warning, otherwise send
      * them to the global error page.
      * 
-     * @param exception a Car Validation Exception
-     * @param request The HttpServletRequest
-     * @param response The HttpServletResponse
-     * @return A ForwardResolution
-     */
-    public Resolution handle(
-            com.criticalsoftware.mobics.proxy.fleet.CarValidationExceptionException exception,
-            HttpServletRequest request,
-            HttpServletResponse response) {
-        LOGGER.error(exception.getMessage(), exception);
-        return insideJobToError("error.CarValidationExceptionException", request, response);
-    }
-
-    /**
-     * If there's an ActionBean present, send the user back where they came from with a stern warning, otherwise send
-     * them to the global error page.
-     * 
      * @param exception a Car License Plate Not Found
      * @param request The HttpServletRequest
      * @param response The HttpServletResponse

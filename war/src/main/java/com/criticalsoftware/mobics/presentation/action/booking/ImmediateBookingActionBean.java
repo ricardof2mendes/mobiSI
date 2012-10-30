@@ -55,7 +55,6 @@ import com.criticalsoftware.mobics.proxy.fleet.CarClassNotFoundExceptionExceptio
 import com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException;
 import com.criticalsoftware.mobics.proxy.fleet.CarNotFoundExceptionException;
 import com.criticalsoftware.mobics.proxy.fleet.CarTypeNotFoundExceptionException;
-import com.criticalsoftware.mobics.proxy.fleet.CarValidationExceptionException;
 import com.criticalsoftware.mobics.proxy.fleet.FleetWSServiceStub;
 import com.criticalsoftware.mobics.proxy.fleet.FuelTypeNotFoundExceptionException;
 
@@ -126,17 +125,15 @@ public class ImmediateBookingActionBean extends BookingActionBean {
      * 
      * @return the page resolution
      * @throws RemoteException a jax-b webservice exception
+     * @throws CarTypeNotFoundExceptionException when car type not found
      */
-    public Resolution licensePlateAutocomplete() throws RemoteException {
+    public Resolution licensePlateAutocomplete() throws RemoteException, CarTypeNotFoundExceptionException {
         if (licensePlate != null) {
-            try {
-                cars = new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint()).getCarsByLicensePlate(
-                        licensePlate, CarTypeEnum.NORMAL.getValue(), new BigDecimal(latitude),
-                        new BigDecimal(longitude));
-                getContext().getResponse().setHeader("Stripes-Success", "OK");
-            } catch (CarValidationExceptionException e) {
-                LOGGER.error("Car validation exception.", e);
-            }
+            cars = new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint()).getCarsByLicensePlate(
+                    licensePlate, CarTypeEnum.NORMAL.getValue(), new BigDecimal(latitude),
+                    new BigDecimal(longitude));
+            getContext().getResponse().setHeader("Stripes-Success", "OK");
+        
         }
         return new ForwardResolution("/WEB-INF/book/carListImmediate.jsp");
     }
@@ -165,7 +162,7 @@ public class ImmediateBookingActionBean extends BookingActionBean {
      */
     @ValidationMethod(on = "nearestCarBook", when = ValidationState.NO_ERRORS)
     public void validateNearestCar(ValidationErrors errors) throws RemoteException, FuelTypeNotFoundExceptionException,
-            CarClassNotFoundExceptionException, CarTypeNotFoundExceptionException, CarValidationExceptionException {
+            CarClassNotFoundExceptionException, CarTypeNotFoundExceptionException {
         CarDTO[] dtos = new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint()).searchCars(null, null,
                 CarClazz.NOT_SPECIFIED.getClazz(), FuelType.NOT_SPECIFIED.getType(), OrderBy.DISTANCE.name(),
                 Configuration.INSTANCE.getMinResults(), new BigDecimal(latitude), new BigDecimal(longitude),
@@ -193,7 +190,7 @@ public class ImmediateBookingActionBean extends BookingActionBean {
      * @return the page resolution
      */
     public Resolution searchCars() throws RemoteException, FuelTypeNotFoundExceptionException,
-            CarClassNotFoundExceptionException, CarTypeNotFoundExceptionException, CarValidationExceptionException {
+            CarClassNotFoundExceptionException, CarTypeNotFoundExceptionException {
         cars = new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint()).searchCars(price, distance,
                 clazz.getClazz(), fuel.getType(), orderBy.name(), Configuration.INSTANCE.getMaxResults(),
                 new BigDecimal(latitude), new BigDecimal(longitude), CarTypeEnum.NORMAL.getValue());
@@ -262,7 +259,7 @@ public class ImmediateBookingActionBean extends BookingActionBean {
     public void validateCarAvailability(ValidationErrors errors) throws RemoteException,
             com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException {
         if (!new BookingWSServiceStub(Configuration.INSTANCE.getBookingEndpoint())
-                .isCarAvailableForBooking(licensePlate)) {
+                .isCarAvailableForImmediateBooking(licensePlate)) {
             errors.addGlobalError(new LocalizableError("car.details.validation.car.not.available"));
         }
     }

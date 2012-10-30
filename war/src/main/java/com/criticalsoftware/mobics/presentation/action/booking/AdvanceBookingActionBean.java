@@ -56,7 +56,6 @@ import com.criticalsoftware.mobics.proxy.booking.InvalidCustomerPinExceptionExce
 import com.criticalsoftware.mobics.proxy.booking.UnauthorizedCustomerExceptionException;
 import com.criticalsoftware.mobics.proxy.carclub.CarClubWSServiceStub;
 import com.criticalsoftware.mobics.proxy.carclub.LocationCodeNotFoundExceptionException;
-import com.criticalsoftware.mobics.proxy.fleet.CarValidationExceptionException;
 import com.criticalsoftware.mobics.proxy.fleet.FleetWSServiceStub;
 
 /**
@@ -144,7 +143,7 @@ public class AdvanceBookingActionBean extends BookingActionBean {
      * @throws CarValidationExceptionException
      * @throws com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException
      */
-    public Resolution licensePlateBookAdvance() throws RemoteException, CarValidationExceptionException,
+    public Resolution licensePlateBookAdvance() throws RemoteException,
             com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException {
         return new ForwardResolution("/WEB-INF/book/carBookAdvance.jsp");
     }
