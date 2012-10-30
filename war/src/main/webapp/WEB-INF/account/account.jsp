@@ -13,7 +13,7 @@
 							<fmt:message key="account.fullname"/> 
 						</span>
 						<span>
-							TODO
+							${actionBean.customer.fullName}
 						</span>
 					</li>
 					<li class="detail">
@@ -21,7 +21,7 @@
 							<fmt:message key="account.email"/>
 						</span>
 						<span>
-							TODO
+							${actionBean.context.user.username}
 						</span>	
 					</li>
 					<li class="detail">
@@ -29,7 +29,7 @@
 							<fmt:message key="account.password"/>
 						</span>
 						<span>
-							TODO
+							${actionBean.context.user.password}
 						</span>	
 					</li>
 					<li class="detail">
@@ -52,15 +52,15 @@
 							<fmt:message key="account.country"/> 
 						</span>
 						<span>
-							TODO
+							${actionBean.customer.country.name}
 						</span>
 					</li>
 					<li class="detail">
 						<span>
-							<fmt:message key="account.adress"/>
+							<fmt:message key="account.address"/>
 						</span>
 						<span>
-							TODO
+							${actionBean.customer.address}
 						</span>	
 					</li>
 					<li class="detail">
@@ -68,7 +68,7 @@
 							<fmt:message key="account.phone"/>
 						</span>
 						<span>
-							TODO
+							${actionBean.customer.phoneNumber}
 						</span>	
 					</li>
 				</ul>			 
