@@ -3,16 +3,17 @@
     To be added after the </extensions> block.
 -->
 <system-properties>
-		<!--jboss props-->
 		<property name="org.apache.catalina.connector.URI_ENCODING" value="UTF-8"/>
         <property name="org.apache.catalina.connector.USE_BODY_ENCODING_FOR_QUERY_STRING" value="true"/>
         <property name="org.apache.coyote.http11.Http11Protocol.COMPRESSION" value="on"/>
         <property name="org.apache.coyote.http11.Http11Protocol.COMPRESSION_MIME_TYPES" value="text/html,text/xml,text/plain,text/css,text/javascript,application/xhtml+xml,application/xml,application/javascript,application/json"/>
-        <!--mobics props-->
-		<property name="mobics.config.locale" value="pt"/>
+        <property name="mobics.config.locale" value="pt"/>
         <property name="mobics.config.meter.pattern" value="#"/>
         <property name="mobics.config.kilometer.pattern" value="#,##0.0"/>
         <property name="mobics.config.currency.pattern" value="#,##0.00"/>
+        <property name="mobics.config.datetime.pattern" value="dd/MM/yyyy HH:mm"/>
+        <property name="mobics.config.js.date.pattern" value="dd/mm/yy"/>
+        <property name="mobics.config.js.time.pattern" value="HH:ii"/>
         <property name="mobics.config.authentication.failure.string" value="Failed Authentication"/>
         <property name="mobics.config.endpoint.fleet" value="http://mobics02.critical.pt:8080/mobics-webservices/Fleet"/>
         <property name="mobics.config.endpoint.booking" value="http://mobics02.critical.pt:8080/mobics-webservices/Booking"/>
