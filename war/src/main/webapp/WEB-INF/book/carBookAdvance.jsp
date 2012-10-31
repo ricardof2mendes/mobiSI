@@ -20,6 +20,8 @@
 					<li class="image">
 						<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.booking.AdvanceBookingActionBean" event="carDetails">
 							<stripes:param name="licensePlate" value="${actionBean.car.licensePlate}"/>
+							<stripes:param name="startDate"><fmt:formatDate value="${actionBean.startDate}" pattern="${applicationScope.configuration.dateTimePattern}"/></stripes:param>
+							<stripes:param name="endDate"><fmt:formatDate value="${actionBean.endDate}" pattern="${applicationScope.configuration.dateTimePattern}"/></stripes:param>
 							<div>
 								<img src="${contextPath}/booking/AdvanceBooking.action?getCarImage=&licensePlate=${actionBean.car.licensePlate}" />
 							</div>

@@ -3,11 +3,23 @@
 <c:set var="title" scope="page"><fmt:message key='car.details.title' /></c:set>
 
 <t:main title="${title}">
+
+	<c:choose>
+		<c:when test="${actionBean.fieldErrors}">
+			<stripes:errors/>
+		</c:when>
+		<c:otherwise>
+			<div class="globalErrors">
+				<stripes:errors/>
+			</div>
+		</c:otherwise>
+	</c:choose>
+
 	<article>
 		<section>
 			<nav class=panel>
 				<ul>
-					<li class="image">
+					<li class="imageNoLink">
 						<div>
 							<img src="${contextPath}/booking/ImmediateBooking.action?getCarImage=&licensePlate=${actionBean.car.licensePlate}" />
 						</div>

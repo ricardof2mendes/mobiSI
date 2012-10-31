@@ -3,11 +3,23 @@
 <c:set var="title" scope="page"><fmt:message key='car.details.title' /></c:set>
 
 <t:main title="${title}">
+	
+	<c:choose>
+		<c:when test="${actionBean.fieldErrors}">
+			<stripes:errors/>
+		</c:when>
+		<c:otherwise>
+			<div class="globalErrors">
+				<stripes:errors/>
+			</div>
+		</c:otherwise>
+	</c:choose>
+
 	<article>
 		<section>
 			<nav class=panel>
 				<ul>
-					<li class="image">
+					<li class="imageNoLink">
 						<div>
 							<img src="${contextPath}/booking/ImmediateBooking.action?getCarImage=&licensePlate=${actionBean.car.licensePlate}" />
 						</div>
@@ -146,6 +158,8 @@
 								<li class="link">
 									<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.booking.AdvanceBookingActionBean" event="parkLocation" addSourcePage="true">
 										<stripes:param name="licensePlate">${actionBean.car.licensePlate}</stripes:param>
+										<stripes:param name="startDate"><fmt:formatDate value="${actionBean.startDate}" pattern="${applicationScope.configuration.dateTimePattern}"/></stripes:param>
+										<stripes:param name="endDate"><fmt:formatDate value="${actionBean.endDate}" pattern="${applicationScope.configuration.dateTimePattern}"/></stripes:param>
 										<span>
 											<fmt:message key="car.details.park"/>
 										</span>

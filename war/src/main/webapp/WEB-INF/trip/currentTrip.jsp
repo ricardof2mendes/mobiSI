@@ -3,6 +3,7 @@
 <c:set var="title" scope="page"><fmt:message key='current.trip.title' /></c:set>
 
 <t:main title="${title}">
+	
 	<stripes:messages/>
 	
 	<article>

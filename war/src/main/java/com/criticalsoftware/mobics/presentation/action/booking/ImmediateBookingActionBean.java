@@ -37,7 +37,7 @@ import com.criticalsoftware.mobics.fleet.CarDTO;
 import com.criticalsoftware.mobics.fleet.CarTypeEnum;
 import com.criticalsoftware.mobics.fleet.CoordinateDTO;
 import com.criticalsoftware.mobics.fleet.ZoneWithPolygonDTO;
-import com.criticalsoftware.mobics.presentation.action.recent.RecentHistoryActionBean;
+import com.criticalsoftware.mobics.presentation.action.trip.TripActionBean;
 import com.criticalsoftware.mobics.presentation.security.AuthenticationUtil;
 import com.criticalsoftware.mobics.presentation.security.MobiCSSecure;
 import com.criticalsoftware.mobics.presentation.util.CarClazz;
@@ -235,11 +235,10 @@ public class ImmediateBookingActionBean extends BookingActionBean {
         bookingWSServiceStub._getServiceClient().addHeader(
                 AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
                         .getPassword()));
-        // TODO validations
         bookingWSServiceStub.createImmediateBookingWithCustomerPin(licensePlate, String.valueOf(pin));
         getContext().getMessages().add(new LocalizableMessage("car.details.book.done"));
 
-        return new RedirectResolution(RecentHistoryActionBean.class).flash(this);
+        return new RedirectResolution(TripActionBean.class).flash(this);
     }
 
     // --------------------------------------------------

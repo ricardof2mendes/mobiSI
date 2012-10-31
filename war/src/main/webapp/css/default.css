@@ -476,7 +476,6 @@ section > nav.panel ul li.link {
 	background: #f4f4f4 url(../img/seta.png) no-repeat 100% 50%;
 }
 
-
 section > nav.panel ul li.link a {
 	padding: 10px 0;
 }
@@ -508,6 +507,14 @@ nav.panel ul li.link {
 }
 
 nav.panel ul li.image {	
+	border-bottom: 1px solid #CCC;
+}
+
+nav.panel ul li.image a {
+	padding: 5px 0;
+}
+
+nav.panel ul li.imageNoLink {	
 	padding: 5px 0;
 	border-bottom: 1px solid #CCC;
 }
@@ -541,7 +548,7 @@ section > nav.panel ul li:last-child{
 	border-bottom: 0;
 }
 
-nav.panel ul li.image > div:nth-child(1),
+nav.panel ul li.imageNoLink > div:nth-child(1),
 nav.panel ul li.image a > div:nth-child(1){
 	width: 60px;
 	Max-height: 60px;
@@ -553,27 +560,27 @@ nav.panel ul li.image a > div:nth-child(1){
 	float: left;
 }
 
-nav.panel  ul li.image > div:nth-child(2),
+nav.panel  ul li.imageNoLink > div:nth-child(2),
 nav.panel  ul li.image a > div:nth-child(2){
 	height: 60px;
 	margin-left: 80px;
 	margin-right: 25px;
 }
 
-nav.panel ul li.image > div:nth-child(2) > div:nth-child(1) > span,
+nav.panel ul li.imageNoLink > div:nth-child(2) > div:nth-child(1) > span,
 nav.panel ul li.image a > div:nth-child(2) > div:nth-child(1) > span {
 	font-size: normal;
 	float: left;
 	width: 100%;
 }
 
-nav.panel ul li.image > div:nth-child(2) > div:nth-child(1) > span:nth-child(1),
+nav.panel ul li.imageNoLink > div:nth-child(2) > div:nth-child(1) > span:nth-child(1),
 nav.panel ul li.image a > div:nth-child(2) > div:nth-child(1) > span:nth-child(1) {
 	font-weight: bold;
 	color: #333;
 }
 
-nav.panel  ul li.image > div:nth-child(2) > div:nth-child(1) > span:nth-child(2),
+nav.panel  ul li.imageNoLink > div:nth-child(2) > div:nth-child(1) > span:nth-child(2),
 nav.panel  ul li.image a > div:nth-child(2) > div:nth-child(1) > span:nth-child(2) {
 	color: #333;
 	display: inline-block;
@@ -582,7 +589,7 @@ nav.panel  ul li.image a > div:nth-child(2) > div:nth-child(1) > span:nth-child(
     white-space: nowrap;
 }
 
-nav.panel  ul li.image > div:nth-child(2) > div:nth-child(1) > span:nth-child(3),
+nav.panel  ul li.imageNoLink > div:nth-child(2) > div:nth-child(1) > span:nth-child(3),
 nav.panel  ul li.image a > div:nth-child(2) > div:nth-child(1) > span:nth-child(3) {
 	color: #999;
 }
