@@ -67,6 +67,8 @@ public class Configuration {
     private final int minResults = 1;
 
     private final int maxResults = 99;
+    
+    private final int recentsFilterMonthGap = 6;
 
     /**
      * Gets the locale.
@@ -203,6 +205,10 @@ public class Configuration {
     public String getDateTimePattern() {
 
         return getValue("mobics.config.datetime.pattern", dateTimePattern);
+    }
+    
+    public int getRecentActivitiesFilterMonthGap() {
+        return Integer.valueOf(getValue("mobics.config.recents.filter.month.gap", recentsFilterMonthGap));
     }
 
     private Configuration() {
