@@ -77,13 +77,13 @@ public class AdvanceBookingActionBean extends BookingActionBean {
 
     @Validate(
             required = true,
-            on = { "searchCarsAdvance", "licensePlateBookAdvance", "parkLocation", "showPin" },
+            on = { "searchCarsAdvance", "licensePlateBookAdvance", "showPin" },
             converter = DatetimeTypeConverter.class)
     private Date startDate;
 
     @Validate(
             required = true,
-            on = { "searchCarsAdvance", "licensePlateBookAdvance", "parkLocation", "showPin" },
+            on = { "searchCarsAdvance", "licensePlateBookAdvance", "showPin" },
             converter = DatetimeTypeConverter.class)
     private Date endDate;
 
@@ -231,25 +231,6 @@ public class AdvanceBookingActionBean extends BookingActionBean {
      */
     public Resolution parkLocation() {
         return new ForwardResolution("/WEB-INF/book/carLocation.jsp").addParameter("zone", licensePlate);
-    }
-
-    @ValidationMethod(on = "parkLocation", when = ValidationState.NO_ERRORS)
-    public void validateCarAvailability(ValidationErrors errors) throws RemoteException,
-            CustomerNotFoundExceptionException, IllegalDateExceptionException,
-            CarLicensePlateNotFoundExceptionException, UnsupportedEncodingException {
-        Calendar start = Calendar.getInstance(), end = Calendar.getInstance();
-        start.setTimeInMillis(startDate.getTime());
-        end.setTimeInMillis(endDate.getTime());
-        BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
-                Configuration.INSTANCE.getBookingEndpoint());
-        bookingWSServiceStub._getServiceClient().addHeader(
-                AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
-                        .getPassword()));
-        
-        if (!bookingWSServiceStub.checkIfAdvanceBookingIsPermitted(
-                licensePlate, start, end)) {
-            errors.addGlobalError(new LocalizableError("car.details.validation.car.not.available"));
-        }
     }
 
     /**
