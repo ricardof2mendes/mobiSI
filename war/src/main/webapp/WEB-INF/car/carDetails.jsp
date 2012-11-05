@@ -27,11 +27,11 @@
 							<div>
 								<span>${actionBean.car.licensePlate}</span>
 								<span>${actionBean.car.carBrandName}&nbsp;${actionBean.car.carModelName}</span>
-								<span><fmt:message key="FuelType.${actionBean.car.fuelType}"/>&nbsp;
+								<span><fmt:message key="FuelType.${actionBean.car.fuelType}"/>&nbsp;<!-- RANGE removed
 									<c:choose>
 										<c:when test="${actionBean.car.range != null}">(${actionBean.car.range})</c:when>
 										<c:otherwise>(<fmt:message key="application.value.not.available"/>)</c:otherwise>
-									</c:choose>
+									</c:choose>-->
 								</span>
 							</div>
 						</div>
@@ -79,7 +79,7 @@
 							<fmt:message key="car.details.class"/>
 						</span>
 						<span>
-							${actionBean.car.category}
+							<fmt:message key="CarClazz.${actionBean.car.category}"/>
 						</span>
 					</li>
 					<li class="detail">
@@ -90,6 +90,7 @@
 							<fmt:message key="FuelType.${actionBean.car.fuelType}"/>
 						</span>
 					</li>
+					<!-- RANGE removed
 					<li class="detail">
 						<span>
 							<fmt:message key="car.details.range"/>
@@ -100,7 +101,7 @@
 								<c:otherwise>(<fmt:message key="application.value.not.available"/>)</c:otherwise>
 							</c:choose>
 						</span>
-					</li>
+					</li>-->
 				</ul>			 
 			</nav>
 		</section>
@@ -113,8 +114,7 @@
 							<fmt:message key="car.details.price.use"/>
 						</span>
 						<span>
-							<mobi:formatMobics value="${actionBean.car.priceInUse}" type="currency" 
-											   pattern="${applicationScope.configuration.currencyPattern}"/>
+							<mobi:formatMobics value="${actionBean.car.priceInUse}" type="currencyHour" />
 						</span>
 					</li>
 					<li class="detail">
@@ -122,8 +122,7 @@
 							<fmt:message key="car.details.price.locked"/>
 						</span>
 						<span>
-							<mobi:formatMobics value="${actionBean.car.priceReserved}" type="currency" 
-											   pattern="${applicationScope.configuration.currencyPattern}"/>
+							<mobi:formatMobics value="${actionBean.car.priceReserved}" type="currencyHour" />
 						</span>
 					</li>
 					<li class="detail">
@@ -131,9 +130,7 @@
 							<fmt:message key="car.details.price.included"/>
 						</span>
 						<span>
-							<mobi:formatMobics value="${actionBean.car.distanceThreshold}" type="distance" 
-											   pattern="${applicationScope.configuration.meterPattern}"
-											   pattern2="${applicationScope.configuration.kilometerPattern}"/>
+							<mobi:formatMobics value="${actionBean.car.distanceThreshold}" type="distance" />
 						</span>
 					</li>
 					<li class="detail">
@@ -141,8 +138,7 @@
 							<fmt:message key="car.details.price.extra"/>
 						</span>
 						<span>
-							<mobi:formatMobics value="${actionBean.car.costPerExtraKm}" type="currency" 
-											   pattern="${applicationScope.configuration.currencyPattern}"/>
+							<mobi:formatMobics value="${actionBean.car.costPerExtraKm}" type="currencySymbol" />
 						</span>
 					</li>
 				</ul>			 
@@ -169,9 +165,7 @@
 								<fmt:message key="car.details.distance"/> 
 							</span>
 							<span>
-								<mobi:formatMobics value="${actionBean.car.distance}" type="distance" 
-												   pattern="${applicationScope.configuration.meterPattern}" 
-												   pattern2="${applicationScope.configuration.kilometerPattern}" />
+								<mobi:formatMobics value="${actionBean.car.distance}" type="distance" />
 							</span>
 						</li>
 					</ul>
