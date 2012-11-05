@@ -18,18 +18,8 @@
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 		<attribute>
-			<description>Specifies whether the value is to be formatted as number, currency, or distance.</description>
+			<description>Specifies whether the value is to be formatted as distance, time, timeWeek, currencySymbol, currencyHour.</description>
 			<name>type</name>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description>Custom formatting pattern.</description>
-			<name>pattern</name>
-			<rtexprvalue>true</rtexprvalue>
-		</attribute>
-		<attribute>
-			<description>Distance km formatting pattern.</description>
-			<name>pattern2</name>
 			<rtexprvalue>true</rtexprvalue>
 		</attribute>
 	</tag>

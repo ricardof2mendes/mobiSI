@@ -14,10 +14,13 @@ package com.criticalsoftware.mobics.format;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.MessageFormat;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -43,13 +46,17 @@ public class FormatMobics extends BodyTagSupport {
     private static final Logger LOGGER = LoggerFactory.getLogger(FormatMobics.class);
 
     private static final String DISTANCE = "distance";
-    
+
     private static final String TIME = "time";
+
+    private static final String TIME_WEEK = "timeWeek";
+
+    private static final String CURRENCY_HOUR = "currencyHour";
+
+    private static final String CURRENCY_SYMBOL = "currencySymbol";
 
     private Object value;
     private String type;
-    private String pattern;
-    private String pattern2;
     private ResourceBundle resources;
 
     public FormatMobics() {
@@ -58,22 +65,21 @@ public class FormatMobics extends BodyTagSupport {
     }
 
     private void init() {
-        value = type = pattern = pattern2 = null;
+        value = type = null;
         resources = ResourceBundle.getBundle("Resources");
     }
 
     public int doEndTag() throws JspException {
         String formatted = null;
 
-        if (value == null || value.equals("") || type == null || type.equals("") || pattern == null
-                || pattern.equals("")) {
+        if (value == null || value.equals("") || type == null || type.equals("")) {
             LOGGER.warn("One or more required fields are not present");
             return EVAL_PAGE;
         }
-
         /*
          * If 'value' is a String, it is first parsed into an instance of java.lang.Number
          */
+
         if (value instanceof String) {
             try {
                 if (((String) value).indexOf('.') != -1) {
@@ -84,7 +90,9 @@ public class FormatMobics extends BodyTagSupport {
             } catch (NumberFormatException nfe) {
                 throw new JspException(Resources.getMessage("FORMAT_NUMBER_PARSE_ERROR", value), nfe);
             }
-        } 
+        } else if (value instanceof Integer) {
+            value = BigDecimal.valueOf(((Integer) value).longValue());
+        }
 
         // If locale is null check for the system property
         Locale locale = null;
@@ -102,46 +110,114 @@ public class FormatMobics extends BodyTagSupport {
         if (locale != null) {
             // Create formatter
             DecimalFormatSymbols symbols = new DecimalFormatSymbols(locale);
-            NumberFormat formatter = new DecimalFormat(pattern, symbols);
-            String key = "price.hour";
+            NumberFormat formatter;
+            DateFormat dateFormatter;
+            String formatPattern;
+            String key;
 
+            /* --------------------- Format week ------------------- */
+            if (TIME_WEEK.equals(type)) {
+                key = "time.yesterday";
+
+                Calendar c = (Calendar) value;
+                Calendar today = Calendar.getInstance(), yesterday = Calendar.getInstance();
+                yesterday.add(Calendar.DAY_OF_WEEK, -1);
+
+                // if today
+                if (today.get(Calendar.DAY_OF_WEEK) == c.get(Calendar.DAY_OF_WEEK)) {
+                    formatPattern = System.getProperty("mobics.config.time.pattern");
+                    if (formatPattern == null) {
+                        LOGGER.warn("System property «mobics.config.time.pattern» is missing!");
+                        return EVAL_PAGE;
+                    }
+                    dateFormatter = new SimpleDateFormat(formatPattern, locale);
+                    formatted = dateFormatter.format(c.getTime());
+                } else
+                // if yesterday
+                if (yesterday.get(Calendar.DAY_OF_WEEK) == c.get(Calendar.DAY_OF_WEEK)) {
+                    formatted = MessageFormat.format(resources.getString(key), c.getTime());
+                } else
+                // this week
+                if (today.get(Calendar.WEEK_OF_YEAR) == c.get(Calendar.WEEK_OF_YEAR)) {
+                    formatPattern = System.getProperty("mobics.config.week.pattern");
+                    if (formatPattern == null) {
+                        LOGGER.warn("System property «mobics.config.day.week.pattern» is missing!");
+                        return EVAL_PAGE;
+                    }
+                    dateFormatter = new SimpleDateFormat("EEEE", locale);
+                    formatted = dateFormatter.format(c.getTime());
+                } else {
+                    // otherwise
+                    formatPattern = System.getProperty("mobics.config.date.pattern");
+                    if (formatPattern == null) {
+                        LOGGER.warn("System property «mobics.config.date.pattern» is missing!");
+                        return EVAL_PAGE;
+                    }
+                    dateFormatter = new SimpleDateFormat(formatPattern, locale);
+                    formatted = dateFormatter.format(c.getTime());
+                }
+
+            } else
+
+            /* --------------------- Format distance ------------------- */
             if (DISTANCE.equals(type)) {
                 key = "distance.meter";
-                // If distance comes in BigDecimal
-                if(value instanceof BigDecimal) {
-                    if (((BigDecimal) value).compareTo(new BigDecimal(1000)) >= 0) {
-                        if (pattern2 == null || pattern2.equals("")) {
-                            LOGGER.warn("Kilometer pattern not supplied! Formatting with meter pattern.");
-                        } else {
-                            formatter = new DecimalFormat(pattern2, symbols);
-                        }
-                        key = "distance.kilometer";
-                        value = ((BigDecimal) value).multiply(new BigDecimal(0.001));
+                formatPattern = System.getProperty("mobics.config.meter.pattern");
+                if (formatPattern == null) {
+                    LOGGER.warn("System property «mobics.config.meter.pattern» is missing!");
+                    return EVAL_PAGE;
+                }
+                formatter = new DecimalFormat(formatPattern, symbols);
+
+                if (((BigDecimal) value).compareTo(new BigDecimal(0)) == 0
+                        || ((BigDecimal) value).compareTo(new BigDecimal(1000)) >= 0) {
+                    key = "distance.kilometer";
+                    formatPattern = System.getProperty("mobics.config.kilometer.pattern");
+                    if (formatPattern == null) {
+                        LOGGER.warn("System property «mobics.config.kilometer.pattern» is missing!");
+                        return EVAL_PAGE;
                     }
-                }else 
-                 // If distance comes in Integer
-                    if(value instanceof Integer) {
-                    if (((Integer) value) >= 1000) {
-                        if (pattern2 == null || pattern2.equals("")) {
-                            LOGGER.warn("Kilometer pattern not supplied! Formatting with meter pattern.");
-                        } else {
-                            formatter = new DecimalFormat(pattern2, symbols);
-                        }
-                        key = "distance.kilometer";
-                        value = ((Integer) value) * 0.001;
-                    }
+                    formatter = new DecimalFormat(formatPattern, symbols);
+                    value = ((BigDecimal) value).multiply(new BigDecimal(0.001));
                 }
                 formatted = MessageFormat.format(resources.getString(key), formatter.format(value));
-            } else if (TIME.equals(type)) {
+            } else
+
+            /* --------------------- Format time ------------------- */
+            if (TIME.equals(type)) {
                 key = "time.minutes";
-                Integer minutes = (((Integer) value) % 3600) / 60;
+                Integer minutes = (((BigDecimal) value).intValue() % 3600) / 60;
                 formatted = MessageFormat.format(resources.getString(key), minutes);
-                if (((Integer) value) >= 3600) {
+                if (((BigDecimal) value).intValue() >= 3600) {
                     key = "time.hours";
-                    Integer hours = ((Integer) value) / 3600;
+                    Integer hours = ((BigDecimal) value).intValue() / 3600;
                     formatted = MessageFormat.format(resources.getString(key), hours, minutes);
                 }
-            } else {
+            } else
+                
+            /* --------------------- Format currency ------------------- */
+            if (CURRENCY_SYMBOL.equals(type)) {
+                key = "price.currency";
+
+                formatPattern = System.getProperty("mobics.config.currency.pattern");
+                if (formatPattern == null) {
+                    LOGGER.warn("System property «mobics.config.currency.pattern» is missing!");
+                    return EVAL_PAGE;
+                }
+                formatter = new DecimalFormat(formatPattern, symbols);
+                formatted = MessageFormat.format(resources.getString(key), formatter.format(value));
+            } else
+                
+            /* --------------------- Format currency per hour ------------------- */
+            if (CURRENCY_HOUR.equals(type)) {
+                key = "price.hour";
+
+                formatPattern = System.getProperty("mobics.config.currency.pattern");
+                if (formatPattern == null) {
+                    LOGGER.warn("System property «mobics.config.currency.pattern» is missing!");
+                    return EVAL_PAGE;
+                }
+                formatter = new DecimalFormat(formatPattern, symbols);
                 formatted = MessageFormat.format(resources.getString(key), formatter.format(value));
             }
         } else {
@@ -184,34 +260,6 @@ public class FormatMobics extends BodyTagSupport {
      */
     public void setType(String type) {
         this.type = type;
-    }
-
-    /**
-     * @return the pattern
-     */
-    public String getPattern() {
-        return pattern;
-    }
-
-    /**
-     * @param pattern the pattern to set
-     */
-    public void setPattern(String pattern) {
-        this.pattern = pattern;
-    }
-
-    /**
-     * @return the pattern2
-     */
-    public String getPattern2() {
-        return pattern2;
-    }
-
-    /**
-     * @param pattern2 the pattern2 to set
-     */
-    public void setPattern2(String pattern2) {
-        this.pattern2 = pattern2;
     }
 
 }
