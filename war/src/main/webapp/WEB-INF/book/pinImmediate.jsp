@@ -21,10 +21,11 @@
 				<label>${actionBean.car.licensePlate}</label>
 				<label>${actionBean.car.carBrandName}&nbsp;${actionBean.car.carModelName}</label>
 				<label>${actionBean.car.fuelType}&nbsp;
+					<!-- RANGE removed
 					<c:choose>
 						<c:when test="${actionBean.car.range != null}">(${actionBean.car.range})</c:when>
 						<c:otherwise>(<fmt:message key="application.value.not.available"/>)</c:otherwise>
-					</c:choose>
+					</c:choose>-->
 				</label>					
 			</div>
 		</section>
@@ -43,7 +44,7 @@
 					<stripes:hidden name="car.carModelName"/>
 					<stripes:hidden name="car.carBrandName"/>
 					<stripes:hidden name="car.fuelType"/>
-					<stripes:hidden name="car.range"/>
+					<!-- RANGE removed <stripes:hidden name="car.range"/> -->
 				</stripes:form>			
 			</div>	
 		</section>

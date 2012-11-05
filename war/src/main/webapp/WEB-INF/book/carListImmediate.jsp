@@ -22,21 +22,19 @@
 												<span>${car.licensePlate}</span>
 												<span>${car.carBrandName}&nbsp;${car.carModelName}</span>
 												<span><fmt:message key="FuelType.${car.fuelType}"/>&nbsp;
+													<!-- RANGE removed
 													<c:choose>
 														<c:when test="${car.range != null}">(${car.range})</c:when>
 														<c:otherwise>(<fmt:message key="application.value.not.available"/>)</c:otherwise>
-													</c:choose>
+													</c:choose>-->
 												</span>
 											</div>
 											<div>
 												<span>
-													<mobi:formatMobics value="${car.priceInUse}" type="currency" 
-																	   pattern="${applicationScope.configuration.currencyPattern}"/>
+													<mobi:formatMobics value="${car.priceInUse}" type="currencyHour" />
 												</span>
 												<span>
-													<mobi:formatMobics value="${car.distance}" type="distance" 
-																	   pattern="${applicationScope.configuration.meterPattern}" 
-																	   pattern2="${applicationScope.configuration.kilometerPattern}" />
+													<mobi:formatMobics value="${car.distance}" type="distance"  />
 												</span>
 											</div>
 										</div>
@@ -55,10 +53,11 @@
 												<span>${car.licensePlate}</span>
 												<span>${car.carBrandName}&nbsp;${car.carModelName}</span>
 												<span>${car.fuelType}&nbsp;
+													<!-- RANGE removed
 													<c:choose>
 														<c:when test="${actionBean.car.range != null}">(${actionBean.car.range})</c:when>
 														<c:otherwise>(<fmt:message key="application.value.not.available"/>)</c:otherwise>
-													</c:choose>
+													</c:choose>-->
 												</span>
 											</div>
 											<div>

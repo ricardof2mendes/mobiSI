@@ -44,8 +44,7 @@
 												</div>
 												<div>
 													<span>
-														<mobi:formatMobics value="${car.priceInUse}" type="currency" 
-																		   pattern="${applicationScope.configuration.currencyPattern}"/>
+														<mobi:formatMobics value="${car.priceInUse}" type="currencyHour" />
 													</span>
 													<span></span>
 												</div>
