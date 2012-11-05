@@ -18,24 +18,24 @@ package com.criticalsoftware.mobics.presentation.util;
  */
 public enum Theme {
 
-    DEFAULT("", " orange"),
-    GREEN("krakatoa", "map green"),
+    DEFAULT("", "map darkblue"),
+    GREEN("krakatoa", "map darkgreen"),
     ORANGE("localhost", "map darkred");
 
     private String host;
 
-    private String theme;
+    private String style;
 
     private Theme(String host, String theme) {
         this.host = host;
-        this.theme = theme;
+        this.style = theme;
     }
 
     public static String getTheme(String host) {
-        String theme = DEFAULT.theme;
+        String theme = DEFAULT.style;
         for (Theme e : Theme.values()) {
             if (e.getHost().equals(host)) {
-                theme = e.getTheme();
+                theme = e.getStyle();
                 break;
             }
         }
@@ -51,10 +51,10 @@ public enum Theme {
     }
 
     /**
-     * @return the theme
+     * @return the style
      */
-    public String getTheme() {
-        return theme;
+    public String getStyle() {
+        return style;
     }
     
     
