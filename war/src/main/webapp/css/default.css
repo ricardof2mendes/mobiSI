@@ -77,6 +77,7 @@ nav#menu ul {
 }
 
 nav#menu ul li {
+	color: #B5B5B5;
 	background-color: #515151;
 	font-weight: bold;
 	font-size: normal;
@@ -84,54 +85,94 @@ nav#menu ul li {
 	border-bottom: 1px solid #797979;
 }
 
-nav#menu ul li.book {
-	background-image: url(../img/menu/bookacar-active.png), url(../img/sombra_menus_10px.png);
+nav#menu ul li.booking {
+	background-image: url(../img/menu/bookacar-inactive.png), url(../img/sombra_menus_10px.png);
 	background-repeat: no-repeat, repeat-x;
 	background-position: 10px 50%, top left;
 }
 
+nav#menu ul li.bookingActive {
+	background-image: url(../img/menu/bookacar-active.png), url(../img/sombra_menus_10px.png);
+	background-color: #8C8C8C;
+	color: #E4E4E4;
+}
+
 nav#menu ul li.trip {
-	background-image: url(../img/menu/trip-active.png);
+	background-image: url(../img/menu/trip-inactive.png);
 	background-repeat: no-repeat;
 	background-position: 10px 50%;
+}
+
+nav#menu ul li.tripActive {
+	background-image: url(../img/menu/trip-active.png), url(../img/sombra_menus_10px.png);
+	background-color: #8C8C8C;
+	color: #E4E4E4;
 }
 
 nav#menu ul li.recent {
-	background-image: url(../img/menu/recent-active.png);
+	background-image: url(../img/menu/recent-inactive.png);
 	background-repeat: no-repeat;
 	background-position: 10px 50%;
 }
 
+nav#menu ul li.recentActive {
+	background-image: url(../img/menu/recent-active.png), url(../img/sombra_menus_10px.png);
+	background-color: #8C8C8C;
+	color: #E4E4E4;
+}
 
-nav#menu ul li.mess {
-	background-image: url(../img/menu/messages-active.png);
+nav#menu ul li.messages {
+	background-image: url(../img/menu/messages-inactive.png);
 	background-repeat: no-repeat;
 	background-position: 10px 50%;
 }
 
+nav#menu ul li.messagesActive {
+	background-image: url(../img/menu/messages-active.png), url(../img/sombra_menus_10px.png);
+	background-color: #8C8C8C;
+	color: #E4E4E4;
+}
 
 nav#menu ul li.contacts {
-	background-image: url(../img/menu/contacts-active.png);
+	background-image: url(../img/menu/contacts-inactive.png);
 	background-repeat: no-repeat;
 	background-position: 10px 50%;
+}
+
+nav#menu ul li.contactsActive {
+	background-image: url(../img/menu/contacts-active.png), url(../img/sombra_menus_10px.png);
+	background-color: #8C8C8C;
+	color: #E4E4E4;
 }
 
 nav#menu ul li.preferences {
-	background-image: url(../img/menu/preferences-active.png);
+	background-image: url(../img/menu/preferences-inactive.png);
 	background-repeat: no-repeat;
 	background-position: 10px 50%;
 }
 
+nav#menu ul li.preferencesActive {
+	background-image: url(../img/menu/preferences-active.png), url(../img/sombra_menus_10px.png);
+	background-color: #8C8C8C;
+	color: #E4E4E4;
+}
+
 nav#menu ul li.account {
-	background-image: url(../img/menu/account-active.png);
+	background-image: url(../img/menu/account-inactive.png);
 	background-repeat: no-repeat;
 	background-position: 10px 50%;
 	border-bottom: 0;
 }
 
+nav#menu ul li.accountActive {
+	background-image: url(../img/menu/account-active.png), url(../img/sombra_menus_10px.png);
+	background-color: #8C8C8C;
+	color: #E4E4E4;
+}
+
 nav#menu ul li a {
 	display: block;
-	color: #E4E4E4;
+	color: inherit;
 	padding-left: 60px;
 }
 
@@ -674,6 +715,52 @@ nav.threeColumnList  ul li a > div:nth-child(2) > div:nth-child(2) > span.unavai
 	color: #FF0000;
 }
 
+/************************************ Two columns list */
+
+nav.twoColumnList ul li {
+	background: #FFF url(../img/seta.png) no-repeat 100% 50%;
+	border-bottom: 1px solid #CCC;
+}
+
+nav.twoColumnList ul li a {
+	display: block;
+	padding: 5px 0;
+	min-height: 40px;
+}
+
+nav.twoColumnList  ul li a > div:nth-child(1) {
+	width: 60%;
+	float: left;
+}
+
+nav.twoColumnList  ul li a > div:nth-child(1) > span {
+	font-size: normal;
+	float: left;
+	width: 100%;
+}
+nav.twoColumnList  ul li a > div:nth-child(1) > span:nth-child(1) {
+	font-weight: bold;
+	color: #333;
+}
+nav.twoColumnList  ul li a > div:nth-child(1) > span:nth-child(2) {
+	color: #999;
+}
+
+nav.twoColumnList  ul li a > div:nth-child(2) {
+	width: 40%;
+	float: right;
+	padding-right: 25px;
+	text-align: right;
+}
+
+nav.twoColumnList  ul li a > div:nth-child(2) > span{
+	color: #3366FF;
+}
+
+
+
+
+
 /************************************ Order navigation bar*/
 
 nav.orderCriteria {
@@ -906,7 +993,7 @@ article.pin form > div > input {
 	margin: 10px auto;
 }
 
-.messages,
+.msg,
 .errors {
 	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
 	-moz-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
@@ -951,12 +1038,12 @@ article.pin form > div > input {
 	margin-bottom: 10px;
 }
 
-.messages {
+.msg {
 	border: 1px solid #AACE65;
 	background: #DDFF85 url(../img/success.png) no-repeat top left;
 }
 
-.messages li {
+.msg li {
 	color: #669900;
 	font: bold 14px Helvetica, Arial, sans-serif;
 	padding: 15px 0 10px 0;
