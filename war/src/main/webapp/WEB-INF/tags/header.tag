@@ -18,25 +18,27 @@
 
 <nav id="menu" class="hidden">
 	<ul>
-		<li class="book">
+		<li class="booking ${actionBean.activeMenu == 'booking' ? 'bookingActive' : ''}">
 			<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.HomeActionBean">
 				<fmt:message key="home.title"/>
 			</stripes:link>
 		</li>
-		<li class="trip">
+		<li class="trip ${actionBean.activeMenu == 'trip' ? 'tripActive' : ''}">
 			<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean">
 				<fmt:message key="current.trip.title"/>
 			</stripes:link>
 		</li>
-		<li class="recent">
-			<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.recent.RecentHistoryActionBean">
+		<li class="recent ${actionBean.activeMenu == 'recent' ? 'recentActive' : ''}">
+			<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.recent.RecentActivitiesActionBean">
 				<fmt:message key="recent.title"/>
 			</stripes:link>
 		</li>
-		<li class="mess"><a href="#">Messages</a></li>
-		<li class="contacts"><a href="#">Contacts</a></li>
-		<li class="preferences"><a href="#">Preferences</a></li>
-		<li class="account">
+		
+		<li class="messages ${actionBean.activeMenu == 'messages' ? 'messagesActive' : ''}"><a href="#">Messages</a></li>
+		<li class="contacts ${actionBean.activeMenu == 'contacts' ? 'contactsActive' : ''}"><a href="#">Contacts</a></li>
+		<li class="preferences ${actionBean.activeMenu == 'preferences' ? 'preferencesActive' : ''}"><a href="#">Preferences</a></li>
+
+		<li class="account ${actionBean.activeMenu == 'account' ? 'accountActive' : ''}">
 			<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.account.AccountActionBean">
 				<fmt:message key="account.title"/>
 			</stripes:link>
