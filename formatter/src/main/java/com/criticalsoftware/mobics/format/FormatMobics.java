@@ -138,7 +138,7 @@ public class FormatMobics extends BodyTagSupport {
                     formatted = MessageFormat.format(resources.getString(key), c.getTime());
                 } else
                 // this week
-                if (today.get(Calendar.WEEK_OF_YEAR) == c.get(Calendar.WEEK_OF_YEAR)) {
+                if (yesterday.get(Calendar.WEEK_OF_YEAR) == c.get(Calendar.WEEK_OF_YEAR)) {
                     formatPattern = System.getProperty("mobics.config.week.pattern");
                     if (formatPattern == null) {
                         LOGGER.warn("System property «mobics.config.day.week.pattern» is missing!");
