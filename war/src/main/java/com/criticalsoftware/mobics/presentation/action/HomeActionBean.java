@@ -43,4 +43,9 @@ public class HomeActionBean extends BaseActionBean {
     public Resolution bookInAdvance() {
         return new ForwardResolution(AdvanceBookingActionBean.class);
     }
+    
+    @Override
+    public String getActiveMenu(){
+        return "booking";
+    }
 }

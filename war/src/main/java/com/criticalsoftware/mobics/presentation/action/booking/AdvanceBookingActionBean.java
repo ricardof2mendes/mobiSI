@@ -38,7 +38,7 @@ import com.criticalsoftware.mobics.carclub.LocationDTO;
 import com.criticalsoftware.mobics.carclub.ZoneDTO;
 import com.criticalsoftware.mobics.fleet.CarTypeEnum;
 import com.criticalsoftware.mobics.fleet.ZoneWithPolygonDTO;
-import com.criticalsoftware.mobics.presentation.action.recent.RecentHistoryActionBean;
+import com.criticalsoftware.mobics.presentation.action.recent.RecentActivitiesActionBean;
 import com.criticalsoftware.mobics.presentation.extension.DatetimeTypeConverter;
 import com.criticalsoftware.mobics.presentation.security.AuthenticationUtil;
 import com.criticalsoftware.mobics.presentation.security.MobiCSSecure;
@@ -175,7 +175,7 @@ public class AdvanceBookingActionBean extends BookingActionBean {
                         .getPassword()));
 
         if (!bookingWSServiceStub.checkOverlappedBookingForCustomer(start, end)) {
-            errors.addGlobalError(new LocalizableError("book.advance.validation.overlapped.book"));
+            //errors.addGlobalError(new LocalizableError("book.advance.validation.overlapped.book"));
         }
     }
 
@@ -201,7 +201,6 @@ public class AdvanceBookingActionBean extends BookingActionBean {
         Calendar start = Calendar.getInstance(), end = Calendar.getInstance();
         start.setTimeInMillis(startDate.getTime());
         end.setTimeInMillis(endDate.getTime());
-
         BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
                 Configuration.INSTANCE.getBookingEndpoint());
         bookingWSServiceStub._getServiceClient().addHeader(
@@ -210,7 +209,7 @@ public class AdvanceBookingActionBean extends BookingActionBean {
         bookingWSServiceStub.createAdvanceBookingWithCustomerPin(licensePlate, String.valueOf(pin), start, end);
         getContext().getMessages().add(new LocalizableMessage("car.details.book.done"));
 
-        return new RedirectResolution(RecentHistoryActionBean.class).flash(this);
+        return new RedirectResolution(RecentActivitiesActionBean.class).flash(this);
     }
 
     // --------------------------------------------------

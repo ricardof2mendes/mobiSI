@@ -39,68 +39,102 @@ import com.criticalsoftware.mobics.proxy.booking.CustomerNotFoundExceptionExcept
  */
 @MobiCSSecure
 public class TripActionBean extends BaseActionBean {
-    
-    private TripDetailsDTO last; 
-    
-    private CurrentTripDTO current; 
+
+    private TripDetailsDTO last;
+
+    private CurrentTripDTO current;
 
     @DefaultHandler
     @DontValidate
-    public Resolution main() throws RemoteException, UnsupportedEncodingException, CustomerNotFoundExceptionException, BookingNotFoundExceptionException {
+    public Resolution main() throws RemoteException, UnsupportedEncodingException, CustomerNotFoundExceptionException,
+            BookingNotFoundExceptionException {
         BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
                 Configuration.INSTANCE.getBookingEndpoint());
         bookingWSServiceStub._getServiceClient().addHeader(
                 AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
                         .getPassword()));
-        
+
         current = bookingWSServiceStub.getCurrentTripDetails();
         ForwardResolution resolution = new ForwardResolution("/WEB-INF/trip/currentTrip.jsp");
-        
-        if(current == null || current.getLicensePlate() == null || current.getLicensePlate().length() == 0) {
+
+        if (current == null || current.getLicensePlate() == null || current.getLicensePlate().length() == 0) {
             last = bookingWSServiceStub.getLastTripDetails();
             resolution = new ForwardResolution("/WEB-INF/trip/lastTrip.jsp");
         }
 
         return resolution;
     }
-    
+
     public Resolution lockCar() {
         getContext().getMessages().add(new LocalizableMessage("current.trip.lock.car.message"));
         return new RedirectResolution(this.getClass()).flash(this);
     }
-    
+
     public Resolution unlockCar() {
         getContext().getMessages().add(new LocalizableMessage("current.trip.unlock.car.message"));
         return new RedirectResolution(this.getClass()).flash(this);
     }
-    
+
     public Resolution signal() {
         getContext().getMessages().add(new LocalizableMessage("current.trip.car.signaling"));
         return new RedirectResolution(this.getClass()).flash(this);
     }
-    
+
     public Resolution endTrip() throws UnsupportedEncodingException, RemoteException, BookingNotFoundExceptionException {
-        
+
         BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
                 Configuration.INSTANCE.getBookingEndpoint());
         bookingWSServiceStub._getServiceClient().addHeader(
                 AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
                         .getPassword()));
-        
-        if(bookingWSServiceStub.isCustomerInOngoingTrip()){
+
+        if (bookingWSServiceStub.isCustomerInOngoingTrip()) {
             bookingWSServiceStub.closeActiveBooking();
             getContext().getMessages().add(new LocalizableMessage("current.trip.end.trip.message"));
         }
         return new RedirectResolution(this.getClass()).flash(this);
     }
-    
+
     /**
      * Reverse geolocation string
      * 
      * @return the address string
      */
     public String getLocation() {
-        return GeolocationUtil.getAddressFromCoordinates(current.getLatitude().toString(), current.getLongitude().toString());
+        String location = "";
+        if (current.getLatitude() != null && current.getLongitude() != null) {
+            location = GeolocationUtil.getAddressFromCoordinates(current.getLatitude().toString(), current
+                    .getLongitude().toString());
+        }
+        return location;
+    }
+
+    /**
+     * Get start location
+     * 
+     * @return the adress string
+     */
+    public String getStartLocation() {
+        String location = "";
+        if (last.getStartLatitude() != null && last.getStartLongitude() != null) {
+            location = GeolocationUtil.getAddressFromCoordinates(last.getStartLatitude().toString(), last.getStartLongitude()
+                    .toString());
+        }
+        return location;
+    }
+
+    /**
+     * Get end location
+     * 
+     * @return the adress string
+     */
+    public String getEndLocation() {
+        String location = "";
+        if (last.getEndtLatitude() != null && last.getEndLongitude() != null) {
+            location = GeolocationUtil.getAddressFromCoordinates(last.getEndtLatitude().toString(), last.getEndLongitude()
+                    .toString());
+        }
+        return location;
     }
 
     /**
@@ -116,6 +150,5 @@ public class TripActionBean extends BaseActionBean {
     public TripDetailsDTO getLast() {
         return last;
     }
-    
-    
+
 }

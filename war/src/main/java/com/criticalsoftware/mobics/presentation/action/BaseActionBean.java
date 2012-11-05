@@ -46,6 +46,13 @@ public abstract class BaseActionBean implements ActionBean {
     public final void setContext(ActionBeanContext context) {
         this.context = (MobiCSActionBeanContext) context;
     }
+    
+    public String getActiveMenu(){
+        Class<? extends BaseActionBean> aClass = getClass();
+        Package aPackage = aClass.getPackage();
+        String name = aPackage.getName(); 
+        return name.substring(name.lastIndexOf('.') + 1);
+    }
 
     /**
      * Get the theme
@@ -65,7 +72,7 @@ public abstract class BaseActionBean implements ActionBean {
      * Check if action bean it has validation field errors
      * @return
      */
-    public boolean getFieldErrors(){
+    public final boolean getFieldErrors(){
         return this.context.getValidationErrors().hasFieldErrors();
     }
 
