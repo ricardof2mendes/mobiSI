@@ -274,7 +274,7 @@ public class DefaultExceptionHandler implements AutoExceptionHandler {
             HttpServletRequest request,
             HttpServletResponse response) {
         LOGGER.error(exception.getMessage(), exception);
-        return insideJobToError("error.IllegalDateExceptionException", request, response);
+        return insideJob("error.IllegalDateExceptionException", request, response);
     }
 
     /**
