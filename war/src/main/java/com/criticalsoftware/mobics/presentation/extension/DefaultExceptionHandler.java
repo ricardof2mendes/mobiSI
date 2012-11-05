@@ -309,6 +309,22 @@ public class DefaultExceptionHandler implements AutoExceptionHandler {
         return insideJobToError("error.CarLicensePlateNotFoundExceptionException", request, response);
     }
     
+    /**
+     * Send them to the global error page.
+     * 
+     * @param exception a Car Type Not Found
+     * @param request The HttpServletRequest
+     * @param response The HttpServletResponse
+     * @return A ForwardResolution
+     */
+    public Resolution handle(
+            com.criticalsoftware.mobics.proxy.booking.BookingNotFoundExceptionException exception,
+            HttpServletRequest request,
+            HttpServletResponse response) {
+        LOGGER.error(exception.getMessage(), exception);
+        return insideJobToError("error.BookNotFoundExceptionException", request, response);
+    }
+    
     
     /**
      * Return the action bean page with errors displayed
