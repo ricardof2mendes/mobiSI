@@ -32,8 +32,6 @@ public class Configuration {
 
     // Main configurations
 
-    private final String locale = "en";
-
     private final String meterPattern = "#";
 
     private final String kilometerPattern = "#,##0.0";
@@ -49,6 +47,8 @@ public class Configuration {
     private final String authenticationFailureString = "Failed Authentication";
 
     private final String carClubEndpoint = "http://mobics02.critical.pt:8080/mobics-webservices/CarClub";
+    
+    private final String carEndpoint = "http://mobics02.critical.pt:8080/mobics-webservices/Car";
 
     private final String fleetEndpoint = "http://mobics02.critical.pt:8080/mobics-webservices/Fleet";
 
@@ -69,23 +69,6 @@ public class Configuration {
     private final int maxResults = 99;
     
     private final int recentsFilterMonthGap = 6;
-
-    /**
-     * Gets the locale.
-     * 
-     * @param culture the user's culture
-     * @return the locale
-     */
-    public Locale getLocale(String culture) {
-        return new Locale(getValue("mobics.config.locale." + culture, locale));
-    }
-
-    /**
-     * @return the locale
-     */
-    public String getLocale() {
-        return getValue("mobics.config.locale", locale);
-    }
 
     /**
      * @return the meterPattern
@@ -120,6 +103,13 @@ public class Configuration {
      */
     public String getCarClubEndpoint() {
         return getValue("mobics.config.endpoint.carclub", carClubEndpoint);
+    }
+    
+    /**
+     * @return the carEndpoint
+     */
+    public String getCarEndpoint() {
+        return getValue("mobics.config.endpoint.car", carEndpoint);
     }
 
     /**

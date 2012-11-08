@@ -55,17 +55,36 @@ public abstract class BaseActionBean implements ActionBean {
     }
 
     /**
-     * Get the theme
+     * Get the splash screen style
      * @return
      */
-    public final String getTheme() {
-        String theme;
+    public final String getSplashScreenStyle() {
+        String style;
         if(this.getContext().getUser() != null) {
-            theme = this.getContext().getUser().getCarClubStyle();
+            style = new StringBuilder(this.getContext().getUser().getCarClubColor()).append(" ").append(this.getContext().getUser().getCarClubTheme()).toString().toLowerCase();
         } else {
-            theme = Theme.getTheme(this.getContext().getRequest().getServerName());
+            style = Theme.getTheme(this.getContext().getRequest().getServerName());
         }
-        return theme;
+        
+        if(style.indexOf(Theme.WARM) > 0) {
+            style.replaceAll(" ", "");
+        }
+        
+        return style;
+    }
+    
+    /**
+     * Get the header style
+     * @return
+     */
+    public final String getHeaderStyle() {
+        String style;
+        if(this.getContext().getUser() != null) {
+            style = this.getContext().getUser().getCarClubColor();
+        } else {
+            style = Theme.getColor(this.getContext().getRequest().getServerName());
+        }
+        return style;
     }
     
     /**

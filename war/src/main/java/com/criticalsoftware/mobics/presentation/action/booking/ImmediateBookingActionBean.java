@@ -254,15 +254,6 @@ public class ImmediateBookingActionBean extends BookingActionBean {
         return new ForwardResolution("/WEB-INF/car/carDetails.jsp");
     }
 
-    @ValidationMethod(on = "carLocation", when = ValidationState.NO_ERRORS)
-    public void validateCarAvailability(ValidationErrors errors) throws RemoteException,
-            com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException {
-        if (!new BookingWSServiceStub(Configuration.INSTANCE.getBookingEndpoint())
-                .isCarAvailableForImmediateBooking(licensePlate)) {
-            errors.addGlobalError(new LocalizableError("car.details.validation.car.not.available"));
-        }
-    }
-
     /**
      * Car location on map
      * 
@@ -315,7 +306,12 @@ public class ImmediateBookingActionBean extends BookingActionBean {
      * @return the address string
      */
     public String getLocation() {
-        return GeolocationUtil.getAddressFromCoordinates(car.getLatitude().toString(), car.getLongitude().toString());
+        String location = new LocalizableMessage("application.value.not.available").getMessage(getContext().getLocale());
+        if (car.getLatitude() != null && car.getLongitude() != null) {
+            location = GeolocationUtil.getAddressFromCoordinates(car.getLatitude().toString(), car.getLongitude()
+                    .toString());
+        }
+        return location;
     }
 
     /**

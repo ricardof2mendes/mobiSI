@@ -12,6 +12,7 @@ import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.Resolution;
 
 import com.criticalsoftware.mobics.presentation.action.booking.AdvanceBookingActionBean;
+import com.criticalsoftware.mobics.presentation.action.booking.FindCarForLaterActionBean;
 import com.criticalsoftware.mobics.presentation.security.MobiCSSecure;
 
 /**
@@ -36,7 +37,7 @@ public class HomeActionBean extends BaseActionBean {
 
     @DontValidate
     public Resolution findCarForLater() {
-        return new ForwardResolution("/WEB-INF/book/findCarForLater.jsp");
+        return new ForwardResolution(FindCarForLaterActionBean.class);
     }
 
     @DontValidate

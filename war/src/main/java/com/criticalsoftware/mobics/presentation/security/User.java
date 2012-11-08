@@ -26,7 +26,9 @@ public class User {
     
     private String carClubCode;
     
-    private String carClubStyle;
+    private String carClubColor;
+    
+    private String carClubTheme;
     
     /**
      * Class constructor
@@ -39,7 +41,8 @@ public class User {
         this.password = password;
         this.carClubName = carClubName;
         this.carClubCode = carClubCode;
-        this.carClubStyle = new StringBuilder(carClubTheme.replaceAll(" ", "")).append(" ").append(carClubColor.replaceAll(" ", "")).toString().toLowerCase();
+        this.carClubColor = carClubCode;
+        this.carClubTheme = this.carClubTheme;
     }
 
     /**
@@ -66,8 +69,8 @@ public class User {
     /**
      * @return the carClubColor
      */
-    public String getCarClubStyle() {
-        return carClubStyle;
+    public String getCarClubColor() {
+        return carClubColor;
     }
 
     /**
@@ -77,4 +80,10 @@ public class User {
         return carClubCode;
     }
 
+    /**
+     * @return the carClubTheme
+     */
+    public String getCarClubTheme() {
+        return carClubTheme;
+    }
 }
