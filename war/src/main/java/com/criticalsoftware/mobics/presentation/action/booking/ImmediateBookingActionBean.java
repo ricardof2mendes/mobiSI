@@ -172,6 +172,8 @@ public class ImmediateBookingActionBean extends BookingActionBean {
             if (car == null) {
                 errors.addGlobalError(new LocalizableError("car.details.validation.car.not.found"));
             }
+        }else {
+            errors.addGlobalError(new LocalizableError("car.details.validation.car.not.found"));
         }
     }
 

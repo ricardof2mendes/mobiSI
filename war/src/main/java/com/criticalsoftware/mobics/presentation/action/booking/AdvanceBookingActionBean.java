@@ -53,6 +53,7 @@ import com.criticalsoftware.mobics.proxy.booking.CustomerNotFoundExceptionExcept
 import com.criticalsoftware.mobics.proxy.booking.ForbiddenZoneExceptionException;
 import com.criticalsoftware.mobics.proxy.booking.IllegalDateExceptionException;
 import com.criticalsoftware.mobics.proxy.booking.InvalidCustomerPinExceptionException;
+import com.criticalsoftware.mobics.proxy.booking.OverlappedBookingExceptionException;
 import com.criticalsoftware.mobics.proxy.booking.UnauthorizedCustomerExceptionException;
 import com.criticalsoftware.mobics.proxy.carclub.CarClubWSServiceStub;
 import com.criticalsoftware.mobics.proxy.carclub.LocationCodeNotFoundExceptionException;
@@ -161,24 +162,6 @@ public class AdvanceBookingActionBean extends BookingActionBean {
         return new ForwardResolution("/WEB-INF/book/pinAdvance.jsp");
     }
 
-    @ValidationMethod(on = "book", when = ValidationState.NO_ERRORS, priority = 1)
-    public void validateAdvanceBook(ValidationErrors errors) throws RemoteException, UnsupportedEncodingException,
-            CustomerNotFoundExceptionException, IllegalDateExceptionException {
-        Calendar start = Calendar.getInstance(), end = Calendar.getInstance();
-        start.setTime(startDate);
-        end.setTime(endDate);
-
-        BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
-                Configuration.INSTANCE.getBookingEndpoint());
-        bookingWSServiceStub._getServiceClient().addHeader(
-                AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
-                        .getPassword()));
-
-        if (!bookingWSServiceStub.checkOverlappedBookingForCustomer(start, end)) {
-            //errors.addGlobalError(new LocalizableError("book.advance.validation.overlapped.book"));
-        }
-    }
-
     /**
      * Booking
      * 
@@ -197,7 +180,7 @@ public class AdvanceBookingActionBean extends BookingActionBean {
             InvalidCustomerPinExceptionException, CarNotFoundExceptionException,
             CarNotAvailableForBookingExceptionException, ForbiddenZoneExceptionException,
             IllegalDateExceptionException, UnauthorizedCustomerExceptionException,
-            CarLicensePlateNotFoundExceptionException {
+            CarLicensePlateNotFoundExceptionException, OverlappedBookingExceptionException {
         Calendar start = Calendar.getInstance(), end = Calendar.getInstance();
         start.setTimeInMillis(startDate.getTime());
         end.setTimeInMillis(endDate.getTime());

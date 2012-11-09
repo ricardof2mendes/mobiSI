@@ -42,7 +42,7 @@ import com.criticalsoftware.mobics.proxy.fleet.IOExceptionException;
 public abstract class BookingActionBean extends BaseActionBean {
 
     @ValidateNestedProperties({ @Validate(field = "licensePlate"), @Validate(field = "carBrandName"),
-            @Validate(field = "carModelName"), @Validate(field = "fuelType"), @Validate(field = "range"),
+            @Validate(field = "carModelName"), @Validate(field = "fuelType.name"), @Validate(field = "range"),
             @Validate(field = "zones", converter = ZoneDTOTypeConverter.class) })
     protected CarDTO car;
 
@@ -73,6 +73,13 @@ public abstract class BookingActionBean extends BaseActionBean {
      * @throws Exception
      */
     public abstract Resolution book() throws Exception;
+    
+    /**
+     * See car details
+     * @return
+     * @throws Exception
+     */
+    public abstract Resolution carDetails() throws Exception;
 
     /**
      * Validate and load the car
