@@ -16,7 +16,7 @@
 									<c:choose>
 										<c:when test="${recent.activityType == 'TRIP'}">
 											<c:set var="eventName" value="tripDetails"/>
-											<c:set var="color" value=""/>
+											<c:set var="class" value=""/>
 											<c:set var="display" value=""/>
 										</c:when>
 										<c:when test="${recent.activityType == 'ADVANCE_BOOKING'}">

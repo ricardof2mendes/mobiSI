@@ -761,7 +761,7 @@ nav.twoColumnList  ul li a > div:nth-child(2) {
 }
 
 nav.twoColumnList  ul li a > div:nth-child(2) > span{
-	color: #3366FF;
+	color: #999;
 }
 
 
@@ -820,11 +820,10 @@ nav.orderCriteria ul li:last-child a {
 
 /* No result list */
 section#noresults {
-	margin: auto;
+	margin: 80px auto auto;
 	text-align: center;
 	height: 30px;
 	color: #333;
-		padding: 10px 0;
 }
 
 section#noresults label:nth-child(1) {
@@ -1032,6 +1031,24 @@ article.pin div:nth-child(3) > input[type="submit"]:active {
 	margin-bottom: 10px;
 }
 
+/* Error page */
+.newerrors {
+	padding: 0 10px;
+	color: #333;
+	margin: 80px auto auto;
+	text-align: center;
+	text-shadow: 0 1px 0 white;
+}
+
+.newerrors label:first-child{
+	font-weight: bold;
+}
+
+.newerrors label a{
+	color: #0099FF;
+}
+
+/* Messages */
 .msg {
 	border: 1px solid #AACE65;
 	background: #DDFF85 url(../img/success.png) no-repeat top left;

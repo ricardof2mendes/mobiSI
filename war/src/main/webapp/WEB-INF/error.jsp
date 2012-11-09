@@ -3,7 +3,7 @@
 <c:set var="title" scope="page"><fmt:message key='error.title' /></c:set>
 
 <t:main title="${title}">
-	<div class="globalErrors">
+	<!-- <div class="globalErrors">
 		<c:choose>
 		    <c:when test="${not empty param.httpError}">
 		    	<section class="errors">
@@ -45,5 +45,14 @@
 	     		</section>
 		    </c:otherwise>
 		</c:choose>
+	</div>-->
+	<div class="newerrors">
+		<label><fmt:message key="error.message.header"/></label><br/>
+		<label>
+			<fmt:message key="error.message">
+				<fmt:param>${applicationScope.configuration.helpdeskPhone}</fmt:param>
+				<fmt:param>${applicationScope.configuration.helpdeskEmail}</fmt:param>
+			</fmt:message>
+		</label>
 	</div>
 </t:main>
