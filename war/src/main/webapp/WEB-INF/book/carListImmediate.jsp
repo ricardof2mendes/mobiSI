@@ -21,7 +21,7 @@
 											<div>
 												<span>${car.licensePlate}</span>
 												<span>${car.carBrandName}&nbsp;${car.carModelName}</span>
-												<span><fmt:message key="FuelType.${car.fuelType}"/>&nbsp;
+												<span><fmt:message key="FuelType.${car.fuelType.name}"/>&nbsp;
 													<!-- RANGE removed
 													<c:choose>
 														<c:when test="${car.range != null}">(${car.range})</c:when>
@@ -77,7 +77,8 @@
 	</c:when>
 <c:otherwise>
 	<section id="noresults">
-		<label><fmt:message key="car.no.results.found"/></label>
+		<label><fmt:message key="book.now.no.results.found.header"/></label><br/>
+		<label><fmt:message key="book.now.no.results.found"/></label>
 	</section>
 </c:otherwise>
 </c:choose>

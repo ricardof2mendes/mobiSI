@@ -27,7 +27,7 @@
 								<div>
 									<span>${actionBean.car.licensePlate} </span>
 									<span>${actionBean.car.carBrandName}&nbsp;${actionBean.car.carModelName}</span>
-									<span><fmt:message key="FuelType.${actionBean.car.fuelType}"/>&nbsp;
+									<span><fmt:message key="FuelType.${actionBean.car.fuelType.name}"/>&nbsp;
 									<!-- RANGE removed
 										<c:choose>
 											<c:when test="${actionBean.car.range != null}">(${actionBean.car.range})</c:when>
@@ -67,22 +67,6 @@
 					</c:choose>
 					<li class="detail">
 						<span>
-							<fmt:message key="car.details.start.date"/>
-						</span>
-						<span>
-							<fmt:formatDate value="${actionBean.startDate}" pattern="${applicationScope.configuration.dateTimePattern}"/>
-						</span>
-					</li>
-					<li class="detail">
-						<span>
-							<fmt:message key="car.details.end.date"/>
-						</span>
-						<span>
-							<fmt:formatDate value="${actionBean.endDate}" pattern="${applicationScope.configuration.dateTimePattern}"/>
-						</span>
-					</li>
-					<li class="detail">
-						<span>
 							<fmt:message key="car.details.price.use"/>
 						</span>
 						<span>
@@ -98,6 +82,28 @@
 						</span>
 					</li>
 				</ul>			 
+			</nav>
+		</section>
+		<section>
+			<nav class="panel">
+				<ul>
+					<li class="detail">
+						<span>
+							<fmt:message key="car.details.start.date"/>
+						</span>
+						<span>
+							<fmt:formatDate value="${actionBean.startDate}" pattern="${applicationScope.configuration.dateTimePattern}"/>
+						</span>
+					</li>
+					<li class="detail">
+						<span>
+							<fmt:message key="car.details.end.date"/>
+						</span>
+						<span>
+							<fmt:formatDate value="${actionBean.endDate}" pattern="${applicationScope.configuration.dateTimePattern}"/>
+						</span>
+					</li>
+				</ul>
 			</nav>
 			<div class="cleaner"></div>
 			<stripes:link id="showPin" beanclass="com.criticalsoftware.mobics.presentation.action.booking.AdvanceBookingActionBean" class="linkBtn green" event="showPin" addSourcePage="true">

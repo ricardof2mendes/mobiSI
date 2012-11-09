@@ -84,7 +84,8 @@
 		</c:when>
 		<c:otherwise>
 			<section id="noresults">
-				<label><fmt:message key="car.no.results.found"/></label>
+				<label><fmt:message key="book.advance.no.results.found.header"/></label><br/>
+				<label><fmt:message key="book.advance.no.results.found"/></label>
 			</section>
 		</c:otherwise>
 	</c:choose>
