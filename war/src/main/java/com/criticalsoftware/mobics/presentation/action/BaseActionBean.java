@@ -47,10 +47,13 @@ public abstract class BaseActionBean implements ActionBean {
         this.context = (MobiCSActionBeanContext) context;
     }
     
+    /**
+     * Get the active menu
+     * 
+     * @return
+     */
     public String getActiveMenu(){
-        Class<? extends BaseActionBean> aClass = getClass();
-        Package aPackage = aClass.getPackage();
-        String name = aPackage.getName(); 
+        String name = getClass().getPackage().getName(); 
         return name.substring(name.lastIndexOf('.') + 1);
     }
 

@@ -68,7 +68,11 @@ public class Configuration {
 
     private final int maxResults = 99;
     
-    private final int recentsFilterMonthGap = 6;
+    private final int recentsActivitiesFilterMonthGap = 6;
+    
+    private final String helpdeskPhone = "219999000";
+    
+    private final String helpdeskEmail = "helpdesk@mobiag.pt";
 
     /**
      * @return the meterPattern
@@ -193,12 +197,25 @@ public class Configuration {
      * @return the dateTimePattern
      */
     public String getDateTimePattern() {
-
         return getValue("mobics.config.datetime.pattern", dateTimePattern);
     }
     
     public int getRecentActivitiesFilterMonthGap() {
-        return Integer.valueOf(getValue("mobics.config.recents.filter.month.gap", recentsFilterMonthGap));
+        return Integer.valueOf(getValue("mobics.config.recents.filter.month.gap", recentsActivitiesFilterMonthGap));
+    }
+    
+    /**
+     * @return the helpdeskPhone
+     */
+    public String getHelpdeskPhone() {
+        return getValue("mobics.config.helpdesk.phone", helpdeskPhone);
+    }
+
+    /**
+     * @return the helpdeskEmail
+     */
+    public String getHelpdeskEmail() {
+        return getValue("mobics.config.helpdesk.email", helpdeskEmail);
     }
 
     private Configuration() {
