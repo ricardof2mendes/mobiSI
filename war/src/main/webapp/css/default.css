@@ -77,7 +77,7 @@ nav#menu ul {
 }
 
 nav#menu ul li {
-	color: #B5B5B5;
+	color: #ccc;
 	background-color: #515151;
 	font-weight: bold;
 	font-size: normal;
@@ -86,15 +86,16 @@ nav#menu ul li {
 }
 
 nav#menu ul li.booking {
-	background-image: url(../img/menu/bookacar-inactive.png), url(../img/sombra_menus_10px.png);
+	background-image: url(../img/menu/bookacar-inactive.png), url(../img/menu/sombra_menu_20px.png);
 	background-repeat: no-repeat, repeat-x;
 	background-position: 10px 50%, top left;
 }
 
 nav#menu ul li.bookingActive {
-	background-image: url(../img/menu/bookacar-active.png), url(../img/sombra_menus_10px.png);
-	background-color: #8C8C8C;
-	color: #E4E4E4;
+	background-image: url(../img/menu/bookacar-active.png), url(../img/menu/sombra_menu_20px.png), url(../img/bt_down_45px.png);
+	background-repeat: no-repeat, repeat-x, repeat-x;
+	background-position: 10px 50%, top left, top left;
+	color: #fff;
 }
 
 nav#menu ul li.trip {
@@ -104,9 +105,10 @@ nav#menu ul li.trip {
 }
 
 nav#menu ul li.tripActive {
-	background-image: url(../img/menu/trip-active.png), url(../img/sombra_menus_10px.png);
-	background-color: #8C8C8C;
-	color: #E4E4E4;
+	background-image: url(../img/menu/trip-active.png), url(../img/bt_down_45px.png);
+	background-repeat: no-repeat, repeat-x;
+	background-position: 10px 50%, top left;
+	color: #fff;
 }
 
 nav#menu ul li.recent {
@@ -116,9 +118,10 @@ nav#menu ul li.recent {
 }
 
 nav#menu ul li.recentActive {
-	background-image: url(../img/menu/recent-active.png), url(../img/sombra_menus_10px.png);
-	background-color: #8C8C8C;
-	color: #E4E4E4;
+	background-image: url(../img/menu/recent-active.png), url(../img/bt_down_45px.png);
+	background-repeat: no-repeat, repeat-x;
+	background-position: 10px 50%, top left;
+	color: #fff;
 }
 
 nav#menu ul li.messages {
@@ -128,9 +131,10 @@ nav#menu ul li.messages {
 }
 
 nav#menu ul li.messagesActive {
-	background-image: url(../img/menu/messages-active.png), url(../img/sombra_menus_10px.png);
-	background-color: #8C8C8C;
-	color: #E4E4E4;
+	background-image: url(../img/menu/messages-active.png), url(../img/bt_down_45px.png);
+	background-repeat: no-repeat, repeat-x;
+	background-position: 10px 50%, top left;
+	color: #fff;
 }
 
 nav#menu ul li.contacts {
@@ -140,9 +144,10 @@ nav#menu ul li.contacts {
 }
 
 nav#menu ul li.contactsActive {
-	background-image: url(../img/menu/contacts-active.png), url(../img/sombra_menus_10px.png);
-	background-color: #8C8C8C;
-	color: #E4E4E4;
+	background-image: url(../img/menu/contacts-active.png), url(../img/bt_down_45px.png);
+	background-repeat: no-repeat, repeat-x;
+	background-position: 10px 50%, top left;
+	color: #fff;
 }
 
 nav#menu ul li.preferences {
@@ -152,22 +157,24 @@ nav#menu ul li.preferences {
 }
 
 nav#menu ul li.preferencesActive {
-	background-image: url(../img/menu/preferences-active.png), url(../img/sombra_menus_10px.png);
-	background-color: #8C8C8C;
-	color: #E4E4E4;
+	background-image: url(../img/menu/preferences-active.png), url(../img/bt_down_45px.png);
+	background-repeat: no-repeat, repeat-x;
+	background-position: 10px 50%, top left;
+	color: #fff;
 }
 
 nav#menu ul li.account {
-	background-image: url(../img/menu/account-inactive.png);
-	background-repeat: no-repeat;
-	background-position: 10px 50%;
+	background-image: url(../img/menu/account-inactive.png), url(../img/menu/sombra_menu_20px_flipped.png);
+	background-repeat: no-repeat, repeat-x;
+	background-position: 10px 50%, bottom left;
 	border-bottom: 0;
 }
 
 nav#menu ul li.accountActive {
-	background-image: url(../img/menu/account-active.png), url(../img/sombra_menus_10px.png);
-	background-color: #8C8C8C;
-	color: #E4E4E4;
+	background-image: url(../img/menu/account-active.png), url(../img/menu/sombra_menu_20px_flipped.png), url(../img/bt_down_45px.png);
+	background-repeat: no-repeat, repeat-x, repeat-x;
+	background-position: 10px 50%, bottom left, top left;
+	color: #fff;
 }
 
 nav#menu ul li a {
@@ -232,7 +239,7 @@ form.loginForm>div>label {
 /* Application Classes */
 .bottomShadow {
 	height: 5px;
-	background: transparent url(../img/sombra_menus_10px.png) repeat-x top left;
+	background: transparent url(../img/menu/sombra_menus_10px.png) repeat-x top left;
 	margin-bottom: 5px;
 }
 .menuBtn {
@@ -309,7 +316,7 @@ form.loginForm>div>label {
 
 .bigBtn:active {
 	border: 1px solid rgba(0, 0, 0, 0.5);
-	background-image: url(../img/bt_down_95px.png);
+	background-image: url(../img/bt_down_90px.png);
 }
 
 .green {
@@ -724,8 +731,8 @@ nav.twoColumnList ul li {
 
 nav.twoColumnList ul li a {
 	display: block;
-	padding: 5px 0;
-	min-height: 40px;
+	padding-top: 5px;
+	min-height: 45px;
 }
 
 nav.twoColumnList  ul li a > div:nth-child(1) {
@@ -817,7 +824,12 @@ section#noresults {
 	text-align: center;
 	height: 30px;
 	color: #333;
-	font: italic 12px/30px Helvetica, Arial, sans-serif;
+		padding: 10px 0;
+}
+
+section#noresults label:nth-child(1) {
+	font-weight: bold;
+
 }
 
 /* Custom selectBox */
@@ -834,39 +846,36 @@ section#noresults {
 
 /*---------------------------------- PIN --*/
 
-article.pin {
-	padding: 0 10px 10px 10px;
-}
-
-article.pin div{
-	margin: auto;
+article.pin div {
+	width: 250px;
+	margin: auto auto 15px;
 	text-align: center;	
 }
 
-article.pin div > label {
+article.pin div:nth-child(1) > label {
 	font-size: normal;
 	display: block;
 }
 
-article.pin  div > label:nth-child(1) {
+article.pin  div:nth-child(1) > label:nth-child(1) {
 	font-weight: bold;
 	color: #333;
 }
 
-article.pin div > label:nth-child(2) {
+article.pin div:nth-child(1) > label:nth-child(2) {
 	color: #333;
 }
 
-article.pin div > label:nth-child(3) {
+article.pin div:nth-child(1) > label:nth-child(3) {
 	color: #666;
 }
 
-article.pin div > label:nth-child(4) {
+article.pin div:nth-child(1) > label:nth-child(4) {
 	font-size: small;
 	color: #999;
 }
 	
-article.pin form > div {
+article.pin div:nth-child(2) {
 	background: #FFF;
 	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
 	-moz-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
@@ -877,15 +886,41 @@ article.pin form > div {
 	overflow: hidden; 
 }
 
-article.pin form > div > input {
-	width: 100%;
-	padding-left: 10px;
+article.pin div:nth-child(2) > input {
+	width: 250px;
 	line-height: 45px;
 	height: 45px;
 	border: 0;
 	font-size: normal;
 	color: #333;
 }
+
+
+article.pin div:nth-child(3) > input[type="submit"] {
+	width: 250px;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	font-size: large;
+    font-weight: bold;
+	text-shadow: 0px -1px 1px rgba(0, 0, 0, 0.5);
+	text-align: center;
+	color: #FFF;
+	line-height: 45px;
+	height: 45px;
+	display: block;
+	background-color: #288b07;
+	background-image: url(../img/bt_up_45px.png);
+	background-repeat: repeat-x;
+	background-position: top left;
+	border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+article.pin div:nth-child(3) > input[type="submit"]:active {
+	background-image: url(../img/bt_down_45px.png);
+	border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
 
 /** ************************************************/
 
@@ -936,47 +971,6 @@ article.pin form > div > input {
 	background: #fff url('../img/clear.png') no-repeat right 50%;
 	cursor: pointer;
 }
-
-
-#pinForm > div {
-	background: #FFF;
-	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
-	-moz-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
-	-webkit-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
-	border-radius: 4px;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	overflow: hidden; 
-}
-
-#pinForm > input[type="submit"] {
-	border-radius: 4px;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	font-size: large;
-    font-weight: bold;
-	text-shadow: 0px -1px 1px rgba(0, 0, 0, 0.5);
-	text-align: center;
-	color: #FFF;
-	line-height: 45px;
-	height: 45px;
-	width: 33%;
-	display: block;
-	margin: auto;
-	background-color: #288b07;
-	background-image: url(../img/bt_up_45px.png);
-	background-repeat: repeat-x;
-	background-position: top left;
-	border: 1px solid rgba(0, 0, 0, 0.3);
-	float: right ; 
-	margin-left: 10px;
-}
-
-#pinForm > input[type="button"]:active {
-	background-image: url(../img/bt_down_45px.png);
-	border: 1px solid rgba(0, 0, 0, 0.5);
-}
-
 
 
 /*-----------------------------------------------------*/
@@ -1050,15 +1044,10 @@ article.pin form > div > input {
 }
 
 /* Theme Classes */
-.solid {
-}
-
-.warm {
-}
-
 .map {
-	background-image: url(../img/webapp-splash-map-transparent.png);
-	background-size: 100%;
+	background-image: url(../img/theme/mapa.png), url(../img/theme/background_login.png);
+	background-repeat: no-repeat, repeat;
+	background-position: 50% 0, top left;
 }
 
 .darkred,
@@ -1068,37 +1057,37 @@ article.pin form > div > input {
 
 .red,
 .red .loginBtn {
-      background-color: #CC1A1A !important
+      background-color: #CC1A1A !important;
 }
 
 .orange,
 .orange .loginBtn {
-    background-color: #F09000 !important 
+    background-color: #F09000 !important; 
 }
 
 .lightgreen,
 .lightgreen .loginBtn {
-    background-color: #78CC0A !important
+    background-color: #78CC0A !important;
 }
 
 .darkgreen,
 .darkgreen .loginBtn {
-    background-color: #095909 !important
+    background-color: #095909 !important;
 }
 
 .lightblue,
 .lightblue .loginBtn {
-    background-color: #008BE8 !important
+    background-color: #008BE8 !important;
 }
 
 .darkblue,
 .darkblue .loginBtn {
-    background-color: #161694 !important
+    background-color: #161694 !important;
 }
 
 .purple,
 .purple .loginBtn {
-    background-color: #4A0D86 !important
+    background-color: #4A0D86 !important;
 }
 
 .pink,
@@ -1110,6 +1099,69 @@ article.pin form > div > input {
 .darkgray .loginBtn {
     background-color: #1A1A1A
 }
+
+/*****/
+
+.warmdarkred,
+.warmdarkred .loginBtn {
+	background: #660000 url(../img/theme/660000/webapp-splash-gradient-normal-660000.png) no-repeat 50% 0;
+	background-size: 100%;
+}
+
+.warmred,
+.warmred .loginBtn {
+      background: #CC1A1A url(../img/theme/CC1A1A/webapp-splash-gradient-normal-CC1A1A.png) no-repeat 50% 0;
+	  background-size: 100%;
+}
+
+.warmorange,
+.warmorange .loginBtn {
+	background: #F09000 url(../img/theme/F09000/webapp-splash-gradient-normal-F09000.png) no-repeat 50% 0;
+	background-size: 100%;
+}
+
+.warmlightgreen,
+.warmlightgreen .loginBtn {
+	background: #78CC0A url(../img/theme/78CC0A/webapp-splash-gradient-normal-78CC0A.png) no-repeat 50% 0;
+    background-size: 100%;
+}
+
+.warmdarkgreen,
+.warmdarkgreen .loginBtn {
+	background: #095909 url(../img/theme/095909/webapp-splash-gradient-normal-095909.png) no-repeat 50% 0;
+	background-size: 100%;
+}
+
+.warmlightblue,
+.warmlightblue .loginBtn {
+	background: #008BE8 url(../img/theme/008BE8/webapp-splash-gradient-normal-008BE8.png) no-repeat 50% 0;
+	background-size: 100%;
+}
+
+.warmdarkblue,
+.warmdarkblue .loginBtn {
+	background: #161694 url(../img/theme/161694/webapp-splash-gradient-normal-161694.png) no-repeat 50% 0;
+	background-size: 100%;
+}
+
+.warmpurple,
+.warmpurple .loginBtn {
+	background: #4A0D86 url(../img/theme/4A0D86/webapp-splash-gradient-normal-4A0D86.png) no-repeat 50% 0;
+	background-size: 100%;
+}
+
+.warmpink,
+.warmpink .loginBtn {
+	background: #CC00CC url(../img/theme/CC00CC/webapp-splash-gradient-normal-CC00CC.png) no-repeat 50% 0;
+	background-size: 100%;
+}
+
+.warmdarkgray,
+.warmdarkgray .loginBtn {
+	background: #1A1A1A url(../img/theme/1A1A1A/webapp-splash-gradient-normal-1A1A1A.png) no-repeat 50% 0;
+	background-size: 100%;
+}
+
 
 /* MODAL */
 .modal {
@@ -1129,4 +1181,117 @@ body.loading {
 
 body.loading .modal {
     display: block;
+}
+
+/********************************************************************* Media Queries */
+
+screen and (-webkit-min-device-pixel-ratio: 1.5),
+screen and (min-device-pixel-ratio: 1.5),
+screen and (min-resolution: 1.5dppx) {
+	
+	nav#menu ul li.booking {
+		background-image: url(../img/menu/bookacar-inactive@2x.png), url(../img/menu/sombra_menu_20px.png);
+	}
+	
+	nav#menu ul li.bookingActive {
+		background-image: url(../img/menu/bookacar-active@2x.png), url(../img/menu/sombra_menu_20px.png), url(../img/bt_down_45px.png);
+	}
+	
+	nav#menu ul li.trip {
+		background-image: url(../img/menu/trip-inactive@2x.png);
+	}
+	
+	nav#menu ul li.tripActive {
+		background-image: url(../img/menu/trip-active@2x.png), url(../img/bt_down_45px.png);
+	}
+	
+	nav#menu ul li.recent {
+		background-image: url(../img/menu/recent-inactive@2x.png);
+	}
+	
+	nav#menu ul li.recentActive {
+		background-image: url(../img/menu/recent-active@2x.png), url(../img/bt_down_45px.png);
+	}
+	
+	nav#menu ul li.messages {
+		background-image: url(../img/menu/messages-inactive@2x.png);
+	}
+	
+	nav#menu ul li.messagesActive {
+		background-image: url(../img/menu/messages-active@2x.png), url(../img/bt_down_45px.png);
+	}
+	
+	nav#menu ul li.contacts {
+		background-image: url(../img/menu/contacts-inactive@2x.png);
+	}
+	
+	nav#menu ul li.contactsActive {
+		background-image: url(../img/menu/contacts-active@2x.png), url(../img/bt_down_45px.png);
+	}
+	
+	nav#menu ul li.preferences {
+		background-image: url(../img/menu/preferences-inactive@2x.png);
+	}
+	
+	nav#menu ul li.preferencesActive {
+		background-image: url(../img/menu/preferences-active@2x.png), url(../img/bt_down_45px.png);
+	}
+	
+	nav#menu ul li.account {
+		background-image: url(../img/menu/account-inactive@2x.png), url(../img/menu/sombra_menu_20px_flipped.png);
+	}
+	
+	nav#menu ul li.accountActive {
+		background-image: url(../img/menu/account-active@2x.png), url(../img/menu/sombra_menu_20px_flipped.png), url(../img/bt_down_45px.png);
+	}
+	
+	.warmdarkred,
+	.warmdarkred .loginBtn {
+		background: #660000 url(../img/theme/660000/webapp-splash-gradient-retina-660000.png) no-repeat 50% 0;
+	}
+	
+	.warmred,
+	.warmred .loginBtn {
+	      background: #CC1A1A url(../img/theme/CC1A1A/webapp-splash-gradient-retina-CC1A1A.png) no-repeat 50% 0;
+	}
+	
+	.warmorange,
+	.warmorange .loginBtn {
+		background: #F09000 url(../img/theme/F09000/webapp-splash-gradient-retina-F09000.png) no-repeat 50% 0;
+	}
+	
+	.warmlightgreen,
+	.warmlightgreen .loginBtn {
+		background: #78CC0A url(../img/theme/78CC0A/webapp-splash-gradient-retina-78CC0A.png) no-repeat 50% 0;
+	}
+	
+	.warmdarkgreen,
+	.warmdarkgreen .loginBtn {
+		background: #095909 url(../img/theme/095909/webapp-splash-gradient-retina-095909.png) no-repeat 50% 0;
+	}
+	
+	.warmlightblue,
+	.warmlightblue .loginBtn {
+		background: #008BE8 url(../img/theme/008BE8/webapp-splash-gradient-retina-008BE8.png) no-repeat 50% 0;
+	}
+	
+	.warmdarkblue,
+	.warmdarkblue .loginBtn {
+		background: #161694 url(../img/theme/161694/webapp-splash-gradient-retina-161694.png) no-repeat 50% 0;
+	}
+	
+	.warmpurple,
+	.warmpurple .loginBtn {
+		background: #4A0D86 url(../img/theme/4A0D86/webapp-splash-gradient-retina-4A0D86.png) no-repeat 50% 0;
+	}
+	
+	.warmpink,
+	.warmpink .loginBtn {
+		background: #CC00CC url(../img/theme/CC00CC/webapp-splash-gradient-retina-CC00CC.png) no-repeat 50% 0;
+	}
+	
+	.warmdarkgray,
+	.warmdarkgray .loginBtn {
+		background: #1A1A1A url(../img/theme/1A1A1A/webapp-splash-gradient-retina-1A1A1A.png) no-repeat 50% 0;
+	}		
 }
