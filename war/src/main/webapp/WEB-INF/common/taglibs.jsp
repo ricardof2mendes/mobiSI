@@ -6,4 +6,6 @@
 <%@taglib prefix="mobi" uri="http://www.criticalsoftware.com/taglib/formatter"%>
 
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
-<c:set var="theme" value="${actionBean.theme}" />
+
+<c:set var="splashScreenStyle" value="${actionBean.splashScreenStyle}" />
+<c:set var="headerStyle" value="${actionBean.headerStyle}" />

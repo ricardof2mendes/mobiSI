@@ -18,7 +18,7 @@
         <link rel="stylesheet" href="${contextPath}/css/default.css" />
         <link rel="stylesheet" href="${contextPath}/css/normalize.css" />
     </head>
-    <body class="${theme}">
+    <body class="${splashScreenStyle}">
         <jsp:doBody/>
     </body>
     

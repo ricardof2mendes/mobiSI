@@ -3,7 +3,7 @@
 <%@attribute name="title" required="true" %>
 <%@attribute name="showLegend" type="java.lang.Boolean" %>
 
-<header class="${theme}">
+<header class="${headerStyle}">
 	<a href="#" class="menuBtn"></a>	
 	<h1>${title}</h1>
 </header>

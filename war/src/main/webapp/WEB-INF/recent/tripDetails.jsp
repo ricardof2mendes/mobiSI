@@ -1,6 +1,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@include file="/WEB-INF/common/taglibs.jsp"%>
-<c:set var="title" scope="page"><fmt:message key='last.trip.title' /></c:set>
+<c:set var="title" scope="page"><fmt:message key='trip.detail.title' /></c:set>
 
 <t:main title="${title}">
 	<stripes:messages/>
@@ -47,7 +47,7 @@
 					<li class="detail">
 						<span><fmt:message key="trip.detail.start.date"/></span>
 						<span>
-							<fmt:formatDate value="${actionBean.trip.endDate.time}" 
+							<fmt:formatDate value="${actionBean.trip.startDate.time}" 
 						    				pattern="${applicationScope.configuration.dateTimePattern}"/>
 						</span>
 					</li>
@@ -80,13 +80,41 @@
 					<li class="detail">
 						<span><fmt:message key="trip.detail.start.location"/></span>
 						<span>
-							${actionBean.startLocation}
+							<c:choose>
+								<c:when test="${actionBean.trip.bookingType == 'IMMEDIATE'}">
+									${actionBean.startLocation}	
+								</c:when>
+								<c:otherwise>
+									<c:choose>
+										<c:when test="${actionBean.trip.startPark != null}">
+											${actionBean.trip.startPark}
+										</c:when>
+										<c:otherwise>
+											<fmt:message key="application.value.not.available"/>
+										</c:otherwise>
+									</c:choose> 
+								</c:otherwise>
+							</c:choose>
 						</span>
 					</li>
 					<li class="detail">
 						<span><fmt:message key="trip.detail.end.location"/></span>
 						<span>
-							${actionBean.endLocation}
+							<c:choose>
+								<c:when test="${actionBean.trip.bookingType == 'IMMEDIATE'}">
+									${actionBean.endLocation}	
+								</c:when>
+								<c:otherwise>
+									<c:choose>
+										<c:when test="${actionBean.trip.endPark != null}">
+											${actionBean.trip.endPark}
+										</c:when>
+										<c:otherwise>
+											<fmt:message key="application.value.not.available"/>
+										</c:otherwise>
+									</c:choose> 
+								</c:otherwise>
+							</c:choose>
 						</span>
 					</li>
 					<li class="detail">
@@ -154,7 +182,6 @@
 							<mobi:formatMobics value="${actionBean.trip.car.costPerExtraKm}" type="currencySymbol" />
 						</span>
 					</li>
-					
 				</ul>
 			</nav>
 		</section>

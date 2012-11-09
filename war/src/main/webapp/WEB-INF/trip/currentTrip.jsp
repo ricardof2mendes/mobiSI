@@ -12,36 +12,64 @@
 				<h2><fmt:message key="current.trip.booked.car"/></h2>
 				<nav class="panel">
 					<ul>
-						<li class="link">
-							<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.booking.ImmediateBookingActionBean" event="carDetails">
-								<stripes:param name="licensePlate" value="${actionBean.current.licensePlate}"/>
-								<stripes:param name="latitude" value="${actionBean.current.latitude}"/>
-								<stripes:param name="longitude" value="${actionBean.current.longitude}"/>
-		
-								<span><fmt:message key="current.trip.car"/></span>
-								<span>
-									${actionBean.current.licensePlate}&nbsp;(${actionBean.current.carBrand}&nbsp;${actionBean.current.carModel})
-								</span>
-							</stripes:link>
-						</li>
-						<li class="link">
-							<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.booking.ImmediateBookingActionBean" event="carLocation">
-								<stripes:param name="licensePlate">${actionBean.current.licensePlate}</stripes:param>
-								<span><fmt:message key="current.trip.location"/></span>
-								<span>
-									${actionBean.location}
-								</span>
-							</stripes:link>
-						</li>
+						<c:choose>
+							<c:when test="${actionBean.current.bookingType == 'IMMEDIATE'}">
+								<li class="link">
+									<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.booking.ImmediateBookingActionBean" event="carDetails" addSourcePage="true" >
+										<stripes:param name="licensePlate" value="${actionBean.current.licensePlate}"/>
+				
+										<span><fmt:message key="current.trip.car"/></span>
+										<span>
+											${actionBean.current.licensePlate}&nbsp;(${actionBean.current.carBrand}&nbsp;${actionBean.current.carModel})
+										</span>
+									</stripes:link>
+								</li>
+								<li class="link">
+									<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.booking.ImmediateBookingActionBean" event="carLocation" addSourcePage="true" >
+										<stripes:param name="licensePlate">${actionBean.current.licensePlate}</stripes:param>
+										<span><fmt:message key="current.trip.location"/></span>
+										<span>
+											${actionBean.location}
+										</span>
+									</stripes:link>
+								</li>
+							</c:when>
+							<c:otherwise>
+								<li class="link">
+									<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.booking.AdvanceBookingActionBean" event="carDetails">
+										<stripes:param name="licensePlate" value="${actionBean.current.licensePlate}"/>
+				
+										<span><fmt:message key="current.trip.car"/></span>
+										<span>
+											${actionBean.current.licensePlate}&nbsp;(${actionBean.current.carBrand}&nbsp;${actionBean.current.carModel})
+										</span>
+									</stripes:link>
+								</li>
+								<li class="link">
+									<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.booking.AdvanceBookingActionBean" event="parkLocation" addSourcePage="true">
+										<stripes:param name="licensePlate">${actionBean.current.licensePlate}</stripes:param>
+										<span><fmt:message key="current.trip.location"/></span>
+										<span>
+											${actionBean.location}
+										</span>
+									</stripes:link>
+								</li>
+							</c:otherwise>
+						</c:choose>
+						
+						
+						
 					</ul>
 				</nav>
 			</section>
 			
 			<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn gray" event="unlockCar" addSourcePage="true">
+				<stripes:param name="licensePlate">${actionBean.current.licensePlate}</stripes:param>
 				<fmt:message key="current.trip.button.unlock.car"/>
 			</stripes:link>
 			
 			<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn gray" event="signal" addSourcePage="true">
+				<stripes:param name="licensePlate">${actionBean.current.licensePlate}</stripes:param>
 				<fmt:message key="current.trip.button.signal.position"/>
 			</stripes:link>
 		</c:if>			
@@ -53,8 +81,7 @@
 					<li class="detail">
 						<span><fmt:message key="current.trip.cost"/></span>
 						<span>
-							<mobi:formatMobics value="${actionBean.current.currentCost}" type="currency" 
-											   pattern="${applicationScope.configuration.currencyPattern}"/>
+							<mobi:formatMobics value="${actionBean.current.currentCost}" type="currencySymbol" />
 						</span>
 					</li>
 				</ul>
@@ -69,8 +96,7 @@
 							<fmt:message key="current.trip.price.use"/>
 						</span>
 						<span>
-							<mobi:formatMobics value="${actionBean.current.basePrice}" type="currency" 
-											   pattern="${applicationScope.configuration.currencyPattern}"/>
+							<mobi:formatMobics value="${actionBean.current.basePrice}" type="currencyHour" />
 						</span>
 					</li>
 					<li class="detail">
@@ -78,8 +104,7 @@
 							<fmt:message key="current.trip.price.locked"/>
 						</span>
 						<span>
-							<mobi:formatMobics value="${actionBean.current.lockedPrice}" type="currency" 
-											   pattern="${applicationScope.configuration.currencyPattern}"/>
+							<mobi:formatMobics value="${actionBean.current.lockedPrice}" type="currencyHour" />
 						</span>
 					</li>
 					<li class="detail">
@@ -87,7 +112,7 @@
 							<fmt:message key="current.trip.duration"/>
 						</span>
 						<span>
-							<mobi:formatMobics value="${actionBean.current.bookingDuration}" type="time" pattern="0"/>
+							<mobi:formatMobics value="${actionBean.current.bookingDuration}" type="time" />
 						</span>
 					</li>
 					
@@ -98,9 +123,7 @@
 									<fmt:message key="current.trip.distance"/>
 								</span>
 								<span>
-									<mobi:formatMobics value="${actionBean.current.currentDistance}" type="distance" 
-											   pattern="${applicationScope.configuration.meterPattern}"
-											   pattern2="${applicationScope.configuration.kilometerPattern}"/>
+									<mobi:formatMobics value="${actionBean.current.currentDistance}" type="distance" />
 								</span>
 							</li>
 						</c:when>

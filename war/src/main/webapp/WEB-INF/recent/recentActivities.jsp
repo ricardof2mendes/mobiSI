@@ -16,20 +16,26 @@
 									<c:choose>
 										<c:when test="${recent.activityType == 'TRIP'}">
 											<c:set var="eventName" value="tripDetails"/>
+											<c:set var="color" value=""/>
+											<c:set var="display" value=""/>
 										</c:when>
 										<c:when test="${recent.activityType == 'ADVANCE_BOOKING'}">
 											<c:set var="eventName" value="bookingDetails"/>
+											<c:set var="color" value="color:red"/>
+											<c:set var="display" value="display:none"/>
 										</c:when>
 										<c:otherwise>
 											<c:set var="eventName" value="interestDetails"/>
+											<c:set var="color" value="color:red"/>
+											<c:set var="display" value="display:none"/>
 										</c:otherwise>
 									</c:choose>
 									
 									<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.recent.RecentActivitiesActionBean" event="${eventName}" addSourcePage="true">	
 										<stripes:param name="activityCode" value="${recent.activityCode }"/>
 										<div>
-											<span><fmt:message key="CustomerActivityEnum.${recent.activityType}"/></span>
-											<span>
+											<span style="${color}"><fmt:message key="CustomerActivityEnum.${recent.activityType}"/></span>
+											<span style="${display}">
 												<fmt:message key="recent.cost"/>:&nbsp;
 												<mobi:formatMobics value="${recent.cost}" type="currencySymbol" />
 											</span>
