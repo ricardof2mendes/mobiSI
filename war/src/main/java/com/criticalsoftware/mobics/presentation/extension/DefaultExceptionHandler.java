@@ -230,6 +230,22 @@ public class DefaultExceptionHandler implements AutoExceptionHandler {
     }
 
     /**
+     * Send them to the request page.
+     * 
+     * @param exception a Car Type Not Found
+     * @param request The HttpServletRequest
+     * @param response The HttpServletResponse
+     * @return A ForwardResolution
+     */
+    public Resolution handle(
+            com.criticalsoftware.mobics.proxy.booking.OverlappedBookingExceptionException exception,
+            HttpServletRequest request,
+            HttpServletResponse response) {
+        LOGGER.error(exception.getMessage(), exception);
+        return insideJob("error.OverlappedBookingExceptionException", request, response);
+    }
+    
+    /**
      * Send them to the global error page.
      * 
      * @param exception a Car Type Not Found

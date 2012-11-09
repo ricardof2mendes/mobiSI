@@ -46,8 +46,8 @@ public class TripActionBean extends BaseActionBean {
     private TripDetailsDTO last;
 
     private CurrentTripDTO current;
-    
-    @Validate(required=true, on={"lockCar", "unlockCar", "signal"})
+
+    @Validate(required = true, on = { "lockCar", "unlockCar", "signal" })
     private String licensePlate;
 
     @DefaultHandler
@@ -71,41 +71,41 @@ public class TripActionBean extends BaseActionBean {
         return resolution;
     }
 
-    public Resolution lockCar() throws RemoteException, UnsupportedEncodingException, CarLicensePlateNotFoundExceptionException {
-        
-        CarWSServiceStub carWSServiceStub = new CarWSServiceStub(
-                Configuration.INSTANCE.getCarEndpoint());
+    public Resolution lockCar() throws RemoteException, UnsupportedEncodingException,
+            CarLicensePlateNotFoundExceptionException, com.criticalsoftware.mobics.proxy.car.CustomerNotFoundExceptionException {
+
+        CarWSServiceStub carWSServiceStub = new CarWSServiceStub(Configuration.INSTANCE.getCarEndpoint());
         carWSServiceStub._getServiceClient().addHeader(
                 AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
                         .getPassword()));
-        
+
         carWSServiceStub.lockCar(licensePlate);
-        
+
         getContext().getMessages().add(new LocalizableMessage("current.trip.lock.car.message"));
         return new RedirectResolution(this.getClass()).flash(this);
     }
 
-    public Resolution unlockCar() throws RemoteException, UnsupportedEncodingException, CarLicensePlateNotFoundExceptionException {
-        
-        CarWSServiceStub carWSServiceStub = new CarWSServiceStub(
-                Configuration.INSTANCE.getCarEndpoint());
+    public Resolution unlockCar() throws RemoteException, UnsupportedEncodingException,
+            CarLicensePlateNotFoundExceptionException, com.criticalsoftware.mobics.proxy.car.CustomerNotFoundExceptionException {
+
+        CarWSServiceStub carWSServiceStub = new CarWSServiceStub(Configuration.INSTANCE.getCarEndpoint());
         carWSServiceStub._getServiceClient().addHeader(
                 AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
                         .getPassword()));
-        
+
         carWSServiceStub.unlockCar(licensePlate);
         getContext().getMessages().add(new LocalizableMessage("current.trip.unlock.car.message"));
         return new RedirectResolution(this.getClass()).flash(this);
     }
 
-    public Resolution signal() throws RemoteException, UnsupportedEncodingException, CarLicensePlateNotFoundExceptionException {
-        
-        CarWSServiceStub carWSServiceStub = new CarWSServiceStub(
-                Configuration.INSTANCE.getCarEndpoint());
+    public Resolution signal() throws RemoteException, UnsupportedEncodingException,
+            CarLicensePlateNotFoundExceptionException, com.criticalsoftware.mobics.proxy.car.CustomerNotFoundExceptionException {
+
+        CarWSServiceStub carWSServiceStub = new CarWSServiceStub(Configuration.INSTANCE.getCarEndpoint());
         carWSServiceStub._getServiceClient().addHeader(
                 AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
                         .getPassword()));
-        
+
         carWSServiceStub.buzzCar(licensePlate);
         getContext().getMessages().add(new LocalizableMessage("current.trip.car.signaling"));
         return new RedirectResolution(this.getClass()).flash(this);
@@ -132,7 +132,8 @@ public class TripActionBean extends BaseActionBean {
      * @return the address string
      */
     public String getLocation() {
-        String location = new LocalizableMessage("application.value.not.available").getMessage(getContext().getLocale());
+        String location = new LocalizableMessage("application.value.not.available")
+                .getMessage(getContext().getLocale());
         if (current.getLatitude() != null && current.getLongitude() != null) {
             location = GeolocationUtil.getAddressFromCoordinates(current.getLatitude().toString(), current
                     .getLongitude().toString());
@@ -146,10 +147,11 @@ public class TripActionBean extends BaseActionBean {
      * @return the adress string
      */
     public String getStartLocation() {
-        String location = new LocalizableMessage("application.value.not.available").getMessage(getContext().getLocale());
+        String location = new LocalizableMessage("application.value.not.available")
+                .getMessage(getContext().getLocale());
         if (last.getStartLatitude() != null && last.getStartLongitude() != null) {
-            location = GeolocationUtil.getAddressFromCoordinates(last.getStartLatitude().toString(), last.getStartLongitude()
-                    .toString());
+            location = GeolocationUtil.getAddressFromCoordinates(last.getStartLatitude().toString(), last
+                    .getStartLongitude().toString());
         }
         return location;
     }
@@ -160,10 +162,11 @@ public class TripActionBean extends BaseActionBean {
      * @return the adress string
      */
     public String getEndLocation() {
-        String location = new LocalizableMessage("application.value.not.available").getMessage(getContext().getLocale());
+        String location = new LocalizableMessage("application.value.not.available")
+                .getMessage(getContext().getLocale());
         if (last.getEndtLatitude() != null && last.getEndLongitude() != null) {
-            location = GeolocationUtil.getAddressFromCoordinates(last.getEndtLatitude().toString(), last.getEndLongitude()
-                    .toString());
+            location = GeolocationUtil.getAddressFromCoordinates(last.getEndtLatitude().toString(), last
+                    .getEndLongitude().toString());
         }
         return location;
     }

@@ -41,8 +41,8 @@ public class User {
         this.password = password;
         this.carClubName = carClubName;
         this.carClubCode = carClubCode;
-        this.carClubColor = carClubCode;
-        this.carClubTheme = this.carClubTheme;
+        this.carClubColor = carClubColor;
+        this.carClubTheme = carClubTheme;
     }
 
     /**
