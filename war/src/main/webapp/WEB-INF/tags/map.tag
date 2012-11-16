@@ -20,14 +20,17 @@
         <link rel="stylesheet" href="${contextPath}/css/map.css" />
     </head>
     
-    <c:set var="script" value=""/>
     <c:choose>
-    	<c:when test="${param.carLocation == '' && param.parkLocation == null}">
+    	<c:when test="${param.carLocation == '' && param.parkLocation == null && param.search == null}">
 	    	<c:set var="script" value="MapACar('${param.licensePlate}');"/>
 	    	<c:set var="height" value="298px"/>
     	</c:when>
-    	<c:when test="${param.parkLocation == '' && param.carLocation == null}">
+    	<c:when test="${param.parkLocation == '' && param.carLocation == null && param.search == null}">
     		<c:set var="script" value="MapAPark('${param.zone}');"/>
+    		<c:set var="height" value="160px"/>
+    	</c:when>
+    	<c:when test="${param.search == 'street'  && param.parkLocation == null  && param.carLocation == null}">
+    		<c:set var="script" value="MapASearch();"/>
     		<c:set var="height" value="160px"/>
     	</c:when>
     	<c:otherwise></c:otherwise>

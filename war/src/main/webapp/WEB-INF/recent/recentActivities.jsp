@@ -3,7 +3,8 @@
 <c:set var="title" scope="page"><fmt:message key='recent.title' /></c:set>
 
 <t:main title="${title}">
-	<stripes:messages/>
+
+	<jsp:include page="/WEB-INF/common/message_error.jsp"/>
 	
 	<article>
 		<c:choose>
@@ -16,11 +17,11 @@
 									<c:choose>
 										<c:when test="${recent.activityType == 'TRIP'}">
 											<c:set var="eventName" value="tripDetails"/>
-											<c:set var="class" value=""/>
+											<c:set var="color" value=""/>
 											<c:set var="display" value=""/>
 										</c:when>
 										<c:when test="${recent.activityType == 'ADVANCE_BOOKING'}">
-											<c:set var="eventName" value="bookingDetails"/>
+											<c:set var="eventName" value="advanceBookingDetails"/>
 											<c:set var="color" value="color:red"/>
 											<c:set var="display" value="display:none"/>
 										</c:when>

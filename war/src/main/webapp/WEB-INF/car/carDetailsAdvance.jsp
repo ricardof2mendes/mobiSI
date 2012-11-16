@@ -4,16 +4,7 @@
 
 <t:main title="${title}">
 	
-	<c:choose>
-		<c:when test="${actionBean.fieldErrors}">
-			<stripes:errors/>
-		</c:when>
-		<c:otherwise>
-			<div class="globalErrors">
-				<stripes:errors/>
-			</div>
-		</c:otherwise>
-	</c:choose>
+	<jsp:include page="/WEB-INF/common/message_error.jsp"/>
 
 	<article>
 		<section>

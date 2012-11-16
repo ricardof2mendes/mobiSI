@@ -4,7 +4,7 @@
 
 <t:main title="${title}">
 	
-	<stripes:messages/>
+	<jsp:include page="/WEB-INF/common/message_error.jsp"/>
 	
 	<article>
 		<c:if test="${actionBean.current.state == 'IN_USE'}">
@@ -14,7 +14,7 @@
 					<ul>
 						<c:choose>
 							<c:when test="${actionBean.current.bookingType == 'IMMEDIATE'}">
-								<li class="link">
+								<li class="link white">
 									<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.booking.ImmediateBookingActionBean" event="carDetails" addSourcePage="true" >
 										<stripes:param name="licensePlate" value="${actionBean.current.licensePlate}"/>
 				
@@ -24,7 +24,7 @@
 										</span>
 									</stripes:link>
 								</li>
-								<li class="link">
+								<li class="link white">
 									<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.booking.ImmediateBookingActionBean" event="carLocation" addSourcePage="true" >
 										<stripes:param name="licensePlate">${actionBean.current.licensePlate}</stripes:param>
 										<span><fmt:message key="current.trip.location"/></span>
@@ -35,7 +35,7 @@
 								</li>
 							</c:when>
 							<c:otherwise>
-								<li class="link">
+								<li class="link white">
 									<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.booking.AdvanceBookingActionBean" event="carDetails">
 										<stripes:param name="licensePlate" value="${actionBean.current.licensePlate}"/>
 				
@@ -45,7 +45,7 @@
 										</span>
 									</stripes:link>
 								</li>
-								<li class="link">
+								<li class="link white">
 									<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.booking.AdvanceBookingActionBean" event="parkLocation" addSourcePage="true">
 										<stripes:param name="licensePlate">${actionBean.current.licensePlate}</stripes:param>
 										<span><fmt:message key="current.trip.location"/></span>
@@ -56,29 +56,27 @@
 								</li>
 							</c:otherwise>
 						</c:choose>
-						
-						
-						
 					</ul>
 				</nav>
 			</section>
-			
-			<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn gray" event="unlockCar" addSourcePage="true">
-				<stripes:param name="licensePlate">${actionBean.current.licensePlate}</stripes:param>
-				<fmt:message key="current.trip.button.unlock.car"/>
-			</stripes:link>
-			
-			<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn gray" event="signal" addSourcePage="true">
-				<stripes:param name="licensePlate">${actionBean.current.licensePlate}</stripes:param>
-				<fmt:message key="current.trip.button.signal.position"/>
-			</stripes:link>
+			<section>
+				<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn gray" event="unlockCar" addSourcePage="true">
+					<stripes:param name="licensePlate">${actionBean.current.licensePlate}</stripes:param>
+					<fmt:message key="current.trip.button.unlock.car"/>
+				</stripes:link>
+				
+				<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn gray" event="signal" addSourcePage="true">
+					<stripes:param name="licensePlate">${actionBean.current.licensePlate}</stripes:param>
+					<fmt:message key="current.trip.button.signal.position"/>
+				</stripes:link>
+			</section>
 		</c:if>			
 		
 		<section>
 			<h2><fmt:message key="current.trip.details"/></h2>
 			<nav class="panel">
 				<ul>
-					<li class="detail">
+					<li class="detail white">
 						<span><fmt:message key="current.trip.cost"/></span>
 						<span>
 							<mobi:formatMobics value="${actionBean.current.currentCost}" type="currencySymbol" />
@@ -91,7 +89,7 @@
 		<section>
 			<nav class="panel">
 				<ul>
-					<li class="detail">
+					<li class="detail white">
 						<span>
 							<fmt:message key="current.trip.price.use"/>
 						</span>
@@ -99,7 +97,7 @@
 							<mobi:formatMobics value="${actionBean.current.basePrice}" type="currencyHour" />
 						</span>
 					</li>
-					<li class="detail">
+					<li class="detail white">
 						<span>
 							<fmt:message key="current.trip.price.locked"/>
 						</span>
@@ -107,7 +105,7 @@
 							<mobi:formatMobics value="${actionBean.current.lockedPrice}" type="currencyHour" />
 						</span>
 					</li>
-					<li class="detail">
+					<li class="detail white">
 						<span>
 							<fmt:message key="current.trip.duration"/>
 						</span>
@@ -118,7 +116,7 @@
 					
 					<c:choose>
 						<c:when test="${actionBean.current.state == 'IN_USE'}">
-							<li class="detail">
+							<li class="detail white">
 								<span>
 									<fmt:message key="current.trip.distance"/>
 								</span>
@@ -128,7 +126,7 @@
 							</li>
 						</c:when>
 						<c:otherwise>
-							<li class="link">
+							<li class="link white">
 								<span>
 									<fmt:message key="current.trip.current.zone"/>
 								</span>

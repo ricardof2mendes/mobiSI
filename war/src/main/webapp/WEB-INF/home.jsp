@@ -23,7 +23,7 @@
 						</stripes:link>
 					</li>
 					<li>
-						<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.HomeActionBean" event="findCarForLater">
+						<stripes:link id="findForLater" beanclass="com.criticalsoftware.mobics.presentation.action.HomeActionBean" event="findCarForLater">
 							<fmt:message key="find.later.title"/>
 						</stripes:link>
 					</li>
