@@ -238,11 +238,27 @@ public class DefaultExceptionHandler implements AutoExceptionHandler {
      * @return A ForwardResolution
      */
     public Resolution handle(
-            com.criticalsoftware.mobics.proxy.booking.OverlappedBookingExceptionException exception,
+            com.criticalsoftware.mobics.proxy.booking.OverlappedCarBookingExceptionException exception,
             HttpServletRequest request,
             HttpServletResponse response) {
         LOGGER.error(exception.getMessage(), exception);
-        return insideJob("error.OverlappedBookingExceptionException", request, response);
+        return insideJob("error.OverlappedCarBookingExceptionException", request, response);
+    }
+    
+    /**
+     * Send them to the request page.
+     * 
+     * @param exception a Car Type Not Found
+     * @param request The HttpServletRequest
+     * @param response The HttpServletResponse
+     * @return A ForwardResolution
+     */
+    public Resolution handle(
+            com.criticalsoftware.mobics.proxy.booking.OverlappedCustomerBookingExceptionException exception,
+            HttpServletRequest request,
+            HttpServletResponse response) {
+        LOGGER.error(exception.getMessage(), exception);
+        return insideJob("error.OverlappedCustomerBookingExceptionException", request, response);
     }
     
     /**
@@ -340,7 +356,6 @@ public class DefaultExceptionHandler implements AutoExceptionHandler {
         LOGGER.error(exception.getMessage(), exception);
         return insideJobToError("error.BookNotFoundExceptionException", request, response);
     }
-    
     
     /**
      * Return the action bean page with errors displayed

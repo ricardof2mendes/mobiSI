@@ -12,7 +12,7 @@
  */
 package com.criticalsoftware.mobics.presentation.util;
 
-import java.util.Locale;
+import java.io.Serializable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +21,10 @@ import org.slf4j.LoggerFactory;
  * @author ltiago
  * @version $Revision: $
  */
-public class Configuration {
+public class Configuration implements Serializable{
+
+    /** */
+    private static final long serialVersionUID = 7216539220608643618L;
 
     /**
      * The Configuration instance property.

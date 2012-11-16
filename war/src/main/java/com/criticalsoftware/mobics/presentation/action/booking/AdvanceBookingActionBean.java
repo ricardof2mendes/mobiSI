@@ -53,7 +53,8 @@ import com.criticalsoftware.mobics.proxy.booking.CustomerNotFoundExceptionExcept
 import com.criticalsoftware.mobics.proxy.booking.ForbiddenZoneExceptionException;
 import com.criticalsoftware.mobics.proxy.booking.IllegalDateExceptionException;
 import com.criticalsoftware.mobics.proxy.booking.InvalidCustomerPinExceptionException;
-import com.criticalsoftware.mobics.proxy.booking.OverlappedBookingExceptionException;
+import com.criticalsoftware.mobics.proxy.booking.OverlappedCarBookingExceptionException;
+import com.criticalsoftware.mobics.proxy.booking.OverlappedCustomerBookingExceptionException;
 import com.criticalsoftware.mobics.proxy.booking.UnauthorizedCustomerExceptionException;
 import com.criticalsoftware.mobics.proxy.carclub.CarClubWSServiceStub;
 import com.criticalsoftware.mobics.proxy.carclub.LocationCodeNotFoundExceptionException;
@@ -180,7 +181,8 @@ public class AdvanceBookingActionBean extends BookingActionBean {
             InvalidCustomerPinExceptionException, CarNotFoundExceptionException,
             CarNotAvailableForBookingExceptionException, ForbiddenZoneExceptionException,
             IllegalDateExceptionException, UnauthorizedCustomerExceptionException,
-            CarLicensePlateNotFoundExceptionException, OverlappedBookingExceptionException {
+            CarLicensePlateNotFoundExceptionException, OverlappedCarBookingExceptionException,
+            OverlappedCustomerBookingExceptionException {
         Calendar start = Calendar.getInstance(), end = Calendar.getInstance();
         start.setTimeInMillis(startDate.getTime());
         end.setTimeInMillis(endDate.getTime());

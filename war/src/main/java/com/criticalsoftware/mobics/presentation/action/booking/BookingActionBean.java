@@ -47,7 +47,7 @@ public abstract class BookingActionBean extends BaseActionBean {
     protected CarDTO car;
 
     @Validate(required = true, on = { "getCarImage", "carLocation", "licensePlateBook", "showPin", "book",
-            "licensePlateBookAdvance", "parkLocation", "carData", "parkData" })
+            "licensePlateBookAdvance", "parkLocation", "carData", "parkData", "carDetails" })
     protected String licensePlate;
 
     @Validate(required = true, on = { "nearestCarBook", "licensePlateBook", "searchCars" })

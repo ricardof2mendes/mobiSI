@@ -12,6 +12,8 @@
  */
 package com.criticalsoftware.mobics.presentation.util;
 
+import java.io.Serializable;
+
 import com.criticalsoftware.mobics.fleet.CoordinateDTO;
 import com.criticalsoftware.mobics.fleet.ZoneWithPolygonDTO;
 
@@ -19,7 +21,10 @@ import com.criticalsoftware.mobics.fleet.ZoneWithPolygonDTO;
  * @author ltiago
  * @version $Revision: $
  */
-public class CoordinateZonesDTO {
+public class CoordinateZonesDTO implements Serializable{
+    /** */
+    private static final long serialVersionUID = 7653171297740285908L;
+
     private CoordinateDTO coordinate;
     
     private ZoneWithPolygonDTO[] zones;
