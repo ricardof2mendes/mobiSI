@@ -94,13 +94,8 @@ public class FormatMobics extends BodyTagSupport {
             value = BigDecimal.valueOf(((Integer) value).longValue());
         }
 
-        // If locale is null check for the system property
-        Locale locale = null;
-        if (System.getProperty("mobics.config.locale") != null) {
-            locale = new Locale(System.getProperty("mobics.config.locale"));
-        } else {
-            locale = pageContext.getRequest().getLocale();
-        }
+        // check for the request
+        Locale locale = pageContext.getRequest().getLocale();
 
         // If locale is null, use the default locale
         if (locale == null) {
@@ -144,7 +139,7 @@ public class FormatMobics extends BodyTagSupport {
                         LOGGER.warn("System property «mobics.config.day.week.pattern» is missing!");
                         return EVAL_PAGE;
                     }
-                    dateFormatter = new SimpleDateFormat("EEEE", locale);
+                    dateFormatter = new SimpleDateFormat(formatPattern, locale);
                     formatted = dateFormatter.format(c.getTime());
                 } else {
                     // otherwise
@@ -189,9 +184,14 @@ public class FormatMobics extends BodyTagSupport {
                 Integer minutes = (((BigDecimal) value).intValue() % 3600) / 60;
                 formatted = MessageFormat.format(resources.getString(key), minutes);
                 if (((BigDecimal) value).intValue() >= 3600) {
-                    key = "time.hours";
                     Integer hours = ((BigDecimal) value).intValue() / 3600;
-                    formatted = MessageFormat.format(resources.getString(key), hours, minutes);
+                    if(new Integer(0).equals(minutes)) {
+                        key = "time.hours";
+                        formatted = MessageFormat.format(resources.getString(key), hours);
+                    } else {
+                        key = "time.hours.minutes";
+                        formatted = MessageFormat.format(resources.getString(key), hours, minutes);
+                    }
                 }
             } else
                 
