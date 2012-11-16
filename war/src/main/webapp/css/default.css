@@ -1231,16 +1231,19 @@ body.confirmation .confirm {
 	background-color: #f4f4f4;
 	padding-bottom: 5px;
 }
-
+.confirm article section {
+	padding: 30px 10px;
+}
 .confirm article h2 {
 	color: #000;
 	font-weight: bold;
+	margin: 0;
 }
 
 .confirm article h3 {
+	margin: 0;
 	color: #A0A0A0;
 	font-weight: normal;
-	margin: 0 10px 50px 10px;
 }
 
 /********************************************************************* Media Queries */
