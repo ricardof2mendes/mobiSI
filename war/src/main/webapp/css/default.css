@@ -319,14 +319,6 @@ form.loginForm>div>label {
 	background-image: url(../img/bt_down_90px.png);
 }
 
-.green {
-	background-color: #288b07;
-}
-
-.red {
-	background-color: red;
-}
-
 section.submit {
 	padding: 0 10px;
 }
@@ -355,6 +347,20 @@ section.submit {
 .submitBtn:active {
 	background-image: url(../img/bt_down_45px.png);
 	border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.green {
+	background-color: #288b07;
+}
+
+.orangered {
+	background-color: #DA4600;
+}
+
+.gray {
+	background-color: #CFCFCF;
+	color: #333;
+	text-shadow: 0 1px 0 white;
 }
 
 .loginBtn {
@@ -423,13 +429,13 @@ section > nav.simpleList ul li.link a {
 
 section > nav.simpleList ul li span:nth-child(1) {
 	text-align: right;
-    width: 28%;
+    width: 38%;
 	display: inline-block;
 }
 
 section > nav.simpleList ul li.link span:nth-child(2) {
 	text-align: left;
-	width: 70%;
+	width: 60%;
 	display: inline-block;
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -448,7 +454,7 @@ section > nav.simpleList ul li.filter {
 }
 
 section > nav.simpleList ul li.filter span:nth-child(2) {
-	width: 70%;
+	width: 60%;
 	display: inline-block;
 	padding-left: 10px;
 	color: #666;
@@ -520,6 +526,10 @@ nav.panel ul li a {
 	background: url(../img/seta.png) no-repeat 100% 50%;
 }
 
+section > nav.panel ul li.white {
+	background-color: #fff !important;
+}
+
 section > nav.panel ul li.link {
 	background: #f4f4f4 url(../img/seta.png) no-repeat 100% 50%;
 }
@@ -530,14 +540,13 @@ section > nav.panel ul li.link a {
 
 section > nav.panel ul li.link span:nth-child(1) {
 	text-align: right;
-    width: 30%;
-	float: left;
+    width: 38%;
 	display: inline-block;
 }
 
 section > nav.panel ul li.link span:nth-child(2) {
 	text-align: left;
-	width: 70%;
+	width: 60%;
 	display: inline-block;
     white-space: break-word;
 	padding-right: 15px;
@@ -583,13 +592,14 @@ section > nav.panel ul li.detail span {
 
 section > nav.panel ul li.detail span:nth-child(1) {
 	text-align: right;
-	width: 30%;
+	width: 38%;
 }
 
 section > nav.panel ul li.detail span:nth-child(2) {
 	padding-left: 10px;
 	color: #666;
 	font-weight: normal;
+	width: 60%;
 }
 
 section > nav.panel ul li:last-child{
@@ -839,7 +849,7 @@ section#noresults label:nth-child(1) {
 .customComboBox > select {
 	border: 0;
 	color: #666;
-	background: #f4f4f4 url('../img/setas.png') no-repeat right 50%;
+	background: transparent url('../img/setas.png') no-repeat right 50%;
 	width: 100%;
 }
 
@@ -1181,6 +1191,7 @@ article.pin div:nth-child(3) > input[type="submit"]:active {
 
 
 /* MODAL */
+.confirm,
 .modal {
     display:    none;
     position:   fixed;
@@ -1189,7 +1200,6 @@ article.pin div:nth-child(3) > input[type="submit"]:active {
     left:       0;
     height:     100%;
     width:      100%;
-    background: rgba( 0, 0, 0, .8 ) url('../img/ajax-loader.gif') 50% 50% no-repeat;
 }
 
 body.loading {
@@ -1198,6 +1208,39 @@ body.loading {
 
 body.loading .modal {
     display: block;
+    background: rgba( 0, 0, 0, .8 ) url('../img/ajax-loader.gif') 50% 50% no-repeat;
+}
+
+/* Confirm modal */
+
+body.confirmation {
+    overflow: hidden;   
+}
+
+body.confirmation .confirm {
+    display: block;
+    background: rgba( 0, 0, 0, .8 );
+    padding: 0 10px;
+}
+
+.confirm article {
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	margin: auto;
+	background-color: #f4f4f4;
+	padding-bottom: 5px;
+}
+
+.confirm article h2 {
+	color: #000;
+	font-weight: bold;
+}
+
+.confirm article h3 {
+	color: #A0A0A0;
+	font-weight: normal;
+	margin: 0 10px 50px 10px;
 }
 
 /********************************************************************* Media Queries */

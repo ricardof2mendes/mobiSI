@@ -37,6 +37,10 @@ $(document).ready(function() {
 		}
 		toggleFx('#legend');
 	});
+	
+	$('#search').on('click', function(e) {
+		fetchSearchData($('#query').val());
+	});
 });
 
 
@@ -54,12 +58,18 @@ var MapAPark = function(licensePlate) {
 	fetchParkData(licensePlate);
 };
 
+var MapASearch = function() {
+	//Build parts
+	buildCommon();
+	processSearch();
+};
+
 /**
  * Build common map and controls
  */
 function buildCommon() {
 	// remove spacing
-	$('div.bottomShadow').css('display', 'none');
+	//$('div.bottomShadow').css('display', 'none');
 	
 	// crete the map, add navigation and zoom controls, add basic layer open street map
 	map = new OpenLayers.Map({
@@ -163,6 +173,21 @@ function fetchParkData(licensePlate) {
 }
 
 /**
+ * Fetch data from server related to given license plate
+ * @param licensePlate
+ */
+function fetchSearchData(query) {
+	$.get(contextPath + '/booking/FindCarForLater.action?searchAdress=&query=' + query, 
+			function(data, textStatus, jqXHR){
+				if (jqXHR.getResponseHeader('Stripes-Success') === 'OK') {
+					processSearch(eval(data));
+		        } else {
+		            console.log('An error has occurred or the user\'s session has expired!');
+		        }
+		    });	
+}
+
+/**
  * Process the received server data
  * @param returnData
  */
@@ -225,6 +250,12 @@ function processData(returnData) {
 			 }
 			 
 		});
+		
+	}
+}
+
+function processSearch(returnData) {
+	if(returnData) {
 		
 	}
 }

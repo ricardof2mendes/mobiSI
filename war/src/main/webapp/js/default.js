@@ -27,6 +27,35 @@ $(document).ready(function() {
 						}, true);
 	});
 	
+	/** Find me a car for later */
+	$('#findForLater').on('click', function(e) {
+		e.preventDefault();
+		var element = $(this); 
+		fillGeoposition(function(position) {
+							var url = element.prop('href')
+									+ "&latitude=" + position.coords.latitude
+									+ "&longitude=" + position.coords.longitude;
+							window.location.href = url;
+						}, true);
+	});
+	
+	/** Search location link */
+	$('#locationLink').on('click', function(e) {
+		e.preventDefault();
+		var element = $(this);
+		var url = element.prop('href');
+		url += "&" + $('#latitude').prop('name') + '=' + $('#latitude').val(); 
+		url += "&" + $('#longitude').prop('name') + '=' + $('#longitude').val(); 
+		url += "&" + $('#startDate').prop('name') + '=' + $('#startDate').val(); 
+		url += "&" + $('#distance').prop('name') + '=' + $('#distance').val(); 
+		url += "&" + $('#carClazz').prop('name') + '=' + $('#carClazz').val(); 
+		url += "&" + $('#fromMyCarClub').prop('name') + '=' + $('#fromMyCarClub').val(); 
+		url += "&" + $('#startSending').prop('name') + '=' + $('#startSending').val(); 
+		url += "&" + $('#stopSending').prop('name') + '=' + $('#stopSending').val(); 
+		url += "&" + $('#maxMessages').prop('name') + '=' + $('#maxMessages').val(); 
+		window.location.href = url;
+	});
+	
 	/**
 	 * Prevent license plate input form to submit
 	 */ 
@@ -89,18 +118,6 @@ $(document).ready(function() {
 						}, true);
  	});
  	
- 	// Search Criteria cars
-// 	$('.orderCriteria ul li a').each(function(){
-// 		var element = $(this);
-// 		$(this).on('click', function(e) {
-// 						e.preventDefault();
-// 						fillGeoposition(function(position) {
-//							var url = element.prop('href') + "&latitude=" + position.coords.latitude + "&longitude=" + position.coords.longitude;
-//							window.location.href = url;
-//						}, true);
-// 		});
-// 	});
- 	
  	/**
  	 * Select autocomplete
  	 */
@@ -143,13 +160,30 @@ $(document).ready(function() {
 	    	timeWheels: 'HHii',
 	        minDate: new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours()+1, now.getMinutes(), now.getSeconds(), now.getMilliseconds()),
 	        display: 'modal',
-	        width: 42,
+	        theme: 'ios',
+	        width: 45,
 	        mode: 'scroller',
 	        onShow: function(html, inst) {
 	        }
 	    });    
  	}
  	
+ 	$('#openConfirm').on('click', function(e) {
+ 		e.preventDefault();
+ 		$('body').addClass("confirmation");
+ 		
+ 		var windowHeight = document.documentElement.clientHeight;
+ 		var elementHeight = $(".confirm article").height();
+ 		$(".confirm article").css({
+ 		    "margin-top": (windowHeight-elementHeight)/2 + 'px'
+ 		});
+ 		
+ 	});
+ 	
+ 	$('#closeConfirm').on('click', function(e) {
+ 		e.preventDefault();
+ 		$('body').removeClass("confirmation");
+ 	});
 });
 
 
