@@ -8,9 +8,10 @@
 
 	<jsp:include page="/WEB-INF/common/message_error.jsp"/>
 
-	<stripes:form id="interestBook" beanclass="com.criticalsoftware.mobics.presentation.action.booking.FindCarForLaterActionBean" method="get">
+	<stripes:form id="interestBook" beanclass="com.criticalsoftware.mobics.presentation.action.recent.EditInterestBookingActionBean" method="post">
 		<stripes:hidden id="latitude" name="latitude"/>
 		<stripes:hidden id="longitude" name="longitude"/>
+		<stripes:hidden name="activityCode"/>
 		
 		<article>
 			<section>
@@ -33,11 +34,8 @@
 					<ul>
 						<li class="link white">
 							<stripes:link id="locationLink" beanclass="com.criticalsoftware.mobics.presentation.action.booking.FindCarForLaterActionBean" event="searchLocation" addSourcePage="true">
-								
 								<span><fmt:message key="find.car.later.location"/></span>
-								<span id="address">
-									<fmt:message key="find.car.later.current.location"/>
-								</span>
+								<span id="address"><fmt:message key="find.car.later.current.location"/></span>
 							</stripes:link>
 						</li>
 						<li class="detail white">
@@ -148,7 +146,7 @@
 			</section>
 			
 			<section class="submit">
-				<stripes:submit name="createBookingInterest" class="submitBtn gray">
+				<stripes:submit name="editBookingInterest" class="submitBtn gray">
 					<fmt:message key="find.car.later.save.button"/>
 				</stripes:submit>
 			</section>
