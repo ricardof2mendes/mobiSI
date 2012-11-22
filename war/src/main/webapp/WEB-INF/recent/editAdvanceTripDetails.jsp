@@ -2,7 +2,7 @@
 <%@include file="/WEB-INF/common/taglibs.jsp"%>
 <c:set var="title" scope="page"><fmt:message key='trip.detail.advance.trip.extend.title' /></c:set>
 
-<t:main title="${title}" >
+<t:main title="${title}" addCalendar="true">
 	<jsp:include page="/WEB-INF/common/message_error.jsp"/>
 	<stripes:form beanclass="com.criticalsoftware.mobics.presentation.action.recent.RecentActivitiesActionBean" method="post">
 		<stripes:hidden name="activityCode" value="${actionBean.trip.bookingNumber}"/>

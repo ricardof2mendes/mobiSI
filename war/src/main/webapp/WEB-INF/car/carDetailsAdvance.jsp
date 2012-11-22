@@ -137,41 +137,39 @@
 			</nav>
 		</section>
 		
-		<c:if test="${actionBean.car.state == 'AVAILABLE' }">
-			<section>
-				<nav class="panel">
-					<ul>
-						<c:choose>
-							<c:when test="${actionBean.car.zones != null}">
-								<li class="link">
-									<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.booking.AdvanceBookingActionBean" event="parkLocation" addSourcePage="true">
-										<stripes:param name="licensePlate">${actionBean.car.licensePlate}</stripes:param>
-										<stripes:param name="startDate"><fmt:formatDate value="${actionBean.startDate}" pattern="${applicationScope.configuration.dateTimePattern}"/></stripes:param>
-										<stripes:param name="endDate"><fmt:formatDate value="${actionBean.endDate}" pattern="${applicationScope.configuration.dateTimePattern}"/></stripes:param>
-										<span>
-											<fmt:message key="car.details.park"/>
-										</span>
-										<span>
-											${actionBean.car.zones[0].zone} 
-										</span>	
-									</stripes:link>
-								</li>
-							</c:when>
-							<c:otherwise>
-								<li class="detail">
+		<section>
+			<nav class="panel">
+				<ul>
+					<c:choose>
+						<c:when test="${actionBean.car.zones != null}">
+							<li class="link">
+								<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.booking.AdvanceBookingActionBean" event="parkLocation" addSourcePage="true">
+									<stripes:param name="licensePlate">${actionBean.car.licensePlate}</stripes:param>
+									<stripes:param name="startDate"><fmt:formatDate value="${actionBean.startDate}" pattern="${applicationScope.configuration.dateTimePattern}"/></stripes:param>
+									<stripes:param name="endDate"><fmt:formatDate value="${actionBean.endDate}" pattern="${applicationScope.configuration.dateTimePattern}"/></stripes:param>
 									<span>
 										<fmt:message key="car.details.park"/>
 									</span>
 									<span>
-										<fmt:message key="application.value.not.available"/>
+										${actionBean.car.zones[0].zone} 
 									</span>	
-								</li>	
-							</c:otherwise>
-						</c:choose>
-					</ul>
-				</nav>
-			</section>
-		</c:if>
+								</stripes:link>
+							</li>
+						</c:when>
+						<c:otherwise>
+							<li class="detail">
+								<span>
+									<fmt:message key="car.details.park"/>
+								</span>
+								<span>
+									<fmt:message key="application.value.not.available"/>
+								</span>	
+							</li>	
+						</c:otherwise>
+					</c:choose>
+				</ul>
+			</nav>
+		</section>
 		
 		<section>
 			<nav class="panel">

@@ -33,9 +33,9 @@
 				</nav>
 			</section>
 			<section>
-				<nav class="simpleList">
+				<nav class="panel">
 					<ul>
-						<li class="filter">
+						<li class="detail">
 							<span><fmt:message key="book.advance.start.date"/></span>
 							<span class="customComboBox">
 								<input type="text" id="startDate" name="startDate" 
@@ -43,7 +43,7 @@
 									   value="<fmt:formatDate value="${actionBean.startDate}" pattern="${applicationScope.configuration.dateTimePattern}"/>"/>
 							</span>
 						</li>
-						<li class="filter">
+						<li class="detail">
 							<span><fmt:message key="book.advance.end.date"/></span>
 							<span class="customComboBox">
 								<input type="text" id="endDate" name="endDate" 

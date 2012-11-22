@@ -571,6 +571,7 @@ nav.panel ul li.image a {
 	padding: 5px 0;
 }
 
+nav.panel ul li.imageCarClub,
 nav.panel ul li.imageNoLink {	
 	padding: 5px 0;
 	border-bottom: 1px solid #CCC;
@@ -604,6 +605,25 @@ section > nav.panel ul li.detail span:nth-child(2) {
 
 section > nav.panel ul li:last-child{
 	border-bottom: 0;
+}
+
+nav.panel ul li.imageCarClub > div {
+	Max-height: 60px;
+}
+
+nav.panel ul li.imageCarClub > div > img {
+	border-radius: 4px ;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border: 1px solid rgba(0, 0, 0, 0.6);
+	margin: 0 10px;
+	vertical-align: middle;
+}
+
+nav.panel ul li.imageCarClub > div > span {
+	font-weight: bold;
+	font-size: normal;
+	color: #333;
 }
 
 nav.panel ul li.imageNoLink > div:nth-child(1),
@@ -732,6 +752,11 @@ nav.threeColumnList  ul li a > div:nth-child(2) > div:nth-child(2) > span.unavai
 	color: #FF0000;
 }
 
+.ellipsis {
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
 /************************************ Two columns list */
 
 nav.twoColumnList ul li {
@@ -773,10 +798,6 @@ nav.twoColumnList  ul li a > div:nth-child(2) {
 nav.twoColumnList  ul li a > div:nth-child(2) > span{
 	color: #999;
 }
-
-
-
-
 
 /************************************ Order navigation bar*/
 
@@ -841,11 +862,30 @@ section#noresults label:nth-child(1) {
 
 }
 
+section#noresultsdamage {
+	margin: 10px auto auto;
+	text-align: center;
+	height: 30px;
+	color: #999;
+}
+
 /* Custom selectBox */
 .customComboBox {
 	padding-right: 5px;
 }
-.customComboBox > input, 
+.customComboBox > textarea {
+	border: 0;
+	color: #666;
+	width: 100%;
+	padding: 0 10px;
+	background-color: transparent;
+}
+.customComboBox > input {
+	border: 0;
+	color: #666;
+	width: 100%;
+	background-color: transparent;
+} 
 .customComboBox > select {
 	border: 0;
 	color: #666;
@@ -902,6 +942,7 @@ article.pin div:nth-child(2) > input {
 	border: 0;
 	font-size: normal;
 	color: #333;
+	padding-left: 10px;
 }
 
 
@@ -1232,7 +1273,7 @@ body.confirmation .confirm {
 	padding-bottom: 5px;
 }
 .confirm article section {
-	padding: 30px 10px;
+	padding: 15px 10px;
 }
 .confirm article h2 {
 	color: #000;

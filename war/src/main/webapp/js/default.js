@@ -67,29 +67,30 @@ $(document).ready(function() {
 	 * License plate autocomplete
 	 */
  	$('#licensePlate').on('keyup', function(e) {
- 		$('#licensePlate').css('text-transform', 'uppercase');
+ 		var that = this;
  		// put cross to delete input content
- 		if($('#licensePlate').val().length >= 1){
+ 		if($(this).val().length >= 1){
+ 			$(this).css('text-transform', 'uppercase');
  			$('#licensePlateBookForm > div > div').addClass('delete')
  				.on('click', function() {
- 					$('#licensePlate').val('');
+ 					$(that).val('');
  					$('#articleContainer').html('').css("display", "none");
  					$('#licensePlateBookForm > div > div').removeClass('delete').off('click');
- 					$('#licensePlate').css('text-transform', 'none');
+ 					$(that).css('text-transform', 'none');
  			});
  		} else {
  			$('#licensePlateBookForm > div > div').removeClass('delete').off('click');
- 			$('#licensePlate').css('text-transform', 'none');
+ 			$(this).css('text-transform', 'none');
  		}
  		
  		// add the autocomplete
-		if($('#licensePlate').val().length >= 2) {
+		if($(this).val().length >= 2) {
 			// first clear the delay
 			clearTimeout(this.timeout);
 			// then create the delay call
 			this.timeout = setTimeout(function(){
 				$('div.delete').toggle();
-				$('#licensePlate').addClass('autocomplete');
+				$(that).addClass('autocomplete');
 	 			if($('#latitude').val().length == 0 && $('#longitude').val().length == 0){
 		 			fillGeoposition(function(position) {
 				 				$('#latitude').val(position.coords.latitude);
@@ -168,6 +169,7 @@ $(document).ready(function() {
 	    });    
  	}
  	
+ 	/* Modal dialog windows */
  	$('#openConfirm').on('click', function(e) {
  		e.preventDefault();
  		$('body').addClass("confirmation");
@@ -183,6 +185,43 @@ $(document).ready(function() {
  	$('#closeConfirm').on('click', function(e) {
  		e.preventDefault();
  		$('body').removeClass("confirmation");
+ 	});
+ 	
+ 	/* report problem license plate search */
+ 	$('#licenseReport').on('blur', function(){
+ 		
+ 		if($(this).val().length == 8 &&
+ 				($("#carLicensePlate").length == 0 ||
+ 				($("#carLicensePlate").length > 0 && $("#carLicensePlate").val() !=  $(this).val()))){
+ 			
+	 		var url = CONTEXT_PATH+'/contacts/ContactsAndDamageReport.action?licensePlateSearch=&licensePlate='+$(this).val();
+	
+			$.get(url, function(data, textStatus, jqXHR){
+				if (jqXHR.getResponseHeader('Stripes-Success') === 'OK') {
+					if (data.indexOf('<html') == -1) {
+						$('#searchResults').html(data);
+					    $("#searchResults").css("display", "block");
+					} else {
+					    $('html').html(data);
+					}
+				} else {
+					console.log('An error has occurred or the user\'s session has expired!');
+					$('html').html(data);
+				}
+			}, function(data, textStatus, jqXHR) {
+				$('html').html(data.responseText);
+			});
+ 		}
+ 	});
+ 	
+ 	$('#licenseReport').on('keyup', function(){
+ 		if($(this).val().length >= 1){
+ 			$(this).css('text-transform', 'uppercase');
+ 		} else {
+ 			$(this).css('text-transform', 'none');
+ 			$("#searchResults").css("display", "none");
+ 			$("#searchResults").html('');
+ 		}
  	});
 });
 

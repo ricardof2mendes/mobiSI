@@ -118,6 +118,7 @@
 		</section>
 	</article>
 	
+	<!-- Modal window for confirmation -->
 	<div class="confirm">
 		<article>
 			<section>

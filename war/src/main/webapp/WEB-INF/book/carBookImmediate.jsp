@@ -31,26 +31,28 @@
 							</div>
 						</stripes:link>
 					</li>
-					<li class="detail">
-						<span>
-							<fmt:message key="car.details.distance"/> 
-						</span>
-						<span>
-							<mobi:formatMobics value="${actionBean.car.distance}" type="distance" />
-							
-						</span>
-					</li>
-					<li class="link">
-						<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.booking.ImmediateBookingActionBean" event="carLocation" addSourcePage="true">
-							<stripes:param name="licensePlate">${actionBean.car.licensePlate}</stripes:param>
+					<c:if test="${actionBean.car.state == 'AVAILABLE' }">
+						<li class="detail">
 							<span>
-								<fmt:message key="car.details.location"/>
+								<fmt:message key="car.details.distance"/> 
 							</span>
 							<span>
-								${actionBean.location}
-							</span>	
-						</stripes:link>
-					</li>
+								<mobi:formatMobics value="${actionBean.car.distance}" type="distance" />
+								
+							</span>
+						</li>
+						<li class="link">
+							<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.booking.ImmediateBookingActionBean" event="carLocation" addSourcePage="true">
+								<stripes:param name="licensePlate">${actionBean.car.licensePlate}</stripes:param>
+								<span>
+									<fmt:message key="car.details.location"/>
+								</span>
+								<span>
+									${actionBean.location}
+								</span>	
+							</stripes:link>
+						</li>
+					</c:if>	
 					<li class="detail">
 						<span>
 							<fmt:message key="car.details.price.use"/>
@@ -69,16 +71,18 @@
 					</li>
 				</ul>			 
 			</nav>
-			<div class="cleaner"></div>
-			<stripes:link id="showPin" beanclass="com.criticalsoftware.mobics.presentation.action.booking.ImmediateBookingActionBean" class="linkBtn green" event="showPin" addSourcePage="true">
-				<stripes:param name="licensePlate" value="${actionBean.car.licensePlate}"/>
-				<stripes:param name="latitude" value="${actionBean.latitude}"/>
-				<stripes:param name="longitude" value="${actionBean.longitude}"/>
-				<fmt:message key="book.now.submit"/>
-			</stripes:link>
-			<div class="warningMessage">
-				<fmt:message key="booking.charge.message"/>
-			</div>
+			
+			<c:if test="${actionBean.car.state == 'AVAILABLE' }">
+				<stripes:link id="showPin" beanclass="com.criticalsoftware.mobics.presentation.action.booking.ImmediateBookingActionBean" class="linkBtn green" event="showPin" addSourcePage="true">
+					<stripes:param name="licensePlate" value="${actionBean.car.licensePlate}"/>
+					<stripes:param name="latitude" value="${actionBean.latitude}"/>
+					<stripes:param name="longitude" value="${actionBean.longitude}"/>
+					<fmt:message key="book.now.submit"/>
+				</stripes:link>
+				<div class="warningMessage">
+					<fmt:message key="booking.charge.message"/>
+				</div>
+			</c:if>
 		</section>
 	</article>	
 </t:main>

@@ -35,7 +35,11 @@
 		</li>
 		
 		<li class="messages ${actionBean.activeMenu == 'messages' ? 'messagesActive' : ''}"><a href="#">Messages</a></li>
-		<li class="contacts ${actionBean.activeMenu == 'contacts' ? 'contactsActive' : ''}"><a href="#">Contacts</a></li>
+		<li class="contacts ${actionBean.activeMenu == 'contacts' ? 'contactsActive' : ''}">
+			<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.contacts.ContactsAndDamageReportActionBean">
+				<fmt:message key="contacts.title"/>
+			</stripes:link>
+		</li>
 		<li class="preferences ${actionBean.activeMenu == 'preferences' ? 'preferencesActive' : ''}"><a href="#">Preferences</a></li>
 
 		<li class="account ${actionBean.activeMenu == 'account' ? 'accountActive' : ''}">

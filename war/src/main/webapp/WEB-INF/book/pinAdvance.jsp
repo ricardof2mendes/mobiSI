@@ -11,7 +11,6 @@
 		<stripes:hidden name="car.licensePlate"/>
 		<stripes:hidden name="car.carModelName"/>
 		<stripes:hidden name="car.carBrandName"/>
-		<stripes:hidden name="car.fuelType"/>
 		<input type="hidden" name="car.zones" value="${actionBean.car.zones[0].zone}"/>
 		
 		<input type="hidden" name="startDate" value="<fmt:formatDate value="${actionBean.startDate}" pattern="${applicationScope.configuration.dateTimePattern}"/>"/>
