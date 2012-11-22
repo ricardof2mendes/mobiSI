@@ -149,7 +149,7 @@
 			</div>
 		</c:if>
 		
-		<stripes:link id="showPin" beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn red" event="endTrip" addSourcePage="true">
+		<stripes:link id="showPin" beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn orangered" event="endTrip" addSourcePage="true">
 			<fmt:message key="current.trip.button.end.trip"/>
 		</stripes:link>
 		<div class="warningMessage">
