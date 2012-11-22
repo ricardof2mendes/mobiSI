@@ -128,8 +128,8 @@ public class RecentActivitiesActionBean extends BaseActionBean {
 
         trip = bookingWSServiceStub.getTripDetails(activityCode);
         // FIXME
-        //cost = bookingWSServiceStub.getAdvanceBookingCancelCost(activityCode);
-        cost = new BigDecimal(15);
+        cost = bookingWSServiceStub.getAdvanceBookingCancelCost(activityCode);
+        //cost = new BigDecimal(15);
         time = new BigDecimal(3600);
 
         return new ForwardResolution("/WEB-INF/recent/advanceTripDetails.jsp");
