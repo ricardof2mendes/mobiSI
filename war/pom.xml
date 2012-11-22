@@ -281,6 +281,8 @@
 									src="${basedir}/target/${project.artifactId}-${project.version}.war"
 									dest="${mobics.jboss.home}/standalone/deployments/${project.artifactId}-${project.version}.war">
 								</unzip>
+								<delete
+									file="${mobics.jboss.home}/standalone/deployments/${project.artifactId}-${project.version}.war.deployed" />
 								<touch
 									file="${mobics.jboss.home}/standalone/deployments/${project.artifactId}-${project.version}.war.dodeploy" />
 							</target>
