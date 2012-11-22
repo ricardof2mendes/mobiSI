@@ -49,7 +49,7 @@ public class FindCarForLaterActionBean extends BaseActionBean {
     @Validate(required = true, on = "createBookingInterest", converter = DatetimeTypeConverter.class)
     private Date startDate;
 
-    @Validate(required = true, on = "createBookingInterest")
+    @Validate
     private String address;
 
     @Validate(required = true, on = "createBookingInterest")
