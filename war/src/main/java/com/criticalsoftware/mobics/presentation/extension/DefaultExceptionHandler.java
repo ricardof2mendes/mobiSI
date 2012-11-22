@@ -30,6 +30,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.criticalsoftware.mobics.presentation.action.ErrorActionBean;
+import com.criticalsoftware.mobics.proxy.car.EventInClosedStateExceptionException;
+import com.criticalsoftware.mobics.proxy.car.EventValidationExceptionException;
 
 /**
  * Handles the exceptions thrown by the application.
@@ -351,6 +353,38 @@ public class DefaultExceptionHandler implements AutoExceptionHandler {
      */
     public Resolution handle(
             com.criticalsoftware.mobics.proxy.booking.BookingNotFoundExceptionException exception,
+            HttpServletRequest request,
+            HttpServletResponse response) {
+        LOGGER.error(exception.getMessage(), exception);
+        return insideJobToError("error.BookNotFoundExceptionException", request, response);
+    }
+    
+    /**
+     * Send them to the global error page.
+     * 
+     * @param exception a Car Type Not Found
+     * @param request The HttpServletRequest
+     * @param response The HttpServletResponse
+     * @return A ForwardResolution
+     */
+    public Resolution handle(
+            com.criticalsoftware.mobics.proxy.car.EventValidationExceptionException exception,
+            HttpServletRequest request,
+            HttpServletResponse response) {
+        LOGGER.error(exception.getMessage(), exception);
+        return insideJobToError("error.BookNotFoundExceptionException", request, response);
+    }
+    
+    /**
+     * Send them to the global error page.
+     * 
+     * @param exception a Car Type Not Found
+     * @param request The HttpServletRequest
+     * @param response The HttpServletResponse
+     * @return A ForwardResolution
+     */
+    public Resolution handle(
+            com.criticalsoftware.mobics.proxy.car.EventInClosedStateExceptionException exception,
             HttpServletRequest request,
             HttpServletResponse response) {
         LOGGER.error(exception.getMessage(), exception);
