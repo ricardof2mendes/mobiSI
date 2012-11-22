@@ -46,55 +46,62 @@ public abstract class BaseActionBean implements ActionBean {
     public final void setContext(ActionBeanContext context) {
         this.context = (MobiCSActionBeanContext) context;
     }
-    
+
     /**
      * Get the active menu
      * 
      * @return
      */
-    public String getActiveMenu(){
-        String name = getClass().getPackage().getName(); 
+    public String getActiveMenu() {
+        String name = getClass().getPackage().getName();
         return name.substring(name.lastIndexOf('.') + 1);
     }
 
     /**
      * Get the splash screen style
+     * 
      * @return
      */
     public final String getSplashScreenStyle() {
         String style;
-        if(this.getContext().getUser() != null) {
-            style = new StringBuilder(this.getContext().getUser().getCarClubColor()).append(" ").append(this.getContext().getUser().getCarClubTheme()).toString().toLowerCase();
+        if (this.getContext().getUser() != null) {
+            // TODO nunca passa aqui
+            style = new StringBuilder(this.getContext().getUser().getCarClub().getCarClubColorScheme()).append(" ")
+                    .append(this.getContext().getUser().getCarClub().getCarClubTheme()).toString().toLowerCase();
+            style = style.replaceAll(" ", "").toLowerCase();
         } else {
             style = Theme.getTheme(this.getContext().getRequest().getServerName());
         }
-        
-        if(style.indexOf(Theme.WARM) > 0) {
+
+        if (style.indexOf(Theme.WARM) > 0) {
             style.replaceAll(" ", "");
         }
-        
+
         return style;
     }
-    
+
     /**
      * Get the header style
+     * 
      * @return
      */
     public final String getHeaderStyle() {
         String style;
-        if(this.getContext().getUser() != null) {
-            style = this.getContext().getUser().getCarClubColor();
+        if (this.getContext().getUser() != null) {
+            style = this.getContext().getUser().getCarClub().getCarClubColorScheme();
+            style = style.replaceAll(" ", "").toLowerCase();
         } else {
             style = Theme.getColor(this.getContext().getRequest().getServerName());
         }
         return style;
     }
-    
+
     /**
      * Check if action bean it has validation field errors
+     * 
      * @return
      */
-    public final boolean getFieldErrors(){
+    public final boolean getFieldErrors() {
         return this.context.getValidationErrors().hasFieldErrors();
     }
 

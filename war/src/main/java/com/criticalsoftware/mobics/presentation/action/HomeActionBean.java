@@ -23,6 +23,8 @@ import com.criticalsoftware.mobics.presentation.security.MobiCSSecure;
  */
 @MobiCSSecure
 public class HomeActionBean extends BaseActionBean {
+    
+    private static final String ACTIVE_MENU = "booking";
 
     @DefaultHandler
     @DontValidate
@@ -47,6 +49,6 @@ public class HomeActionBean extends BaseActionBean {
     
     @Override
     public String getActiveMenu(){
-        return "booking";
+        return ACTIVE_MENU;
     }
 }

@@ -63,14 +63,12 @@ public class LoginActionBean extends BaseActionBean {
         carClubWSServiceStub._getServiceClient().addHeader(
                 AuthenticationUtil.getAuthenticationHeader(username, password));
 
+        // this.getContext().setUser(new User("a","a","a","a", "orange", "darkred"));
+
         try {
             CarClubSimpleDTO carClubDTO = carClubWSServiceStub.getCustomerCarClub();
             if (carClubDTO != null) {
-
-                this.getContext().setUser(
-                        new User(username, password, carClubDTO.getCarClubName(), carClubDTO.getCarClubCode(),
-                                carClubDTO.getCarClubColorScheme().toLowerCase().replaceAll(" ", ""), carClubDTO
-                                        .getCarClubTheme().toLowerCase().replaceAll(" ", "")));
+                this.getContext().setUser(new User(username, password, carClubDTO));
             } else {
                 this.getContext().getValidationErrors().addGlobalError(new LocalizableError("login.carclub.error"));
                 resolution = new ForwardResolution("/WEB-INF/login.jsp");
