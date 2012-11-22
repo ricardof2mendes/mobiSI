@@ -53,6 +53,7 @@ public class TripActionBean extends BaseActionBean {
     @DefaultHandler
     @DontValidate
     public Resolution main() throws RemoteException, UnsupportedEncodingException, CustomerNotFoundExceptionException, BookingNotFoundExceptionException {
+        ForwardResolution resolution = new ForwardResolution("/WEB-INF/trip/currentTrip.jsp");
         BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
                 Configuration.INSTANCE.getBookingEndpoint());
         bookingWSServiceStub._getServiceClient().addHeader(
@@ -60,7 +61,6 @@ public class TripActionBean extends BaseActionBean {
                         .getPassword()));
 
         current = bookingWSServiceStub.getCurrentTripDetails();
-        ForwardResolution resolution = new ForwardResolution("/WEB-INF/trip/currentTrip.jsp");
 
         if (current == null || current.getLicensePlate() == null || current.getLicensePlate().length() == 0) {
             resolution = new ForwardResolution("/WEB-INF/trip/lastTrip.jsp");

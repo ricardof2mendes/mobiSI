@@ -12,6 +12,8 @@
  */
 package com.criticalsoftware.mobics.presentation.security;
 
+import com.criticalsoftware.mobics.carclub.CarClubSimpleDTO;
+
 /**
  * @author ltiago
  * @version $Revision: $
@@ -21,14 +23,8 @@ public class User {
     private String username;
     
     private String password;
-
-    private String carClubName;
     
-    private String carClubCode;
-    
-    private String carClubColor;
-    
-    private String carClubTheme;
+    private CarClubSimpleDTO carClub;
     
     /**
      * Class constructor
@@ -36,13 +32,10 @@ public class User {
      * @param username
      * @param carClubName
      */
-    public User(String username, String password, String carClubName, String carClubCode, String carClubColor, String carClubTheme) {
+    public User(String username, String password, CarClubSimpleDTO carClub) {
         this.username = username;
         this.password = password;
-        this.carClubName = carClubName;
-        this.carClubCode = carClubCode;
-        this.carClubColor = carClubColor;
-        this.carClubTheme = carClubTheme;
+        this.carClub = carClub;
     }
 
     /**
@@ -60,30 +53,9 @@ public class User {
     }
 
     /**
-     * @return the carClubName
+     * @return the carClub
      */
-    public String getCarClubName() {
-        return carClubName;
-    }
-
-    /**
-     * @return the carClubColor
-     */
-    public String getCarClubColor() {
-        return carClubColor;
-    }
-
-    /**
-     * @return the carClubCode
-     */
-    public String getCarClubCode() {
-        return carClubCode;
-    }
-
-    /**
-     * @return the carClubTheme
-     */
-    public String getCarClubTheme() {
-        return carClubTheme;
+    public CarClubSimpleDTO getCarClub() {
+        return carClub;
     }
 }

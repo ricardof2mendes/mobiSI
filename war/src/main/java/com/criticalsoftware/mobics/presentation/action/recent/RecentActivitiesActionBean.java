@@ -37,6 +37,7 @@ import com.criticalsoftware.mobics.presentation.security.AuthenticationUtil;
 import com.criticalsoftware.mobics.presentation.security.MobiCSSecure;
 import com.criticalsoftware.mobics.presentation.util.Configuration;
 import com.criticalsoftware.mobics.presentation.util.GeolocationUtil;
+import com.criticalsoftware.mobics.proxy.booking.BookingInterestNotFoundExceptionException;
 import com.criticalsoftware.mobics.proxy.booking.BookingNotFoundExceptionException;
 import com.criticalsoftware.mobics.proxy.booking.BookingValidationExceptionException;
 import com.criticalsoftware.mobics.proxy.booking.BookingWSServiceStub;
@@ -163,7 +164,6 @@ public class RecentActivitiesActionBean extends BaseActionBean {
                         .getPassword()));
         Calendar c = Calendar.getInstance();
         c.setTime(endDate);
-        System.out.println(activityCode + " " +c.getTime());
         bookingWSServiceStub.extendAdvanceBooking(activityCode, c);
 
         getContext().getMessages().add(new LocalizableMessage("trip.detail.advance.booking.edit.success"));
@@ -185,8 +185,10 @@ public class RecentActivitiesActionBean extends BaseActionBean {
                         .getPassword()));
 
         bookingWSServiceStub.cancelAdvanceBooking(activityCode);
+        
+        getContext().getMessages().add(new LocalizableMessage("trip.detail.advance.booking.cancel.success"));
 
-        return new ForwardResolution("/WEB-INF/recent/editAdvanceTripDetails.jsp");
+        return new RedirectResolution(this.getClass()).flash(this);
     }
 
     /**
@@ -198,7 +200,7 @@ public class RecentActivitiesActionBean extends BaseActionBean {
      * @throws BookingNotFoundExceptionException
      */
     public Resolution interestDetails() throws RemoteException, UnsupportedEncodingException,
-            BookingNotFoundExceptionException {
+            BookingInterestNotFoundExceptionException {
         BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
                 Configuration.INSTANCE.getBookingEndpoint());
         bookingWSServiceStub._getServiceClient().addHeader(
@@ -207,7 +209,50 @@ public class RecentActivitiesActionBean extends BaseActionBean {
 
         booking = bookingWSServiceStub.getBookingInterest(activityCode);
 
-        return new ForwardResolution("/WEB-INF/recent/interestDetails.jsp");
+        return new ForwardResolution("/WEB-INF/recent/interestBookingDetails.jsp");
+    }
+    
+    /**
+     * Booking interest details
+     * 
+     * @return
+     * @throws RemoteException
+     * @throws UnsupportedEncodingException
+     * @throws BookingNotFoundExceptionException
+     */
+    public Resolution editInterest() throws RemoteException, UnsupportedEncodingException,
+            BookingInterestNotFoundExceptionException {
+        BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
+                Configuration.INSTANCE.getBookingEndpoint());
+        bookingWSServiceStub._getServiceClient().addHeader(
+                AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
+                        .getPassword()));
+
+        booking = bookingWSServiceStub.getBookingInterest(activityCode);
+
+        return new ForwardResolution("/WEB-INF/recent/editInterestBooking.jsp");
+    }
+    
+    /**
+     * Booking interest details
+     * 
+     * @return
+     * @throws RemoteException
+     * @throws UnsupportedEncodingException
+     * @throws BookingNotFoundExceptionException
+     */
+    public Resolution saveInterest() throws RemoteException, UnsupportedEncodingException,
+            BookingInterestNotFoundExceptionException {
+        BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
+                Configuration.INSTANCE.getBookingEndpoint());
+        bookingWSServiceStub._getServiceClient().addHeader(
+                AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
+                        .getPassword()));
+
+        booking = bookingWSServiceStub.getBookingInterest(activityCode);
+       // booking = bookingWSServiceStub.updateBookingInterest(activityCode, code293, pickupDate294, carClass295, carClubCarsOnly296, longitude297, latitude298, radius299, notificationStartTime300, notificationStopTime301, numOfNotifications302, updateDate303);
+
+        return new ForwardResolution("/WEB-INF/recent/editInterestBooking.jsp");
     }
 
     /**
@@ -236,6 +281,15 @@ public class RecentActivitiesActionBean extends BaseActionBean {
         if (trip.getEndtLatitude() != null && trip.getEndLongitude() != null) {
             location = GeolocationUtil.getAddressFromCoordinates(trip.getEndtLatitude().toString(), trip
                     .getEndLongitude().toString());
+        }
+        return location;
+    }
+    
+    public String getBookingLocation() {
+        String location = new LocalizableMessage("application.value.not.available")
+                .getMessage(getContext().getLocale());
+        if (booking.getLocation()!= null && booking.getLocation().getLatitude() != null && booking.getLocation().getLongitude() != null) {
+            location = GeolocationUtil.getAddressFromCoordinates(booking.getLocation().getLatitude().toString(), booking.getLocation().getLongitude().toString());
         }
         return location;
     }
