@@ -41,6 +41,7 @@ import com.criticalsoftware.mobics.presentation.action.trip.TripActionBean;
 import com.criticalsoftware.mobics.presentation.security.AuthenticationUtil;
 import com.criticalsoftware.mobics.presentation.security.MobiCSSecure;
 import com.criticalsoftware.mobics.presentation.util.CarClazz;
+import com.criticalsoftware.mobics.presentation.util.CarState;
 import com.criticalsoftware.mobics.presentation.util.Configuration;
 import com.criticalsoftware.mobics.presentation.util.CoordinateZonesDTO;
 import com.criticalsoftware.mobics.presentation.util.FuelType;
@@ -160,7 +161,7 @@ public class ImmediateBookingActionBean extends BookingActionBean {
      * @throws CarTypeNotFoundExceptionException
      * @throws CarValidationExceptionException
      */
-    @ValidationMethod(on = "nearestCarBook", when = ValidationState.NO_ERRORS)
+    @ValidationMethod(on = "nearestCarBook", when = ValidationState.NO_ERRORS, priority = 1)
     public void validateNearestCar(ValidationErrors errors) throws RemoteException, FuelTypeNotFoundExceptionException,
             CarClassNotFoundExceptionException, CarTypeNotFoundExceptionException {
         CarDTO[] dtos = new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint()).searchCars(null, null,
@@ -174,6 +175,13 @@ public class ImmediateBookingActionBean extends BookingActionBean {
             }
         }else {
             errors.addGlobalError(new LocalizableError("car.details.validation.car.not.found"));
+        }
+    }
+    
+    @ValidationMethod(on = {"licensePlateBook", "nearestCarBook"}, when = ValidationState.NO_ERRORS, priority = 2)
+    public void validateCar(ValidationErrors errors) {
+        if(!car.getState().equals(CarState.AVAILABLE.name())){
+            errors.addGlobalError(new LocalizableError("error.CarNotAvailableForBookingExceptionException"));
         }
     }
 

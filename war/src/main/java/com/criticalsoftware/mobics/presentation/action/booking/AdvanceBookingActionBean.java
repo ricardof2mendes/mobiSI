@@ -132,7 +132,7 @@ public class AdvanceBookingActionBean extends BookingActionBean {
         start.setTime(startDate);
         end.setTime(endDate);
         cars = new BookingWSServiceStub(Configuration.INSTANCE.getBookingEndpoint()).getCarsForAdvanceBooking(
-                getContext().getUser().getCarClubCode(), zone, location, start, end);
+                getContext().getUser().getCarClub().getCarClubCode(), zone, location, start, end);
 
         return new ForwardResolution("/WEB-INF/book/carListAdvance.jsp");
     }
@@ -263,7 +263,7 @@ public class AdvanceBookingActionBean extends BookingActionBean {
      */
     public LocationDTO[] getLocations() throws RemoteException {
         return new CarClubWSServiceStub(Configuration.INSTANCE.getCarClubEndpoint())
-                .getLocationsByCarClubCode(getContext().getUser().getCarClubCode());
+                .getLocationsByCarClubCode(getContext().getUser().getCarClub().getCarClubCode());
     }
 
     /**
@@ -276,7 +276,8 @@ public class AdvanceBookingActionBean extends BookingActionBean {
         ZoneDTO[] zones = null;
         try {
             zones = new CarClubWSServiceStub(Configuration.INSTANCE.getCarClubEndpoint())
-                    .getParksByCarClubCodeAndLocationCode(getContext().getUser().getCarClubCode(), location);
+                    .getParksByCarClubCodeAndLocationCode(getContext().getUser().getCarClub().getCarClubCode(),
+                            location);
         } catch (LocationCodeNotFoundExceptionException e) {
             LOGGER.warn("Zones not found due to location code.", e.getLocalizedMessage());
         } catch (com.criticalsoftware.mobics.proxy.carclub.CarClubCodeNotFoundExceptionException e) {

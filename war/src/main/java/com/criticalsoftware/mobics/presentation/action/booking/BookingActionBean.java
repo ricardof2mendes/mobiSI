@@ -73,9 +73,10 @@ public abstract class BookingActionBean extends BaseActionBean {
      * @throws Exception
      */
     public abstract Resolution book() throws Exception;
-    
+
     /**
      * See car details
+     * 
      * @return
      * @throws Exception
      */
@@ -102,7 +103,7 @@ public abstract class BookingActionBean extends BaseActionBean {
             errors.addGlobalError(new LocalizableError("car.details.validation.car.not.available"));
         }
     }
-    
+
     /**
      * Get the car image
      * 

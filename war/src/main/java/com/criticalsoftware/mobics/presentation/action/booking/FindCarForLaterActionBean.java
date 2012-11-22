@@ -126,7 +126,7 @@ public class FindCarForLaterActionBean extends BaseActionBean {
         Calendar start = Calendar.getInstance();
         start.setTime(startDate);
 
-        bookingWSServiceStub.createBookingInterest(getContext().getUser().getCarClubCode(), start, carClazz,
+        bookingWSServiceStub.createBookingInterest(getContext().getUser().getCarClub().getCarClubCode(), start, carClazz,
                 fromMyCarClub, new BigDecimal(longitude), new BigDecimal(latitude), distance.intValue(),
                 startSending.intValue(), stopSending.intValue(), maxMessages.intValue(), Calendar.getInstance());
 
