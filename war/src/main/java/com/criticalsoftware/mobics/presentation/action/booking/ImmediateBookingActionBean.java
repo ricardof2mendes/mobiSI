@@ -51,6 +51,7 @@ import com.criticalsoftware.mobics.proxy.booking.BookingWSServiceStub;
 import com.criticalsoftware.mobics.proxy.booking.CarNotAvailableForBookingExceptionException;
 import com.criticalsoftware.mobics.proxy.booking.ForbiddenZoneExceptionException;
 import com.criticalsoftware.mobics.proxy.booking.InvalidCustomerPinExceptionException;
+import com.criticalsoftware.mobics.proxy.booking.OverlappedCustomerTripExceptionException;
 import com.criticalsoftware.mobics.proxy.booking.UnauthorizedCustomerExceptionException;
 import com.criticalsoftware.mobics.proxy.fleet.CarClassNotFoundExceptionException;
 import com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException;
@@ -238,7 +239,7 @@ public class ImmediateBookingActionBean extends BookingActionBean {
             com.criticalsoftware.mobics.proxy.booking.CarNotFoundExceptionException,
             CarNotAvailableForBookingExceptionException, UnauthorizedCustomerExceptionException,
             com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException,
-            ForbiddenZoneExceptionException {
+            ForbiddenZoneExceptionException, OverlappedCustomerTripExceptionException {
 
         BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
                 Configuration.INSTANCE.getBookingEndpoint());
