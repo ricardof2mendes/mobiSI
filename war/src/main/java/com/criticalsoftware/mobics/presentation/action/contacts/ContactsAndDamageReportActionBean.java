@@ -192,7 +192,7 @@ public class ContactsAndDamageReportActionBean extends BaseActionBean {
     
     @ValidationMethod(on="saveDamageReport", when = ValidationState.NO_ERRORS)
     public void validate(ValidationErrors errors) {
-        if(car.getLicensePlate() == null) {
+        if(car== null || car.getLicensePlate() == null) {
             errors.addGlobalError(new LocalizableError("damage.report.no.results.found"));
         }
     }

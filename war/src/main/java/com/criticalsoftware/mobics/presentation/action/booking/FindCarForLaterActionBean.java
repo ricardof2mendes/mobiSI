@@ -31,6 +31,7 @@ import com.criticalsoftware.mobics.presentation.action.BaseActionBean;
 import com.criticalsoftware.mobics.presentation.action.recent.RecentActivitiesActionBean;
 import com.criticalsoftware.mobics.presentation.extension.DatetimeTypeConverter;
 import com.criticalsoftware.mobics.presentation.security.AuthenticationUtil;
+import com.criticalsoftware.mobics.presentation.util.CarClazz;
 import com.criticalsoftware.mobics.presentation.util.Configuration;
 import com.criticalsoftware.mobics.presentation.util.GeolocationUtil;
 import com.criticalsoftware.mobics.proxy.booking.BookingValidationExceptionException;
@@ -56,7 +57,7 @@ public class FindCarForLaterActionBean extends BaseActionBean {
     private Integer distance;
 
     @Validate(required = true, on = "createBookingInterest")
-    private String carClazz;
+    private CarClazz carClazz;
 
     @Validate(required = true, on = "createBookingInterest")
     private boolean fromMyCarClub;
@@ -125,8 +126,8 @@ public class FindCarForLaterActionBean extends BaseActionBean {
 
         Calendar start = Calendar.getInstance();
         start.setTime(startDate);
-
-        bookingWSServiceStub.createBookingInterest(getContext().getUser().getCarClub().getCarClubCode(), start, carClazz,
+        
+        bookingWSServiceStub.createBookingInterest(getContext().getUser().getCarClub().getCarClubCode(), start, carClazz.getClazz(),
                 fromMyCarClub, new BigDecimal(longitude), new BigDecimal(latitude), distance.intValue(),
                 startSending.intValue(), stopSending.intValue(), maxMessages.intValue(), Calendar.getInstance());
 
@@ -188,14 +189,14 @@ public class FindCarForLaterActionBean extends BaseActionBean {
     /**
      * @return the carClazz
      */
-    public String getCarClazz() {
+    public CarClazz getCarClazz() {
         return carClazz;
     }
 
     /**
      * @param carClazz the carClazz to set
      */
-    public void setCarClazz(String carClazz) {
+    public void setCarClazz(CarClazz carClazz) {
         this.carClazz = carClazz;
     }
 

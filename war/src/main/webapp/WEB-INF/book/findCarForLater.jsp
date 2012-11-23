@@ -8,9 +8,10 @@
 
 	<jsp:include page="/WEB-INF/common/message_error.jsp"/>
 
-	<stripes:form id="interestBook" beanclass="com.criticalsoftware.mobics.presentation.action.booking.FindCarForLaterActionBean" method="get">
+	<stripes:form id="interestBook" beanclass="com.criticalsoftware.mobics.presentation.action.booking.FindCarForLaterActionBean" method="post">
 		<stripes:hidden id="latitude" name="latitude"/>
 		<stripes:hidden id="longitude" name="longitude"/>
+		<stripes:hidden id="address" name="address"/>
 		
 		<article>
 			<section>
@@ -35,7 +36,7 @@
 							<stripes:link id="locationLink" beanclass="com.criticalsoftware.mobics.presentation.action.booking.FindCarForLaterActionBean" event="searchLocation" addSourcePage="true">
 								
 								<span><fmt:message key="find.car.later.location"/></span>
-								<span id="address">
+								<span id="addressSpan">
 									<fmt:message key="find.car.later.current.location"/>
 								</span>
 							</stripes:link>

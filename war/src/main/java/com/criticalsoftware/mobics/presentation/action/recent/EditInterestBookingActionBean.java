@@ -53,7 +53,7 @@ public class EditInterestBookingActionBean extends BaseActionBean {
     @Validate(required = true, on = "editBookingInterest", converter = DatetimeTypeConverter.class)
     private Date startDate;
 
-    @Validate(required = true, on = "editBookingInterest")
+    @Validate
     private String address;
 
     @Validate(required = true, on = "editBookingInterest")
@@ -95,6 +95,7 @@ public class EditInterestBookingActionBean extends BaseActionBean {
 
         BookingInterestDTO booking = bookingWSServiceStub.getBookingInterest(activityCode);
 
+        activityCode = booking.getCode();
         startDate = booking.getPickupDate().getTime();
         address = booking.getLocationName();
         latitude = booking.getLocation().getLatitude().toString();

@@ -7,7 +7,7 @@
         <property name="org.apache.catalina.connector.USE_BODY_ENCODING_FOR_QUERY_STRING" value="true"/>
         <property name="org.apache.coyote.http11.Http11Protocol.COMPRESSION" value="on"/>
         <property name="org.apache.coyote.http11.Http11Protocol.COMPRESSION_MIME_TYPES" value="text/html,text/xml,text/plain,text/css,text/javascript,application/xhtml+xml,application/xml,application/javascript,application/json"/>
-        <property name="mobics.config.locale" value="pt"/>
+
         <property name="mobics.config.meter.pattern" value="#"/>
         <property name="mobics.config.kilometer.pattern" value="#,##0.0"/>
         <property name="mobics.config.currency.pattern" value="#,##0.00"/>
@@ -19,12 +19,16 @@
         <property name="mobics.config.endpoint.booking" value="http://mobics02.critical.pt:8080/mobics-webservices/Booking"/>
         <property name="mobics.config.endpoint.miscellaneous" value="http://mobics02.critical.pt:8080/mobics-webservices/Miscellaneous"/>
         <property name="mobics.config.endpoint.carclub" value="http://mobics02.critical.pt:8080/mobics-webservices/CarClub"/>
+		<property name="mobics.config.endpoint.car" value="http://mobics02.critical.pt:8080/mobics-webservices/Car"/>
         <property name="mobics.config.endpoint.customer" value="http://mobics02.critical.pt:8080/mobics-webservices/Customer"/>
         <property name="mobics.config.geolocation.server" value="nominatim.openstreetmap.org"/>
         <property name="mobics.config.thumbnail.width" value="58"/>
         <property name="mobics.config.thumbnail.height" value="58"/>
         <property name="mobics.config.max.results" value="99"/>
         <property name="mobics.config.min.results" value="1"/>
+		<property name="mobics.config.recents.filter.month.gap" value="6"/>
+		<property name="mobics.config.helpdesk.phone" value="210000000"/>
+		<property name="mobics.config.helpdesk.email" value="helpdesk@mobiag.pt"/>
 </system-properties>
 
 <!--

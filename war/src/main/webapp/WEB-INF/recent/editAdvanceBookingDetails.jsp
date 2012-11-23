@@ -102,11 +102,9 @@
 				</nav>
 			</section>
 			<section class="submit">
-				<c:if test="${actionBean.extendBookingDate != null}">
-					<div class="warningMessage">			
-						<fmt:formatDate value="${actionBean.extendBookingDate}" pattern="${applicationScope.configuration.dateTimePattern}"/>
-					</div>
-				</c:if>
+				<div class="warningMessage">			
+					<fmt:formatDate value="${actionBean.extendBookingDate}" pattern="${applicationScope.configuration.dateTimePattern}"/>
+				</div>
 				<stripes:submit name="saveAdvanceBooking"  class="submitBtn gray"><fmt:message key="trip.detail.advance.booking.save"/></stripes:submit>
 				<div class="warningMessage">
 					<fmt:message key="trip.detail.advance.booking.edit.cost">

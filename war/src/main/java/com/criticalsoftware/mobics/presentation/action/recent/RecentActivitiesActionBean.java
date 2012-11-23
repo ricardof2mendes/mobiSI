@@ -127,14 +127,21 @@ public class RecentActivitiesActionBean extends BaseActionBean {
                         .getPassword()));
 
         trip = bookingWSServiceStub.getTripDetails(activityCode);
-        // FIXME
         cost = bookingWSServiceStub.getAdvanceBookingCancelCost(activityCode);
-        //cost = new BigDecimal(15);
+        // FIXME falta um servico para devolver o tempo
         time = new BigDecimal(3600);
 
-        return new ForwardResolution("/WEB-INF/recent/advanceTripDetails.jsp");
+        return new ForwardResolution("/WEB-INF/recent/advanceBookingDetails.jsp");
     }
 
+    /**
+     * Show Edition page
+     *  
+     * @return
+     * @throws RemoteException
+     * @throws UnsupportedEncodingException
+     * @throws BookingNotFoundExceptionException
+     */
     public Resolution editAdvanceBooking() throws RemoteException, UnsupportedEncodingException,
             BookingNotFoundExceptionException {
         BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
@@ -143,16 +150,24 @@ public class RecentActivitiesActionBean extends BaseActionBean {
                 AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
                         .getPassword()));
         trip = bookingWSServiceStub.getTripDetails(activityCode);
-        // FIXME
-        // cost = bookingWSServiceStub.getAdvanceBookingExtendCost(activityCode);
-        cost = new BigDecimal(15);
+        cost = bookingWSServiceStub.getAdvanceBookingExtendCost(activityCode);
 
         Calendar c = bookingWSServiceStub.getNextAdvanceBooking(activityCode);
         extendBookingDate = c == null ? null : c.getTime();
 
-        return new ForwardResolution("/WEB-INF/recent/editAdvanceTripDetails.jsp");
+        return new ForwardResolution("/WEB-INF/recent/editAdvanceBookingDetails.jsp");
     }
 
+    /**
+     * Save the advance booking
+     * @return
+     * @throws RemoteException
+     * @throws UnsupportedEncodingException
+     * @throws BookingNotFoundExceptionException
+     * @throws BookingValidationExceptionException
+     * @throws InvalidCustomerPinExceptionException
+     * @throws CarLicensePlateNotFoundExceptionException
+     */
     @SuppressWarnings({"unchecked", "rawtypes"})
     public Resolution saveAdvanceBooking() throws RemoteException, UnsupportedEncodingException,
             BookingNotFoundExceptionException, BookingValidationExceptionException,
