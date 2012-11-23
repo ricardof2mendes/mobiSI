@@ -20,7 +20,7 @@ public enum Theme {
 
     DEFAULT("", "map", "darkblue"),
     GREEN("krakatoa", "map", "darkgreen"),
-    ORANGE("localhost", "map", "prange");
+    ORANGE("localhost", "map", "orange");
 
     public static final String WARM = "warm";
     
