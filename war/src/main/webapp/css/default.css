@@ -766,7 +766,7 @@ nav.twoColumnList ul li {
 
 nav.twoColumnList ul li a {
 	display: block;
-	padding-top: 5px;
+	padding: 5px 0 0 10px;
 	min-height: 45px;
 }
 

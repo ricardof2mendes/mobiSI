@@ -68,7 +68,7 @@ public class ContactsAndDamageReportActionBean extends BaseActionBean {
     @Validate(required = true, on = "saveDamageReport")
     private String type;
 
-    @Validate(required = true, on = { "licensePlateSearch", "saveDamageReport" }, minlength = 8, maxlength = 8)
+    @Validate(required = true, on = { "licensePlateSearch", "saveDamageReport" })
     private String licensePlate;
 
     @Validate(required = true, on = "saveDamageReport", converter = DatetimeTypeConverter.class)

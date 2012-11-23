@@ -101,6 +101,12 @@ public abstract class BookingActionBean extends BaseActionBean {
                 : new BigDecimal(longitude));
         if (car == null) {
             errors.addGlobalError(new LocalizableError("car.details.validation.car.not.available"));
+        } else {
+            System.out.println("********************************");
+            System.out.println("License plate: "+car.getLicensePlate());
+            System.out.println("Price in use: "+car.getPriceInUse());
+            System.out.println("Price reserved: "+car.getPriceReserved());
+            System.out.println("********************************");
         }
     }
 

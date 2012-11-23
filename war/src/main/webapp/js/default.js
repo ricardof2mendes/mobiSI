@@ -66,6 +66,8 @@ $(document).ready(function() {
 	/**
 	 * License plate autocomplete
 	 */
+	$('#licensePlate').focus();
+	
  	$('#licensePlate').on('keyup', function(e) {
  		var that = this;
  		// put cross to delete input content
@@ -190,8 +192,8 @@ $(document).ready(function() {
  	/* report problem license plate search */
  	$('#licenseReport').on('blur', function(){
  		
- 		if($(this).val().length == 8 &&
- 				($("#carLicensePlate").length == 0 ||
+ 		//if($(this).val().length == 8 &&
+ 			if(	($("#carLicensePlate").length == 0 ||
  				($("#carLicensePlate").length > 0 && $("#carLicensePlate").val() !=  $(this).val()))){
  			
 	 		var url = CONTEXT_PATH+'/contacts/ContactsAndDamageReport.action?licensePlateSearch=&licensePlate='+$(this).val();
