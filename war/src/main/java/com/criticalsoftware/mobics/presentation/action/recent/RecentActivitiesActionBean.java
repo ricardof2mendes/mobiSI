@@ -82,8 +82,8 @@ public class RecentActivitiesActionBean extends BaseActionBean {
                 AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
                         .getPassword()));
         Calendar begin = Calendar.getInstance(), end = Calendar.getInstance();
-        begin.add(Calendar.YEAR, -Configuration.INSTANCE.getRecentActivitiesFilterMonthGap());
-        end.add(Calendar.YEAR, Configuration.INSTANCE.getRecentActivitiesFilterMonthGap());
+        begin.add(Calendar.MONTH, -Configuration.INSTANCE.getRecentActivitiesFilterMonthGap());
+        end.add(Calendar.MONTH, Configuration.INSTANCE.getRecentActivitiesFilterMonthGap());
 
         recents = bookingWSServiceStub.getRecentActivities(begin, end, CustomerActivityEnum.ALL.getValue());
 

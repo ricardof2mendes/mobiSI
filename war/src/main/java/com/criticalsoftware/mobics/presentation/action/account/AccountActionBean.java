@@ -20,13 +20,13 @@ import net.sourceforge.stripes.action.DontValidate;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.Resolution;
 
-import com.criticalsoftware.mobics.customer.EditCustomerDTO;
 import com.criticalsoftware.mobics.presentation.action.BaseActionBean;
 import com.criticalsoftware.mobics.presentation.security.AuthenticationUtil;
 import com.criticalsoftware.mobics.presentation.security.MobiCSSecure;
 import com.criticalsoftware.mobics.presentation.util.Configuration;
 import com.criticalsoftware.mobics.proxy.customer.CustomerNotFoundExceptionException;
 import com.criticalsoftware.mobics.proxy.customer.CustomerWSServiceStub;
+import com.criticalsoftware.mobics.proxy.customer.InvalidEmailTokenExceptionException;
 
 /**
  * Account action bean
@@ -37,36 +37,39 @@ import com.criticalsoftware.mobics.proxy.customer.CustomerWSServiceStub;
 @MobiCSSecure
 public class AccountActionBean extends BaseActionBean {
 
-    private EditCustomerDTO customer;
-
     /**
      * Account page
+     * 
+     * @return the page resolution
+     */
+    @DefaultHandler
+    @DontValidate
+    public Resolution main() {
+        return new ForwardResolution("/WEB-INF/account/account.jsp");
+    }
+
+    /**
+     * Authentication page
      * 
      * @return the page resolution
      * @throws RemoteException
      * @throws CustomerNotFoundExceptionException
      * @throws UnsupportedEncodingException
      */
-    @DefaultHandler
     @DontValidate
-    public Resolution main() throws RemoteException, CustomerNotFoundExceptionException, UnsupportedEncodingException {
+    public Resolution authentication() {
+        return new ForwardResolution("/WEB-INF/account/authentication.jsp");
+    }
+
+    public boolean getMessage() throws RemoteException, CustomerNotFoundExceptionException,
+            UnsupportedEncodingException, InvalidEmailTokenExceptionException {
 
         CustomerWSServiceStub customerWSServiceStub = new CustomerWSServiceStub(
                 Configuration.INSTANCE.getCustomerEndpoint());
         customerWSServiceStub._getServiceClient().addHeader(
                 AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
                         .getPassword()));
-        
-        customer = customerWSServiceStub.getCustomerDetails();
-
-        return new ForwardResolution("/WEB-INF/account/account.jsp");
-    }
-
-    /**
-     * @return the customer
-     */
-    public EditCustomerDTO getCustomer() {
-        return customer;
+        return customerWSServiceStub.checkCustomerHasEmailToken();
     }
 
 }

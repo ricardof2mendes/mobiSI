@@ -12,8 +12,7 @@
 				<ul>
 					<li class="imageCarClub">
 						<div>
-							<!-- img src="${contextPath}/contacts/ContactsAndDamageReport.action?_eventName=carClubImage" /-->
-							<img src="${contextPath}/img/menu/contacts-inactive@2x.png" />
+							<img src="${contextPath}/contacts/ContactsAndDamageReport.action?_eventName=carClubImage" />
 							<span>${actionBean.context.user.carClub.carClubName}</span>
 						</div>
 					</li>
@@ -26,9 +25,11 @@
 						<span><fmt:message key="contacts.email"/></span>
 						<span class="ellipsis">${actionBean.context.user.carClub.carClubContactEmail}</span>
 					</li>
-					<li class="detail">
-						<span><fmt:message key="contacts.web"/></span>
-						<span>${actionBean.context.user.carClub.carClubWebSiteURL}</span>
+					<li class="link">
+						<stripes:link href="${actionBean.context.user.carClub.carClubWebSiteURL}" target="_blank">
+							<span><fmt:message key="contacts.web"/></span>
+							<span>${actionBean.context.user.carClub.carClubWebSiteURL}</span>
+						</stripes:link>
 					</li>
 				</ul>
 			</nav>

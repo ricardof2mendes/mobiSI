@@ -444,6 +444,7 @@ section > nav.simpleList ul li.link span:nth-child(2) {
 	color: #666666;
     font-weight: normal;
     padding-left: 10px;
+    vertical-align: top;
 }
 
 section > nav.simpleList ul li.filter {
@@ -459,6 +460,7 @@ section > nav.simpleList ul li.filter span:nth-child(2) {
 	padding-left: 10px;
 	color: #666;
 	font-weight: normal;
+	vertical-align: top;
 }
 
 section > nav.simpleList ul li:last-child {
@@ -553,6 +555,7 @@ section > nav.panel ul li.link span:nth-child(2) {
 	color: #666666;
     font-weight: normal;
     padding-left: 10px;
+    vertical-align: top;
 }
 
 nav.panel ul li.detail,
@@ -601,14 +604,11 @@ section > nav.panel ul li.detail span:nth-child(2) {
 	color: #666;
 	font-weight: normal;
 	width: 60%;
+	vertical-align: top;
 }
 
 section > nav.panel ul li:last-child{
 	border-bottom: 0;
-}
-
-nav.panel ul li.imageCarClub > div {
-	Max-height: 60px;
 }
 
 nav.panel ul li.imageCarClub > div > img {
@@ -622,7 +622,7 @@ nav.panel ul li.imageCarClub > div > img {
 
 nav.panel ul li.imageCarClub > div > span {
 	font-weight: bold;
-	font-size: normal;
+	font-size: x-large;
 	color: #333;
 }
 
@@ -880,19 +880,23 @@ section#noresultsdamage {
 	padding: 0 10px;
 	background-color: transparent;
 }
+
+.customComboBox > select,
 .customComboBox > input {
 	border: 0;
 	color: #666;
 	width: 100%;
 	background-color: transparent;
-} 
-.customComboBox > select {
-	border: 0;
-	color: #666;
-	background: transparent url('../img/setas.png') no-repeat right 50%;
-	width: 100%;
 }
 
+.customComboBox > input.editable {
+	background: transparent url('../img/setas.png') no-repeat right 50%;
+}
+
+.fullWith {
+	width: 100% !important;
+	padding-left: 10px;
+}
 /*---------------------------------- PIN --*/
 
 article.pin div {
@@ -1029,6 +1033,7 @@ article.pin div:nth-child(3) > input[type="submit"]:active {
 	margin-bottom: 10px;
 	text-align: center;
 	color: #999;
+	padding: 0 10px;
 }
 
 /* Errors */
@@ -1232,15 +1237,14 @@ article.pin div:nth-child(3) > input[type="submit"]:active {
 
 
 /* MODAL */
-.confirm,
-.modal {
-    display:    none;
-    position:   fixed;
-    z-index:    1000;
-    top:        0;
-    left:       0;
-    height:     100%;
-    width:      100%;
+.confirm,.modal {
+	display: none;
+	position: fixed;
+	z-index: 1000;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
 }
 
 body.loading {
@@ -1249,7 +1253,7 @@ body.loading {
 
 body.loading .modal {
     display: block;
-    background: rgba( 0, 0, 0, .8 ) url('../img/ajax-loader.gif') 50% 50% no-repeat;
+    background: rgba(153, 153, 153, 0.7) url('../img/ajax-loader.gif') 50% 50% no-repeat;
 }
 
 /* Confirm modal */
@@ -1260,8 +1264,8 @@ body.confirmation {
 
 body.confirmation .confirm {
     display: block;
-    background: rgba( 0, 0, 0, .8 );
-    padding: 0 10px;
+    background: rgba(153, 153, 153, 0.7);
+    padding: 80px 10px 0 10px;
 }
 
 .confirm article {

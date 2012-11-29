@@ -131,7 +131,7 @@
 									<fmt:message key="current.trip.current.zone"/>
 								</span>
 								<span>
-									<fmt:message key="zone.${actionBean.current.currentZoneType}"/>
+									<fmt:message key="ZoneType.${actionBean.current.currentZoneType}"/>
 								</span>
 							</li>
 						</c:otherwise>

@@ -1,6 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@include file="/WEB-INF/common/taglibs.jsp"%>
 <c:set var="title" scope="page"><fmt:message key='trip.detail.advance.trip.extend.title' /></c:set>
+<c:set var="placeholder" scope="page"><fmt:message key="book.advance.date.placeholder"/></c:set>
 
 <t:main title="${title}" addCalendar="true">
 	<jsp:include page="/WEB-INF/common/message_error.jsp"/>
@@ -93,9 +94,8 @@
 								<fmt:message key="car.details.end.date"/>
 							</span>
 							<span class="customComboBox">
-								<input type="text" id="endDate" name="endDate" 
-									   placeholder="<fmt:message key="book.advance.date.placeholder"/>" 
-									   value="<fmt:formatDate value="${actionBean.trip.endDate.time}" pattern="${applicationScope.configuration.dateTimePattern}"/>"/>
+								<stripes:text id="endDate" name="endDate" class="editable"
+									   placeholder="${placeholder}" formatPattern="${applicationScope.configuration.dateTimePattern}"/>
 							</span>
 						</li>
 					</ul>

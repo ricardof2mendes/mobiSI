@@ -3,119 +3,35 @@
 <c:set var="title" scope="page"><fmt:message key="account.title" /></c:set>
 
 <t:main title="${title}">
+	<jsp:include page="/WEB-INF/common/message_error.jsp"/>
 	<article>
 		<section>
-			<h2><fmt:message key="account.identification"/></h2>
-			<nav class="panel">
+			<h2><fmt:message key="account.settings"/></h2>
+			<nav class="simpleList">
 				<ul>
-					<li class="detail">
-						<span>
-							<fmt:message key="account.fullname"/> 
-						</span>
-						<span>
-							${actionBean.customer.fullName}
-						</span>
+					<li>
+						<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.account.EditInformationContactActionBean">
+							<fmt:message key="account.information.contact.title"/>
+						</stripes:link>
 					</li>
-					<li class="detail">
-						<span>
-							<fmt:message key="account.email"/>
-						</span>
-						<span>
-							${actionBean.context.user.username}
-						</span>	
+					<li>
+						<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.account.AccountActionBean" event="authentication">
+							<fmt:message key="account.authentication.security.title"/>
+						</stripes:link>
 					</li>
-					<li class="detail">
-						<span>
-							<fmt:message key="account.password"/>
-						</span>
-						<span>
-							${actionBean.context.user.password}
-						</span>	
-					</li>
-					<li class="detail">
-						<span>
-							<fmt:message key="account.pin"/>
-						</span>
-						<span>
-							TODO
-						</span>	
-					</li>
-				</ul>			 
+				</ul>
 			</nav>
-		</section>		
-		<section>
-			<h2><fmt:message key="account.contact"/></h2>
-			<nav class="panel">
-				<ul>
-					<li class="detail">
-						<span>
-							<fmt:message key="account.country"/> 
-						</span>
-						<span>
-							${actionBean.customer.country.name}
-						</span>
-					</li>
-					<li class="detail">
-						<span>
-							<fmt:message key="account.address"/>
-						</span>
-						<span>
-							${actionBean.customer.address}
-						</span>	
-					</li>
-					<li class="detail">
-						<span>
-							<fmt:message key="account.phone"/>
-						</span>
-						<span>
-							${actionBean.customer.phoneNumber}
-						</span>	
-					</li>
-				</ul>			 
-			</nav>
+			
+			<h2><fmt:message key="account.session"/></h2>
+			<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.LogoutActionBean" class="linkBtn red">
+				<fmt:message key="main.logout"/>
+			</stripes:link>	
+			
+			<div class="warningMessage">
+				<fmt:message key="account.login.message">
+					<fmt:param>${sessionScope.user.username}</fmt:param>
+				</fmt:message>
+			</div>
 		</section>
-		<section>
-			<h2><fmt:message key="account.payment"/></h2>
-			<nav class="panel">
-				<ul>
-					<li class="detail">
-						<span>
-							<fmt:message key="account.method"/> 
-						</span>
-						<span>
-							TODO
-						</span>
-					</li>
-					<li class="detail">
-						<span>
-							<fmt:message key="account.card"/>
-						</span>
-						<span>
-							TODO
-						</span>	
-					</li>
-					<li class="detail">
-						<span>
-							<fmt:message key="account.number"/>
-						</span>
-						<span>
-							TODO
-						</span>	
-					</li>
-					<li class="detail">
-						<span>
-							<fmt:message key="account.expires"/>
-						</span>
-						<span>
-							TODO
-						</span>	
-					</li>
-				</ul>			 
-			</nav>
-		</section>			
-	</article>	
-		
-	<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.LogoutActionBean" class="linkBtn red">
-		<fmt:message key="main.logout"/>
-	</stripes:link>
+	</article>
 </t:main>

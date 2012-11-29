@@ -1,8 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/common/taglibs.jsp"%>
-<c:set var="title" scope="page">
-	<fmt:message key='book.advance.title' />
-</c:set>
+<c:set var="title" scope="page"><fmt:message key='book.advance.title' /></c:set>
+<c:set var="placeholder" scope="page"><fmt:message key="book.advance.date.placeholder"/></c:set>
 
 <t:main title="${title}" addCalendar="true">
 	<jsp:include page="/WEB-INF/common/message_error.jsp"/>
@@ -38,17 +37,14 @@
 						<li class="detail">
 							<span><fmt:message key="book.advance.start.date"/></span>
 							<span class="customComboBox">
-								<input type="text" id="startDate" name="startDate" 
-									   placeholder="<fmt:message key="book.advance.date.placeholder"/>" 
-									   value="<fmt:formatDate value="${actionBean.startDate}" pattern="${applicationScope.configuration.dateTimePattern}"/>"/>
+								<stripes:text id="startDate" name="startDate" class="editable" 
+									   placeholder="${placeholder}" formatPattern="${applicationScope.configuration.dateTimePattern}"/>
 							</span>
 						</li>
 						<li class="detail">
 							<span><fmt:message key="book.advance.end.date"/></span>
 							<span class="customComboBox">
-								<input type="text" id="endDate" name="endDate" 
-									   placeholder="<fmt:message key="book.advance.date.placeholder"/>" 
-									   value="<fmt:formatDate value="${actionBean.endDate}" pattern="${applicationScope.configuration.dateTimePattern}"/>"/>
+								<stripes:text  id="endDate" name="endDate" class="editable" placeholder="${placeholder}" formatPattern="${applicationScope.configuration.dateTimePattern}"/>
 							</span>
 						</li>
 					</ul>

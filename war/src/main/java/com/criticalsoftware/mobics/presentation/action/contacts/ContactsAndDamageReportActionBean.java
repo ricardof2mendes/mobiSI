@@ -12,6 +12,7 @@
  */
 package com.criticalsoftware.mobics.presentation.action.contacts;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.rmi.RemoteException;
@@ -35,6 +36,9 @@ import net.sourceforge.stripes.validation.ValidationErrors;
 import net.sourceforge.stripes.validation.ValidationMethod;
 import net.sourceforge.stripes.validation.ValidationState;
 
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpStatus;
+import org.apache.commons.httpclient.methods.GetMethod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -65,6 +69,10 @@ public class ContactsAndDamageReportActionBean extends BaseActionBean {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(ContactsAndDamageReportActionBean.class);
 
+    private static final int LOGO_WIDTH = 44;
+    
+    private static final int LOGO_HEIGHT = 44;
+
     @Validate(required = true, on = "saveDamageReport")
     private String type;
 
@@ -77,11 +85,11 @@ public class ContactsAndDamageReportActionBean extends BaseActionBean {
     @Validate(required = true, on = "saveDamageReport", converter = BooleanTypeConverter.class)
     private boolean assume;
 
-    @Validate(required = true, on = "saveDamageReport")
+    @Validate(required = true, on = "saveDamageReport", maxlength = 1024)
     private String description;
 
-    @ValidateNestedProperties({@Validate(field = "licensePlate"), @Validate(field = "carBrandName"),
-        @Validate(field = "carModelName"), @Validate(field = "fuelType.name")})
+    @ValidateNestedProperties({ @Validate(field = "licensePlate"), @Validate(field = "carBrandName"),
+            @Validate(field = "carModelName"), @Validate(field = "fuelType.name") })
     private CarDTO car;
 
     /**
@@ -109,16 +117,28 @@ public class ContactsAndDamageReportActionBean extends BaseActionBean {
         StreamingResolution resolution = null;
         CarClubWSServiceStub carClubWSServiceStub = new CarClubWSServiceStub(
                 Configuration.INSTANCE.getCarClubEndpoint());
-        DataHandler data = carClubWSServiceStub.getCarClubImageByCarClubCode(getContext().getUser().getCarClub()
-                .getCarClubCode());
+        DataHandler data = carClubWSServiceStub.getCarClubThumbnailByCarClubCode(getContext().getUser().getCarClub()
+                .getCarClubCode(), LOGO_WIDTH, LOGO_HEIGHT);
         if (data != null) {
             resolution = new StreamingResolution(data.getContentType(), data.getInputStream());
+        }
+        // FIXME to be removed just for testing porpuses
+        else {
+            HttpClient http = new HttpClient();
+            GetMethod method = new GetMethod();
+            method.setPath("http://api.ning.com/files/6Gvj9JpKpavtOgbeWj6W9I8tzplrhsDUtJqd1ARnuSu485ej*IpVjkePIrS0Y6nEdPDJjtDSz6y7ywqzvFB5LGineyHCUVbj/663883059.jpeg?xgip=1075%3A59%3A1351%3A1351%3B%3B&width=64&height=64&crop=1%3A1");
+            int status = http.executeMethod(method);
+            if (status == HttpStatus.SC_OK) {
+                resolution = new StreamingResolution(method.getResponseHeader("Content-Type").getValue(),
+                        new ByteArrayInputStream(method.getResponseBody()));
+            }
         }
         return resolution;
     }
 
     /**
      * Loads the damage report page, and the car in use
+     * 
      * @return
      * @throws RemoteException
      * @throws UnsupportedEncodingException
@@ -164,6 +184,7 @@ public class ContactsAndDamageReportActionBean extends BaseActionBean {
 
     /**
      * Save damage report
+     * 
      * @return
      * @throws RemoteException
      * @throws UnsupportedEncodingException
@@ -189,10 +210,10 @@ public class ContactsAndDamageReportActionBean extends BaseActionBean {
         getContext().getMessages().add(new LocalizableMessage("damage.report.save.success"));
         return new RedirectResolution(this.getClass()).flash(this);
     }
-    
-    @ValidationMethod(on="saveDamageReport", when = ValidationState.NO_ERRORS)
+
+    @ValidationMethod(on = "saveDamageReport", when = ValidationState.NO_ERRORS)
     public void validate(ValidationErrors errors) {
-        if(car== null || car.getLicensePlate() == null) {
+        if (car == null || car.getLicensePlate() == null) {
             errors.addGlobalError(new LocalizableError("damage.report.no.results.found"));
         }
     }

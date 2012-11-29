@@ -1,6 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@include file="/WEB-INF/common/taglibs.jsp"%>
 <c:set var="title" scope="page"><fmt:message key='pin.title' /></c:set>
+<c:set var="placeholder" scope="page"><fmt:message key="pin.customer.input" /></c:set>
 
 <t:main title="${title}">
 
@@ -39,7 +40,7 @@
 					</label>
 				</div>
 				<div>
-					<input type="number" name="pin" id="pin" maxlength="4" placeholder="<fmt:message key="pin.customer.input" />" autocomplete="off"/>						
+					<stripes:password name="pin" id="pin" placeholder="${placeholder}" autocomplete="off"/>						
 				</div>
 				<div>
 					<stripes:submit id="book" name="book"><fmt:message key="pin.button"/></stripes:submit>

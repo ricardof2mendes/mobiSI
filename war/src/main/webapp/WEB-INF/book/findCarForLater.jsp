@@ -1,8 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/common/taglibs.jsp"%>
-<c:set var="title" scope="page">
-	<fmt:message key='find.car.later.title' />
-</c:set>
+<c:set var="title" scope="page"><fmt:message key='find.car.later.title' /></c:set>
+<c:set var="placeholder" scope="page"><fmt:message key="account.information.placeholder"/></c:set>
 
 <t:main title="${title}" addCalendar="true">
 
@@ -21,9 +20,7 @@
 						<li class="detail white">
 							<span><fmt:message key="find.car.later.datetime"/></span>
 							<span class="customComboBox">
-								<input type="text" id="startDate" name="startDate" 
-									   placeholder="<fmt:message key="find.car.later.datetime.placeholder"/>" 
-									   value="<fmt:formatDate value="${actionBean.startDate}" pattern="${applicationScope.configuration.dateTimePattern}"/>"/>
+								<stripes:text id="startDate" name="startDate" class="editable" placeholder="${placeholder }" formatPattern="${applicationScope.configuration.dateTimePattern}"/>
 							</span>
 						</li>
 					</ul>
@@ -34,7 +31,6 @@
 					<ul>
 						<li class="link white">
 							<stripes:link id="locationLink" beanclass="com.criticalsoftware.mobics.presentation.action.booking.FindCarForLaterActionBean" event="searchLocation" addSourcePage="true">
-								
 								<span><fmt:message key="find.car.later.location"/></span>
 								<span id="addressSpan">
 									<fmt:message key="find.car.later.current.location"/>

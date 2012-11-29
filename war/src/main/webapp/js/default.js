@@ -59,7 +59,7 @@ $(document).ready(function() {
 	/**
 	 * Prevent license plate input form to submit
 	 */ 
-	$('#licensePlateBookForm').submit(function(e){
+	$('#licensePlateBookForm').on('submit', function(e){
 		e.preventDefault();
 	});
 
@@ -176,17 +176,22 @@ $(document).ready(function() {
  		e.preventDefault();
  		$('body').addClass("confirmation");
  		
- 		var windowHeight = document.documentElement.clientHeight;
- 		var elementHeight = $(".confirm article").height();
- 		$(".confirm article").css({
- 		    "margin-top": (windowHeight-elementHeight)/2 + 'px'
+ 		$('body').on('scroll', function(e){
+ 			e.preventDefault();
  		});
+ 		
+// 		var windowHeight = document.documentElement.clientHeight;
+// 		var elementHeight = $(".confirm article").height();
+// 		$(".confirm article").css({
+// 		    "margin-top": (windowHeight-elementHeight)/2 + 'px'
+// 		});
  		
  	});
  	
  	$('#closeConfirm').on('click', function(e) {
  		e.preventDefault();
  		$('body').removeClass("confirmation");
+ 		$('body').off('scroll');
  	});
  	
  	/* report problem license plate search */
@@ -242,6 +247,7 @@ function fillGeoposition(callback, isLoading) {
 		navigator.geolocation.getCurrentPosition(callback, function(err) {
 			treatGeolocationError(err);
 		}, {
+			timeout : 10000,
 			maximumAge : 60000,
 			enableHighAccuracy : true
 		});
@@ -320,6 +326,7 @@ function treatGeolocationError(err) {
 	} else {
 		alert('An unknown error occurred while requesting your location.');
 	}
+	$('body').removeClass("loading");
 }
 
 /**

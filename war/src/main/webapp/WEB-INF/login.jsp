@@ -1,6 +1,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@include file="/WEB-INF/common/taglibs.jsp"%>
 <c:set var="title" scope="page"><fmt:message key='login.title' /></c:set>
+<c:set var="placeholderLogin" scope="page"><fmt:message key="login.j_username" /></c:set>
+<c:set var="placeholderPass" scope="page"><fmt:message key="login.j_password" /></c:set>
 
 <t:login title="${title}">
 	<article>
@@ -15,8 +17,8 @@
 		<section id="login">
 			<stripes:form class="loginForm" beanclass="com.criticalsoftware.mobics.presentation.action.LoginActionBean" method="post">
 				<div>
-					<input type="text" id="username" name="username" placeholder="<fmt:message key="login.j_username" />"/>
-					<input type="password" id="password" name="password" placeholder="<fmt:message key="login.j_password" />"/>
+					<stripes:text id="username" name="username" placeholder="${placeholderLogin}"/>
+					<stripes:password id="password" name="password" placeholder="${placeholderPass}"/>
 				</div>
 				<stripes:submit id="authenticate" name="authenticate" class="submitBtn loginBtn"><fmt:message key="login.submit"/></stripes:submit>
 			</stripes:form>

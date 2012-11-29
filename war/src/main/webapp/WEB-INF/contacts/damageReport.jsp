@@ -1,8 +1,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/common/taglibs.jsp"%>
-<c:set var="title" scope="page">
-	<fmt:message key='damage.report.title' />
-</c:set>
+<c:set var="title" scope="page"><fmt:message key='damage.report.title' /></c:set>
+<c:set var="placeholder" scope="page"><fmt:message key="damage.report.license.placeholder"/></c:set>
+<c:set var="placeholderDate" scope="page"><fmt:message key="damage.report.date.placeholder"/></c:set>
+<c:set var="placeholderTextarea" scope="page"><fmt:message key="damage.report.textarea.placeholder"/></c:set>
 
 <t:main title="${title}" addCalendar="true">
 
@@ -31,9 +32,7 @@
 						<li class="detail white">
 							<span><fmt:message key="damage.report.license"/></span>
 							<span class="customComboBox">
-								<input type="text" id="licenseReport" name="licensePlate" 
-									   placeholder="<fmt:message key="damage.report.license.placeholder"/>" 
-									   value="${actionBean.licensePlate}"/>																	
+								<stripes:text id="licenseReport" name="licensePlate" placeholder="${placeholder}" />																	
 							</span>
 						</li>
 					</ul>
@@ -52,9 +51,8 @@
 						<li class="detail white">
 							<span><fmt:message key="damage.report.date"/></span>
 							<span class="customComboBox">
-								<input type="text" id="startDate" name="date" 
-									   placeholder="<fmt:message key="damage.report.date.placeholder"/>" 
-									   value="<fmt:formatDate value="${actionBean.date}" pattern="${applicationScope.configuration.dateTimePattern}"/>"/>
+								<stripes:text  id="startDate" name="date" class="editable"
+									   placeholder="${placeholderDate}" formatPattern="${applicationScope.configuration.dateTimePattern}"/>
 							</span>
 						</li>
 						<li class="detail white">
@@ -68,7 +66,7 @@
 						</li>
 						<li class="detail white">
 							<div class="customComboBox">
-								<textarea name="description" rows="5" cols="5" placeholder="<fmt:message key="damage.report.textarea.placeholder"/>">${actionBean.description}</textarea>
+								<stripes:textarea name="description" rows="5" cols="5" placeholder="${placeholderTextarea}"/>
 							</div>								
 						</li>
 					</ul>

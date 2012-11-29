@@ -58,4 +58,13 @@ public class User {
     public CarClubSimpleDTO getCarClub() {
         return carClub;
     }
+
+    /**
+     * Set the password
+     * 
+     * @param password
+     */
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }
