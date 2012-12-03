@@ -43,7 +43,7 @@ public class EditPasswordActionBean extends AskPinActionBean {
     private String password;
 
     @Validate(required = true, on = "saveData", expression = "this == password")
-    private String passConfirm;
+    private String confirmation;
     
     /**
      * Account page
@@ -105,17 +105,16 @@ public class EditPasswordActionBean extends AskPinActionBean {
     }
 
     /**
-     * @return the passwordConfirm
+     * @return the confirmation
      */
-    public String getPassConfirm() {
-        return passConfirm;
+    public String getConfirmation() {
+        return confirmation;
     }
 
     /**
-     * @param passwordConfirm the passwordConfirm to set
+     * @param confirmation the confirmation to set
      */
-    public void setPassConfirm(String passwordConfirm) {
-        this.passConfirm = passwordConfirm;
+    public void setConfirmation(String confirmation) {
+        this.confirmation = confirmation;
     }
-
 }

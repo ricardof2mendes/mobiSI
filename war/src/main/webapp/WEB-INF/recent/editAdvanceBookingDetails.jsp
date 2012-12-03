@@ -94,7 +94,7 @@
 								<fmt:message key="car.details.end.date"/>
 							</span>
 							<span class="customComboBox">
-								<stripes:text id="endDate" name="endDate" class="editable"
+								<stripes:text id="endDate" name="endDate" class="editable" value="${actionBean.trip.endDate.time}"
 									   placeholder="${placeholder}" formatPattern="${applicationScope.configuration.dateTimePattern}"/>
 							</span>
 						</li>

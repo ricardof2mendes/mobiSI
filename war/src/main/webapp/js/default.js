@@ -66,7 +66,7 @@ $(document).ready(function() {
 	/**
 	 * License plate autocomplete
 	 */
-	$('#licensePlate').focus();
+	//$('#licensePlate').focus();
 	
  	$('#licensePlate').on('keyup', function(e) {
  		var that = this;
@@ -176,7 +176,7 @@ $(document).ready(function() {
  		e.preventDefault();
  		$('body').addClass("confirmation");
  		
- 		$('body').on('scroll', function(e){
+ 		$('body').on('touchmove', 'body', function(e){
  			e.preventDefault();
  		});
  		
@@ -230,6 +230,18 @@ $(document).ready(function() {
  			$("#searchResults").html('');
  		}
  	});
+ 	
+ 	/* Messages */
+ 	$('.messageBook').on('click', function(e) {
+		e.preventDefault();
+		var element = $(this); 
+		fillGeoposition(function(position) {
+							var url = element.prop('href')
+									+ "&latitude=" + position.coords.latitude
+									+ "&longitude=" + position.coords.longitude;
+							window.location.href = url;
+						}, true);
+	});
 });
 
 

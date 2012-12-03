@@ -52,7 +52,7 @@
 											<div>
 												<span>${car.licensePlate}</span>
 												<span>${car.carBrandName}&nbsp;${car.carModelName}</span>
-												<span>${car.fuelType}&nbsp;
+												<span><fmt:message key="FuelType.${car.fuelType.name}"/>&nbsp;
 													<!-- RANGE removed
 													<c:choose>
 														<c:when test="${actionBean.car.range != null}">(${actionBean.car.range})</c:when>

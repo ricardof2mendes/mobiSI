@@ -22,7 +22,11 @@ import net.sourceforge.stripes.action.LocalizableMessage;
 import net.sourceforge.stripes.action.RedirectResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.Wizard;
+import net.sourceforge.stripes.validation.LocalizableError;
 import net.sourceforge.stripes.validation.Validate;
+import net.sourceforge.stripes.validation.ValidationErrors;
+import net.sourceforge.stripes.validation.ValidationMethod;
+import net.sourceforge.stripes.validation.ValidationState;
 
 import com.criticalsoftware.mobics.presentation.security.AuthenticationUtil;
 import com.criticalsoftware.mobics.presentation.security.MobiCSSecure;
@@ -40,13 +44,13 @@ import com.criticalsoftware.mobics.proxy.customer.InvalidLoginExceptionException
 @MobiCSSecure
 @Wizard(startEvents = "main")
 public class EditEmailLoginActionBean extends AskPinActionBean {
-    
+
     @Validate(required = true, on = "saveData")
     private String email;
 
     @Validate(required = true, on = "saveData", expression = "this == email")
     private String emailConfirm;
-    
+
     /**
      * Account page
      * 
@@ -69,12 +73,12 @@ public class EditEmailLoginActionBean extends AskPinActionBean {
     public Resolution data() throws RemoteException, CustomerNotFoundExceptionException, UnsupportedEncodingException {
         return new ForwardResolution("/WEB-INF/account/editEmailLogin.jsp");
     }
-    
+
     /**
      * Save Data
      * 
      * @throws InvalidLoginExceptionException
-     * @throws UnsupportedEncodingException 
+     * @throws UnsupportedEncodingException
      */
     public Resolution saveData() throws RemoteException, InvalidLoginExceptionException, UnsupportedEncodingException {
         CustomerWSServiceStub customerWSServiceStub = new CustomerWSServiceStub(
@@ -87,6 +91,25 @@ public class EditEmailLoginActionBean extends AskPinActionBean {
 
         getContext().getMessages().add(new LocalizableMessage("account.authentication.edit.email.login.success"));
         return new RedirectResolution(AccountActionBean.class).flash(this);
+    }
+
+    /**
+     * Validate email 
+     * 
+     * @param errors
+     * @throws UnsupportedEncodingException
+     * @throws RemoteException
+     */
+    @ValidationMethod(on="saveDate", when=ValidationState.NO_ERRORS)
+    public void validate(ValidationErrors errors) throws UnsupportedEncodingException, RemoteException {
+        CustomerWSServiceStub customerWSServiceStub = new CustomerWSServiceStub(
+                Configuration.INSTANCE.getCustomerEndpoint());
+        customerWSServiceStub._getServiceClient().addHeader(
+                AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
+                        .getPassword()));
+        if(!customerWSServiceStub.validateEmail(email)){
+            errors.addGlobalError(new LocalizableError("account.authentication.email.error"));
+        }
     }
 
     /**

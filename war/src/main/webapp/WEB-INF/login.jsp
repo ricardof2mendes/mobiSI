@@ -17,7 +17,7 @@
 		<section id="login">
 			<stripes:form class="loginForm" beanclass="com.criticalsoftware.mobics.presentation.action.LoginActionBean" method="post">
 				<div>
-					<stripes:text id="username" name="username" placeholder="${placeholderLogin}"/>
+					<stripes:text type="email" id="username" name="username" placeholder="${placeholderLogin}"/>
 					<stripes:password id="password" name="password" placeholder="${placeholderPass}"/>
 				</div>
 				<stripes:submit id="authenticate" name="authenticate" class="submitBtn loginBtn"><fmt:message key="login.submit"/></stripes:submit>
