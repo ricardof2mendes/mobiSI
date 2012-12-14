@@ -71,7 +71,7 @@
 							<fmt:message key="car.details.class"/>
 						</span>
 						<span>
-							<fmt:message key="CarClazz.${actionBean.car.category}"/>
+							${actionBean.car.category}
 						</span>
 					</li>
 					<li class="detail">

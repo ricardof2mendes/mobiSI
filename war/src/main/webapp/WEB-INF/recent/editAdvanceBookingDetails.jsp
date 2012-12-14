@@ -5,14 +5,14 @@
 
 <t:main title="${title}" addCalendar="true">
 	<jsp:include page="/WEB-INF/common/message_error.jsp"/>
-	<stripes:form beanclass="com.criticalsoftware.mobics.presentation.action.recent.RecentActivitiesActionBean" method="post">
+	<stripes:form beanclass="com.criticalsoftware.mobics.presentation.action.booking.EditAvanceBookingActionBean" method="post">
 		<stripes:hidden name="activityCode" value="${actionBean.trip.bookingNumber}"/>
 		<article>
 			<section>
 				<nav class="panel">
 					<ul>
 						<li class="image">
-							<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.booking.AdvanceBookingActionBean" event="carDetails" addSourcePage="true">
+							<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.booking.EditAvanceBookingActionBean" event="carDetails" addSourcePage="true">
 								<stripes:param name="licensePlate" value="${actionBean.trip.car.licensePlate}"/>
 								<div>
 									<img src="${contextPath}/booking/AdvanceBooking.action?getCarImage=&licensePlate=${actionBean.trip.car.licensePlate}" />
@@ -37,7 +37,7 @@
 						<c:choose>
 							<c:when test="${actionBean.trip.car.zones != null}">
 								<li class="link">
-									<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.booking.AdvanceBookingActionBean" event="parkLocation" addSourcePage="true">
+									<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.booking.EditAvanceBookingActionBean" event="parkLocation" addSourcePage="true">
 										<stripes:param name="licensePlate">${actionBean.trip.car.licensePlate}</stripes:param>
 										<span>
 											<fmt:message key="car.details.park"/>
@@ -108,7 +108,7 @@
 				<stripes:submit name="saveAdvanceBooking"  class="submitBtn gray"><fmt:message key="trip.detail.advance.booking.save"/></stripes:submit>
 				<div class="warningMessage">
 					<fmt:message key="trip.detail.advance.booking.edit.cost">
-						<fmt:param><mobi:formatMobics value="${actionBean.cost}" type="currencySymbol"/></fmt:param>
+						<fmt:param><mobi:formatMobics value="${actionBean.trip.extendCost}" type="currencySymbol"/></fmt:param>
 					</fmt:message>
 				</div>
 			</section>

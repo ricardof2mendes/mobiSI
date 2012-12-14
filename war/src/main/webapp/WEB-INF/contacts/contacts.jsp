@@ -12,7 +12,9 @@
 				<ul>
 					<li class="imageCarClub">
 						<div>
-							<img src="${contextPath}/contacts/ContactsAndDamageReport.action?_eventName=carClubImage" />
+							<div class="${actionBean.splashScreenStyle}">
+								<img src="${contextPath}/contacts/ContactsAndDamageReport.action?_eventName=carClubImage" />
+							</div>
 							<span>${actionBean.context.user.carClub.carClubName}</span>
 						</div>
 					</li>

@@ -59,15 +59,11 @@
 					</ul>
 				</nav>
 			</section>
+			
 			<section>
 				<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn gray" event="unlockCar" addSourcePage="true">
 					<stripes:param name="licensePlate">${actionBean.current.licensePlate}</stripes:param>
 					<fmt:message key="current.trip.button.unlock.car"/>
-				</stripes:link>
-				
-				<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn gray" event="signal" addSourcePage="true">
-					<stripes:param name="licensePlate">${actionBean.current.licensePlate}</stripes:param>
-					<fmt:message key="current.trip.button.signal.position"/>
 				</stripes:link>
 			</section>
 		</c:if>			
@@ -126,7 +122,7 @@
 							</li>
 						</c:when>
 						<c:otherwise>
-							<li class="link white">
+							<li class="detail white">
 								<span>
 									<fmt:message key="current.trip.current.zone"/>
 								</span>
@@ -139,6 +135,13 @@
 				</ul>
 			</nav>
 		</section>
+		
+		<c:if test="${actionBean.current.bookingType == 'ADVANCED'}">		
+			<stripes:link id="showPin" beanclass="com.criticalsoftware.mobics.presentation.action.booking.EditAvanceBookingActionBean" class="linkBtn gray" addSourcePage="true">
+				<stripes:param name="activityCode" value="${actionBean.trip.bookingNumber}"/>
+				<fmt:message key="current.trip.button.edit"/>
+			</stripes:link>
+		</c:if>
 				
 		<c:if test="${actionBean.current.state == 'ON_TRIP'}">		
 			<stripes:link id="showPin" beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn gray" event="lockCar" addSourcePage="true">

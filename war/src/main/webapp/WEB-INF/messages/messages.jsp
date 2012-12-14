@@ -17,20 +17,11 @@
 						<c:forEach items="${actionBean.messages}" var="msg">
 							<li>
 								<stripes:link class="messageBook" beanclass="com.criticalsoftware.mobics.presentation.action.booking.ImmediateBookingActionBean" event="licensePlateBook" addSourcePage="true">
-									<stripes:param name="licensePlate" value="BM-03-20"/>
+									<stripes:param name="licensePlate" value="${msg.carPlate}"/>
 									
-									<div class="nosheet">
-										<c:choose>
-											<c:when test="${msg.isRead}">
-												
-											</c:when>
-											<c:otherwise>
-												<img src="http://www2.espares.co.za:81/Images/BlueBullet.gif" />
-											</c:otherwise>
-										</c:choose>	
-				
-									</div>
-									<div>
+									<div class="msg-read-${msg.isRead}"></div>
+									
+									<div class="msg-body">
 										<div>
 											<span><fmt:message key="messages.car.available"/></span>
 											<span>${msg.carName}&nbsp;${msg.carPlate}</span>
@@ -38,7 +29,7 @@
 										</div>
 										<div>
 											<span>
-												xxx
+												${msg.carPlate}
 											</span>
 											<span></span>
 										</div>

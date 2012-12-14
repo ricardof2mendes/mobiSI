@@ -1,18 +1,11 @@
 <%@tag description="Header template" pageEncoding="UTF-8" %>
 <%@include file="/WEB-INF/common/taglibs.jsp" %>
 <%@attribute name="title" required="true" %>
-<%@attribute name="showLegend" type="java.lang.Boolean" %>
 
-<header class="${headerStyle}">
+<header class="${actionBean.headerStyle}">
 	<a href="#" class="menuBtn"></a>	
 	<h1>${title}</h1>
 </header>
-
-<c:if test="${showLegend}">
-	<a href="#" class="legendBtn">
-		<fmt:message key="location.legend"/>
-	</a>
-</c:if>
 
 <div class="bottomShadow"></div>
 
@@ -44,7 +37,11 @@
 				<fmt:message key="contacts.title"/>
 			</stripes:link>
 		</li>
-		<li class="preferences ${actionBean.activeMenu == 'preferences' ? 'preferencesActive' : ''}"><a href="#">Preferences</a></li>
+		<li class="preferences ${actionBean.activeMenu == 'preferences' ? 'preferencesActive' : ''}">
+			<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.preferences.PreferencesActionBean">
+				<fmt:message key="preferences.title"/>
+			</stripes:link>
+		</li>
 
 		<li class="account ${actionBean.activeMenu == 'account' ? 'accountActive' : ''}">
 			<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.account.AccountActionBean">
@@ -62,21 +59,23 @@
 				</li>
 				
 				<c:choose>
-			    	<c:when test="${param.carLocation == '' && param.parkLocation == null}">
+			    	<c:when test="${param.carLocation == '' || param.searchImmediateInMap == ''}">
 				    	<li>
 							<span><fmt:message key="location.legend.car.location"/></span>
 						</li>
-						<li>
-							<span><fmt:message key="location.legend.regular.zone"/></span>
-						</li>
-						<li>
-							<span><fmt:message key="location.legend.undesire.zone"/></span>
-						</li>
-						<li>
-							<span><fmt:message key="location.legend.forbidden.zone"/></span>
-						</li>
+						<c:if test="${param.searchImmediateInMap == null}">
+							<li>
+								<span><fmt:message key="location.legend.regular.zone"/></span>
+							</li>
+							<li>
+								<span><fmt:message key="location.legend.undesire.zone"/></span>
+							</li>
+							<li>
+								<span><fmt:message key="location.legend.forbidden.zone"/></span>
+							</li>
+						</c:if>
 			    	</c:when>
-			    	<c:when test="${param.parkLocation == '' && param.carLocation == null}">
+			    	<c:when test="${param.parkLocation == ''}">
 			    		<li class="hidden"></li>
 			    		<li>
 							<span><fmt:message key="location.legend.park.zone"/></span>

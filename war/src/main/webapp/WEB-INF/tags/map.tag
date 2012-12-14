@@ -7,7 +7,10 @@
     <head>
         <!-- Meta Tags -->
         <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+        <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; minimum-scale=1.0; user-scalable=0;" />
+        <meta name="handheldfriendly" content="true"/>
+        <meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="defaul|black|black-translucent">
 
         <title>${title}</title>
 
@@ -21,23 +24,24 @@
     </head>
     
     <c:choose>
-    	<c:when test="${param.carLocation == '' && param.parkLocation == null && param.search == null}">
+    	<c:when test="${param.carLocation == ''}">
 	    	<c:set var="script" value="MapACar('${param.licensePlate}');"/>
 	    	<c:set var="height" value="298px"/>
     	</c:when>
-    	<c:when test="${param.parkLocation == '' && param.carLocation == null && param.search == null}">
+    	<c:when test="${param.parkLocation == ''}">
     		<c:set var="script" value="MapAPark('${param.zone}');"/>
     		<c:set var="height" value="160px"/>
     	</c:when>
-    	<c:when test="${param.search == 'street'  && param.parkLocation == null  && param.carLocation == null}">
-    		<c:set var="script" value="MapASearch();"/>
+    	<c:when test="${param.searchImmediateInMap == ''}">
+    		<c:set var="script" value="MapASearch('${param.price}', '${param.distance}', '${param.clazz}', '${param.fuel}', '${param.orderBy}', '${param.latitude}', '${param.longitude}');"/>
     		<c:set var="height" value="160px"/>
     	</c:when>
     	<c:otherwise></c:otherwise>
     </c:choose>
+    
     <body onload="${script}">
 
-        <t:header title="${title}" showLegend="true"/>
+        <t:header title="${title}"/>
         
         <jsp:doBody/>
 
@@ -48,7 +52,10 @@
         </script>
         <script src="${contextPath}/js/zepto.js"></script>
         <script src="${contextPath}/js/zepto-gfx.js"></script>
+
         <script src="${contextPath}/js/OpenLayers.mobile.js"></script>
+		<script src="${contextPath}/js/Button.js"></script>
+        
         <script src="${contextPath}/js/map.js"></script>
     </body>
 </html>

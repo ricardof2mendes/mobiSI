@@ -60,7 +60,7 @@
 						<span>
 							<c:choose>
 								<c:when test="${empty actionBean.booking.carClass}"><fmt:message key="CarClazz.NOT_SPECIFIED"/></c:when>
-								<c:otherwise><fmt:message key="CarClazz.${actionBean.booking.carClass}"/></c:otherwise>
+								<c:otherwise>${actionBean.booking.carClass}</c:otherwise>
 							</c:choose>
 						</span>
 					</li>
@@ -69,7 +69,7 @@
 							<fmt:message key="interest.details.from.my.car.club"/>
 						</span>
 						<span>
-							<fmt:message key="car.club.only.${actionBean.booking.carClubCarsOnly}"/>
+							<fmt:message key="application.value.${actionBean.booking.carClubCarsOnly}"/>
 						</span>
 					</li>
 				</ul>
@@ -121,7 +121,7 @@
 			</nav>
 			<c:if test="${actionBean.booking.isEditable}">
 				<div class="cleaner"></div>
-				<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.recent.EditInterestBookingActionBean" class="linkBtn gray" addSourcePage="true">
+				<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.booking.EditInterestBookingActionBean" class="linkBtn gray" addSourcePage="true">
 					<stripes:param name="activityCode" value="${actionBean.booking.code}"/>
 					<fmt:message key="interest.details.edit.request"/>
 				</stripes:link>
@@ -140,14 +140,14 @@
 			<section>
 				<h2><fmt:message key="interest.details.cancel.header"/></h2>
 				<h3><fmt:message key="interest.details.cancel.header2"/></h3>
+				<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.recent.RecentActivitiesActionBean" class="linkBtn orangered" event="cancelInterest" addSourcePage="true">
+					<stripes:param name="activityCode" value="${actionBean.booking.code}"/>
+					<fmt:message key="interest.details.delete.request"/>
+				</stripes:link>
+				<a id="closeConfirm" href="#" class="linkBtn gray" >
+					<fmt:message key="interest.details.delete.request.cancel"/>
+				</a>
 			</section>
-			<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.recent.RecentActivitiesActionBean" class="linkBtn orangered" event="cancelInterest" addSourcePage="true">
-				<stripes:param name="activityCode" value="${actionBean.booking.code}"/>
-				<fmt:message key="interest.details.delete.request"/>
-			</stripes:link>
-			<a id="closeConfirm" href="#" class="linkBtn gray" >
-				<fmt:message key="interest.details.delete.request.cancel"/>
-			</a>
 		</article>
 	</div>
 </t:main>

@@ -41,11 +41,17 @@
 							<span><fmt:message key="find.car.later.max.distance"/></span>
 							<span class="customComboBox">
 								<stripes:select id="distance" name="distance">
+									<stripes:option value="">
+										<fmt:message key="book.now.search.distance.any"/>
+									</stripes:option>
 									<stripes:option value="500" >
 										<fmt:message key="book.now.search.distance.label.meters"><fmt:param value="500"/></fmt:message>
 									</stripes:option>
 									<stripes:option value="1000" >
 										<fmt:message key="book.now.search.distance.label"><fmt:param value="1"/></fmt:message>
+									</stripes:option>
+									<stripes:option value="2000" >
+										<fmt:message key="book.now.search.distance.label"><fmt:param value="2"/></fmt:message>
 									</stripes:option>
 									<stripes:option value="3000" >
 										<fmt:message key="book.now.search.distance.label"><fmt:param value="3"/></fmt:message>
@@ -63,7 +69,10 @@
 							<span><fmt:message key="find.car.later.car.clazz"/></span>
 							<span class="customComboBox">
 								<stripes:select id="carClazz" name="carClazz">
-									<stripes:options-enumeration enum="com.criticalsoftware.mobics.presentation.util.CarClazz" sort="clazz" />
+									<stripes:option value=""><fmt:message key="CarClazz.NOT_SPECIFIED"/></stripes:option>
+									<c:forEach items="${actionBean.carClasses}" var="class">
+										<stripes:option value="${class.code}"><fmt:message key="CarClazz.${class.description}"/></stripes:option>
+									</c:forEach>
 								</stripes:select>																
 							</span>
 						</li>
@@ -136,8 +145,8 @@
 						<li class="detail white">
 							<span><fmt:message key="find.car.later.max.messages"/></span>
 							<span class="customComboBox">
-								<input type="number" id="maxMessages" name="maxMessages" value="${actionBean.maxMessages}" 
-									   placeholder="<fmt:message key="find.car.later.max.messages.placeholder"/>"/>
+								<stripes:text type="number" id="maxMessages" name="maxMessages" 
+									   placeholder="${placeholder}"/>
 							</span>
 						</li>
 					</ul>

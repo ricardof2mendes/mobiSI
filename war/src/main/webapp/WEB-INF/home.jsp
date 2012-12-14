@@ -17,17 +17,17 @@
 		<section>
 			<nav class="simpleList">
 				<ul>
-					<li>
+					<li class="bookForNow">
 						<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.HomeActionBean" event="bookCarForNow">
 							<fmt:message key="book.now.title"/>
 						</stripes:link>
 					</li>
-					<li>
+					<li class="findForLater">
 						<stripes:link id="findForLater" beanclass="com.criticalsoftware.mobics.presentation.action.HomeActionBean" event="findCarForLater">
 							<fmt:message key="find.later.title"/>
 						</stripes:link>
 					</li>
-					<li>
+					<li class="bookAdvance">
 						<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.HomeActionBean" event="bookInAdvance">
 							<fmt:message key="book.advance.title"/>
 						</stripes:link>
@@ -37,8 +37,9 @@
 			
 			<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.booking.ImmediateBookingActionBean" 
 						  id="nearestCar" name="nearestCar" event="nearestCarBook" class="linkBtn bigBtn green" addSourcePage="true">
-				<fmt:message key="nearest.car.button"/>
+				<span id="nearestCar"><fmt:message key="nearest.car.button"/></span>
 			</stripes:link>			
 		</section>
 	</article>
+	<jsp:include page="/WEB-INF/common/geolocationErrorAlert.jsp"/>
 </t:main>
