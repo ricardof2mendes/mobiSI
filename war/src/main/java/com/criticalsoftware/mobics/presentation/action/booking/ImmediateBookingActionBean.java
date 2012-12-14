@@ -80,7 +80,7 @@ public class ImmediateBookingActionBean extends BookingActionBean {
     @Validate
     private BigDecimal distance;
 
-    @Validate(required = true, on = { "searchImmediateInList", "searchImmediateInMap" })
+    @Validate
     private String clazz;
 
     @Validate(
