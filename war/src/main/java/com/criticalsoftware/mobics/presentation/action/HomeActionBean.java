@@ -6,14 +6,20 @@
  */
 package com.criticalsoftware.mobics.presentation.action;
 
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
+
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.DontValidate;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.Resolution;
 
+import com.criticalsoftware.mobics.miscellaneous.CarClassDTO;
 import com.criticalsoftware.mobics.presentation.action.booking.AdvanceBookingActionBean;
 import com.criticalsoftware.mobics.presentation.action.booking.FindCarForLaterActionBean;
 import com.criticalsoftware.mobics.presentation.security.MobiCSSecure;
+import com.criticalsoftware.mobics.presentation.util.Configuration;
+import com.criticalsoftware.mobics.proxy.miscellaneous.MiscellaneousWSServiceStub;
 
 /**
  * Home action bean.
@@ -23,7 +29,7 @@ import com.criticalsoftware.mobics.presentation.security.MobiCSSecure;
  */
 @MobiCSSecure
 public class HomeActionBean extends BaseActionBean {
-    
+
     private static final String ACTIVE_MENU = "booking";
 
     @DefaultHandler
@@ -34,7 +40,9 @@ public class HomeActionBean extends BaseActionBean {
 
     @DontValidate
     public Resolution bookCarForNow() {
-        return new ForwardResolution("/WEB-INF/book/bookCarForNow.jsp");
+        // added parameter distance to request, fill the form with user preferences
+        return new ForwardResolution("/WEB-INF/book/bookCarForNow.jsp").addParameter("distance", new BigDecimal(
+                getContext().getUser().getCustomerPreferencesDTO().getSearchRadius()));
     }
 
     @DontValidate
@@ -46,9 +54,16 @@ public class HomeActionBean extends BaseActionBean {
     public Resolution bookInAdvance() {
         return new ForwardResolution(AdvanceBookingActionBean.class);
     }
-    
+
     @Override
-    public String getActiveMenu(){
+    public String getActiveMenu() {
         return ACTIVE_MENU;
+    }
+    
+    /**
+     * @return the carClasses
+     */
+    public CarClassDTO[] getCarClasses() throws RemoteException {
+        return new MiscellaneousWSServiceStub(Configuration.INSTANCE.getMiscellaneousEnpoint()).getAllCarClasses();
     }
 }

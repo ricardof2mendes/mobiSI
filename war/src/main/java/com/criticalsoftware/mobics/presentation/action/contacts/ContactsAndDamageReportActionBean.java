@@ -126,7 +126,7 @@ public class ContactsAndDamageReportActionBean extends BaseActionBean {
         else {
             HttpClient http = new HttpClient();
             GetMethod method = new GetMethod();
-            method.setPath("http://api.ning.com/files/6Gvj9JpKpavtOgbeWj6W9I8tzplrhsDUtJqd1ARnuSu485ej*IpVjkePIrS0Y6nEdPDJjtDSz6y7ywqzvFB5LGineyHCUVbj/663883059.jpeg?xgip=1075%3A59%3A1351%3A1351%3B%3B&width=64&height=64&crop=1%3A1");
+            method.setPath("http://www.westminster.gov.uk/assets/images/map-icons/CarClub-off.png");
             int status = http.executeMethod(method);
             if (status == HttpStatus.SC_OK) {
                 resolution = new StreamingResolution(method.getResponseHeader("Content-Type").getValue(),

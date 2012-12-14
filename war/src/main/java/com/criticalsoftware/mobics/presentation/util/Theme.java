@@ -18,9 +18,9 @@ package com.criticalsoftware.mobics.presentation.util;
  */
 public enum Theme {
 
-    DEFAULT("", "map", "darkblue"),
-    GREEN("krakatoa", "map", "darkgreen"),
-    ORANGE("localhost", "map", "orange");
+    DEFAULT("", "warm", "darkblue"),
+    GREEN("http://localhost:8080/mobics", "map", "darkgreen"),
+    ORANGE("http://mobics.cadsh.com", "map", "darkred");
 
     public static final String WARM = "warm";
     

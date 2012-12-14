@@ -10,7 +10,7 @@
  * Last changed on: $Date: $
  * Last changed by: $Author: $
  */
-package com.criticalsoftware.mobics.presentation.action.recent;
+package com.criticalsoftware.mobics.presentation.action.booking;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
@@ -28,7 +28,9 @@ import net.sourceforge.stripes.ajax.JavaScriptResolution;
 import net.sourceforge.stripes.validation.Validate;
 
 import com.criticalsoftware.mobics.booking.BookingInterestDTO;
+import com.criticalsoftware.mobics.miscellaneous.CarClassDTO;
 import com.criticalsoftware.mobics.presentation.action.BaseActionBean;
+import com.criticalsoftware.mobics.presentation.action.recent.RecentActivitiesActionBean;
 import com.criticalsoftware.mobics.presentation.extension.DatetimeTypeConverter;
 import com.criticalsoftware.mobics.presentation.security.AuthenticationUtil;
 import com.criticalsoftware.mobics.presentation.util.Configuration;
@@ -40,6 +42,7 @@ import com.criticalsoftware.mobics.proxy.booking.CarClassNotFoundExceptionExcept
 import com.criticalsoftware.mobics.proxy.booking.CustomerNotFoundExceptionException;
 import com.criticalsoftware.mobics.proxy.booking.IllegalDateExceptionException;
 import com.criticalsoftware.mobics.proxy.booking.OverlappedCarBookingExceptionException;
+import com.criticalsoftware.mobics.proxy.miscellaneous.MiscellaneousWSServiceStub;
 
 /**
  * @author ltiago
@@ -56,10 +59,10 @@ public class EditInterestBookingActionBean extends BaseActionBean {
     @Validate
     private String address;
 
-    @Validate(required = true, on = "editBookingInterest")
+    @Validate
     private Integer distance;
 
-    @Validate(required = true, on = "editBookingInterest")
+    @Validate
     private String carClazz;
 
     @Validate(required = true, on = "editBookingInterest")
@@ -83,9 +86,18 @@ public class EditInterestBookingActionBean extends BaseActionBean {
     @Validate(required = true, on = "searchAdress")
     private String query;
 
+    /**
+     * Edit booking interest page
+     * 
+     * @return
+     * @throws RemoteException
+     * @throws UnsupportedEncodingException
+     * @throws BookingInterestNotFoundExceptionException
+     */
     @DontValidate
     @DefaultHandler
-    public Resolution main() throws RemoteException, UnsupportedEncodingException, BookingInterestNotFoundExceptionException {
+    public Resolution main() throws RemoteException, UnsupportedEncodingException,
+            BookingInterestNotFoundExceptionException {
 
         BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
                 Configuration.INSTANCE.getBookingEndpoint());
@@ -110,6 +122,18 @@ public class EditInterestBookingActionBean extends BaseActionBean {
         return new ForwardResolution("/WEB-INF/recent/editInterestBooking.jsp");
     }
 
+    /**
+     * Save edited booking interest
+     * 
+     * @return
+     * @throws RemoteException
+     * @throws UnsupportedEncodingException
+     * @throws OverlappedCarBookingExceptionException
+     * @throws CarClassNotFoundExceptionException
+     * @throws CustomerNotFoundExceptionException
+     * @throws BookingValidationExceptionException
+     * @throws IllegalDateExceptionException
+     */
     public Resolution editBookingInterest() throws RemoteException, UnsupportedEncodingException,
             OverlappedCarBookingExceptionException, CarClassNotFoundExceptionException,
             CustomerNotFoundExceptionException, BookingValidationExceptionException, IllegalDateExceptionException {
@@ -122,9 +146,9 @@ public class EditInterestBookingActionBean extends BaseActionBean {
         Calendar start = Calendar.getInstance();
         start.setTime(startDate);
 
-        bookingWSServiceStub.createBookingInterest(getContext().getUser().getCarClub().getCarClubCode(), start,
-                carClazz, fromMyCarClub, new BigDecimal(longitude), new BigDecimal(latitude), distance.intValue(),
-                startSending.intValue(), stopSending.intValue(), maxMessages.intValue(), Calendar.getInstance());
+        bookingWSServiceStub.createBookingInterest(start, carClazz, fromMyCarClub, new BigDecimal(longitude),
+                new BigDecimal(latitude), distance.intValue(), startSending.intValue(), stopSending.intValue(),
+                maxMessages.intValue());
 
         getContext().getMessages().add(new LocalizableMessage("find.car.later.interest.created"));
         return new RedirectResolution(RecentActivitiesActionBean.class).flash(this);
@@ -312,6 +336,13 @@ public class EditInterestBookingActionBean extends BaseActionBean {
      */
     public void setFromMyCarClub(boolean fromMyCarClub) {
         this.fromMyCarClub = fromMyCarClub;
+    }
+
+    /**
+     * @return the carClasses
+     */
+    public CarClassDTO[] getCarClasses() throws RemoteException {
+        return new MiscellaneousWSServiceStub(Configuration.INSTANCE.getMiscellaneousEnpoint()).getAllCarClasses();
     }
 
 }

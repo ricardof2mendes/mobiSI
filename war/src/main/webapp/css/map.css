@@ -1,12 +1,43 @@
 html, body{
 	height: 100%;
 }
-#map{
+
+
+#container{
 	position:absolute;
     left: 0;
     right: 0;
     bottom: 0;
     top: 45px;
+}
+
+#container > #map {
+	position:absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+#container.white > #map{
+	bottom: 75px !important;
+}
+
+#whiteBar {
+	background-image: url(../img/menu/sombra_menus_10px.png);
+	background-repeat: repeat-x;
+	background-position: top left;
+	position:absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: white;
+    height: 75px;
+    
+}
+
+#whiteBar nav{
+	padding-top: 4px;
 }
 
 .mapMenu {
@@ -103,30 +134,31 @@ html, body{
 }
 
 div.olControlZoom {
-    background: none repeat scroll 0 0 rgba(255, 255, 255, 0.4);
-    border-radius: 4px 4px 4px 4px;
-    left: 8px;
-    padding: 2px;
+	background: none repeat scroll 0 0 rgba(0, 0, 0, 0.4);
+    border-radius: 4px;
+	box-shadow: 0px 7px 5px rgba(0, 0, 0, 0.4);
+    left: 10px;
     position: absolute;
-    top: 8px;
+    bottom: 65px;
 }
 
 div.olControlZoom a {
-    background: none repeat scroll 0 0 rgba(0, 60, 136, 0.5);
-    color: white;
+    background-color: white;
+    color: #444;
     display: block;
     font-family: sans-serif;
-    font-size: 28px;
-    font-weight: bold;
+    font-size: x-large;
+    font-weight: normal;
     height: 32px;
     line-height: 28px;
-    margin: 1px;
     padding: 0;
     text-align: center;
     text-decoration: none;
-    text-shadow: 0 0 3px rgba(0, 0, 0, 0.8);
+    /*text-shadow: 0 0 3px rgba(0, 0, 0, 0.8);*/
     width: 32px;
+    margin: 1px;
 }
+
 a.olControlZoomIn {
     border-radius: 4px 4px 0 0;
 }
@@ -134,7 +166,7 @@ a.olControlZoomOut {
     border-radius: 0 0 4px 4px;
 }
 div.olControlZoom a:hover {
-    background: none repeat scroll 0 0 rgba(0, 60, 136, 0.7);
+    background-color: #DCDCDC !important;
 }
 
 .olLayerGrid .olTileImage {
@@ -143,6 +175,67 @@ div.olControlZoom a:hover {
 img.olTileImage {
 }
 
+/* Other buttons*/
+div.myControl {
+	z-index: 5000;
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0.4);
+    border-radius: 4px 4px 4px 4px;
+    padding: 1px;
+    position: absolute;
+    box-shadow: 0 7px 5px rgba(0, 0, 0, 0.4);    
+}
+div.top {
+	top : 10px;
+}
+
+div.bottom {
+	bottom: 20px;
+}
+
+div.left {
+	left: 10px;
+}
+div.right {
+	right: 10px;
+}
+
+div.myControl a {
+    background-color: white;
+    display: block;
+    font-family: sans-serif;
+    font-size: x-large;
+    font-weight: normal;
+    height: 32px;
+    line-height: 28px;
+    padding: 0;    
+    text-align: center;
+    text-decoration: none;
+    /*text-shadow: 0 0 3px rgba(0, 0, 0, 0.8);*/
+    width: 32px;
+    color: #444444 ;
+    border-radius: 4px;
+}
+
+div.myControl a:hover {
+    background-color: #DCDCDC;
+}
+
+div.myControl a.wide {
+	font-size: large;
+	font-weight: normal;
+	width: 50px;
+	height: 30px;
+}
+
+div.myControl a.italic {
+	font-family: "Monotype Corsiva", sans-serif; 
+	padding-right: 3px !important; 
+	font-size: x-large;
+	font-weight: normal;
+	font-style: italic;
+}
+
+/* search */
 #streetSearch div.holder {
 	background: transparent url(../img/menu/sombra_menus_10px.png) repeat-x top bottom;
 	padding: 0 10px;
@@ -181,8 +274,43 @@ div#searchResults {
     bottom: 0;
 }
 
+/******************************* Map Legend*/
+#legend {
+	padding-top: 10px;
+}
+#legend nav.simpleList ul li {
+	background: none;
+	padding-left: 10px;
+	width: 100%;
+}
 
+#legend nav.simpleList ul li span {
+	padding-left: 30px;
+	display: block;
+	height: 45px;
+	width: 100%;
+	text-align: left;
+}
 
+#legend nav.simpleList ul li:nth-child(1) span {
+	background: #fff url(../img/map/mylocation.png) no-repeat 0 50%;
+}
+
+#legend nav.simpleList ul li:nth-child(2) span {
+	background: #fff url(../img/map/car-location.png) no-repeat 0 50%;
+}
+
+#legend nav.simpleList ul li:nth-child(3) span {
+	background: #fff url(../img/map/regular-zone.png) no-repeat 0 50%;
+}
+
+#legend nav.simpleList ul li:nth-child(4) span {
+	background: #fff url(../img/map/undesirable-zone.png) no-repeat 0 50%;
+}
+
+#legend nav.simpleList ul li:nth-child(5) span {
+	background: #fff url(../img/map/forbidden-zone.png) no-repeat 0 50%;
+}
 
 
 

@@ -59,7 +59,24 @@ public class MessagesActionBean extends BaseActionBean {
         bookingWSServiceStub._getServiceClient().addHeader(
                 AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
                         .getPassword()));
+
         messages = bookingWSServiceStub.getBookingMessages();
+
+//        if (messages == null) {
+//            messages = new BookingInterestMessageDTO[2];
+//            BookingInterestMessageDTO m = new BookingInterestMessageDTO();
+//            m.setCarName("carro de teste 123");
+//            m.setCarPlate("aaaaaaaa");
+//            m.setCode("code");
+//            m.setIsRead(true);
+//            messages[0] = m;
+//            m = new BookingInterestMessageDTO();
+//            m.setCarName("carro de teste 321");
+//            m.setCarPlate("bbbbbbb");
+//            m.setCode("code 2");
+//            m.setIsRead(false);
+//            messages[1] = m;
+//        }
 
         return new ForwardResolution("/WEB-INF/messages/messages.jsp");
     }

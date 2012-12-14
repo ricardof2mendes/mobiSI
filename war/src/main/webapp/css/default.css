@@ -48,6 +48,13 @@ section h2 {
 	color: #666;
 }
 
+section h3 {
+	margin: 0 10px 5px;
+	font-size: normal;
+	font-weight: normal;
+	color: #666;
+}
+
 header {
 	color: #FFF;
 	line-height: 45px;
@@ -65,15 +72,6 @@ footer {
 	text-shadow: 0px -1px 1px rgba(0, 0, 0, 0.5);
 	text-align: center;
 	color: #FFF;
-}
-
-fieldset {
-
-}
-
-nav#menu ul {
-	margin-top: -10px;
-	margin-bottom: 10px;
 }
 
 nav#menu ul li {
@@ -260,29 +258,7 @@ form.loginForm>div>label {
 	background: transparent url(../img/bt_down_30px.png) no-repeat top left;
 }
 
-/* Legend */
-.legendBtn {
-	height: 30px;
-	line-height: 30px;
-	float: right;
-	margin: -38px 10px 0 0;
-	border: 1px solid rgba(0, 0, 0, 0.3);
-	background: transparent;
-	border-radius: 4px;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	font-weight: bold;
-	text-align: center;
-	color: #FFF;
-	text-shadow: 0px -1px 1px rgba(0, 0, 0, 0.5);
-	padding: 0 5px;
-}
-
-.legendBtn:active {
-	border: 1px solid rgba(0, 0, 0, 0.5);
-	background: transparent url(../img/bt_down_90px.png) no-repeat top left;
-}
-
+.alertBtn,
 .linkBtn {
 	display: block;
 	height: 45px;
@@ -293,7 +269,6 @@ form.loginForm>div>label {
 	font-weight: bold;
 	text-align: center;
 	color: #FFF;
-	margin: 0 10px 10px 10px;
 	text-shadow: 0px -1px 1px rgba(0, 0, 0, 0.5);
 	border: 1px solid rgba(0, 0, 0, 0.3);	
 	background-image: url(../img/bt_up_45px.png);
@@ -301,6 +276,15 @@ form.loginForm>div>label {
 	background-position: top left;
 }
 
+.linkBtn {
+	margin: 0 10px 10px 10px;
+}
+
+.alertBtn {
+	margin-bottom: 10px;
+}
+
+.alertBtn:active,
 .linkBtn:active {
 	border: 1px solid rgba(0, 0, 0, 0.5);
 	background-image: url(../img/bt_down_45px.png);
@@ -317,6 +301,13 @@ form.loginForm>div>label {
 .bigBtn:active {
 	border: 1px solid rgba(0, 0, 0, 0.5);
 	background-image: url(../img/bt_down_90px.png);
+}
+
+span#nearestCar {
+	background-image: url(../img/links/nearest-car.png);
+	background-repeat: no-repeat;
+	background-position: 0 50%;
+	padding-left: 24px;
 }
 
 section.submit {
@@ -393,6 +384,18 @@ section > nav.simpleList ul li {
 	background-position: 10px 50%, 100% 50%;
 }
 
+section > nav.simpleList ul li.bookForNow {
+	background-image: url(../img/links/book-for-now.png), url(../img/seta.png);
+}
+
+section > nav.simpleList ul li.findForLater {
+	background-image: url(../img/links/find-a-car-for-later.png), url(../img/seta.png);
+}
+
+section > nav.simpleList ul li.bookAdvance {
+	background-image: url(../img/links/book-in-advance.png), url(../img/seta.png);
+}
+
 section > nav.simpleList ul li:first-child {
 	border-radius: 4px 4px 0 0;
 	-moz-border-radius: 4px 4px 0 0;
@@ -413,6 +416,15 @@ section > nav.simpleList ul li.title {
 	font-size: normal;
 	font-weight: normal;
 	color: #666;
+}
+
+section > nav.simpleList ul li.anotherTitle {
+	line-height: 26px;
+	padding-left: 10px;
+	background: none;
+	background-color: #fff;
+	font-size: normal;
+	color: #000;
 }
 
 section > nav.simpleList ul li.link {
@@ -473,41 +485,6 @@ section > nav.simpleList ul li a {
 	display: block;
 }
 
-/******************************* Map Legend*/
-#legend nav.simpleList ul li {
-	background: none;
-	padding-left: 10px;
-	width: 100%;
-}
-
-#legend nav.simpleList ul li span {
-	padding-left: 30px;
-	display: block;
-	height: 45px;
-	width: 100%;
-	text-align: left;
-}
-
-#legend nav.simpleList ul li:nth-child(1) span {
-	background: #fff url(../img/map/mylocation.png) no-repeat 0 50%;
-}
-
-#legend nav.simpleList ul li:nth-child(2) span {
-	background: #fff url(../img/map/car-location.png) no-repeat 0 50%;
-}
-
-#legend nav.simpleList ul li:nth-child(3) span {
-	background: #fff url(../img/map/regular-zone.png) no-repeat 0 50%;
-}
-
-#legend nav.simpleList ul li:nth-child(4) span {
-	background: #fff url(../img/map/undesirable-zone.png) no-repeat 0 50%;
-}
-
-#legend nav.simpleList ul li:nth-child(5) span {
-	background: #fff url(../img/map/forbidden-zone.png) no-repeat 0 50%;
-}
-
 /****************************** Panel detail **/
 section > nav.panel ul {
 	margin: 0 10px 15px;
@@ -528,7 +505,7 @@ nav.panel ul li a {
 	background: url(../img/seta.png) no-repeat 100% 50%;
 }
 
-section > nav.panel ul li.white {
+ul li.white {
 	background-color: #fff !important;
 }
 
@@ -611,19 +588,34 @@ section > nav.panel ul li:last-child{
 	border-bottom: 0;
 }
 
-nav.panel ul li.imageCarClub > div > img {
+nav.panel ul li.imageCarClub > div  {
+	padding-left: 10px;
+	display: inline;
+}
+
+nav.panel ul li.imageCarClub > div > div {
 	border-radius: 4px ;
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
 	border: 1px solid rgba(0, 0, 0, 0.6);
 	margin: 0 10px;
-	vertical-align: middle;
+	width: 60px;
+	height: 60px;
+	display:table-cell;
+    vertical-align: middle;
 }
+
+nav.panel ul li.imageCarClub > div > div > img {
+	display: block;
+	margin: auto;
+}
+
 
 nav.panel ul li.imageCarClub > div > span {
 	font-weight: bold;
 	font-size: x-large;
 	color: #333;
+	vertical-align: text-bottom;
 }
 
 nav.panel ul li.imageNoLink > div:nth-child(1),
@@ -693,6 +685,25 @@ nav.threeColumnList  ul li a > div:nth-child(1) {
 	border: 1px solid rgba(0, 0, 0, 0.6);
 	margin: 0 10px;
 	float: left;
+}
+
+nav.threeColumnList  ul li a > div.msg-read-true,
+nav.threeColumnList  ul li a > div.msg-read-false {
+	border: none !important;
+	width: 13px !important;
+	height: 60px;
+}
+
+nav.threeColumnList  ul li a > div.msg-read-true {
+	background: transparent url(../img/new-message-icon.png) no-repeat 50% 50% !important;	
+}
+
+nav.threeColumnList  ul li a > div.msg-read-false {
+	background: none !important;
+}
+
+nav.threeColumnList  ul li a > div.msg-body {
+	margin-left: 33px !important;
 }
 
 nav.threeColumnList  ul li a > div:nth-child(2) {
@@ -809,9 +820,14 @@ nav.orderCriteria {
 	-webkit-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
 }
 
-section > nav.orderCriteria ul {
-	width: 226px;
-	margin: auto;
+section > nav.orderCriteria ul:first-child {
+	float: left;
+	padding-left: 10px;
+}
+
+section > nav.orderCriteria ul:last-child {
+	float: right;
+	padding-right: 10px;
 }
 
 nav.orderCriteria ul li {
@@ -839,7 +855,6 @@ nav.orderCriteria ul li:first-child a{
 	border-radius: 4px 0 0 4px;
 	-moz-border-radius: 4px 0 0 4px;
 	-webkit-border-radius: 4px 0 0 4px;
-	
 }
 
 nav.orderCriteria ul li:last-child a {
@@ -847,6 +862,13 @@ nav.orderCriteria ul li:last-child a {
 	border-radius: 0 4px 4px 0;
 	-moz-border-radius: 0 4px 4px 0;
 	-webkit-border-radius: 0 4px 4px 0;
+}
+
+nav.orderCriteria ul:last-child li a {
+	width: 76px;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;	
 }
 
 /* No result list */
@@ -859,7 +881,6 @@ section#noresults {
 
 section#noresults label:nth-child(1) {
 	font-weight: bold;
-
 }
 
 section#noresultsdamage {
@@ -882,15 +903,13 @@ section#noresultsdamage {
 }
 
 .customComboBox > select,
-.customComboBox > input {
+.customComboBox > input[type="text"],
+.customComboBox > input[type="number"],
+.customComboBox > input[type="password"] {
 	border: 0;
 	color: #666;
 	width: 100%;
 	background-color: transparent;
-}
-
-.customComboBox > input.editable {
-	background: transparent url('../img/setas.png') no-repeat right 50%;
 }
 
 .fullWith {
@@ -1237,7 +1256,8 @@ article.pin div:nth-child(3) > input[type="submit"]:active {
 
 
 /* MODAL */
-.confirm,.modal {
+.confirm,
+.modal {
 	display: none;
 	position: fixed;
 	z-index: 1000;
@@ -1274,21 +1294,29 @@ body.confirmation .confirm {
 	-webkit-border-radius: 4px;
 	margin: auto;
 	background-color: #f4f4f4;
-	padding-bottom: 5px;
+	border: 1px solid #E5E5E5;
+	box-shadow: 0px 7px 5px rgba(0, 0, 0, 0.4);
+	text-align: left;
 }
 .confirm article section {
-	padding: 15px 10px;
+	padding: 30px;
 }
+.confirm article section > .alertBtn:last-child {
+	margin-bottom: 0px;
+}
+
 .confirm article h2 {
 	color: #000;
 	font-weight: bold;
 	margin: 0;
+	margin-bottom: 10px; 
 }
 
 .confirm article h3 {
 	margin: 0;
 	color: #A0A0A0;
 	font-weight: normal;
+	margin-bottom: 10px;
 }
 
 /********************************************************************* Media Queries */
@@ -1296,6 +1324,27 @@ body.confirmation .confirm {
 screen and (-webkit-min-device-pixel-ratio: 1.5),
 screen and (min-device-pixel-ratio: 1.5),
 screen and (min-resolution: 1.5dppx) {
+	
+	span#nearestCar {
+		background-image: url(../img/links/nearest-car.png);
+		padding-left: 48px;
+	}
+	
+	section > nav.simpleList ul li.bookForNow {
+		background-image: url(../img/links/book-for-now@2x.png), url(../img/seta.png);
+	}
+	
+	section > nav.simpleList ul li.findForLater {
+		background-image: url(../img/links/find-a-car-for-later@2x.png), url(../img/seta.png);
+	}
+	
+	section > nav.simpleList ul li.bookAdvance {
+		background-image: url(../img/links/book-in-advance@2x.png), url(../img/seta.png);
+	}
+	
+	nav.threeColumnList  ul li a > div.msg-read-true {
+		background-image: transparent url(../img/new-message-icon@2x.png);	
+	}
 	
 	nav#menu ul li.booking {
 		background-image: url(../img/menu/bookacar-inactive@2x.png), url(../img/menu/sombra_menu_20px.png);

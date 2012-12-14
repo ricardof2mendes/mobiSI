@@ -50,10 +50,10 @@ public abstract class BookingActionBean extends BaseActionBean {
             "licensePlateBookAdvance", "parkLocation", "carData", "parkData", "carDetails" })
     protected String licensePlate;
 
-    @Validate(required = true, on = { "nearestCarBook", "licensePlateBook", "searchCars" })
+    @Validate(required = true, on = { "nearestCarBook"})
     protected String latitude;
 
-    @Validate(required = true, on = { "nearestCarBook", "licensePlateBook", "searchCars" })
+    @Validate(required = true, on = { "nearestCarBook"})
     protected String longitude;
 
     @Validate(required = true, on = "book", minlength = 4, maxlength = 4)

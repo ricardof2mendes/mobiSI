@@ -110,4 +110,8 @@ public class AuthenticationUtil {
 
         return securityHeader;
     }
+    
+    public static String encriptSHA(String value) {
+        return Hex.encodeHexString(DigestUtils.sha(value));
+    }
 }

@@ -26,6 +26,8 @@ import com.criticalsoftware.mobics.presentation.security.AuthenticationUtil;
 import com.criticalsoftware.mobics.presentation.security.User;
 import com.criticalsoftware.mobics.presentation.util.Configuration;
 import com.criticalsoftware.mobics.proxy.carclub.CarClubWSServiceStub;
+import com.criticalsoftware.mobics.proxy.customer.CustomerNotFoundExceptionException;
+import com.criticalsoftware.mobics.proxy.customer.CustomerWSServiceStub;
 
 /**
  * Sign-in action bean.
@@ -34,8 +36,6 @@ import com.criticalsoftware.mobics.proxy.carclub.CarClubWSServiceStub;
  * @version $Revision: 1.3 $
  */
 public class LoginActionBean extends BaseActionBean {
-
-    private CarClubWSServiceStub carClubWSServiceStub;
 
     @Validate
     private String username;
@@ -56,19 +56,25 @@ public class LoginActionBean extends BaseActionBean {
         }
     }
 
-    public Resolution authenticate() throws UnsupportedEncodingException, RemoteException {
+    public Resolution authenticate() throws UnsupportedEncodingException, RemoteException,
+            CustomerNotFoundExceptionException {
         Resolution resolution = new RedirectResolution(HomeActionBean.class);
 
-        carClubWSServiceStub = new CarClubWSServiceStub(Configuration.INSTANCE.getCarClubEndpoint());
+        CarClubWSServiceStub carClubWSServiceStub = new CarClubWSServiceStub(
+                Configuration.INSTANCE.getCarClubEndpoint());
         carClubWSServiceStub._getServiceClient().addHeader(
                 AuthenticationUtil.getAuthenticationHeader(username, password));
-
-        // this.getContext().setUser(new User("a","a","a","a", "orange", "darkred"));
 
         try {
             CarClubSimpleDTO carClubDTO = carClubWSServiceStub.getCustomerCarClub();
             if (carClubDTO != null) {
-                this.getContext().setUser(new User(username, password, carClubDTO));
+
+                CustomerWSServiceStub customerWSServiceStub = new CustomerWSServiceStub(
+                        Configuration.INSTANCE.getCustomerEndpoint());
+                customerWSServiceStub._getServiceClient().addHeader(
+                        AuthenticationUtil.getAuthenticationHeader(username, password));
+                this.getContext().setUser(
+                        new User(username, password, carClubDTO, customerWSServiceStub.getCustomerPreferences()));
             } else {
                 this.getContext().getValidationErrors().addGlobalError(new LocalizableError("login.carclub.error"));
                 resolution = new ForwardResolution("/WEB-INF/login.jsp");

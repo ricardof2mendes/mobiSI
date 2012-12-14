@@ -50,6 +50,14 @@ public class TripActionBean extends BaseActionBean {
     @Validate(required = true, on = { "lockCar", "unlockCar", "signal" })
     private String licensePlate;
 
+    /**
+     * Recent list resolution
+     * @return
+     * @throws RemoteException
+     * @throws UnsupportedEncodingException
+     * @throws CustomerNotFoundExceptionException
+     * @throws BookingNotFoundExceptionException
+     */
     @DefaultHandler
     @DontValidate
     public Resolution main() throws RemoteException, UnsupportedEncodingException, CustomerNotFoundExceptionException, BookingNotFoundExceptionException {
@@ -70,6 +78,15 @@ public class TripActionBean extends BaseActionBean {
         return resolution;
     }
 
+    /**
+     * Lock car resolution
+     * 
+     * @return
+     * @throws RemoteException
+     * @throws UnsupportedEncodingException
+     * @throws CarLicensePlateNotFoundExceptionException
+     * @throws com.criticalsoftware.mobics.proxy.car.CustomerNotFoundExceptionException
+     */
     public Resolution lockCar() throws RemoteException, UnsupportedEncodingException,
             CarLicensePlateNotFoundExceptionException, com.criticalsoftware.mobics.proxy.car.CustomerNotFoundExceptionException {
 
@@ -84,6 +101,15 @@ public class TripActionBean extends BaseActionBean {
         return new RedirectResolution(this.getClass()).flash(this);
     }
 
+    /**
+     * Unlock car resolution
+     * 
+     * @return
+     * @throws RemoteException
+     * @throws UnsupportedEncodingException
+     * @throws CarLicensePlateNotFoundExceptionException
+     * @throws com.criticalsoftware.mobics.proxy.car.CustomerNotFoundExceptionException
+     */
     public Resolution unlockCar() throws RemoteException, UnsupportedEncodingException,
             CarLicensePlateNotFoundExceptionException, com.criticalsoftware.mobics.proxy.car.CustomerNotFoundExceptionException {
 
@@ -97,19 +123,14 @@ public class TripActionBean extends BaseActionBean {
         return new RedirectResolution(this.getClass()).flash(this);
     }
 
-    public Resolution signal() throws RemoteException, UnsupportedEncodingException,
-            CarLicensePlateNotFoundExceptionException, com.criticalsoftware.mobics.proxy.car.CustomerNotFoundExceptionException {
-
-        CarWSServiceStub carWSServiceStub = new CarWSServiceStub(Configuration.INSTANCE.getCarEndpoint());
-        carWSServiceStub._getServiceClient().addHeader(
-                AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
-                        .getPassword()));
-
-        carWSServiceStub.buzzCar(licensePlate);
-        getContext().getMessages().add(new LocalizableMessage("current.trip.car.signaling"));
-        return new RedirectResolution(this.getClass()).flash(this);
-    }
-
+    /**
+     * End current trip resolution
+     * 
+     * @return
+     * @throws UnsupportedEncodingException
+     * @throws RemoteException
+     * @throws BookingNotFoundExceptionException
+     */
     public Resolution endTrip() throws UnsupportedEncodingException, RemoteException, BookingNotFoundExceptionException {
 
         BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(

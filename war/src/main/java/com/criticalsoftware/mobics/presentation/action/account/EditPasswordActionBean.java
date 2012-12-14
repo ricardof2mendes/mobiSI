@@ -43,8 +43,8 @@ public class EditPasswordActionBean extends AskPinActionBean {
     private String password;
 
     @Validate(required = true, on = "saveData", expression = "this == password")
-    private String confirmation;
-    
+    private String retypePassword;
+
     /**
      * Account page
      * 
@@ -72,7 +72,7 @@ public class EditPasswordActionBean extends AskPinActionBean {
      * Save Data
      * 
      * @throws InvalidLoginExceptionException
-     * @throws UnsupportedEncodingException 
+     * @throws UnsupportedEncodingException
      */
     public Resolution saveData() throws RemoteException, InvalidLoginExceptionException, UnsupportedEncodingException {
 
@@ -81,9 +81,10 @@ public class EditPasswordActionBean extends AskPinActionBean {
         customerWSServiceStub._getServiceClient().addHeader(
                 AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
                         .getPassword()));
-        customerWSServiceStub.updateCustomerPassword(getContext().getUser().getUsername(), getContext().getUser()
-                .getPassword(), password);
-        //also update password in context
+        customerWSServiceStub.updateCustomerPassword(getContext().getUser().getUsername(),
+                AuthenticationUtil.encriptSHA(getContext().getUser().getPassword()),
+                AuthenticationUtil.encriptSHA(password));
+        // also update password in context
         getContext().getUser().setPassword(password);
 
         getContext().getMessages().add(new LocalizableMessage("account.authentication.edit.email.password.success"));
@@ -107,14 +108,14 @@ public class EditPasswordActionBean extends AskPinActionBean {
     /**
      * @return the confirmation
      */
-    public String getConfirmation() {
-        return confirmation;
+    public String getRetypePassword() {
+        return retypePassword;
     }
 
     /**
      * @param confirmation the confirmation to set
      */
-    public void setConfirmation(String confirmation) {
-        this.confirmation = confirmation;
+    public void setRetypePassword(String confirmation) {
+        this.retypePassword = confirmation;
     }
 }

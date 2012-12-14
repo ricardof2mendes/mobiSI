@@ -13,6 +13,7 @@
 package com.criticalsoftware.mobics.presentation.security;
 
 import com.criticalsoftware.mobics.carclub.CarClubSimpleDTO;
+import com.criticalsoftware.mobics.customer.CustomerPreferencesDTO;
 
 /**
  * @author ltiago
@@ -26,16 +27,21 @@ public class User {
     
     private CarClubSimpleDTO carClub;
     
+    private CustomerPreferencesDTO customerPreferencesDTO;
+    
     /**
      * Class constructor
      * 
      * @param username
-     * @param carClubName
+     * @param password
+     * @param carClub
+     * @param customerPreferencesDTO 
      */
-    public User(String username, String password, CarClubSimpleDTO carClub) {
+    public User(String username, String password, CarClubSimpleDTO carClub, CustomerPreferencesDTO customerPreferencesDTO) {
         this.username = username;
         this.password = password;
         this.carClub = carClub;
+        this.customerPreferencesDTO = customerPreferencesDTO;
     }
 
     /**
@@ -67,4 +73,19 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    /**
+     * @return the customerPreferencesDTO
+     */
+    public CustomerPreferencesDTO getCustomerPreferencesDTO() {
+        return customerPreferencesDTO;
+    }
+
+    /**
+     * @param customerPreferencesDTO the customerPreferencesDTO to set
+     */
+    public void setCustomerPreferencesDTO(CustomerPreferencesDTO customerPreferencesDTO) {
+        this.customerPreferencesDTO = customerPreferencesDTO;
+    }
+    
 }

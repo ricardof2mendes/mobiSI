@@ -215,7 +215,7 @@ public class AdvanceBookingActionBean extends BookingActionBean {
      * @return the map page
      */
     public Resolution parkLocation() {
-        return new ForwardResolution("/WEB-INF/book/carLocation.jsp").addParameter("zone", licensePlate);
+        return new ForwardResolution("/WEB-INF/common/mapFullWidth.jsp").addParameter("zone", licensePlate);
     }
 
     /**

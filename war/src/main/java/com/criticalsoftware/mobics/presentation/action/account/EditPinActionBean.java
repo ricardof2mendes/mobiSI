@@ -81,8 +81,8 @@ public class EditPinActionBean extends AskPinActionBean {
         customerWSServiceStub._getServiceClient().addHeader(
                 AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
                         .getPassword()));
-        customerWSServiceStub.updateCustomerPin(getContext().getUser().getUsername(), getContext().getUser()
-                .getPassword(), newPin);
+        customerWSServiceStub.updateCustomerPin(getContext().getUser().getUsername(), AuthenticationUtil.encriptSHA(getContext().getUser()
+                .getPassword()), newPin);
 
         getContext().getMessages().add(new LocalizableMessage("account.authentication.edit.email.pin.success"));
         return new RedirectResolution(AccountActionBean.class).flash(this);

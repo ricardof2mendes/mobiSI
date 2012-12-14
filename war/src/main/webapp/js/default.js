@@ -10,6 +10,7 @@ $(document).ready(function() {
 	 * Menu open/close 
 	 */
 	$('.menuBtn').on('click', function(e) {
+		e.preventDefault();
 		toggleFx('#menu');
 	});
 
@@ -21,9 +22,11 @@ $(document).ready(function() {
 		var element = $(this); 
 		fillGeoposition(function(position) {
 							var url = element.prop('href')
-									+ "&latitude=" + position.coords.latitude
-									+ "&longitude=" + position.coords.longitude;
+									+ '&latitude=' + position.coords.latitude
+									+ '&longitude=' + position.coords.longitude;
 							window.location.href = url;
+						}, function(err) {
+							treatGeolocationError(err);
 						}, true);
 	});
 	
@@ -33,10 +36,12 @@ $(document).ready(function() {
 		var element = $(this); 
 		fillGeoposition(function(position) {
 							var url = element.prop('href')
-									+ "&latitude=" + position.coords.latitude
-									+ "&longitude=" + position.coords.longitude;
+									+ '&latitude=' + position.coords.latitude
+									+ '&longitude=' + position.coords.longitude;
 							window.location.href = url;
-						}, true);
+						}, function() {
+							window.location.href = element.prop('href') + '&latitude=&longitude=';
+						} ,true);
 	});
 	
 	/** Search location link */
@@ -44,15 +49,15 @@ $(document).ready(function() {
 		e.preventDefault();
 		var element = $(this);
 		var url = element.prop('href');
-		url += "&" + $('#latitude').prop('name') + '=' + $('#latitude').val(); 
-		url += "&" + $('#longitude').prop('name') + '=' + $('#longitude').val(); 
-		url += "&" + $('#startDate').prop('name') + '=' + $('#startDate').val(); 
-		url += "&" + $('#distance').prop('name') + '=' + $('#distance').val(); 
-		url += "&" + $('#carClazz').prop('name') + '=' + $('#carClazz').val(); 
-		url += "&" + $('#fromMyCarClub').prop('name') + '=' + $('#fromMyCarClub').val(); 
-		url += "&" + $('#startSending').prop('name') + '=' + $('#startSending').val(); 
-		url += "&" + $('#stopSending').prop('name') + '=' + $('#stopSending').val(); 
-		url += "&" + $('#maxMessages').prop('name') + '=' + $('#maxMessages').val(); 
+		url += '&' + $('#latitude').prop('name') + '=' + $('#latitude').val(); 
+		url += '&' + $('#longitude').prop('name') + '=' + $('#longitude').val(); 
+		url += '&' + $('#startDate').prop('name') + '=' + $('#startDate').val(); 
+		url += '&' + $('#distance').prop('name') + '=' + $('#distance').val(); 
+		url += '&' + $('#carClazz').prop('name') + '=' + $('#carClazz').val(); 
+		url += '&' + $('#fromMyCarClub').prop('name') + '=' + $('#fromMyCarClub').val(); 
+		url += '&' + $('#startSending').prop('name') + '=' + $('#startSending').val(); 
+		url += '&' + $('#stopSending').prop('name') + '=' + $('#stopSending').val(); 
+		url += '&' + $('#maxMessages').prop('name') + '=' + $('#maxMessages').val(); 
 		window.location.href = url;
 	});
 	
@@ -76,7 +81,7 @@ $(document).ready(function() {
  			$('#licensePlateBookForm > div > div').addClass('delete')
  				.on('click', function() {
  					$(that).val('');
- 					$('#articleContainer').html('').css("display", "none");
+ 					$('#articleContainer').html('').css('display', 'none');
  					$('#licensePlateBookForm > div > div').removeClass('delete').off('click');
  					$(that).css('text-transform', 'none');
  			});
@@ -98,26 +103,30 @@ $(document).ready(function() {
 				 				$('#latitude').val(position.coords.latitude);
 				 				$('#longitude').val(position.coords.longitude);
 				 				autocompleteList();
-		 					});
+		 					}, function() {
+		 						autocompleteList();
+							});
 	 			} else {
 	 				autocompleteList();
 	 			}
 			}, 1000);
 			
  		} else {
- 			$('#articleContainer').html('').css("display", "none");
+ 			$('#articleContainer').html('').css('display', 'none');
  		}
  	});
  	
  	/**
  	 * Search for cars 
  	 */
- 	$("#searchCarsForBook").on('click', function(e){
+ 	$('#searchCarsForBook').on('click', function(e){
  		e.preventDefault();
  		fillGeoposition(function(position) {
 							$('#latitude').val(position.coords.latitude);
 							$('#longitude').val(position.coords.longitude);
 							$('#searchForm').submit();
+						}, function(err) {
+							treatGeolocationError(err);
 						}, true);
  	});
  	
@@ -127,7 +136,7 @@ $(document).ready(function() {
  	if($('#location').length > 0){
  		autocompleteZones();
  		
- 		$('#location').on("change", function(){
+ 		$('#location').on('change', function(){
  	 		autocompleteZones();
  	 	});
  	}
@@ -174,23 +183,23 @@ $(document).ready(function() {
  	/* Modal dialog windows */
  	$('#openConfirm').on('click', function(e) {
  		e.preventDefault();
- 		$('body').addClass("confirmation");
+ 		$('body').addClass('confirmation');
  		
  		$('body').on('touchmove', 'body', function(e){
  			e.preventDefault();
  		});
  		
 // 		var windowHeight = document.documentElement.clientHeight;
-// 		var elementHeight = $(".confirm article").height();
-// 		$(".confirm article").css({
-// 		    "margin-top": (windowHeight-elementHeight)/2 + 'px'
+// 		var elementHeight = $('.confirm article').height();
+// 		$('.confirm article').css({
+// 		    'margin-top': (windowHeight-elementHeight)/2 + 'px'
 // 		});
  		
  	});
  	
  	$('#closeConfirm').on('click', function(e) {
  		e.preventDefault();
- 		$('body').removeClass("confirmation");
+ 		$('body').removeClass('confirmation');
  		$('body').off('scroll');
  	});
  	
@@ -198,8 +207,8 @@ $(document).ready(function() {
  	$('#licenseReport').on('blur', function(){
  		
  		//if($(this).val().length == 8 &&
- 			if(	($("#carLicensePlate").length == 0 ||
- 				($("#carLicensePlate").length > 0 && $("#carLicensePlate").val() !=  $(this).val()))){
+ 			if(	($('#carLicensePlate').length == 0 ||
+ 				($('#carLicensePlate').length > 0 && $('#carLicensePlate').val() !=  $(this).val()))){
  			
 	 		var url = CONTEXT_PATH+'/contacts/ContactsAndDamageReport.action?licensePlateSearch=&licensePlate='+$(this).val();
 	
@@ -207,7 +216,7 @@ $(document).ready(function() {
 				if (jqXHR.getResponseHeader('Stripes-Success') === 'OK') {
 					if (data.indexOf('<html') == -1) {
 						$('#searchResults').html(data);
-					    $("#searchResults").css("display", "block");
+					    $('#searchResults').css('display', 'block');
 					} else {
 					    $('html').html(data);
 					}
@@ -226,8 +235,8 @@ $(document).ready(function() {
  			$(this).css('text-transform', 'uppercase');
  		} else {
  			$(this).css('text-transform', 'none');
- 			$("#searchResults").css("display", "none");
- 			$("#searchResults").html('');
+ 			$('#searchResults').css('display', 'none');
+ 			$('#searchResults').html('');
  		}
  	});
  	
@@ -237,11 +246,56 @@ $(document).ready(function() {
 		var element = $(this); 
 		fillGeoposition(function(position) {
 							var url = element.prop('href')
-									+ "&latitude=" + position.coords.latitude
-									+ "&longitude=" + position.coords.longitude;
+									+ '&latitude=' + position.coords.latitude
+									+ '&longitude=' + position.coords.longitude;
 							window.location.href = url;
+						}, function() {
+							window.location.href = element.prop('href')+ '&latitude=&longitude=';
 						}, true);
 	});
+ 	
+ 	/* Preferences*/
+ 	$('#sort0').on('change', function(e) {
+ 		if($('#sort1').val() == $(this).val()) {
+ 			toogleSort('#sort1', '#sort2', this);
+ 		}else {
+ 			toogleSort('#sort2', '#sort1', this);
+ 		}
+ 	});
+ 	$('#sort1').on('change', function(e) {
+ 		if($('#sort0').val() == $(this).val()) {
+ 			toogleSort('#sort0', '#sort2', this);
+ 		}else {
+ 			toogleSort('#sort2', '#sort0', this);
+ 		}
+ 	});
+ 	$('#sort2').on('change', function(e) {
+ 		if($('#sort0').val() == $(this).val()) {
+ 			toogleSort('#sort0', '#sort1', this);
+ 		}else {
+ 			toogleSort('#sort1', '#sort0', this);
+ 		}		
+ 	});
+ 	// click on li to change checkbox
+ 	$('#appFilter').on('click', function(){
+ 		$('#app').trigger('click');
+ 	});
+ 	// click on li to change checkbox
+ 	$('#smsFilter').on('click', function(){
+ 		$('#sms').trigger('click');
+ 	});
+ 	// click on checkbox will toogle select option
+ 	$('#app').on('click', function(e){
+ 		e.stopPropagation();
+ 		$('#appOption').prop('disabled', ! $('#appOption').prop('disabled'));
+ 		toogleSort('#communicationChannel', '#app', '#app');
+ 	});
+ 	// click on checkbox will toogle select option
+ 	$('#sms').on('click', function(e){
+ 		e.stopPropagation();
+ 		$('#smsOption').prop('disabled', ! $('#smsOption').prop('disabled'));
+ 		toogleSort('#communicationChannel', '#sms', '#sms');
+ 	});
 });
 
 
@@ -251,20 +305,18 @@ $(document).ready(function() {
  * @param callback callback function
  * @param isLoading show loading screen
  */
-function fillGeoposition(callback, isLoading) {
+function fillGeoposition(callback, error, isLoading) {
 	if (navigator.geolocation) {
 		if(isLoading){
-			$('body').addClass("loading");
+			$('body').addClass('loading');
 		}
-		navigator.geolocation.getCurrentPosition(callback, function(err) {
-			treatGeolocationError(err);
-		}, {
+		navigator.geolocation.getCurrentPosition(callback, error, {
 			timeout : 10000,
 			maximumAge : 60000,
 			enableHighAccuracy : true
 		});
 	} else {
-		alert("Geolocation is not supported by this browser.");
+		alert('Geolocation is not supported by this browser.');
 	}
 }
 
@@ -281,7 +333,7 @@ function autocompleteList() {
 		if (jqXHR.getResponseHeader('Stripes-Success') === 'OK') {
             if (data.indexOf('<html') == -1) {
             	$('#articleContainer').html(data);
-                $("#articleContainer").css("display", "block");
+                $('#articleContainer').css('display', 'block');
                 $('#licensePlate').removeClass('autocomplete');
                 $('div.delete').toggle();
             } else {
@@ -305,13 +357,13 @@ function autocompleteZones() {
 		if (jqXHR.getResponseHeader('Stripes-Success') === 'OK') {
             	data = eval(data);
             	if (data == null || data.length != 1) {
-            		$("#zone").html('');
-                    $("#zone").append('<option value="">' + ZONE_ALL + '</option>');
+            		$('#zone').html('');
+                    $('#zone').append('<option value="">' + ZONE_ALL + '</option>');
                 }
                 if (data != null) {
                     $(data).each(function(e) {
                         if (this.zone != null)
-                            $("#zone").append('<option value="' + this.zone + '">' + this.zone + '</option>');
+                            $('#zone').append('<option value="' + this.zone + '">' + this.zone + '</option>');
                     });
                 }
         } else {
@@ -329,16 +381,18 @@ function autocompleteZones() {
  * @param err the error message
  */
 function treatGeolocationError(err) {
+	var value;
 	if (err.code == 1) {
-		alert('The user denied the request for location information.');
-	} else if (err.code == 2) {
-		alert('Your location information is unavailable.');
-	} else if (err.code == 3) {
-		alert('The request to get your location timed out.');
+		value=2;
 	} else {
-		alert('An unknown error occurred while requesting your location.');
+		value=1;
 	}
-	$('body').removeClass("loading");
+	$('body').removeClass('loading');
+	$('h3#title'+value).hide();
+	$('body').addClass('confirmation');
+	$('body').on('touchmove', 'body', function(e){
+		e.preventDefault();
+	});
 }
 
 /**
@@ -349,15 +403,17 @@ function treatGeolocationError(err) {
 function toggleFx(element) {
 	//$('div.bottomShadow').toggle();
 	if($(element).css('display') == 'none') {
+		$('#menu ul').css('margin-top','-10px').css('margin-bottom', '10px');
 		$(element).gfxFadeIn({
 			duration : 500,
 			easing : 'ease-in',
 		});
-		
 	} else {
 		$(element).gfxFadeOut({
 			duration : 400,
 			easing : 'ease-out',
+		}, function(){
+			$('#menu ul').css('margin-top','').css('margin-bottom', '');
 		});
 	}
 }
@@ -370,12 +426,24 @@ function preventCacheOnIos() {
 		window.onpageshow = function(evt) {
 			// If persisted then it is in the page cache, force a reload of the page.
 			if (evt.persisted) {
-				document.body.style.display = "none";
+				document.body.style.display = 'none';
 				location.reload();
 			}	
 		};
 	} else {
 		$(window).bind('unload', function(){});
 	}
+}
+
+function toogleSort(sort2, sort1, sort0) {
+	var setted = false;
+	$(sort2 + ' option').each(function(){
+		if($(this).val() != $(sort1).val() && $(this).val() != $(sort0).val()) {
+			if(!setted) {
+				setted = true;
+				$(sort2).val($(this).val());
+			}
+		}
+	});
 }
 

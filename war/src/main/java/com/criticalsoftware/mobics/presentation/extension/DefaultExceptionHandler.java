@@ -30,8 +30,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.criticalsoftware.mobics.presentation.action.ErrorActionBean;
-import com.criticalsoftware.mobics.proxy.car.EventInClosedStateExceptionException;
-import com.criticalsoftware.mobics.proxy.car.EventValidationExceptionException;
 
 /**
  * Handles the exceptions thrown by the application.

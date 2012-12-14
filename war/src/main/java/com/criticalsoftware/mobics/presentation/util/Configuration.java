@@ -76,6 +76,12 @@ public class Configuration implements Serializable{
     private final String helpdeskPhone = "219999000";
     
     private final String helpdeskEmail = "helpdesk@mobiag.pt";
+    
+    private final String defaultThemeWarmWord = "warm";
+    
+    private final String defaultThemeStyle = "map";
+
+    private final String defaultThemeColor = "darkgreen";
 
     /**
      * @return the meterPattern
@@ -219,6 +225,30 @@ public class Configuration implements Serializable{
      */
     public String getHelpdeskEmail() {
         return getValue("mobics.config.helpdesk.email", helpdeskEmail);
+    }
+
+    /**
+     * 
+     * @return the defaultThemeStyle
+     */
+    public String getDefaultThemeStyle() {
+        return getValue("mobics.config.default.theme.style", defaultThemeStyle);
+    }
+
+    /**
+     * 
+     * @return the defaultThemeColor
+     */
+    public String getDefaultThemeColor() {
+        return getValue("mobics.config.default.theme.color", defaultThemeColor);
+    }
+
+    /**
+     * 
+     * @return the defaultThemeStyle
+     */
+    public String getDefaultThemeWarmWord() {
+        return getValue("mobics.config.default.theme.warm.word", defaultThemeWarmWord);
     }
 
     private Configuration() {

@@ -12,7 +12,9 @@
  */
 package com.criticalsoftware.mobics.presentation.util;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -68,7 +70,16 @@ public class GeolocationUtil {
             int statusCode = new HttpClient().executeMethod(method);
 
             if (statusCode == HttpStatus.SC_OK) {
-                byte[] responseBody = method.getResponseBody();
+                InputStream is = method.getResponseBodyAsStream();
+                ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+                int nRead;
+                byte[] data = new byte[16384];
+                while ((nRead = is.read(data, 0, data.length)) != -1) {
+                  buffer.write(data, 0, nRead);
+                }
+
+                buffer.flush();
+                byte[] responseBody = buffer.toByteArray();
                 JSONObject jsonObject = (JSONObject) new JSONParser().parse(new String(responseBody));
                 if (LOGGER.isTraceEnabled()) {
                     LOGGER.trace(jsonObject.toJSONString());
