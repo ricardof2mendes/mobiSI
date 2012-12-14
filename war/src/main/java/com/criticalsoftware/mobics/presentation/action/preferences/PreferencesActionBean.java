@@ -43,8 +43,6 @@ public class PreferencesActionBean extends BaseActionBean {
     
     private static final String EMAIL = "EMAIL";
     
-    private static final String APP = "APP";
-
     private static final String SMS = "SMS";
 
     /**
@@ -154,6 +152,7 @@ public class PreferencesActionBean extends BaseActionBean {
      * @throws RemoteException 
      */
     public CountryDTO[] getLanguages() throws RemoteException {
+        //TODO check this getCountries not the same getLanguages!
         return new MiscellaneousWSServiceStub(Configuration.INSTANCE.getMiscellaneousEnpoint()).getAllCountries();
     }
 
