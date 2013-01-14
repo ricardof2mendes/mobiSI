@@ -492,7 +492,7 @@ Map.prototype = {
 			}
 			if(data) {
 				$(data).each(function(){
-					html += '<li><a href="#">'+data.displayName+'</a></li>';
+					html += '<li><a href="#">'+this.displayName+'</a></li>';
 				});
 			}
 			$('#results').html(html);
