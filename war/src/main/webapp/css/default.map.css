@@ -1,0 +1,350 @@
+html, body{
+	height: 100%;
+}
+
+#container{
+	position:absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 45px;
+}
+
+#container.street {
+	top: 95px !important;
+}
+
+#container.street,
+#container.white {
+	bottom: 76px !important;
+}
+
+#container > #map {
+	position:absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+#whiteBar {
+	background-image: url(../img/menu/sombra_menus_10px.png);
+	background-repeat: repeat-x;
+	background-position: top left;
+	position:absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: white;
+    height: 75px;
+    
+}
+
+#whiteBar nav{
+	padding-top: 5px;
+}
+
+#whiteBar.addressBar span{
+	background-image: url(../img/map/mylocation.png);
+	background-repeat: no-repeat;
+	background-position: center left;
+	padding-left: 25px;
+	font-size: x-large;
+	margin-left: 10px;
+}
+
+#whiteBar.addressBar div {
+	
+}
+
+#whiteBar.addressBar div > div{
+	width: 50%;
+	float: left;
+	padding: 5px 10px;
+}
+
+#whiteBar.addressBar input[type="submit"],
+#whiteBar.addressBar a{
+	height: 30px;
+	line-height: 30px;
+	margin: 0 !important;
+}
+
+.mapMenu {
+	top: 346px;
+}
+
+.mapLegend {
+	top: 295px;
+}
+
+.maplocation {
+	top: 90px !important;
+}
+
+div.olControlAttribution {
+	position: absolute;
+	font-size: 10px;
+	bottom: 0;
+	right: 0;
+	background: rgba(0, 0, 0, 0.1);
+	font-family: Arial;
+	padding: 2px 4px;
+	border-radius: 5px 0 0 0;
+}
+
+div.olControlZoom,
+div.olControlLegend,
+div.olControlList,
+div.olControlMyLocation {
+	background: none repeat scroll 0 0 rgba(0, 0, 0, 0.4);
+    border-radius: 4px;
+	box-shadow: 0px 7px 5px rgba(0, 0, 0, 0.4);
+    position: absolute;
+}
+
+div.olControlZoom {
+	left: 10px;
+    bottom: 65px;
+}
+
+div.olControlLegend {
+    bottom: 20px;
+    right: 10px;
+}
+
+div.olControlList {
+    top: 10px;
+    right: 10px;
+}
+
+div.olControlMyLocation {
+    bottom: 20px;
+    left: 10px;
+}
+
+div.olControlZoom a,
+div.olControlLegend a,
+div.olControlList a,
+div.olControlMyLocation a {
+    background-color: #FFF;
+    color: #444;
+    display: block;
+    font-family: sans-serif;
+    font-size: x-large;
+    font-weight: normal;
+    height: 32px;
+    line-height: 32px;
+    padding: 0;
+    text-align: center;
+    text-decoration: none;
+    /*text-shadow: 0 0 3px rgba(0, 0, 0, 0.8);*/
+    width: 32px;
+    margin: 1px;
+}
+
+div.olControlLegend a {
+	background-size: 30px 30px;
+	background: #FFF url(../img/map/map-icon-info.png) no-repeat 50% 50%;
+}
+
+div.olControlMyLocation a {
+	background-size: 30px 30px;
+	background: #FFF url(../img/map/map-icon-location.png) no-repeat 50% 50%;
+}
+
+div.olControlList a {
+	font-size: large;
+	font-weight: normal;
+	width: 50px;
+}
+
+a.olControlZoomIn {
+    border-radius: 4px 4px 0 0;
+}
+
+a.olControlZoomOut {
+    border-radius: 0 0 4px 4px;
+}
+
+a.olControlLegend,
+a.olControlList,
+a.olControlMyLocation {
+    border-radius: 4px;
+}
+
+div.olControlZoom a:hover,
+div.olControlLegend a:hover,
+div.olControlList a:hover,
+div.olControlMyLocation a:hover {
+    background-color: #DCDCDC !important;
+}
+
+/******************************* Search Form */
+
+#streetsearch > section {
+	padding-bottom: 40px;
+	background-image: url("../img/menu/sombra_menus_10px.png");
+    background-position: left bottom;
+    background-repeat: repeat-x;
+}
+
+#streetSearchForm > div > div:first-child {
+	background: #FFF;
+	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
+	-moz-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
+	-webkit-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
+	border-radius: 12px;
+	-moz-border-radius: 12px;
+	-webkit-border-radius: 12px;
+	overflow: hidden; 
+	position: relative;
+	margin: 0 10px;
+	padding: 0 10px 0 10px;
+	width: 83%;
+	float: left;
+}
+
+#streetSearchForm > div > div:nth-child(2) {
+	width: 15%;
+	float: right;
+}
+
+#streetSearchForm > div > div > input{
+	line-height: 24px;
+	height: 24px;
+	border: 0;
+	font-size: normal;
+	color: #999;
+	width: 100%;
+}
+
+#streetSearchForm > div > div:nth-child(2) > ul {
+	float: right;
+	padding-right: 10px;
+}
+
+#streetSearchForm > div > div:nth-child(2) > ul li {
+	float: left;
+	text-align: center;		
+}
+
+#streetSearchForm > div > div:nth-child(2) > ul li a {
+	display:block;
+	color: #333;
+	font-weight: bold;
+	border: 1px solid rgba(0, 0, 0, 0.6);
+	background: url('../img/bt_up_30px-height.png');
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	padding: 0 10px;	
+	margin-top: -3px;
+    padding: 5px 10px;
+}
+
+#streetSearchForm > div > div:nth-child(2) > ul li a.selected{
+	background: url('../img/bt_down_30px-height.png');
+}
+
+
+#streetSearchForm > div > input.autocomplete{
+	background: #fff url('../img/ajax-loader-input.gif') no-repeat 100% 50%;
+}
+
+#streetSearchForm > div > div > div {
+	background: #fff;
+	padding: 12px;
+	position: absolute;
+	right: 10px;
+	top: 0;
+}
+
+#streetSearchForm > div > div > div.delete {
+	background: #fff url('../img/clear.png') no-repeat right 50%;
+	cursor: pointer;
+}
+
+
+
+/******************************* Map Legend*/
+#legend {
+	padding-top: 10px;
+}
+#legend nav.simpleList ul li {
+	background: none;
+	padding-left: 10px;
+	width: 100%;
+}
+
+#legend nav.simpleList ul li span {
+	padding-left: 30px;
+	display: block;
+	height: 45px;
+	width: 100%;
+	text-align: left;
+}
+
+#legend nav.simpleList ul li:nth-child(1) span {
+	background: #fff url(../img/map/mylocation.png) no-repeat 0 50%;
+}
+
+#legend nav.simpleList ul li:nth-child(2) span {
+	background: #fff url(../img/map/car-location.png) no-repeat 0 50%;
+}
+
+#legend nav.simpleList ul li:nth-child(3) span {
+	background: #fff url(../img/map/regular-zone.png) no-repeat 0 50%;
+}
+
+#legend nav.simpleList ul li:nth-child(4) span {
+	background: #fff url(../img/map/undesirable-zone.png) no-repeat 0 50%;
+}
+
+#legend nav.simpleList ul li:nth-child(5) span {
+	background: #fff url(../img/map/forbidden-zone.png) no-repeat 0 50%;
+}
+
+/* Enable 3d acceleration when operating on tiles, this is
+   known to yield better performance on IOS Safari.
+   http://osgeo-org.1803224.n2.nabble.com/Harware-accelerated-CSS3-animations-for-iOS-td6255560.html
+
+   It also prevents tile blinking effects in iOS 5.
+   See https://github.com/openlayers/openlayers/issues/511
+*/
+@media (-webkit-transform-3d) {
+	img.olTileImage {
+	    -webkit-transform: translate3d(0, 0, 0);
+	}
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 1.5),
+	screen and (min-device-pixel-ratio: 1.5),
+	screen and (min-resolution: 1.5dppx) {
+
+	div.olControlLegend a {
+		background-image: url(../img/map/map-icon-info@2x.png);
+	}
+	
+	div.olControlMyLocation a {
+		background-image: url(../img/map/map-icon-location@2x.png);
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

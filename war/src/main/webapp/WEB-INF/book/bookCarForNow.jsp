@@ -10,14 +10,14 @@
 		<section>
 			<nav class="simpleList">
 				<ul>
-					<li>
+					<li class="nearestcarsearch">
 						<stripes:link
 							beanclass="com.criticalsoftware.mobics.presentation.action.booking.ImmediateBookingActionBean" 
 							id="nearestCar"  name="nearestCarBook" event="nearestCarBook" addSourcePage="true">
 							<fmt:message key="nearest.car.title" />
 						</stripes:link>
 					</li>
-					<li>
+					<li class="licenseplatesearch">
 						<stripes:link
 							beanclass="com.criticalsoftware.mobics.presentation.action.booking.ImmediateBookingActionBean"
 									event="licensePlateSearch">
@@ -36,7 +36,7 @@
 					<stripes:hidden id="longitude" name="longitude"/>
 					<stripes:hidden name="orderBy" value="${actionBean.context.user.customerPreferencesDTO.fleetOrder[0].columnName}"/>
 					<ul>
-						<li>
+						<li class="listsearch">
 							<stripes:link id="searchCarsForBook" name="searchCarsForBook" href="#">
 								<fmt:message key="book.now.search.list"/>
 							</stripes:link>

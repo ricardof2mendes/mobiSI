@@ -34,6 +34,8 @@ public class Configuration implements Serializable{
     private static final Logger LOGGER = LoggerFactory.getLogger(Configuration.class);
 
     // Main configurations
+    
+    private final String uriEnconding = "UTF-8";
 
     private final String meterPattern = "#";
 
@@ -82,6 +84,16 @@ public class Configuration implements Serializable{
     private final String defaultThemeStyle = "map";
 
     private final String defaultThemeColor = "darkgreen";
+    
+    private final String geolocationServerAllowedCountries = "pt";
+    
+
+    /**
+     * @return the uriEnconding
+     */
+    public String getUriEnconding() {
+        return getValue("org.apache.catalina.connector.URI_ENCODING", uriEnconding);
+    }
 
     /**
      * @return the meterPattern
@@ -249,6 +261,14 @@ public class Configuration implements Serializable{
      */
     public String getDefaultThemeWarmWord() {
         return getValue("mobics.config.default.theme.warm.word", defaultThemeWarmWord);
+    }
+    
+
+    /**
+     * @return the geolocationServerAllowedCountries
+     */
+    public String getGeolocationServerAllowedCountries() {
+        return getValue("mobics.config.geolocation.server.allowed.countries", geolocationServerAllowedCountries);
     }
 
     private Configuration() {

@@ -84,12 +84,14 @@ nav#menu ul li {
 }
 
 nav#menu ul li.booking {
+	background-size: 40px 30px, 1px 20px;
 	background-image: url(../img/menu/bookacar-inactive.png), url(../img/menu/sombra_menu_20px.png);
 	background-repeat: no-repeat, repeat-x;
 	background-position: 10px 50%, top left;
 }
 
 nav#menu ul li.bookingActive {
+	background-size: 40px 30px, 1px 20px, 1px 45px;
 	background-image: url(../img/menu/bookacar-active.png), url(../img/menu/sombra_menu_20px.png), url(../img/bt_down_45px.png);
 	background-repeat: no-repeat, repeat-x, repeat-x;
 	background-position: 10px 50%, top left, top left;
@@ -97,12 +99,14 @@ nav#menu ul li.bookingActive {
 }
 
 nav#menu ul li.trip {
+	background-size: 40px 30px;
 	background-image: url(../img/menu/trip-inactive.png);
 	background-repeat: no-repeat;
 	background-position: 10px 50%;
 }
 
 nav#menu ul li.tripActive {
+	background-size: 40px 30px, 1px 45px;
 	background-image: url(../img/menu/trip-active.png), url(../img/bt_down_45px.png);
 	background-repeat: no-repeat, repeat-x;
 	background-position: 10px 50%, top left;
@@ -110,12 +114,14 @@ nav#menu ul li.tripActive {
 }
 
 nav#menu ul li.recent {
+	background-size: 40px 30px;
 	background-image: url(../img/menu/recent-inactive.png);
 	background-repeat: no-repeat;
 	background-position: 10px 50%;
 }
 
 nav#menu ul li.recentActive {
+	background-size: 40px 30px, 1px 45px;
 	background-image: url(../img/menu/recent-active.png), url(../img/bt_down_45px.png);
 	background-repeat: no-repeat, repeat-x;
 	background-position: 10px 50%, top left;
@@ -123,12 +129,14 @@ nav#menu ul li.recentActive {
 }
 
 nav#menu ul li.messages {
+	background-size: 40px 30px;
 	background-image: url(../img/menu/messages-inactive.png);
 	background-repeat: no-repeat;
 	background-position: 10px 50%;
 }
 
 nav#menu ul li.messagesActive {
+	background-size: 40px 30px, 1px 45px;
 	background-image: url(../img/menu/messages-active.png), url(../img/bt_down_45px.png);
 	background-repeat: no-repeat, repeat-x;
 	background-position: 10px 50%, top left;
@@ -136,12 +144,14 @@ nav#menu ul li.messagesActive {
 }
 
 nav#menu ul li.contacts {
+	background-size: 40px 30px;
 	background-image: url(../img/menu/contacts-inactive.png);
 	background-repeat: no-repeat;
 	background-position: 10px 50%;
 }
 
 nav#menu ul li.contactsActive {
+	background-size: 40px 30px, 1px 45px;
 	background-image: url(../img/menu/contacts-active.png), url(../img/bt_down_45px.png);
 	background-repeat: no-repeat, repeat-x;
 	background-position: 10px 50%, top left;
@@ -149,12 +159,14 @@ nav#menu ul li.contactsActive {
 }
 
 nav#menu ul li.preferences {
+	background-size: 40px 30px;
 	background-image: url(../img/menu/preferences-inactive.png);
 	background-repeat: no-repeat;
 	background-position: 10px 50%;
 }
 
 nav#menu ul li.preferencesActive {
+	background-size: 40px 30px, 1px 45px;
 	background-image: url(../img/menu/preferences-active.png), url(../img/bt_down_45px.png);
 	background-repeat: no-repeat, repeat-x;
 	background-position: 10px 50%, top left;
@@ -162,6 +174,7 @@ nav#menu ul li.preferencesActive {
 }
 
 nav#menu ul li.account {
+	background-size: 40px 30px;
 	background-image: url(../img/menu/account-inactive.png), url(../img/menu/sombra_menu_20px_flipped.png);
 	background-repeat: no-repeat, repeat-x;
 	background-position: 10px 50%, bottom left;
@@ -169,6 +182,7 @@ nav#menu ul li.account {
 }
 
 nav#menu ul li.accountActive {
+	background-size: 40px 30px, 1px 45px;
 	background-image: url(../img/menu/account-active.png), url(../img/menu/sombra_menu_20px_flipped.png), url(../img/bt_down_45px.png);
 	background-repeat: no-repeat, repeat-x, repeat-x;
 	background-position: 10px 50%, bottom left, top left;
@@ -187,7 +201,7 @@ form.loginForm {
 	margin: 0 auto;
 }
 
-form.loginForm>div {
+form.loginForm > div {
 	float: left;
 	background: #FFF;
 	border: 1px solid #E5E5E5;
@@ -198,7 +212,7 @@ form.loginForm>div {
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
 }
-form.loginForm>div>input  {
+form.loginForm > div > input  {
 	float: left;
 	width: 100%;
 	padding-left: 10px;
@@ -304,6 +318,7 @@ form.loginForm>div>label {
 }
 
 span#nearestCar {
+	background-size: 18px 38px;
 	background-image: url(../img/links/nearest-car.png);
 	background-repeat: no-repeat;
 	background-position: 0 50%;
@@ -385,15 +400,37 @@ section > nav.simpleList ul li {
 }
 
 section > nav.simpleList ul li.bookForNow {
+	background-size: 24px 24px, 19px 13px;
 	background-image: url(../img/links/book-for-now.png), url(../img/seta.png);
 }
 
 section > nav.simpleList ul li.findForLater {
+	background-size: 24px 24px, 19px 13px;
 	background-image: url(../img/links/find-a-car-for-later.png), url(../img/seta.png);
 }
 
 section > nav.simpleList ul li.bookAdvance {
+	background-size: 24px 24px, 19px 13px;
 	background-image: url(../img/links/book-in-advance.png), url(../img/seta.png);
+}
+
+section > nav.simpleList ul li.nearestcarsearch {
+	background-size: 24px 24px, 19px 13px;
+	background-image: url(../img/links/nearest-car-internal.png), url(../img/seta.png);
+}
+
+section > nav.simpleList ul li.licenseplatesearch {
+	background-size: 24px 24px, 19px 13px;
+	background-image: url(../img/links/license-plate.png), url(../img/seta.png);
+}
+
+section > nav.simpleList ul li.listsearch {
+	background-size: 24px 24px, 19px 13px;
+	background-image: url(../img/links/search.png), url(../img/seta.png);
+}
+
+section > nav.simpleList ul li.account {
+	background: url(../img/seta.png) no-repeat 100% 50%;
 }
 
 section > nav.simpleList ul li:first-child {
@@ -406,7 +443,6 @@ section > nav.simpleList ul li:last-child {
 	-moz-border-radius: 0 0 4px;
 	-webkit-border-radius: 0 0 4px;
 }
-
 
 section > nav.simpleList ul li.title {
 	line-height: 26px;
@@ -483,6 +519,10 @@ section > nav.simpleList ul li a {
 	color: #333;
 	padding-left: 40px;
 	display: block;
+}
+
+section > nav.simpleList ul li.account a {
+	padding-left: 10px;
 }
 
 /****************************** Panel detail **/
@@ -589,33 +629,36 @@ section > nav.panel ul li:last-child{
 }
 
 nav.panel ul li.imageCarClub > div  {
-	padding-left: 10px;
-	display: inline;
+	display: table-cell;
 }
 
-nav.panel ul li.imageCarClub > div > div {
+nav.panel ul li.imageCarClub > div > div:nth-child(1) {
+    float: left;
+   	margin: 0 10px;
+}
+
+nav.panel ul li.imageCarClub > div > div:nth-child(1) > div{
 	border-radius: 4px ;
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
 	border: 1px solid rgba(0, 0, 0, 0.6);
-	margin: 0 10px;
 	width: 60px;
 	height: 60px;
 	display:table-cell;
     vertical-align: middle;
 }
 
-nav.panel ul li.imageCarClub > div > div > img {
+nav.panel ul li.imageCarClub > div > div:nth-child(1) > div > img {
 	display: block;
 	margin: auto;
 }
 
-
-nav.panel ul li.imageCarClub > div > span {
+nav.panel ul li.imageCarClub > div > div:nth-child(2) {
+	float: left;
 	font-weight: bold;
 	font-size: x-large;
 	color: #333;
-	vertical-align: text-bottom;
+	padding-top: 15px;
 }
 
 nav.panel ul li.imageNoLink > div:nth-child(1),
@@ -694,8 +737,9 @@ nav.threeColumnList  ul li a > div.msg-read-false {
 	height: 60px;
 }
 
-nav.threeColumnList  ul li a > div.msg-read-true {
-	background: transparent url(../img/new-message-icon.png) no-repeat 50% 50% !important;	
+nav.threeColumnList  ul li a > div.msg-read-false {
+	background-size: 13px 13px;
+	background: transparent url(../img/link/new-message-icon.png) no-repeat 50% 50% !important;	
 }
 
 nav.threeColumnList  ul li a > div.msg-read-false {
@@ -996,16 +1040,14 @@ article.pin div:nth-child(3) > input[type="submit"]:active {
 
 
 /** ************************************************/
-
-#licsearch > section{
-	padding-bottom: 10px;
-	border-bottom: 1px solid #E5E5E5;
-	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
-	-moz-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
-	-webkit-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
+#licsearch > section {
+	padding-bottom: 15px;
+	background-image: url("../img/menu/sombra_menus_10px.png");
+    background-position: left bottom;
+    background-repeat: repeat-x;
 }
 
-#licensePlateBookForm > div{
+#licensePlateBookForm > div {
 	background: #FFF;
 	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
 	-moz-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
@@ -1044,8 +1086,6 @@ article.pin div:nth-child(3) > input[type="submit"]:active {
 	background: #fff url('../img/clear.png') no-repeat right 50%;
 	cursor: pointer;
 }
-
-
 /*-----------------------------------------------------*/
 
 .warningMessage {
@@ -1070,7 +1110,7 @@ article.pin div:nth-child(3) > input[type="submit"]:active {
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
 	min-height: 45px;
-	padding-left: 45px;
+	padding: 0 10px 0 45px;
 	margin: 0 10px 10px;
 }
 
@@ -1196,60 +1236,70 @@ article.pin div:nth-child(3) > input[type="submit"]:active {
 
 .warmdarkred,
 .warmdarkred .loginBtn {
+	background-size: 320px 410px;
 	background: #660000 url(../img/theme/660000/webapp-splash-gradient-normal-660000.png) no-repeat 50% 0;
 	background-size: 100%;
 }
 
 .warmred,
 .warmred .loginBtn {
+	background-size: 320px 410px;
       background: #CC1A1A url(../img/theme/CC1A1A/webapp-splash-gradient-normal-CC1A1A.png) no-repeat 50% 0;
 	  background-size: 100%;
 }
 
 .warmorange,
 .warmorange .loginBtn {
+	background-size: 320px 410px;
 	background: #F09000 url(../img/theme/F09000/webapp-splash-gradient-normal-F09000.png) no-repeat 50% 0;
 	background-size: 100%;
 }
 
 .warmlightgreen,
 .warmlightgreen .loginBtn {
+	background-size: 320px 410px;
 	background: #78CC0A url(../img/theme/78CC0A/webapp-splash-gradient-normal-78CC0A.png) no-repeat 50% 0;
     background-size: 100%;
 }
 
 .warmdarkgreen,
 .warmdarkgreen .loginBtn {
+	background-size: 320px 410px;
 	background: #095909 url(../img/theme/095909/webapp-splash-gradient-normal-095909.png) no-repeat 50% 0;
 	background-size: 100%;
 }
 
 .warmlightblue,
 .warmlightblue .loginBtn {
+	background-size: 320px 410px;
 	background: #008BE8 url(../img/theme/008BE8/webapp-splash-gradient-normal-008BE8.png) no-repeat 50% 0;
 	background-size: 100%;
 }
 
 .warmdarkblue,
 .warmdarkblue .loginBtn {
+	background-size: 320px 410px;
 	background: #161694 url(../img/theme/161694/webapp-splash-gradient-normal-161694.png) no-repeat 50% 0;
 	background-size: 100%;
 }
 
 .warmpurple,
 .warmpurple .loginBtn {
+	background-size: 320px 410px;
 	background: #4A0D86 url(../img/theme/4A0D86/webapp-splash-gradient-normal-4A0D86.png) no-repeat 50% 0;
 	background-size: 100%;
 }
 
 .warmpink,
 .warmpink .loginBtn {
+	background-size: 320px 410px;
 	background: #CC00CC url(../img/theme/CC00CC/webapp-splash-gradient-normal-CC00CC.png) no-repeat 50% 0;
 	background-size: 100%;
 }
 
 .warmdarkgray,
 .warmdarkgray .loginBtn {
+	background-size: 320px 410px;
 	background: #1A1A1A url(../img/theme/1A1A1A/webapp-splash-gradient-normal-1A1A1A.png) no-repeat 50% 0;
 	background-size: 100%;
 }
@@ -1321,13 +1371,12 @@ body.confirmation .confirm {
 
 /********************************************************************* Media Queries */
 
-screen and (-webkit-min-device-pixel-ratio: 1.5),
-screen and (min-device-pixel-ratio: 1.5),
-screen and (min-resolution: 1.5dppx) {
+@media screen and (-webkit-min-device-pixel-ratio: 1.5),
+	   screen and (min-device-pixel-ratio: 1.5),
+	   screen and (min-resolution: 1.5dppx) {
 	
 	span#nearestCar {
-		background-image: url(../img/links/nearest-car.png);
-		padding-left: 48px;
+		background-image: url(../img/links/nearest-car@2x.png);
 	}
 	
 	section > nav.simpleList ul li.bookForNow {
@@ -1342,8 +1391,20 @@ screen and (min-resolution: 1.5dppx) {
 		background-image: url(../img/links/book-in-advance@2x.png), url(../img/seta.png);
 	}
 	
-	nav.threeColumnList  ul li a > div.msg-read-true {
-		background-image: transparent url(../img/new-message-icon@2x.png);	
+	section > nav.simpleList ul li.nearestcarsearch {
+		background-image: url(../img/links/nearest-car-internal@2x.png), url(../img/seta.png);
+	}
+	
+	section > nav.simpleList ul li.licenseplatesearch {
+		background-image: url(../img/links/license-plate@2x.png), url(../img/seta.png);
+	}
+	
+	section > nav.simpleList ul li.listsearch {
+		background-image: url(../img/links/search@2x.png), url(../img/seta.png);
+	}
+	
+	nav.threeColumnList  ul li a > div.msg-read-false {
+		background-image: transparent url(../img/link/new-message-icon@2x.png);	
 	}
 	
 	nav#menu ul li.booking {

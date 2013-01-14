@@ -40,6 +40,7 @@ import com.criticalsoftware.mobics.proxy.booking.BookingValidationExceptionExcep
 import com.criticalsoftware.mobics.proxy.booking.BookingWSServiceStub;
 import com.criticalsoftware.mobics.proxy.booking.CarClassNotFoundExceptionException;
 import com.criticalsoftware.mobics.proxy.booking.CustomerNotFoundExceptionException;
+import com.criticalsoftware.mobics.proxy.booking.ExpiredBookingInterestExceptionException;
 import com.criticalsoftware.mobics.proxy.booking.IllegalDateExceptionException;
 import com.criticalsoftware.mobics.proxy.booking.OverlappedCarBookingExceptionException;
 import com.criticalsoftware.mobics.proxy.miscellaneous.MiscellaneousWSServiceStub;
@@ -48,7 +49,7 @@ import com.criticalsoftware.mobics.proxy.miscellaneous.MiscellaneousWSServiceStu
  * @author ltiago
  * @version $Revision: $
  */
-public class EditInterestBookingActionBean extends BaseActionBean {
+public class EditBookingInterestActionBean extends BaseActionBean {
 
     @Validate(required = true, on = { "main", "editBookingInterest" })
     private String activityCode;
@@ -135,7 +136,7 @@ public class EditInterestBookingActionBean extends BaseActionBean {
      * @throws IllegalDateExceptionException
      */
     public Resolution editBookingInterest() throws RemoteException, UnsupportedEncodingException,
-            OverlappedCarBookingExceptionException, CarClassNotFoundExceptionException,
+            OverlappedCarBookingExceptionException, CarClassNotFoundExceptionException, ExpiredBookingInterestExceptionException,
             CustomerNotFoundExceptionException, BookingValidationExceptionException, IllegalDateExceptionException {
         BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
                 Configuration.INSTANCE.getBookingEndpoint());
@@ -158,7 +159,7 @@ public class EditInterestBookingActionBean extends BaseActionBean {
         return new ForwardResolution("/WEB-INF/book/streetLocation.jsp").addParameter("search", "street");
     }
 
-    public Resolution searchAdress() {
+    public Resolution searchAdress() throws UnsupportedEncodingException {
         getContext().getResponse().setHeader("Stripes-Success", "OK");
         return new JavaScriptResolution(GeolocationUtil.getAddressFromText(query));
     }

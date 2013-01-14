@@ -16,7 +16,7 @@ import net.sourceforge.stripes.action.Resolution;
 
 import com.criticalsoftware.mobics.miscellaneous.CarClassDTO;
 import com.criticalsoftware.mobics.presentation.action.booking.AdvanceBookingActionBean;
-import com.criticalsoftware.mobics.presentation.action.booking.FindCarForLaterActionBean;
+import com.criticalsoftware.mobics.presentation.action.booking.BookingInterestActionBean;
 import com.criticalsoftware.mobics.presentation.security.MobiCSSecure;
 import com.criticalsoftware.mobics.presentation.util.Configuration;
 import com.criticalsoftware.mobics.proxy.miscellaneous.MiscellaneousWSServiceStub;
@@ -47,7 +47,7 @@ public class HomeActionBean extends BaseActionBean {
 
     @DontValidate
     public Resolution findCarForLater() {
-        return new ForwardResolution(FindCarForLaterActionBean.class);
+        return new ForwardResolution(BookingInterestActionBean.class);
     }
 
     @DontValidate

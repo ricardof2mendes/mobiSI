@@ -59,6 +59,14 @@ public class RecentActivitiesActionBean extends BaseActionBean {
             "cancelAdvanceBooking"})
     private String activityCode;
 
+    /**
+     * Main handler
+     * 
+     * @return a page resolution
+     * @throws RemoteException
+     * @throws UnsupportedEncodingException
+     * @throws CustomerNotFoundExceptionException
+     */
     @DefaultHandler
     @DontValidate
     public Resolution main() throws RemoteException, UnsupportedEncodingException, CustomerNotFoundExceptionException {
@@ -80,7 +88,7 @@ public class RecentActivitiesActionBean extends BaseActionBean {
     /**
      * Trip details
      * 
-     * @return
+     * @return a page resolution
      * @throws RemoteException
      * @throws UnsupportedEncodingException
      * @throws BookingNotFoundExceptionException
@@ -100,7 +108,7 @@ public class RecentActivitiesActionBean extends BaseActionBean {
     /**
      * Booking interest details
      * 
-     * @return
+     * @return a page resolution
      * @throws RemoteException
      * @throws UnsupportedEncodingException
      * @throws BookingNotFoundExceptionException
@@ -120,6 +128,16 @@ public class RecentActivitiesActionBean extends BaseActionBean {
         return new ForwardResolution("/WEB-INF/recent/advanceBookingDetails.jsp");
     }
 
+    /**
+     * Cancel advance booking
+     * 
+     * @return a page resolution
+     * @throws RemoteException
+     * @throws UnsupportedEncodingException
+     * @throws BookingNotFoundExceptionException
+     * @throws CustomerNotFoundExceptionException
+     * @throws UnauthorizedCustomerExceptionException
+     */
     public Resolution cancelAdvanceBooking() throws RemoteException, UnsupportedEncodingException,
             BookingNotFoundExceptionException, CustomerNotFoundExceptionException,
             UnauthorizedCustomerExceptionException {
@@ -158,7 +176,7 @@ public class RecentActivitiesActionBean extends BaseActionBean {
     }
 
     /**
-     * Get start location
+     * Get trip start location
      * 
      * @return the adress string
      */
@@ -173,7 +191,7 @@ public class RecentActivitiesActionBean extends BaseActionBean {
     }
 
     /**
-     * Get end location
+     * Get trip end location
      * 
      * @return the adress string
      */
@@ -187,6 +205,10 @@ public class RecentActivitiesActionBean extends BaseActionBean {
         return location;
     }
     
+    /**
+     * Get the booking car location
+     * @return
+     */
     public String getBookingLocation() {
         String location = new LocalizableMessage("application.value.not.available")
                 .getMessage(getContext().getLocale());

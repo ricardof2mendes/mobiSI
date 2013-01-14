@@ -7,7 +7,7 @@
 
 	<jsp:include page="/WEB-INF/common/message_error.jsp"/>
 
-	<stripes:form id="interestBook" beanclass="com.criticalsoftware.mobics.presentation.action.booking.EditInterestBookingActionBean" method="post">
+	<stripes:form id="interestBook" beanclass="com.criticalsoftware.mobics.presentation.action.booking.EditBookingInterestActionBean" method="post">
 		<stripes:hidden id="latitude" name="latitude"/>
 		<stripes:hidden id="longitude" name="longitude"/>
 		<stripes:hidden name="activityCode"/>
@@ -31,9 +31,9 @@
 				<nav class="panel">
 					<ul>
 						<li class="link white">
-							<stripes:link id="locationLink" beanclass="com.criticalsoftware.mobics.presentation.action.booking.FindCarForLaterActionBean" event="searchLocation" addSourcePage="true">
+							<stripes:link id="locationLink" beanclass="com.criticalsoftware.mobics.presentation.action.booking.BookingInterestActionBean" event="searchLocation" addSourcePage="true">
 								<span><fmt:message key="find.car.later.location"/></span>
-								<span id="address"><fmt:message key="find.car.later.current.location"/></span>
+								<span id="address"><fmt:message key="interest.details.current.location"/></span>
 							</stripes:link>
 						</li>
 						<li class="detail white">

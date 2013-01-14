@@ -17,6 +17,7 @@ import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.DontValidate;
@@ -25,19 +26,29 @@ import net.sourceforge.stripes.action.LocalizableMessage;
 import net.sourceforge.stripes.action.RedirectResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.ajax.JavaScriptResolution;
+import net.sourceforge.stripes.validation.LocalizableError;
 import net.sourceforge.stripes.validation.Validate;
+import net.sourceforge.stripes.validation.ValidationErrors;
+import net.sourceforge.stripes.validation.ValidationMethod;
+import net.sourceforge.stripes.validation.ValidationState;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.criticalsoftware.mobics.miscellaneous.CarClassDTO;
 import com.criticalsoftware.mobics.presentation.action.BaseActionBean;
 import com.criticalsoftware.mobics.presentation.action.recent.RecentActivitiesActionBean;
 import com.criticalsoftware.mobics.presentation.extension.DatetimeTypeConverter;
 import com.criticalsoftware.mobics.presentation.security.AuthenticationUtil;
+import com.criticalsoftware.mobics.presentation.security.MobiCSSecure;
 import com.criticalsoftware.mobics.presentation.util.Configuration;
 import com.criticalsoftware.mobics.presentation.util.GeolocationUtil;
+import com.criticalsoftware.mobics.presentation.util.PlaceDTO;
 import com.criticalsoftware.mobics.proxy.booking.BookingValidationExceptionException;
 import com.criticalsoftware.mobics.proxy.booking.BookingWSServiceStub;
 import com.criticalsoftware.mobics.proxy.booking.CarClassNotFoundExceptionException;
 import com.criticalsoftware.mobics.proxy.booking.CustomerNotFoundExceptionException;
+import com.criticalsoftware.mobics.proxy.booking.ExpiredBookingInterestExceptionException;
 import com.criticalsoftware.mobics.proxy.booking.IllegalDateExceptionException;
 import com.criticalsoftware.mobics.proxy.booking.OverlappedCarBookingExceptionException;
 import com.criticalsoftware.mobics.proxy.miscellaneous.MiscellaneousWSServiceStub;
@@ -46,13 +57,13 @@ import com.criticalsoftware.mobics.proxy.miscellaneous.MiscellaneousWSServiceStu
  * @author ltiago
  * @version $Revision: $
  */
-public class FindCarForLaterActionBean extends BaseActionBean {
+@MobiCSSecure
+public class BookingInterestActionBean extends BaseActionBean {
+    
+    private static final Logger LOGGER = LoggerFactory.getLogger(BookingInterestActionBean.class);
 
     @Validate(required = true, on = "createBookingInterest", converter = DatetimeTypeConverter.class)
     private Date startDate;
-
-    @Validate
-    private String address;
 
     @Validate
     private Integer distance;
@@ -72,10 +83,13 @@ public class FindCarForLaterActionBean extends BaseActionBean {
     @Validate(required = true, on = "createBookingInterest")
     private Integer maxMessages;
 
-    @Validate(required = true, on = { "main", "createBookingInterest" })
+    @Validate
+    private String address;
+    
+    @Validate
     private String latitude;
 
-    @Validate(required = true, on = { "main", "createBookingInterest" })
+    @Validate
     private String longitude;
 
     @Validate(required = true, on = "searchAdress")
@@ -90,19 +104,29 @@ public class FindCarForLaterActionBean extends BaseActionBean {
     @DontValidate
     @DefaultHandler
     public Resolution main() throws RemoteException {
-        startSending = getContext().getUser().getCustomerPreferencesDTO().getTimeToStartSending();
-        stopSending = getContext().getUser().getCustomerPreferencesDTO().getTimeToStopSending();
+        startSending = startSending == null ? getContext().getUser().getCustomerPreferencesDTO()
+                .getTimeToStartSending() : startSending;
+        stopSending = stopSending == null ? getContext().getUser().getCustomerPreferencesDTO().getTimeToStopSending()
+                : stopSending;
 
         Calendar c = Calendar.getInstance();
         c.set(Calendar.HOUR_OF_DAY, c.get(Calendar.HOUR_OF_DAY) + 1);
         c.set(Calendar.MINUTE, 0);
         c.set(Calendar.SECOND, 0);
         c.set(Calendar.MILLISECOND, 0);
-        startDate = new Date(c.getTimeInMillis());
-        maxMessages = getContext().getUser().getCustomerPreferencesDTO().getNumberOfNotifications();
-        distance = getContext().getUser().getCustomerPreferencesDTO().getSearchRadius();
+        startDate = startDate == null ? new Date(c.getTimeInMillis()) : startDate;
+        maxMessages = maxMessages == null ? getContext().getUser().getCustomerPreferencesDTO()
+                .getNumberOfNotifications() : maxMessages;
+        distance = distance == null ? getContext().getUser().getCustomerPreferencesDTO().getSearchRadius() : distance;
 
-        return new ForwardResolution("/WEB-INF/book/findCarForLater.jsp");
+        return new ForwardResolution("/WEB-INF/book/bookingInterest.jsp");
+    }
+    
+    @ValidationMethod(on="createBookingInterest", when=ValidationState.NO_ERRORS)
+    public void validateAdress(ValidationErrors errors) {
+        if(latitude == null && longitude == null) {
+            errors.add("address", new LocalizableError("validation.required.valueNotPresent"));
+        }
     }
 
     /**
@@ -119,7 +143,8 @@ public class FindCarForLaterActionBean extends BaseActionBean {
      */
     public Resolution createBookingInterest() throws RemoteException, UnsupportedEncodingException,
             OverlappedCarBookingExceptionException, CarClassNotFoundExceptionException,
-            CustomerNotFoundExceptionException, BookingValidationExceptionException, IllegalDateExceptionException {
+            ExpiredBookingInterestExceptionException, CustomerNotFoundExceptionException,
+            BookingValidationExceptionException, IllegalDateExceptionException {
         BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
                 Configuration.INSTANCE.getBookingEndpoint());
         bookingWSServiceStub._getServiceClient().addHeader(
@@ -129,8 +154,9 @@ public class FindCarForLaterActionBean extends BaseActionBean {
         Calendar start = Calendar.getInstance();
         start.setTime(startDate);
 
-        bookingWSServiceStub.createBookingInterest(start, carClazz, fromMyCarClub,
-                new BigDecimal(longitude), new BigDecimal(latitude), distance.intValue(), startSending.intValue(),
+        // FIXME cannot send 0 has radius
+        bookingWSServiceStub.createBookingInterest(start, carClazz, fromMyCarClub, new BigDecimal(longitude),
+                new BigDecimal(latitude), distance != null ? distance.intValue() : 0, startSending.intValue(),
                 stopSending.intValue(), maxMessages.intValue());
 
         getContext().getMessages().add(new LocalizableMessage("find.car.later.interest.created"));
@@ -143,7 +169,7 @@ public class FindCarForLaterActionBean extends BaseActionBean {
      * @return
      */
     public Resolution searchLocation() {
-        return new ForwardResolution("/WEB-INF/book/streetLocation.jsp").addParameter("search", "street");
+        return new ForwardResolution("/WEB-INF/map/mapSearchStreet.jsp").addParameter("search", "street");
     }
 
     /**
@@ -151,9 +177,22 @@ public class FindCarForLaterActionBean extends BaseActionBean {
      * 
      * @return
      */
-    public Resolution searchAdress() {
+    public Resolution getAdressFromQuery() {
         getContext().getResponse().setHeader("Stripes-Success", "OK");
-        return new JavaScriptResolution(GeolocationUtil.getAddressFromText(query));
+        
+        List<PlaceDTO> dtos = null;
+        try {
+            dtos = GeolocationUtil.getAddressFromText(query);
+        } catch (UnsupportedEncodingException e) {
+            LOGGER.error("License plate not found", e);
+        }
+        
+        return new JavaScriptResolution(dtos);
+    }
+    
+    public Resolution getAdressFromCoordinates() {
+        getContext().getResponse().setHeader("Stripes-Success", "OK");
+        return new JavaScriptResolution(GeolocationUtil.getAddressFromCoordinates(latitude, longitude));
     }
 
     /**

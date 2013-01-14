@@ -5,13 +5,26 @@ $(document).ready(function() {
 	'use strict';
 	
 	// preventCacheOnIos();
+	
+	// Get rid of address bar on iphone/ipod
+	var fixSize = function() {
+	    window.scrollTo(0,0);
+	    document.body.style.height = '100%';
+	    if (!(/(iphone|ipod)/.test(navigator.userAgent.toLowerCase()))) {
+	        if (document.body.parentNode) {
+	            document.body.parentNode.style.height = '100%';
+	        }
+	    }
+	};
+	setTimeout(fixSize, 700);
+	setTimeout(fixSize, 1500);
 
 	/** 
 	 * Menu open/close 
 	 */
 	$('.menuBtn').on('click', function(e) {
 		e.preventDefault();
-		toggleFx('#menu');
+		toggleMenuFx();
 	});
 
 	/** 
@@ -44,6 +57,10 @@ $(document).ready(function() {
 						} ,true);
 	});
 	
+ 	/**
+ 	 * Booking Interest
+ 	 */
+ 	
 	/** Search location link */
 	$('#locationLink').on('click', function(e) {
 		e.preventDefault();
@@ -57,7 +74,8 @@ $(document).ready(function() {
 		url += '&' + $('#fromMyCarClub').prop('name') + '=' + $('#fromMyCarClub').val(); 
 		url += '&' + $('#startSending').prop('name') + '=' + $('#startSending').val(); 
 		url += '&' + $('#stopSending').prop('name') + '=' + $('#stopSending').val(); 
-		url += '&' + $('#maxMessages').prop('name') + '=' + $('#maxMessages').val(); 
+		url += '&' + $('#maxMessages').prop('name') + '=' + $('#maxMessages').val();
+ 		
 		window.location.href = url;
 	});
 	
@@ -400,16 +418,16 @@ function treatGeolocationError(err) {
  * 
  * @param element name
  */
-function toggleFx(element) {
+function toggleMenuFx(element) {
 	//$('div.bottomShadow').toggle();
-	if($(element).css('display') == 'none') {
+	if($('#menu').css('display') == 'none') {
 		$('#menu ul').css('margin-top','-10px').css('margin-bottom', '10px');
-		$(element).gfxFadeIn({
+		$('#menu').gfxFadeIn({
 			duration : 500,
 			easing : 'ease-in',
 		});
 	} else {
-		$(element).gfxFadeOut({
+		$('#menu').gfxFadeOut({
 			duration : 400,
 			easing : 'ease-out',
 		}, function(){

@@ -230,7 +230,7 @@ public class ImmediateBookingActionBean extends BookingActionBean {
      */
     public Resolution searchImmediateInMap() throws RemoteException, FuelTypeNotFoundExceptionException,
             CarClassNotFoundExceptionException, CarTypeNotFoundExceptionException {
-        return new ForwardResolution("/WEB-INF/common/mapWhiteBar.jsp");
+        return new ForwardResolution("/WEB-INF/map/mapWhiteBar.jsp");
     }
 
     // --------------------------------------------------
@@ -296,7 +296,7 @@ public class ImmediateBookingActionBean extends BookingActionBean {
      * @return the car location page resolution
      */
     public Resolution carLocation() {
-        return new ForwardResolution("/WEB-INF/common/mapFullWidth.jsp");
+        return new ForwardResolution("/WEB-INF/map/mapFullWidth.jsp");
     }
 
     /**
@@ -324,6 +324,13 @@ public class ImmediateBookingActionBean extends BookingActionBean {
         return new JavaScriptResolution(new CoordinateZonesDTO(coordinate, zones));
     }
 
+    /**
+     * Search cars handler
+     * 
+     * @return a resolution page
+     * @throws AxisFault
+     * @throws RemoteException
+     */
     public Resolution searchCarsData() throws AxisFault, RemoteException {
         try {
             cars = new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint()).searchCars(price, distance, clazz,
@@ -350,6 +357,14 @@ public class ImmediateBookingActionBean extends BookingActionBean {
     }
 
     // Validation Methods
+    
+    /**
+     * Validate if car type is com.criticalsoftware.mobics.fleet.CarTypeEnum.NORMAL
+     * 
+     * @param errors validation errors
+     * @throws RemoteException
+     * @throws com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException
+     */
     @ValidationMethod(
             on = { "licensePlateBook", "showPin", "carDetails" },
             when = ValidationState.NO_ERRORS,
@@ -362,7 +377,7 @@ public class ImmediateBookingActionBean extends BookingActionBean {
     }
 
     /**
-     * Reverse geolocation string
+     * Get the location string based on reverse geolocation
      * 
      * @return the address string
      */

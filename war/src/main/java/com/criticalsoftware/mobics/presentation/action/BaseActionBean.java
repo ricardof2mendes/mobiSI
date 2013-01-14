@@ -33,6 +33,10 @@ import com.criticalsoftware.mobics.proxy.carclub.CarClubWebSiteURLNotFoundExcept
 public abstract class BaseActionBean implements ActionBean {
 
     private static final Logger LOG = LoggerFactory.getLogger(BaseActionBean.class);
+    
+    private static final String SECURE_PROTOCOL = "https://";
+    
+    private static final String NONSECURE_PROTOCOL = "http://";
 
     /**
      * The Stripes action bean context.
@@ -80,8 +84,8 @@ public abstract class BaseActionBean implements ActionBean {
      */
     public final String getSplashScreenStyle() throws AxisFault, RemoteException {
         CarClubSimpleDTO carClubSimpleDTO = null;
-        StringBuilder builder = new StringBuilder(getContext().getRequest().isSecure() ? "https://"
-                : "http://").append(getContext().getRequest().getServerName()).append(":")
+        StringBuilder builder = new StringBuilder(getContext().getRequest().isSecure() ? SECURE_PROTOCOL
+                : NONSECURE_PROTOCOL).append(getContext().getRequest().getServerName()).append(":")
                 .append(getContext().getRequest().getServerPort()).append(getContext().getRequest().getContextPath());
         try {
             carClubSimpleDTO = new CarClubWSServiceStub(Configuration.INSTANCE.getCarClubEndpoint())
@@ -91,10 +95,10 @@ public abstract class BaseActionBean implements ActionBean {
         }
 
         String style = new StringBuilder((carClubSimpleDTO != null ? carClubSimpleDTO.getCarClubColorScheme()
-                : Configuration.INSTANCE.getDefaultThemeStyle()).replaceAll(" ", ""))
+                : Configuration.INSTANCE.getDefaultThemeStyle()).replaceAll("_", ""))
                 .append(" ")
                 .append((carClubSimpleDTO != null ? carClubSimpleDTO.getCarClubTheme() : Configuration.INSTANCE
-                        .getDefaultThemeColor()).replaceAll(" ", "")).toString();
+                        .getDefaultThemeColor()).replaceAll("_", "")).toString();
 
         if (style.indexOf(Configuration.INSTANCE.getDefaultThemeWarmWord()) > 0) {
             style.replaceAll(" ", "");
@@ -113,7 +117,7 @@ public abstract class BaseActionBean implements ActionBean {
         if (getContext().getUser() != null) {
             header = getContext().getUser().getCarClub().getCarClubColorScheme();
         }
-        return header.replaceAll(" ", "").toLowerCase();
+        return header.replaceAll("_", "").toLowerCase();
     }
 
     /**

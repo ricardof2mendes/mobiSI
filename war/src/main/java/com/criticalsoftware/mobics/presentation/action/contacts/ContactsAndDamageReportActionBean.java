@@ -117,7 +117,7 @@ public class ContactsAndDamageReportActionBean extends BaseActionBean {
         StreamingResolution resolution = null;
         CarClubWSServiceStub carClubWSServiceStub = new CarClubWSServiceStub(
                 Configuration.INSTANCE.getCarClubEndpoint());
-        DataHandler data = carClubWSServiceStub.getCarClubThumbnailByCarClubCode(getContext().getUser().getCarClub()
+        DataHandler data = carClubWSServiceStub.getCarClubSmallThumbnailByCarClubCode(getContext().getUser().getCarClub()
                 .getCarClubCode(), LOGO_WIDTH, LOGO_HEIGHT);
         if (data != null) {
             resolution = new StreamingResolution(data.getContentType(), data.getInputStream());

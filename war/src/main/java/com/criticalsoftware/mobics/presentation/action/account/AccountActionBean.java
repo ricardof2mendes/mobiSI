@@ -61,6 +61,15 @@ public class AccountActionBean extends BaseActionBean {
         return new ForwardResolution("/WEB-INF/account/authentication.jsp");
     }
 
+    /**
+     * Check email validation to show message
+     *  
+     * @return true if email is validated
+     * @throws RemoteException
+     * @throws CustomerNotFoundExceptionException
+     * @throws UnsupportedEncodingException
+     * @throws InvalidEmailTokenExceptionException
+     */
     public boolean getMessage() throws RemoteException, CustomerNotFoundExceptionException,
             UnsupportedEncodingException, InvalidEmailTokenExceptionException {
 

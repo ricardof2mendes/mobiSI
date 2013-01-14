@@ -121,7 +121,7 @@
 			</nav>
 			<c:if test="${actionBean.booking.isEditable}">
 				<div class="cleaner"></div>
-				<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.booking.EditInterestBookingActionBean" class="linkBtn gray" addSourcePage="true">
+				<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.booking.EditBookingInterestActionBean" class="linkBtn gray" addSourcePage="true">
 					<stripes:param name="activityCode" value="${actionBean.booking.code}"/>
 					<fmt:message key="interest.details.edit.request"/>
 				</stripes:link>

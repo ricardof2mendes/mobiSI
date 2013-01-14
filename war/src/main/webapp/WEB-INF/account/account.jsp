@@ -9,12 +9,12 @@
 			<h2><fmt:message key="account.settings"/></h2>
 			<nav class="simpleList">
 				<ul>
-					<li>
+					<li class="account">
 						<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.account.EditInformationContactActionBean">
 							<fmt:message key="account.information.contact.title"/>
 						</stripes:link>
 					</li>
-					<li>
+					<li class="account">
 						<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.account.AccountActionBean" event="authentication">
 							<fmt:message key="account.authentication.security.title"/>
 						</stripes:link>
