@@ -3,6 +3,7 @@
     To be added after the </extensions> block.
 -->
 <system-properties>
+		<!--App server-->
 		<property name="org.apache.catalina.connector.URI_ENCODING" value="UTF-8"/>
         <property name="org.apache.catalina.connector.USE_BODY_ENCODING_FOR_QUERY_STRING" value="true"/>
         <property name="org.apache.coyote.http11.Http11Protocol.COMPRESSION" value="on"/>
@@ -11,7 +12,10 @@
         <property name="mobics.config.meter.pattern" value="#"/>
         <property name="mobics.config.kilometer.pattern" value="#,##0.0"/>
         <property name="mobics.config.currency.pattern" value="#,##0.00"/>
+		<property name="mobics.config.date.pattern" value="dd/MM/yyyy"/>
         <property name="mobics.config.datetime.pattern" value="dd/MM/yyyy HH:mm"/>
+		<property name="mobics.config.time.pattern" value="HH:mm"/>
+		<property name="mobics.config.week.pattern" value="E"/>
         <property name="mobics.config.js.date.pattern" value="dd/mm/yy"/>
         <property name="mobics.config.js.time.pattern" value="HH:ii"/>
 		<!--Failure authentication string-->
@@ -25,6 +29,7 @@
         <property name="mobics.config.endpoint.customer" value="http://mobics02.critical.pt:8080/mobics-webservices/Customer"/>
 		<!--Geolocation server-->
         <property name="mobics.config.geolocation.server" value="nominatim.openstreetmap.org"/>
+		<property name="mobics.config.geolocation.server.allowed.countries" value="pt"/>
 		<!--Styling-->
         <property name="mobics.config.thumbnail.width" value="58"/>
         <property name="mobics.config.thumbnail.height" value="58"/>
