@@ -80,7 +80,7 @@ public class FormatUtils {
             if (yesterday.get(Calendar.WEEK_OF_YEAR) == c.get(Calendar.WEEK_OF_YEAR)) {
                 formatPattern = System.getProperty("mobics.config.week.pattern");
                 if (formatPattern == null) {
-                    LOGGER.warn("System property «mobics.config.day.week.pattern» is missing!");
+                    LOGGER.warn("System property «mobics.config.week.pattern» is missing!");
                     return null;
                 }
                 dateFormatter = new SimpleDateFormat(formatPattern, locale);
