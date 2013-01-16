@@ -5,6 +5,10 @@
 	box-sizing: border-box;
 }
 
+*:focus {
+    outline: none;
+}
+
 ul, li, h1 {
 	padding: 0;
 	margin: 0;
@@ -810,6 +814,7 @@ nav.threeColumnList  ul li a > div:nth-child(2) > div:nth-child(2) > span.unavai
 .ellipsis {
 	overflow: hidden;
 	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 
 /************************************ Two columns list */
@@ -853,6 +858,7 @@ nav.twoColumnList  ul li a > div:nth-child(2) {
 nav.twoColumnList  ul li a > div:nth-child(2) > span{
 	color: #999;
 }
+
 
 /************************************ Order navigation bar*/
 
@@ -1211,7 +1217,6 @@ article.pin div:nth-child(3) > input[type="submit"]:active {
 .lightblue .loginBtn {
     background-color: #008BE8 !important;
 }
-
 .darkblue,
 .darkblue .loginBtn {
     background-color: #161694 !important;
@@ -1304,9 +1309,111 @@ article.pin div:nth-child(3) > input[type="submit"]:active {
 	background-size: 100%;
 }
 
+/* Contacts image theme */
+
+li.imageCarClub div.mapdarkred {
+	background: transparent url(../img/theme/660000/ios-webapp-contacts-world-normal-660000.png) no-repeat 50% 50%;
+	background-size: 64px 64px;
+}
+
+li.imageCarClub div.mapred {
+	background: transparent url(../img/theme/CC1A1A/ios-webapp-contacts-world-normal-CC1A1A.png) no-repeat 50% 50%;
+	background-size: 64px 64px;
+}
+
+li.imageCarClub div.maporange {
+	background: transparent url(../img/theme/F09000/ios-webapp-contacts-world-normal-F09000.png) no-repeat 50% 50%;
+	background-size: 64px 64px;
+}
+li.imageCarClub div.maplightgreen {
+	background: transparent url(../img/theme/78CC0A/ios-webapp-contacts-world-normal-78CC0A.png) no-repeat 50% 50%;
+	background-size: 64px 64px;
+}
+
+li.imageCarClub div.mapdarkgreen {
+	background: transparent url(../img/theme/095909/ios-webapp-contacts-world-normal-095909.png) no-repeat 50% 50%;
+	background-size: 64px 64px;
+}
+
+li.imageCarClub div.maplightblue {
+	background: transparent url(../img/theme/008BE8/ios-webapp-contacts-world-normal-008BE8.png) no-repeat 50% 50%;
+	background-size: 64px 64px;
+}
+
+li.imageCarClub div.mapdarkblue {
+	background: transparent url(../img/theme/161694/ios-webapp-contacts-world-normal-161694.png) no-repeat 50% 50%;
+	background-size: 64px 64px;
+}
+
+li.imageCarClub div.mappurple {
+	background: transparent url(../img/theme/4A0D86/ios-webapp-contacts-world-normal-4A0D86.png) no-repeat 50% 50%;
+	background-size: 64px 64px;
+}
+
+li.imageCarClub div.mappink {
+	background: transparent url(../img/theme/CC00CC/ios-webapp-contacts-world-normal-CC00CC.png) no-repeat 50% 50%;
+	background-size: 64px 64px;
+}
+
+li.imageCarClub div.mapdarkgray {
+	background: transparent url(../img/theme/1A1A1A/ios-webapp-contacts-world-normal-1A1A1A.png) no-repeat 50% 50%;
+	background-size: 64px 64px;
+}
+
+/*********/
+li.imageCarClub div.warmdarkred {
+	background: transparent url(../img/theme/660000/ios-webapp-contacts-warm-normal-660000.png) no-repeat 50% 50%;
+	background-size: 64px 64px;
+}
+
+li.imageCarClub div.warmred {
+	background: transparent url(../img/theme/CC1A1A/ios-webapp-contacts-warm-normal-CC1A1A.png) no-repeat 50% 50%;
+	background-size: 64px 64px;
+}
+
+li.imageCarClub div.warmorange {
+	background: transparent url(../img/theme/F09000/ios-webapp-contacts-warm-normal-F09000.png) no-repeat 50% 50%;
+	background-size: 64px 64px;
+}
+li.imageCarClub div.warmlightgreen {
+	background: transparent url(../img/theme/78CC0A/ios-webapp-contacts-warm-normal-78CC0A.png) no-repeat 50% 50%;
+	background-size: 64px 64px;
+}
+
+li.imageCarClub div.warmdarkgreen {
+	background: transparent url(../img/theme/095909/ios-webapp-contacts-warm-normal-095909.png) no-repeat 50% 50%;
+	background-size: 64px 64px;
+}
+
+li.imageCarClub div.warmlightblue {
+	background: transparent url(../img/theme/008BE8/ios-webapp-contacts-warm-normal-008BE8.png) no-repeat 50% 50%;
+	background-size: 64px 64px;
+}
+
+li.imageCarClub div.warmdarkblue {
+	background: transparent url(../img/theme/161694/ios-webapp-contacts-warm-normal-161694.png) no-repeat 50% 50%;
+	background-size: 64px 64px;
+}
+
+li.imageCarClub div.warmpurple {
+	background: transparent url(../img/theme/4A0D86/ios-webapp-contacts-warm-normal-4A0D86.png) no-repeat 50% 50%;
+	background-size: 64px 64px;
+}
+
+li.imageCarClub div.warmpink {
+	background: transparent url(../img/theme/CC00CC/ios-webapp-contacts-warm-normal-CC00CC.png) no-repeat 50% 50%;
+	background-size: 64px 64px;
+}
+
+li.imageCarClub div.warmdarkgray {
+	background: transparent url(../img/theme/1A1A1A/ios-webapp-contacts-warm-normal-1A1A1A.png) no-repeat 50% 50%;
+	background-size: 64px 64px;
+}
+
 
 /* MODAL */
 .confirm,
+.confirm2,
 .modal {
 	display: none;
 	position: fixed;
@@ -1332,13 +1439,15 @@ body.confirmation {
     overflow: hidden;   
 }
 
-body.confirmation .confirm {
+body.confirmation .confirm,
+body.confirmation .confirm2 {
     display: block;
     background: rgba(153, 153, 153, 0.7);
     padding: 80px 10px 0 10px;
 }
 
-.confirm article {
+.confirm article,
+.confirm2 article {
 	border-radius: 4px;
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
@@ -1348,14 +1457,19 @@ body.confirmation .confirm {
 	box-shadow: 0px 7px 5px rgba(0, 0, 0, 0.4);
 	text-align: left;
 }
-.confirm article section {
+
+.confirm article section,
+.confirm2 article section {
 	padding: 30px;
 }
-.confirm article section > .alertBtn:last-child {
+
+.confirm article section > .alertBtn:last-child,
+.confirm2 article section > .alertBtn:last-child {
 	margin-bottom: 0px;
 }
 
-.confirm article h2 {
+.confirm article h2,
+.confirm2 article h2 {
 	color: #000;
 	font-weight: bold;
 	margin: 0;
@@ -1367,6 +1481,24 @@ body.confirmation .confirm {
 	color: #A0A0A0;
 	font-weight: normal;
 	margin-bottom: 10px;
+}
+
+#statePooling section{
+	width: 255px;
+	margin: auto;
+	text-align: center;
+}
+
+#statePooling h2 {
+	padding-right: 16px;
+	margin: 0;
+	background: transparent url("../img/indicator.gif") right center no-repeat;
+}
+
+#statePooling div {
+	color: #999;
+	font-size: large;
+	font-weight: normal;
 }
 
 /********************************************************************* Media Queries */
@@ -1463,53 +1595,140 @@ body.confirmation .confirm {
 		background-image: url(../img/menu/account-active@2x.png), url(../img/menu/sombra_menu_20px_flipped.png), url(../img/bt_down_45px.png);
 	}
 	
+	/**App theme*/
+	.map {
+		background-image: url(../img/theme/mapa@2x.png), url(../img/theme/background_login@2x.png);
+	}
+	
 	.warmdarkred,
 	.warmdarkred .loginBtn {
-		background: #660000 url(../img/theme/660000/webapp-splash-gradient-retina-660000.png) no-repeat 50% 0;
+		background-image: url(../img/theme/660000/webapp-splash-gradient-retina-660000.png);
 	}
 	
 	.warmred,
 	.warmred .loginBtn {
-	      background: #CC1A1A url(../img/theme/CC1A1A/webapp-splash-gradient-retina-CC1A1A.png) no-repeat 50% 0;
+	      background-image: url(../img/theme/CC1A1A/webapp-splash-gradient-retina-CC1A1A.png);
 	}
 	
 	.warmorange,
 	.warmorange .loginBtn {
-		background: #F09000 url(../img/theme/F09000/webapp-splash-gradient-retina-F09000.png) no-repeat 50% 0;
+		background-image: url(../img/theme/F09000/webapp-splash-gradient-retina-F09000.png);
 	}
 	
 	.warmlightgreen,
 	.warmlightgreen .loginBtn {
-		background: #78CC0A url(../img/theme/78CC0A/webapp-splash-gradient-retina-78CC0A.png) no-repeat 50% 0;
+		background-image: url(../img/theme/78CC0A/webapp-splash-gradient-retina-78CC0A.png);
 	}
 	
 	.warmdarkgreen,
 	.warmdarkgreen .loginBtn {
-		background: #095909 url(../img/theme/095909/webapp-splash-gradient-retina-095909.png) no-repeat 50% 0;
+		background-image: url(../img/theme/095909/webapp-splash-gradient-retina-095909.png);
 	}
 	
 	.warmlightblue,
 	.warmlightblue .loginBtn {
-		background: #008BE8 url(../img/theme/008BE8/webapp-splash-gradient-retina-008BE8.png) no-repeat 50% 0;
+		background-image: url(../img/theme/008BE8/webapp-splash-gradient-retina-008BE8.png);
 	}
 	
 	.warmdarkblue,
 	.warmdarkblue .loginBtn {
-		background: #161694 url(../img/theme/161694/webapp-splash-gradient-retina-161694.png) no-repeat 50% 0;
+		background-image: url(../img/theme/161694/webapp-splash-gradient-retina-161694.png);
 	}
 	
 	.warmpurple,
 	.warmpurple .loginBtn {
-		background: #4A0D86 url(../img/theme/4A0D86/webapp-splash-gradient-retina-4A0D86.png) no-repeat 50% 0;
+		background-image: url(../img/theme/4A0D86/webapp-splash-gradient-retina-4A0D86.png);
 	}
 	
 	.warmpink,
 	.warmpink .loginBtn {
-		background: #CC00CC url(../img/theme/CC00CC/webapp-splash-gradient-retina-CC00CC.png) no-repeat 50% 0;
+		background-image: url(../img/theme/CC00CC/webapp-splash-gradient-retina-CC00CC.png);
 	}
 	
 	.warmdarkgray,
 	.warmdarkgray .loginBtn {
-		background: #1A1A1A url(../img/theme/1A1A1A/webapp-splash-gradient-retina-1A1A1A.png) no-repeat 50% 0;
+		background-image: url(../img/theme/1A1A1A/webapp-splash-gradient-retina-1A1A1A.png);
 	}		
+	
+	/* Contacts image theme */
+
+	li.imageCarClub div.mapdarkred {
+		background-image: url(../img/theme/660000/ios-webapp-contacts-world-retina-660000.png);
+	}
+	
+	li.imageCarClub div.mapred {
+		background-image: url(../img/theme/CC1A1A/ios-webapp-contacts-world-retina-CC1A1A.png);		
+	}
+	
+	li.imageCarClub div.maporange {
+		background-image: url(../img/theme/F09000/ios-webapp-contacts-world-retina-F09000.png);		
+	}
+	
+	li.imageCarClub div.maplightgreen {
+		background-image: url(../img/theme/78CC0A/ios-webapp-contacts-world-retina-78CC0A.png);		
+	}
+	
+	li.imageCarClub div.mapdarkgreen {
+		background-image: url(../img/theme/095909/ios-webapp-contacts-world-retina-095909.png);		
+	}
+	
+	li.imageCarClub div.maplightblue {
+		background-image: url(../img/theme/008BE8/ios-webapp-contacts-world-retina-008BE8.png);		
+	}
+	
+	li.imageCarClub div.mapdarkblue {
+		background-image: url(../img/theme/161694/ios-webapp-contacts-world-retina-161694.png);		
+	}
+	
+	li.imageCarClub div.mappurple {
+		background-image: url(../img/theme/4A0D86/ios-webapp-contacts-world-retina-4A0D86.png);		
+	}
+	
+	li.imageCarClub div.mappink {
+		background-image: url(../img/theme/CC00CC/ios-webapp-contacts-world-retina-CC00CC.png);		
+	}
+	
+	li.imageCarClub div.mapdarkgray {
+		background-image: url(../img/theme/1A1A1A/ios-webapp-contacts-world-retina-1A1A1A.png);		
+	}
+	
+	/*********/
+	li.imageCarClub div.warmdarkred {
+		background-image: url(../img/theme/660000/ios-webapp-contacts-warm-retina-660000.png);		
+	}
+	
+	li.imageCarClub div.warmred {
+		background-image: url(../img/theme/CC1A1A/ios-webapp-contacts-warm-retina-CC1A1A.png);		
+	}
+	
+	li.imageCarClub div.warmorange {
+		background-image: url(../img/theme/F09000/ios-webapp-contacts-warm-retina-F09000.png);		
+	}
+	li.imageCarClub div.warmlightgreen {
+		background-image: url(../img/theme/78CC0A/ios-webapp-contacts-warm-retina-78CC0A.png);		
+	}
+	
+	li.imageCarClub div.warmdarkgreen {
+		background-image: url(../img/theme/095909/ios-webapp-contacts-warm-retina-095909.png);		
+	}
+	
+	li.imageCarClub div.warmlightblue {
+		background-image: url(../img/theme/008BE8/ios-webapp-contacts-warm-retina-008BE8.png);
+	}
+	
+	li.imageCarClub div.warmdarkblue {
+		background-image: url(../img/theme/161694/ios-webapp-contacts-warm-retina-161694.png);		
+	}
+	
+	li.imageCarClub div.warmpurple {
+		background-image: url(../img/theme/4A0D86/ios-webapp-contacts-warm-retina-4A0D86.png);		
+	}
+	
+	li.imageCarClub div.warmpink {
+		background-image: url(../img/theme/CC00CC/ios-webapp-contacts-warm-retina-CC00CC.png);		
+	}
+	
+	li.imageCarClub div.warmdarkgray {
+		background-image: url(../img/theme/1A1A1A/ios-webapp-contacts-warm-retina-1A1A1A.png);		
+	}
 }

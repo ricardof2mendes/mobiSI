@@ -11,12 +11,12 @@ html, body{
 }
 
 #container.street {
-	top: 95px !important;
+	top: 90px !important;
 }
 
 #container.street,
 #container.white {
-	bottom: 76px !important;
+	bottom: 75px !important;
 }
 
 #container > #map {
@@ -25,49 +25,6 @@ html, body{
     right: 0;
     top: 0;
     bottom: 0;
-}
-
-#whiteBar {
-	background-image: url(../img/menu/sombra_menus_10px.png);
-	background-repeat: repeat-x;
-	background-position: top left;
-	position:absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: white;
-    height: 75px;
-    
-}
-
-#whiteBar nav{
-	padding-top: 5px;
-}
-
-#whiteBar.addressBar span{
-	background-image: url(../img/map/mylocation.png);
-	background-repeat: no-repeat;
-	background-position: center left;
-	padding-left: 25px;
-	font-size: x-large;
-	margin-left: 10px;
-}
-
-#whiteBar.addressBar div {
-	
-}
-
-#whiteBar.addressBar div > div{
-	width: 50%;
-	float: left;
-	padding: 5px 10px;
-}
-
-#whiteBar.addressBar input[type="submit"],
-#whiteBar.addressBar a{
-	height: 30px;
-	line-height: 30px;
-	margin: 0 !important;
 }
 
 .mapMenu {
@@ -180,16 +137,60 @@ div.olControlMyLocation a:hover {
     background-color: #DCDCDC !important;
 }
 
+/******************************* White bar */
+#whiteBar {
+	background: url("../img/menu/sombra_menus_10px.png") repeat-x scroll left top #fff;
+	position:absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 76px;
+}
+
+#whiteBar nav{
+	padding-top: 5px;
+}
+
+#whiteBar.addressBar span{
+	background-image: url(../img/map/mylocation.png);
+	background-repeat: no-repeat;
+	background-position: center left;
+	padding: 0 0 3px 25px;
+	font-size: large;
+	margin-left: 10px;
+	line-height: 30px;
+}
+
+#whiteBar.addressBar div {
+	
+}
+
+#whiteBar.addressBar div > div{
+	width: 50%;
+	float: left;
+	padding: 5px 10px;
+}
+
+#whiteBar.addressBar input[type="submit"],
+#whiteBar.addressBar a{
+	height: 30px;
+	line-height: 30px;
+	margin: 0 !important;
+}
+
 /******************************* Search Form */
 
 #streetsearch > section {
-	padding-bottom: 40px;
-	background-image: url("../img/menu/sombra_menus_10px.png");
-    background-position: left bottom;
-    background-repeat: repeat-x;
+	padding-bottom: 13px;
+	background: url("../img/menu/sombra_menus_10px.png") repeat-x scroll left bottom transparent;
 }
 
-#streetSearchForm > div > div:first-child {
+#streetSearchForm div.right {
+	float: right;
+	width: 70px;
+}  
+
+#streetSearchForm div.left {
 	background: #FFF;
 	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
 	-moz-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
@@ -197,20 +198,14 @@ div.olControlMyLocation a:hover {
 	border-radius: 12px;
 	-moz-border-radius: 12px;
 	-webkit-border-radius: 12px;
-	overflow: hidden; 
 	position: relative;
 	margin: 0 10px;
 	padding: 0 10px 0 10px;
-	width: 83%;
-	float: left;
+	overflow: hidden;
 }
 
-#streetSearchForm > div > div:nth-child(2) {
-	width: 15%;
-	float: right;
-}
 
-#streetSearchForm > div > div > input{
+#streetSearchForm div.left > input{
 	line-height: 24px;
 	height: 24px;
 	border: 0;
@@ -219,18 +214,17 @@ div.olControlMyLocation a:hover {
 	width: 100%;
 }
 
-#streetSearchForm > div > div:nth-child(2) > ul {
+#streetSearchForm div.right > ul {
 	float: right;
 	padding-right: 10px;
 }
 
-#streetSearchForm > div > div:nth-child(2) > ul li {
+#streetSearchForm div.right > ul li {
 	float: left;
 	text-align: center;		
 }
 
-#streetSearchForm > div > div:nth-child(2) > ul li a {
-	display:block;
+#streetSearchForm div.right > ul li a {
 	color: #333;
 	font-weight: bold;
 	border: 1px solid rgba(0, 0, 0, 0.6);
@@ -239,20 +233,14 @@ div.olControlMyLocation a:hover {
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
 	padding: 0 10px;	
-	margin-top: -3px;
     padding: 5px 10px;
 }
 
-#streetSearchForm > div > div:nth-child(2) > ul li a.selected{
-	background: url('../img/bt_down_30px-height.png');
-}
-
-
-#streetSearchForm > div > input.autocomplete{
+#streetSearchForm div.right > input.autocomplete{
 	background: #fff url('../img/ajax-loader-input.gif') no-repeat 100% 50%;
 }
 
-#streetSearchForm > div > div > div {
+#streetSearchForm div.left > div {
 	background: #fff;
 	padding: 12px;
 	position: absolute;
@@ -260,12 +248,40 @@ div.olControlMyLocation a:hover {
 	top: 0;
 }
 
-#streetSearchForm > div > div > div.delete {
+#streetSearchForm div.left > div.delete {
 	background: #fff url('../img/clear.png') no-repeat right 50%;
 	cursor: pointer;
 }
 
+/************************************ One column list */
 
+nav.oneColumnList ul li {
+	background: #FFF url(../img/seta.png) no-repeat 100% 50%;
+	border-bottom: 1px solid #CCC;
+}
+
+nav.oneColumnList ul li a {
+	display: block;
+	height: 60px;
+}
+
+nav.oneColumnList  ul li a > div:nth-child(1) {
+	float: left;
+	width: 50px;
+	line-height: 60px;
+	display: block;
+	text-align: center;
+}
+
+nav.oneColumnList  ul li a > div:nth-child(2) {
+	font-weight: bold;
+	color: #333;
+	padding-right: 25px;
+	text-align: left;
+	vertical-align: center;
+	height: 60px;
+	line-height: 60px;
+}
 
 /******************************* Map Legend*/
 #legend {
