@@ -16,8 +16,9 @@
 					<ul>
 						<c:forEach items="${actionBean.messages}" var="msg">
 							<li>
-								<stripes:link class="messageBook" beanclass="com.criticalsoftware.mobics.presentation.action.booking.ImmediateBookingActionBean" event="licensePlateBook" addSourcePage="true">
+								<stripes:link class="messageBook" beanclass="com.criticalsoftware.mobics.presentation.action.messages.MessagesActionBean" event="read" addSourcePage="true">
 									<stripes:param name="licensePlate" value="${msg.carPlate}"/>
+									<stripes:param name="code" value="${msg.code}"/>
 									
 									<div class="msg-read-${msg.isRead}"></div>
 									

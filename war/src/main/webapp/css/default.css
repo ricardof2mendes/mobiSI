@@ -9,6 +9,14 @@
     outline: none;
 }
 
+/* all */
+::-webkit-input-placeholder,
+::-moz-placeholder,
+input:-moz-placeholder {
+	color:#333; 
+	font-weight: normal;
+}
+
 ul, li, h1 {
 	padding: 0;
 	margin: 0;
@@ -20,11 +28,6 @@ li {
 
 a {
     text-decoration: none;
-}
-
-input:-moz-placeholder,
-input::-webkit-input-placeholder {
-	font-weight: normal;
 }
 
 /* Main Elements */
@@ -739,15 +742,12 @@ nav.threeColumnList  ul li a > div.msg-read-false {
 	border: none !important;
 	width: 13px !important;
 	height: 60px;
+	background: none !important;
 }
 
 nav.threeColumnList  ul li a > div.msg-read-false {
 	background-size: 13px 13px;
-	background: transparent url(../img/link/new-message-icon.png) no-repeat 50% 50% !important;	
-}
-
-nav.threeColumnList  ul li a > div.msg-read-false {
-	background: none !important;
+	background: transparent url(../img/links/new-message-icon.png) no-repeat 50% 50% !important;	
 }
 
 nav.threeColumnList  ul li a > div.msg-body {
@@ -1536,7 +1536,7 @@ body.confirmation .confirm2 {
 	}
 	
 	nav.threeColumnList  ul li a > div.msg-read-false {
-		background-image: transparent url(../img/link/new-message-icon@2x.png);	
+		background-image: transparent url(../img/links/new-message-icon@2x.png);	
 	}
 	
 	nav#menu ul li.booking {

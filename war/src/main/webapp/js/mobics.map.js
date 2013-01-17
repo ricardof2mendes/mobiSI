@@ -57,7 +57,7 @@ Map.prototype = {
 			this.selectStyle.strokeColor = '#000';
 
 			this.greenStyle = OpenLayers.Util.extend({}, this.defaultStyle);
-			this.greenStyle.fillOpacity = 0.1;
+			this.greenStyle.fillOpacity = 0.3;
 			this.greenStyle.fillColor = '#ACE228';
 			this.greenStyle.strokeColor = '#94C222';
 
@@ -70,6 +70,7 @@ Map.prototype = {
 			this.yellowStyle.strokeColor = '#B7AD00';
 			
 			this.locationDefautlStyle = OpenLayers.Util.extend({}, OpenLayers.Feature.Vector.style['default']);
+			this.locationDefautlStyle.graphicOpacity = 1; 
 			this.locationDefautlStyle.externalGraphic = '../img/map/mylocation.png';
 			this.locationDefautlStyle.graphicHeight = 25;
 			this.locationDefautlStyle.graphicWidth = 21;
@@ -219,7 +220,7 @@ Map.prototype = {
 		queryData : function(query) {
 			var that = this;
 			if(query.length > 0) {
-				$.get(contextPath + '/booking/BookingInterest.action?getAdressFromQuery=&query=' + encodeURI(query), 
+				$.get(contextPath + '/booking/BookingInterest.action?getAddressFromQuery=&query=' + encodeURI(query), 
 						function(data, textStatus, jqXHR){
 							if (jqXHR.getResponseHeader('Stripes-Success') === 'OK') {
 								that.processStreet(eval(data));
@@ -347,10 +348,12 @@ Map.prototype = {
 			var selectedFeature = null,
 				that = this;
 			
+			this.points = [];
+			
 			// set style
 			var style = new OpenLayers.StyleMap({
-					'default': this.defaultStyle,
-		            'select' : this.selectStyle
+					'default': this.locationDefautlStyle,
+		            'select' : this.locationSelectStyle
 	        	});
 			
 			// remove any prior object layer
@@ -391,7 +394,6 @@ Map.prototype = {
 			
 			// process the return data with streets
 			if(returnData) {
-				this.points = [];
 				$(returnData).each(function(){
 					var point = 
 						new OpenLayers.Geometry.Point(this.longitude, this.latitude).transform(that.mapDisplayProjection, that.map.getProjectionObject());
@@ -431,9 +433,11 @@ Map.prototype = {
 
 			// timeout to avoid geolocation override allready selected
 			window.setTimeout(function(){
-				
 				// add geolocation updates
 				geolocate.events.register('locationupdated', geolocate, function(e) {
+					// if we have geolocation chage the placeholder input
+					$('#query').attr('placeholder', that.searchParams.placeholder);
+					
 					var point = new OpenLayers.Geometry.Point(e.position.coords.longitude, e.position.coords.latitude).transform(that.mapDisplayProjection, that.map.getProjectionObject());
 					
 					if(!that.mylatlong.point || that.mylatlong.point.x !== point.x || that.mylatlong.point.y !== point.y) {
@@ -460,17 +464,14 @@ Map.prototype = {
 										}, null);
 					    objectVector.addFeatures(feature);
 					    
-					    if(selectedFeature.attributes.location === true) {
+					    if(!selectedFeature || selectedFeature.attributes.location === true) {
 					    	selectCtrl.select(feature);
 						}
+					    that.processList(returnData);
 					}
 						
 				});
-				
-				// Just log geolocation failure
-				geolocate.events.register('locationfailed',this,function() {
-				    OpenLayers.Console.log('Location detection failed');
-				});
+						
 	
 				geolocate.watch = true;
 			    geolocate.activate();
@@ -482,17 +483,32 @@ Map.prototype = {
 			if(selectedFeature) {
 				selectCtrl.select(selectedFeature);
 				this.processList(returnData);
+			} else { // or clear if none selected
+				this.cleanRadius();
+				this.processList();
+				this.updateWhiteBar({car : null});
+				this.map.zoomTo(1);
 			}
 		},
 		
+		/**
+		 * Process the data by putting it on the list
+		 * @param data
+		 */
 		processList : function(data) {
 			var html = '';
-			if(this.mylatlon) {
-				html += '<li><a href="#">'+this.searchParams.placeholder+'</a></li>';
+			$('#results').html(html);
+			var url = $('#linkToBeUsedInList').attr('href'),
+				aux = url;
+			
+			if(this.mylatlong.point) {
+				aux += '&latitude=' + this.mylatlong.latitude + '&longitude=' + this.mylatlong.longitude + '&address='; 
+				html += '<li><a href="'+aux+'"><div><img src="'+contextPath+'/img/map/mylocation.png"/></div><div class="ellipsis" ><span>'+this.searchParams.placeholder+'</span></div></a></li>';
 			}
 			if(data) {
 				$(data).each(function(){
-					html += '<li><a href="#">'+this.displayName+'</a></li>';
+					aux = url + '&latitude=' + this.latitude + '&longitude=' + this.longitude + '&address=' + this.displayName;
+					html += '<li><a href="'+aux+'"><div><img src="'+contextPath+'/img/map/mylocation.png"/></div><div class="ellipsis" ><span>'+ this.displayName +'</span></div></a></li>';
 				});
 			}
 			$('#results').html(html);
@@ -508,10 +524,8 @@ Map.prototype = {
 			// if radius set circle
 			if(this.searchParams && this.searchParams.distance && this.searchParams.distance.length > 0) {
 				// remove any previous radius layer
-				var aux = this.map.getLayersByName('radiusLocation');
-				if(aux && aux.length > 0) {
-					this.map.removeLayer(aux[0]);
-				}
+				this.cleanRadius();
+				// add new radius
 				var circleLayer = new OpenLayers.Layer.Vector('radiusLocation', {style: this.redStyle});
     			this.map.addLayer(circleLayer);
 				// radius calculation with spherical mercator scale h=1/cos(lat)
@@ -522,10 +536,27 @@ Map.prototype = {
 
 				bounds.extend(polygon.getBounds());
 			} 
+			
+			if(this.points.length > 1) {
+				$(this.points).each(function(){
+					bounds.extend(this.getBounds());
+				});
+			}
+			
 			// zoom contents
 			bounds.toBBOX();
 			this.map.zoomToExtent(bounds, false);
-
+			if(this.points.length > 1) {
+				this.map.zoomTo(this.map.zoom-1);
+			}
+		},
+		
+		/** Clean the radius from map */
+		cleanRadius : function() {
+			var aux = this.map.getLayersByName('radiusLocation');
+			if(aux && aux.length > 0) {
+				this.map.removeLayer(aux[0]);
+			}
 		},
 
 		/**
@@ -570,10 +601,7 @@ Map.prototype = {
 				// if radius set circle and zoom contents
 				if(that.searchParams && that.searchParams.distance && that.searchParams.distance.length > 0) {
 					// remove any previous radius layer
-					var aux = this.map.getLayersByName('radiusLocation');
-					if(aux && aux.length > 0) {
-						this.map.removeLayer(aux[0]);
-					}
+					that.cleanRadius();
 					var circleLayer = new OpenLayers.Layer.Vector('radiusLocation', {style: that.redStyle});
 					that.map.addLayer(circleLayer);
 					var radius = that.searchParams.distance/Math.cos(that.mylatlong.latitude * (Math.PI / 180));
@@ -654,7 +682,6 @@ Map.prototype = {
 				$('#whiteBar nav').show();
 				$('#address').val(options.street.displayName);
 				$('#choosenAddress').html(options.street.displayName);
-				console.log(options.street.latitude +" "+ options.street.longitude);
 				$('#latitude').html(options.street.latitude);
 				$('#longitude').html(options.street.longitude);
 			} else {

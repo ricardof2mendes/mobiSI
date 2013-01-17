@@ -51,7 +51,7 @@
 						<li class="detail white">
 							<span><fmt:message key="damage.report.date"/></span>
 							<span class="customComboBox">
-								<stripes:text  id="startDate" name="date" class="editable"
+								<stripes:text  id="reportDamageDate" name="date" class="editable"
 									   placeholder="${placeholderDate}" formatPattern="${applicationScope.configuration.dateTimePattern}"/>
 							</span>
 						</li>

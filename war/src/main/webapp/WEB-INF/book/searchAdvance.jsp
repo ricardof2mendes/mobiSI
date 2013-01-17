@@ -51,7 +51,7 @@
 				</nav>
 			</section>
 			<section class="submit">
-				<stripes:submit name="searchCarsAdvance" class="submitBtn">
+				<stripes:submit name="searchCarsAdvance" class="submitBtn gray">
 					<fmt:message key="book.advance.search.button"/>
 				</stripes:submit>
 			</section>

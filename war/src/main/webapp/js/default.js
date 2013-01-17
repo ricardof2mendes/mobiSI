@@ -5,19 +5,6 @@ $(document).ready(function() {
 	'use strict';
 	
 	// preventCacheOnIos();
-	
-	// Get rid of address bar on iphone/ipod
-	var fixSize = function() {
-	    window.scrollTo(0,0);
-	    document.body.style.height = '100%';
-	    if (!(/(iphone|ipod)/.test(navigator.userAgent.toLowerCase()))) {
-	        if (document.body.parentNode) {
-	            document.body.parentNode.style.height = '100%';
-	        }
-	    }
-	};
-	setTimeout(fixSize, 700);
-	setTimeout(fixSize, 1500);
 
 	/** 
 	 * Menu open/close 
@@ -164,37 +151,46 @@ $(document).ready(function() {
  	 */
  	if($('#startDate').length > 0){
  		var now = new Date();
-	    $('#startDate').scroller({
-	    	preset: 'datetime',
+	    $('#startDate').mobiscroll().datetime({
+	    	setText: 'OK',
 	    	dateFormat: DATE_PATTERN,
 	    	dateOrder: 'ddmmyy',
 	    	timeFormat: TIME_PATTERN,
 	    	timeWheels: 'HHii',
 	        minDate: new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds(), now.getMilliseconds()),
 	        display: 'modal',
-	        theme: 'ios',
-	        width: 45,
 	        mode: 'scroller',
-	        onShow: function(html, inst) {
-	        }
+	        width: 42
 	    });    
  	}
  	
  	if($('#endDate').length > 0){
 	 	var now = new Date();
-	    $('#endDate').scroller({
-	    	preset: 'datetime',
+	    $('#endDate').mobiscroll().datetime({
+	    	setText: 'OK',
 	    	dateFormat: DATE_PATTERN,
 	    	dateOrder: 'ddmmyy',
 	    	timeFormat: TIME_PATTERN,
 	    	timeWheels: 'HHii',
 	        minDate: new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours()+1, now.getMinutes(), now.getSeconds(), now.getMilliseconds()),
 	        display: 'modal',
-	        theme: 'ios',
-	        width: 45,
 	        mode: 'scroller',
-	        onShow: function(html, inst) {
-	        }
+	        width: 42
+	    });    
+ 	}
+ 	
+ 	if($('#reportDamageDate').length > 0){
+	 	var now = new Date();
+	    $('#reportDamageDate').mobiscroll().datetime({
+	    	setText: 'OK',
+	    	dateFormat: DATE_PATTERN,
+	    	dateOrder: 'ddmmyy',
+	    	timeFormat: TIME_PATTERN,
+	    	timeWheels: 'HHii',
+	        maxDate: new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds(), now.getMilliseconds()),
+	        display: 'modal',
+	        mode: 'scroller',
+	        width: 42
 	    });    
  	}
  	
@@ -313,6 +309,64 @@ $(document).ready(function() {
  		e.stopPropagation();
  		$('#smsOption').prop('disabled', ! $('#smsOption').prop('disabled'));
  		toogleSort('#communicationChannel', '#sms', '#sms');
+ 	});
+ 	
+ 	
+ 	if($('#statePooling').length > 0) {
+ 		// check the state
+ 		var data = $('#state').text();
+ 		var WAITING = 'WAIT_OBS_';
+ 		var ERROR = 'IN_ERROR';
+ 		
+ 		var url = {state : CONTEXT_PATH, 
+ 				   end : CONTEXT_PATH};
+ 		
+ 		if($('#statePooling').hasClass('currentTrip')) {
+ 			url.state += '/trip/Trip.action?getState=';
+ 			url.end += '/trip/Trip.action?showMessage=';
+ 		} else {
+ 			url.state += '/recent/RecentActivities.action?getState=&activityCode=' + $('#activityCode').text();
+ 			url.end += '/recent/RecentActivities.action?showMessage=&activityCode=' + $('#activityCode').text();
+ 		}
+ 		
+ 		if(data.substring(0, WAITING.length) === WAITING) {
+ 			setInterval(function(){
+ 				var that = this;
+ 				$.get(url.state, 
+ 						function(data, textStatus, jqXHR){
+ 							if (jqXHR.getResponseHeader('Stripes-Success') === 'OK') {
+ 								var evaluated = eval(data);
+ 								if(evaluated === ERROR) {
+ 									clearInterval(that); 
+ 									$('body').addClass('confirmation');
+ 									$('body').on('touchmove', 'body', function(e){
+ 										e.preventDefault();
+ 									});
+ 						 		} else if(evaluated.substring(0, WAITING.length) !== WAITING){
+ 						 			window.location.href = url.end;
+ 						 		}
+ 					        } else {
+ 					            console.log('An error has occurred or the user\'s session has expired!');
+ 					        }
+ 					    });	
+ 			}, 3000);
+ 		} else if(data === ERROR) {
+ 			$('body').addClass('confirmation');
+			$('body').on('touchmove', 'body', function(e){
+				e.preventDefault();
+			});
+ 		}
+ 	}
+ 	
+ 	// On click booking error confirm box button
+ 	$('#closeBookingImmediate').on('click', function(e) {
+ 		e.preventDefault();
+ 		window.location.href = CONTEXT_PATH + '/trip/Trip.action?endTrip=';
+ 	});
+ 	
+ 	$('#closeBookingAdvance').on('click', function(e) {
+ 		e.preventDefault();
+ 		window.location.href = CONTEXT_PATH + '/recent/RecentActivities.action?cancelAdvanceBooking=&activityCode='+$('#activityCode').text();
  	});
 });
 

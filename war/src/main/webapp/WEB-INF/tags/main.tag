@@ -24,7 +24,6 @@
         <!-- Calendar -->
         <c:if test="${addCalendar}">
 	        <link rel="stylesheet" href="${contextPath}/css/mobiscroll.core-2.0.3.css" />
-	        <link rel="stylesheet" href="${contextPath}/css/mobiscroll.ios-2.0.2.css" />
         </c:if>
     </head>
     <body>
@@ -46,9 +45,7 @@
         	var TIME_PATTERN = '${applicationScope.configuration.jsTimePattern}';
         </script>
         <c:if test="${addCalendar}">
-      		<script src="${contextPath}/js/mobiscroll.zepto-2.0.3.js"></script>
-      		<script src="${contextPath}/js/mobiscroll.core-2.0.3.js"></script>
-      		<script src="${contextPath}/js/mobiscroll.datetime-2.0.3.js"></script>      		
+      		<script src="${contextPath}/js/mobiscroll-2.3.1.custom.min.js"></script>      		
         </c:if>
         <script src="${contextPath}/js/default.js"></script>
     </body>

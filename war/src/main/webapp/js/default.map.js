@@ -12,14 +12,46 @@ $(document).ready(function() {
 		toggleFx('#legend', true);
 	});
 	
+	var toggle = function() {
+		$('#resultlist').toggle();
+		$('#resultmap').toggleClass('hidden');
+		$('#container').toggle();
+		$('#whiteBar').toggle();
+		if($('#addressList').css('display') === 'none') {
+			$('#addressList').show();
+		} else {
+			$('#addressList').hide();
+		}
+	};
+	
 	$('#resultlist').on('click', function(e) {
 		e.preventDefault();
-		toggleSearchList();
+		toggle();
 	});
 	$('#resultmap').on('click', function(e) {
 		e.preventDefault();
-		toggleSearchList();
+		toggle();
 	});
+	
+	/** delele function*/
+	$('#query').on('keyup', function() {
+		var that = this;
+ 		// put cross to delete input content
+ 		if($(this).val().length > 0){
+ 			$('#streetSearchForm > div > div > div').addClass('delete')
+ 				.on('click', function() {
+ 					$(that).val('');
+ 					Map.change($(that).val());
+ 					$('#streetSearchForm > div > div > div').removeClass('delete').off('click');
+ 			});
+ 		} else {
+ 			$('#streetSearchForm > div > div > div').removeClass('delete').off('click');
+ 		}
+	});
+	
+	if($('#query').length > 0 && $('#query').val().length > 0) {
+		$('#query').trigger('keyup');
+	}
 	
 	// Draw the map
 	var configuration = {};
@@ -61,29 +93,12 @@ $(document).ready(function() {
 	Map.create(configuration);
 });
 
-function toggleSearchList() {
-	$('#resultlist').toggle();
-	if($('#resultmap').css('display') === 'none') {
-		$('#resultmap').show();
-	} else {
-		$('#resultmap').hide();
-	}
-	$('#resultmap').toggle();
-	$('#container').toggle();
-	$('#whiteBar').toggle();
-	if($('#addressList').css('display') === 'none') {
-		$('#addressList').show();
-	} else {
-		$('#addressList').hide();
-	}
-}
-
-
 /**
- * Toggle element
+ * Toggle Menu or Legend
  * @param element
  */
-function toggleFx(element, animate) {
+// FIXME this styles should be in css
+var toggleFx = function (element, animate) {
 	if($(element).css('display') == 'none') {
 		if(element.indexOf('menu') > 0) {
 			if($('#streetsearch').length > 0) {
@@ -130,4 +145,4 @@ function toggleFx(element, animate) {
 			$('#streetsearch').show();
 		}
 	}
-}
+};

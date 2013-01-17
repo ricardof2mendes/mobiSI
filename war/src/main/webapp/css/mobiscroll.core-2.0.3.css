@@ -26,7 +26,7 @@
 /* Datewheel overlay background */
 .dwo {
     width: 100%;
-    background: #000;
+    background: lightGrey;
     position: absolute;
     top: 0;
     left: 0;

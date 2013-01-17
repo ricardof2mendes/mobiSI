@@ -20,8 +20,8 @@
         <link rel="icon" href="${contextPath}/favicon.ico" sizes="16x16 32x32" />
 
 		<!-- TODO CSS -->
-        <link rel="stylesheet" href="${contextPath}/css/default.css" />
         <link rel="stylesheet" href="${contextPath}/css/normalize.css" />
+        <link rel="stylesheet" href="${contextPath}/css/default.css" />
         <link rel="stylesheet" href="${contextPath}/css/add2home.css" />
     </head>
     <body class="${actionBean.splashScreenStyle}">

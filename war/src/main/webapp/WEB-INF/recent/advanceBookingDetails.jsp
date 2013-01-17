@@ -4,6 +4,34 @@
 
 <t:main title="${title}">
 	<jsp:include page="/WEB-INF/common/message_error.jsp"/>
+	
+	<span id="state" class="hidden">${actionBean.trip.state}</span>
+	<span id="activityCode" class="hidden">${actionBean.trip.bookingNumber}</span>
+	
+	<article id="statePooling" class="${actionBean.trip.state != 'WAIT_OBS_ADVANCE' ? 'hidden' : ''}">
+		<section>
+			<h2>
+				<fmt:message key="current.trip.validating"/>
+			</h2>
+			<div>
+				<fmt:message key="current.trip.validating.seconds"/>
+			</div>
+		</section>
+	</article>
+	
+	<!-- Modal window for confirmation -->
+	<div class="confirm2">
+		<article>
+			<section>
+				<h2><fmt:message key="current.trip.booking.cancelled"/></h2>
+				<h3 id="title1"><fmt:message key="current.trip.booking.cancelled.text"/></h3>
+				<a id="closeBookingImmediate" href="#" class="alertBtn gray" >
+					<fmt:message key="geolocation.alert.button.ok"/>
+				</a>
+			</section>
+		</article>
+	</div>
+	
 	<article>
 		<section>
 			<nav class="panel">
@@ -96,25 +124,26 @@
 					</li>
 				</ul>
 			</nav>
-			<div class="cleaner"></div>
-			<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.booking.EditAvanceBookingActionBean" class="linkBtn gray" addSourcePage="true">
-				<stripes:param name="activityCode" value="${actionBean.trip.bookingNumber}"/>
-				<fmt:message key="trip.detail.advance.booking.edit"/>
-			</stripes:link>
-			<a id="openConfirm" href="#" class="linkBtn orangered">
-				<fmt:message key="trip.detail.advance.booking.cancel"/>
-			</a>
-			<div class="warningMessage">
-				<c:choose>
-					<c:when test="${actionBean.trip.cancelCost != null}">
-						<fmt:message key="trip.detail.advance.booking.cancel.cost">
-							<fmt:param><mobi:formatMobics value="${actionBean.time}" type="time"/></fmt:param>
-							<fmt:param><mobi:formatMobics value="${actionBean.trip.cancelCost}" type="currencySymbol"/></fmt:param>
-						</fmt:message>
-					</c:when>
-					<c:otherwise><fmt:message key="trip.detail.advance.booking.cancel.no.fees"/></c:otherwise>
-				</c:choose>
-			</div>
+			<c:if test="${actionBean.trip.state != 'WAIT_OBS_ADVANCE' && actionBean.trip.state != 'IN_ERROR'}">
+				<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.booking.EditAvanceBookingActionBean" class="linkBtn gray" addSourcePage="true">
+					<stripes:param name="activityCode" value="${actionBean.trip.bookingNumber}"/>
+					<fmt:message key="trip.detail.advance.booking.edit"/>
+				</stripes:link>
+				<a id="openConfirm" href="#" class="linkBtn orangered">
+					<fmt:message key="trip.detail.advance.booking.cancel"/>
+				</a>
+				<div class="warningMessage">
+					<c:choose>
+						<c:when test="${actionBean.trip.cancelCost != null}">
+							<fmt:message key="trip.detail.advance.booking.cancel.cost">
+								<fmt:param><mobi:formatMobics value="${actionBean.time}" type="time"/></fmt:param>
+								<fmt:param><mobi:formatMobics value="${actionBean.trip.cancelCost}" type="currencySymbol"/></fmt:param>
+							</fmt:message>
+						</c:when>
+						<c:otherwise><fmt:message key="trip.detail.advance.booking.cancel.no.fees"/></c:otherwise>
+					</c:choose>
+				</div>
+			</c:if>
 		</section>
 	</article>
 	
