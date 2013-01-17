@@ -12,7 +12,6 @@
  */
 package com.criticalsoftware.mobics.presentation.action.contacts;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.rmi.RemoteException;
@@ -36,9 +35,6 @@ import net.sourceforge.stripes.validation.ValidationErrors;
 import net.sourceforge.stripes.validation.ValidationMethod;
 import net.sourceforge.stripes.validation.ValidationState;
 
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpStatus;
-import org.apache.commons.httpclient.methods.GetMethod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -122,17 +118,6 @@ public class ContactsAndDamageReportActionBean extends BaseActionBean {
         if (data != null) {
             resolution = new StreamingResolution(data.getContentType(), data.getInputStream());
         }
-        // FIXME to be removed just for testing porpuses
-        else {
-            HttpClient http = new HttpClient();
-            GetMethod method = new GetMethod();
-            method.setPath("http://www.westminster.gov.uk/assets/images/map-icons/CarClub-off.png");
-            int status = http.executeMethod(method);
-            if (status == HttpStatus.SC_OK) {
-                resolution = new StreamingResolution(method.getResponseHeader("Content-Type").getValue(),
-                        new ByteArrayInputStream(method.getResponseBody()));
-            }
-        }
         return resolution;
     }
 
@@ -215,6 +200,9 @@ public class ContactsAndDamageReportActionBean extends BaseActionBean {
     public void validate(ValidationErrors errors) {
         if (car == null || car.getLicensePlate() == null) {
             errors.addGlobalError(new LocalizableError("damage.report.no.results.found"));
+        }
+        if (date.after(new Date())) {
+            errors.addGlobalError(new LocalizableError("damage.report.date.not.allowed"));
         }
     }
 

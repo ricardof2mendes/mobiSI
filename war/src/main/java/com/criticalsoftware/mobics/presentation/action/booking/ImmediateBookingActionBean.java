@@ -190,7 +190,7 @@ public class ImmediateBookingActionBean extends BookingActionBean {
 
     @ValidationMethod(on = { "licensePlateBook", "nearestCarBook" }, when = ValidationState.NO_ERRORS, priority = 2)
     public void validateCar(ValidationErrors errors) {
-        if (!car.getState().equals(CarState.AVAILABLE.name())) {
+        if (!CarState.AVAILABLE.name().equals(car.getState())) {
             errors.addGlobalError(new LocalizableError("error.CarNotAvailableForBookingExceptionException"));
         }
     }
@@ -272,9 +272,8 @@ public class ImmediateBookingActionBean extends BookingActionBean {
                 AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
                         .getPassword()));
         bookingWSServiceStub.createImmediateBookingWithCustomerPin(licensePlate, String.valueOf(pin));
-        getContext().getMessages().add(new LocalizableMessage("car.details.book.done"));
-
-        return new RedirectResolution(TripActionBean.class).flash(this);
+        
+        return new RedirectResolution(TripActionBean.class);
     }
 
     // --------------------------------------------------

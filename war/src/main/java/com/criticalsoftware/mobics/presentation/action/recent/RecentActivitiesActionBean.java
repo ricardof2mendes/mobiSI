@@ -16,6 +16,8 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.DontValidate;
@@ -23,7 +25,11 @@ import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.LocalizableMessage;
 import net.sourceforge.stripes.action.RedirectResolution;
 import net.sourceforge.stripes.action.Resolution;
+import net.sourceforge.stripes.ajax.JavaScriptResolution;
 import net.sourceforge.stripes.validation.Validate;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.criticalsoftware.mobics.booking.BookingInterestDTO;
 import com.criticalsoftware.mobics.booking.CustomerActivityEnum;
@@ -46,6 +52,8 @@ import com.criticalsoftware.mobics.proxy.booking.UnauthorizedCustomerExceptionEx
  */
 @MobiCSSecure
 public class RecentActivitiesActionBean extends BaseActionBean {
+    
+    private static final Logger LOGGER = LoggerFactory.getLogger(RecentActivitiesActionBean.class);
 
     private CustomerActivityListDTO[] recents;
 
@@ -55,8 +63,9 @@ public class RecentActivitiesActionBean extends BaseActionBean {
 
     private BigDecimal time;
 
-    @Validate(required = true, on = { "tripDetails", "bookingDetails", "advanceBookingDetails",
-            "cancelAdvanceBooking"})
+    @Validate(
+            required = true,
+            on = { "tripDetails", "bookingDetails", "advanceBookingDetails", "cancelAdvanceBooking" })
     private String activityCode;
 
     /**
@@ -76,11 +85,10 @@ public class RecentActivitiesActionBean extends BaseActionBean {
         bookingWSServiceStub._getServiceClient().addHeader(
                 AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
                         .getPassword()));
-        Calendar begin = Calendar.getInstance(), end = Calendar.getInstance();
+        Calendar begin = Calendar.getInstance();
         begin.add(Calendar.MONTH, -Configuration.INSTANCE.getRecentActivitiesFilterMonthGap());
-        end.add(Calendar.MONTH, Configuration.INSTANCE.getRecentActivitiesFilterMonthGap());
 
-        recents = bookingWSServiceStub.getRecentActivities(begin, end, CustomerActivityEnum.ALL.getValue());
+        recents = bookingWSServiceStub.getRecentActivities(begin, null, CustomerActivityEnum.ALL.getValue());
 
         return new ForwardResolution("/WEB-INF/recent/recentActivities.jsp");
     }
@@ -122,7 +130,7 @@ public class RecentActivitiesActionBean extends BaseActionBean {
                         .getPassword()));
 
         trip = bookingWSServiceStub.getTripDetails(activityCode);
-        // FIXME falta um servico para devolver o tempo
+        // FIXME this property should be replaced by cancelTime from trip object
         time = new BigDecimal(3600);
 
         return new ForwardResolution("/WEB-INF/recent/advanceBookingDetails.jsp");
@@ -148,10 +156,51 @@ public class RecentActivitiesActionBean extends BaseActionBean {
                         .getPassword()));
 
         bookingWSServiceStub.cancelAdvanceBooking(activityCode);
-        
+
         getContext().getMessages().add(new LocalizableMessage("trip.detail.advance.booking.cancel.success"));
 
         return new RedirectResolution(this.getClass()).flash(this);
+    }
+
+    /**
+     * Get the advance booking state
+     * @return booking state
+     * @throws RemoteException
+     * @throws UnsupportedEncodingException
+     */
+    public Resolution getState() throws RemoteException, UnsupportedEncodingException  {
+        BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
+                Configuration.INSTANCE.getBookingEndpoint());
+        bookingWSServiceStub._getServiceClient().addHeader(
+                AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
+                        .getPassword()));
+        
+        try {
+            trip = bookingWSServiceStub.getTripDetails(activityCode);
+        } catch (BookingNotFoundExceptionException e) {
+            LOGGER.error("Booking not found", e);
+        }
+        
+        getContext().getResponse().setHeader("Stripes-Success", "OK");
+
+        return new JavaScriptResolution(trip == null? null : trip.getState());
+    }
+
+    /**
+     * @return
+     * @throws RemoteException
+     * @throws UnsupportedEncodingException
+     * @throws CustomerNotFoundExceptionException
+     */
+    public Resolution showMessage() throws RemoteException, UnsupportedEncodingException,
+            CustomerNotFoundExceptionException {
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("advanceBookingDetails", "");
+        params.put("activityCode", activityCode);
+
+        getContext().getMessages().add(new LocalizableMessage("car.details.book.done"));
+
+        return new RedirectResolution(this.getClass()).addParameters(params).flash(this);
     }
 
     /**
@@ -204,16 +253,19 @@ public class RecentActivitiesActionBean extends BaseActionBean {
         }
         return location;
     }
-    
+
     /**
      * Get the booking car location
+     * 
      * @return
      */
     public String getBookingLocation() {
         String location = new LocalizableMessage("application.value.not.available")
                 .getMessage(getContext().getLocale());
-        if (booking.getLocation()!= null && booking.getLocation().getLatitude() != null && booking.getLocation().getLongitude() != null) {
-            location = GeolocationUtil.getAddressFromCoordinates(booking.getLocation().getLatitude().toString(), booking.getLocation().getLongitude().toString());
+        if (booking.getLocation() != null && booking.getLocation().getLatitude() != null
+                && booking.getLocation().getLongitude() != null) {
+            location = GeolocationUtil.getAddressFromCoordinates(booking.getLocation().getLatitude().toString(),
+                    booking.getLocation().getLongitude().toString());
         }
         return location;
     }

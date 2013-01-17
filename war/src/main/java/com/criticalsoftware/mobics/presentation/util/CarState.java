@@ -17,5 +17,5 @@ package com.criticalsoftware.mobics.presentation.util;
  * @version $Revision: $
  */
 public enum CarState {
-    AVAILABLE
+    AVAILABLE, IN_USE, ON_TRIP, CLOSED, CANCELED, BOOKED, WAIT_OBS_ADVANCE, WAIT_OBS_IMMEDIATE, IN_ERROR
 }

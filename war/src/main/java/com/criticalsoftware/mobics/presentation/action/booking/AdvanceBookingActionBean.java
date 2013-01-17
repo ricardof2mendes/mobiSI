@@ -186,14 +186,15 @@ public class AdvanceBookingActionBean extends BookingActionBean {
         Calendar start = Calendar.getInstance(), end = Calendar.getInstance();
         start.setTimeInMillis(startDate.getTime());
         end.setTimeInMillis(endDate.getTime());
+
         BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
                 Configuration.INSTANCE.getBookingEndpoint());
         bookingWSServiceStub._getServiceClient().addHeader(
                 AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
                         .getPassword()));
         bookingWSServiceStub.createAdvanceBookingWithCustomerPin(licensePlate, String.valueOf(pin), start, end);
-        getContext().getMessages().add(new LocalizableMessage("car.details.book.done"));
 
+        getContext().getMessages().add(new LocalizableMessage("car.details.advance.book.done"));
         return new RedirectResolution(RecentActivitiesActionBean.class).flash(this);
     }
 

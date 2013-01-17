@@ -17,7 +17,6 @@ import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.DontValidate;
@@ -32,9 +31,6 @@ import net.sourceforge.stripes.validation.ValidationErrors;
 import net.sourceforge.stripes.validation.ValidationMethod;
 import net.sourceforge.stripes.validation.ValidationState;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.criticalsoftware.mobics.miscellaneous.CarClassDTO;
 import com.criticalsoftware.mobics.presentation.action.BaseActionBean;
 import com.criticalsoftware.mobics.presentation.action.recent.RecentActivitiesActionBean;
@@ -43,7 +39,6 @@ import com.criticalsoftware.mobics.presentation.security.AuthenticationUtil;
 import com.criticalsoftware.mobics.presentation.security.MobiCSSecure;
 import com.criticalsoftware.mobics.presentation.util.Configuration;
 import com.criticalsoftware.mobics.presentation.util.GeolocationUtil;
-import com.criticalsoftware.mobics.presentation.util.PlaceDTO;
 import com.criticalsoftware.mobics.proxy.booking.BookingValidationExceptionException;
 import com.criticalsoftware.mobics.proxy.booking.BookingWSServiceStub;
 import com.criticalsoftware.mobics.proxy.booking.CarClassNotFoundExceptionException;
@@ -60,8 +55,6 @@ import com.criticalsoftware.mobics.proxy.miscellaneous.MiscellaneousWSServiceStu
 @MobiCSSecure
 public class BookingInterestActionBean extends BaseActionBean {
     
-    private static final Logger LOGGER = LoggerFactory.getLogger(BookingInterestActionBean.class);
-
     @Validate(required = true, on = "createBookingInterest", converter = DatetimeTypeConverter.class)
     private Date startDate;
 
@@ -80,7 +73,7 @@ public class BookingInterestActionBean extends BaseActionBean {
     @Validate(required = true, on = "createBookingInterest")
     private Integer stopSending;
 
-    @Validate(required = true, on = "createBookingInterest")
+    @Validate(required = true, on = "createBookingInterest", maxvalue = 99, maxlength=2)
     private Integer maxMessages;
 
     @Validate
@@ -114,7 +107,7 @@ public class BookingInterestActionBean extends BaseActionBean {
         c.set(Calendar.MINUTE, 0);
         c.set(Calendar.SECOND, 0);
         c.set(Calendar.MILLISECOND, 0);
-        startDate = startDate == null ? new Date(c.getTimeInMillis()) : startDate;
+        startDate = (startDate == null ? new Date(c.getTimeInMillis()) : startDate);
         maxMessages = maxMessages == null ? getContext().getUser().getCustomerPreferencesDTO()
                 .getNumberOfNotifications() : maxMessages;
         distance = distance == null ? getContext().getUser().getCustomerPreferencesDTO().getSearchRadius() : distance;
@@ -176,20 +169,17 @@ public class BookingInterestActionBean extends BaseActionBean {
      * Search adress in geolocation
      * 
      * @return
+     * @throws UnsupportedEncodingException 
      */
-    public Resolution getAdressFromQuery() {
+    public Resolution getAddressFromQuery() throws UnsupportedEncodingException {
         getContext().getResponse().setHeader("Stripes-Success", "OK");
-        
-        List<PlaceDTO> dtos = null;
-        try {
-            dtos = GeolocationUtil.getAddressFromText(query);
-        } catch (UnsupportedEncodingException e) {
-            LOGGER.error("License plate not found", e);
-        }
-        
-        return new JavaScriptResolution(dtos);
+        return new JavaScriptResolution(GeolocationUtil.getAddressFromText(query));
     }
     
+    /**
+     * 
+     * @return
+     */
     public Resolution getAdressFromCoordinates() {
         getContext().getResponse().setHeader("Stripes-Success", "OK");
         return new JavaScriptResolution(GeolocationUtil.getAddressFromCoordinates(latitude, longitude));

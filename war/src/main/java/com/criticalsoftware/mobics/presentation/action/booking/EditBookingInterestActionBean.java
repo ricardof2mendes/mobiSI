@@ -75,7 +75,7 @@ public class EditBookingInterestActionBean extends BaseActionBean {
     @Validate(required = true, on = "editBookingInterest")
     private Integer stopSending;
 
-    @Validate(required = true, on = "editBookingInterest")
+    @Validate(required = true, on = "editBookingInterest", maxvalue = 99, maxlength=2)
     private Integer maxMessages;
 
     @Validate(required = true, on = "createBookingInterest")
@@ -129,6 +129,8 @@ public class EditBookingInterestActionBean extends BaseActionBean {
      * @return
      * @throws RemoteException
      * @throws UnsupportedEncodingException
+     * @throws ExpiredBookingInterestExceptionException
+     * @throws BookingInterestNotFoundExceptionException
      * @throws OverlappedCarBookingExceptionException
      * @throws CarClassNotFoundExceptionException
      * @throws CustomerNotFoundExceptionException
@@ -136,8 +138,10 @@ public class EditBookingInterestActionBean extends BaseActionBean {
      * @throws IllegalDateExceptionException
      */
     public Resolution editBookingInterest() throws RemoteException, UnsupportedEncodingException,
-            OverlappedCarBookingExceptionException, CarClassNotFoundExceptionException, ExpiredBookingInterestExceptionException,
-            CustomerNotFoundExceptionException, BookingValidationExceptionException, IllegalDateExceptionException {
+            BookingInterestNotFoundExceptionException, OverlappedCarBookingExceptionException,
+            CarClassNotFoundExceptionException, CustomerNotFoundExceptionException,
+            BookingValidationExceptionException, IllegalDateExceptionException,
+            ExpiredBookingInterestExceptionException {
         BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
                 Configuration.INSTANCE.getBookingEndpoint());
         bookingWSServiceStub._getServiceClient().addHeader(
@@ -147,15 +151,17 @@ public class EditBookingInterestActionBean extends BaseActionBean {
         Calendar start = Calendar.getInstance();
         start.setTime(startDate);
 
-        bookingWSServiceStub.createBookingInterest(start, carClazz, fromMyCarClub, new BigDecimal(longitude),
-                new BigDecimal(latitude), distance.intValue(), startSending.intValue(), stopSending.intValue(),
-                maxMessages.intValue());
+        bookingWSServiceStub.updateBookingInterest(activityCode, getContext().getUser().getCarClub().getCarClubCode(),
+                start, carClazz, fromMyCarClub, new BigDecimal(longitude), new BigDecimal(latitude),
+                distance.intValue(), startSending.intValue(), stopSending.intValue(), maxMessages.intValue(),
+                Calendar.getInstance());
 
         getContext().getMessages().add(new LocalizableMessage("find.car.later.interest.created"));
         return new RedirectResolution(RecentActivitiesActionBean.class).flash(this);
     }
 
     public Resolution searchLocation() {
+        // TODO implement this
         return new ForwardResolution("/WEB-INF/book/streetLocation.jsp").addParameter("search", "street");
     }
 

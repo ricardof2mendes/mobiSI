@@ -69,7 +69,7 @@ public class PreferencesActionBean extends BaseActionBean {
     @Validate(required=true, on="save")
     private int timeToStopSending;
     
-    @Validate(required=true, on="save")
+    @Validate(required=true, on="save", maxvalue = 99, maxlength=2)
     private int numberOfNotifications;
     
     @Validate(required=true, on="save")
@@ -153,7 +153,7 @@ public class PreferencesActionBean extends BaseActionBean {
      */
     public CountryDTO[] getLanguages() throws RemoteException {
         //TODO check this getCountries not the same getLanguages!
-        return new MiscellaneousWSServiceStub(Configuration.INSTANCE.getMiscellaneousEnpoint()).getAllCountries();
+        return new MiscellaneousWSServiceStub(Configuration.INSTANCE.getMiscellaneousEnpoint()).getAllCountries(null);
     }
 
     /**

@@ -95,7 +95,7 @@ public class EditInformationContactActionBean extends AskPinActionBean {
                 AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
                         .getPassword()));
 
-        EditCustomerDTO customer = customerWSServiceStub.getCustomerDetails();
+        EditCustomerDTO customer = customerWSServiceStub.getCustomerDetails(null);
         if (customer != null) {
             this.address = customer.getAddress();
             if (customer.getCountry() != null) {
@@ -134,7 +134,7 @@ public class EditInformationContactActionBean extends AskPinActionBean {
     public CountryDTO[] getCountries() throws RemoteException {
         MiscellaneousWSServiceStub miscellaneousWSServiceStub = new MiscellaneousWSServiceStub(
                 Configuration.INSTANCE.getMiscellaneousEnpoint());
-        return miscellaneousWSServiceStub.getAllCountries();
+        return miscellaneousWSServiceStub.getAllCountries(null);
     }
 
     /**

@@ -119,6 +119,19 @@ public abstract class BaseActionBean implements ActionBean {
         }
         return header.replaceAll("_", "").toLowerCase();
     }
+    
+    /**
+     * Get the contacts image style
+     * 
+     * @return
+     * @throws CarClubCodeNotFoundExceptionException
+     * @throws CarClubWebSiteURLNotFoundExceptionException
+     * @throws RemoteException
+     * @throws AxisFault
+     */
+    public final String getContactImageStyle() throws AxisFault, RemoteException {
+        return getSplashScreenStyle().replaceAll(" ", "");
+    }
 
     /**
      * Check if action bean it has validation field errors

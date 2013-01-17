@@ -21,7 +21,11 @@ import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.LocalizableMessage;
 import net.sourceforge.stripes.action.RedirectResolution;
 import net.sourceforge.stripes.action.Resolution;
+import net.sourceforge.stripes.ajax.JavaScriptResolution;
 import net.sourceforge.stripes.validation.Validate;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.criticalsoftware.mobics.booking.CurrentTripDTO;
 import com.criticalsoftware.mobics.booking.TripDetailsDTO;
@@ -43,15 +47,18 @@ import com.criticalsoftware.mobics.proxy.car.CarWSServiceStub;
 @MobiCSSecure
 public class TripActionBean extends BaseActionBean {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(TripActionBean.class);
+
     private TripDetailsDTO last;
 
     private CurrentTripDTO current;
 
     @Validate(required = true, on = { "lockCar", "unlockCar", "signal" })
     private String licensePlate;
-
+    
     /**
      * Recent list resolution
+     * 
      * @return
      * @throws RemoteException
      * @throws UnsupportedEncodingException
@@ -60,7 +67,8 @@ public class TripActionBean extends BaseActionBean {
      */
     @DefaultHandler
     @DontValidate
-    public Resolution main() throws RemoteException, UnsupportedEncodingException, CustomerNotFoundExceptionException, BookingNotFoundExceptionException {
+    public Resolution main() throws RemoteException, UnsupportedEncodingException, CustomerNotFoundExceptionException,
+            BookingNotFoundExceptionException {
         ForwardResolution resolution = new ForwardResolution("/WEB-INF/trip/currentTrip.jsp");
         BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
                 Configuration.INSTANCE.getBookingEndpoint());
@@ -74,7 +82,7 @@ public class TripActionBean extends BaseActionBean {
             resolution = new ForwardResolution("/WEB-INF/trip/lastTrip.jsp");
             last = bookingWSServiceStub.getLastTripDetails();
         }
-
+        
         return resolution;
     }
 
@@ -88,7 +96,8 @@ public class TripActionBean extends BaseActionBean {
      * @throws com.criticalsoftware.mobics.proxy.car.CustomerNotFoundExceptionException
      */
     public Resolution lockCar() throws RemoteException, UnsupportedEncodingException,
-            CarLicensePlateNotFoundExceptionException, com.criticalsoftware.mobics.proxy.car.CustomerNotFoundExceptionException {
+            CarLicensePlateNotFoundExceptionException,
+            com.criticalsoftware.mobics.proxy.car.CustomerNotFoundExceptionException {
 
         CarWSServiceStub carWSServiceStub = new CarWSServiceStub(Configuration.INSTANCE.getCarEndpoint());
         carWSServiceStub._getServiceClient().addHeader(
@@ -111,7 +120,8 @@ public class TripActionBean extends BaseActionBean {
      * @throws com.criticalsoftware.mobics.proxy.car.CustomerNotFoundExceptionException
      */
     public Resolution unlockCar() throws RemoteException, UnsupportedEncodingException,
-            CarLicensePlateNotFoundExceptionException, com.criticalsoftware.mobics.proxy.car.CustomerNotFoundExceptionException {
+            CarLicensePlateNotFoundExceptionException,
+            com.criticalsoftware.mobics.proxy.car.CustomerNotFoundExceptionException {
 
         CarWSServiceStub carWSServiceStub = new CarWSServiceStub(Configuration.INSTANCE.getCarEndpoint());
         carWSServiceStub._getServiceClient().addHeader(
@@ -138,11 +148,28 @@ public class TripActionBean extends BaseActionBean {
         bookingWSServiceStub._getServiceClient().addHeader(
                 AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
                         .getPassword()));
+        
+        // TODO implement this (html+js+java)
+//      current = bookingWSServiceStub.getCurrentTripDetails();
+//      
+////      if (current != null)
+////          if(CarState.IN_USE.name().equals(current.getState()){
+////              
+////          } else if(CarState.IN_ERROR.name().equals(current.getState())){
+////              
+////          }
+////          
+////          if(ZoneCategoryEnum.NORMAL.getValue().equals(current.getCurrentZoneType()) || 
+////              ZoneCategoryEnum.PARKING.getValue().equals(current.getCurrentZoneType())) {
+////          bookingWSServiceStub.closeActiveBooking();
+////          getContext().getMessages().add(new LocalizableMessage("current.trip.end.trip.message"));
+////      }
 
         if (bookingWSServiceStub.isCustomerInOngoingTrip()) {
             bookingWSServiceStub.closeActiveBooking();
             getContext().getMessages().add(new LocalizableMessage("current.trip.end.trip.message"));
         }
+        // FIXME this should forward in case of none
         return new RedirectResolution(this.getClass()).flash(this);
     }
 
@@ -189,6 +216,44 @@ public class TripActionBean extends BaseActionBean {
                     .getEndLongitude().toString());
         }
         return location;
+    }
+
+    /**
+     * Get the car state
+     * 
+     * @return boolean
+     * @throws RemoteException
+     * @throws UnsupportedEncodingException
+     */
+    public Resolution getState() throws RemoteException, UnsupportedEncodingException {
+        BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
+                Configuration.INSTANCE.getBookingEndpoint());
+        bookingWSServiceStub._getServiceClient().addHeader(
+                AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
+                        .getPassword()));
+
+        try {
+            current = bookingWSServiceStub.getCurrentTripDetails();
+        } catch (CustomerNotFoundExceptionException e) {
+            LOGGER.error("Customer not found", e);
+        }
+
+        getContext().getResponse().setHeader("Stripes-Success", "OK");
+        
+        return new JavaScriptResolution(current == null ? null : current.getState());
+    }
+
+    /**
+     * 
+     * @return
+     * @throws RemoteException
+     * @throws UnsupportedEncodingException
+     * @throws CustomerNotFoundExceptionException
+     */
+    public Resolution showMessage() throws RemoteException, UnsupportedEncodingException,
+            CustomerNotFoundExceptionException {
+        getContext().getMessages().add(new LocalizableMessage("car.details.book.done"));
+        return new RedirectResolution(this.getClass()).flash(this);
     }
 
     /**

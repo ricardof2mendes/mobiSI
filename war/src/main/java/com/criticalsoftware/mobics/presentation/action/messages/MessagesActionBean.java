@@ -14,6 +14,8 @@ package com.criticalsoftware.mobics.presentation.action.messages;
 
 import java.io.UnsupportedEncodingException;
 import java.rmi.RemoteException;
+import java.util.HashMap;
+import java.util.Map;
 
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.DontValidate;
@@ -23,9 +25,11 @@ import net.sourceforge.stripes.validation.Validate;
 
 import com.criticalsoftware.mobics.booking.BookingInterestMessageDTO;
 import com.criticalsoftware.mobics.presentation.action.BaseActionBean;
+import com.criticalsoftware.mobics.presentation.action.booking.ImmediateBookingActionBean;
 import com.criticalsoftware.mobics.presentation.security.AuthenticationUtil;
 import com.criticalsoftware.mobics.presentation.security.MobiCSSecure;
 import com.criticalsoftware.mobics.presentation.util.Configuration;
+import com.criticalsoftware.mobics.proxy.booking.BookingNotificationNotFoundExceptionException;
 import com.criticalsoftware.mobics.proxy.booking.BookingWSServiceStub;
 import com.criticalsoftware.mobics.proxy.booking.CustomerNotFoundExceptionException;
 
@@ -40,8 +44,11 @@ public class MessagesActionBean extends BaseActionBean {
 
     private BookingInterestMessageDTO[] messages;
 
-    @Validate(required = true, on = "detail")
+    @Validate(required = true, on = "read")
     private String code;
+
+    @Validate(required = true, on = "read")
+    private String licensePlate;
 
     /**
      * Account page
@@ -62,25 +69,34 @@ public class MessagesActionBean extends BaseActionBean {
 
         messages = bookingWSServiceStub.getBookingMessages();
 
-//        if (messages == null) {
-//            messages = new BookingInterestMessageDTO[2];
-//            BookingInterestMessageDTO m = new BookingInterestMessageDTO();
-//            m.setCarName("carro de teste 123");
-//            m.setCarPlate("aaaaaaaa");
-//            m.setCode("code");
-//            m.setIsRead(true);
-//            messages[0] = m;
-//            m = new BookingInterestMessageDTO();
-//            m.setCarName("carro de teste 321");
-//            m.setCarPlate("bbbbbbb");
-//            m.setCode("code 2");
-//            m.setIsRead(false);
-//            messages[1] = m;
-//        }
-
         return new ForwardResolution("/WEB-INF/messages/messages.jsp");
     }
-    
+
+    /**
+     * Mark a message as read and forward the user to booking
+     * @return
+     * @throws UnsupportedEncodingException
+     * @throws RemoteException
+     * @throws CustomerNotFoundExceptionException
+     * @throws BookingNotificationNotFoundExceptionException
+     */
+    public Resolution read() throws UnsupportedEncodingException, RemoteException, CustomerNotFoundExceptionException,
+            BookingNotificationNotFoundExceptionException {
+        
+        BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
+                Configuration.INSTANCE.getBookingEndpoint());
+        bookingWSServiceStub._getServiceClient().addHeader(
+                AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
+                        .getPassword()));
+        bookingWSServiceStub.setBookingMessageAsRead(code);
+
+        Map<String, String> params = new HashMap<String, String>();
+        params.put("licensePlate", licensePlate);
+        params.put("licensePlateBook", "");
+
+        return new ForwardResolution(ImmediateBookingActionBean.class).addParameters(params);
+    }
+
     /**
      * Number of messages
      * 
@@ -102,5 +118,12 @@ public class MessagesActionBean extends BaseActionBean {
      */
     public void setCode(String code) {
         this.code = code;
+    }
+
+    /**
+     * @param licensePlate the licensePlate to set
+     */
+    public void setLicensePlate(String licensePlate) {
+        this.licensePlate = licensePlate;
     }
 }
