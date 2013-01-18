@@ -40,9 +40,6 @@
         <property name="mobics.config.max.results" value="99"/>
         <property name="mobics.config.min.results" value="1"/>
 		<property name="mobics.config.recents.filter.month.gap" value="6"/>
-		<!--Contacts-->
-		<property name="mobics.config.helpdesk.phone" value="210000000"/>
-		<property name="mobics.config.helpdesk.email" value="helpdesk@mobiag.pt"/>
 </system-properties>
 
 <!--
