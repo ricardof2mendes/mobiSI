@@ -21,17 +21,25 @@ import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.DontValidate;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.Resolution;
+import net.sourceforge.stripes.validation.LocalizableError;
 import net.sourceforge.stripes.validation.Validate;
+import net.sourceforge.stripes.validation.ValidationErrors;
+import net.sourceforge.stripes.validation.ValidationMethod;
+import net.sourceforge.stripes.validation.ValidationState;
 
 import com.criticalsoftware.mobics.booking.BookingInterestMessageDTO;
+import com.criticalsoftware.mobics.fleet.CarDTO;
 import com.criticalsoftware.mobics.presentation.action.BaseActionBean;
 import com.criticalsoftware.mobics.presentation.action.booking.ImmediateBookingActionBean;
 import com.criticalsoftware.mobics.presentation.security.AuthenticationUtil;
 import com.criticalsoftware.mobics.presentation.security.MobiCSSecure;
+import com.criticalsoftware.mobics.presentation.util.CarState;
 import com.criticalsoftware.mobics.presentation.util.Configuration;
 import com.criticalsoftware.mobics.proxy.booking.BookingNotificationNotFoundExceptionException;
 import com.criticalsoftware.mobics.proxy.booking.BookingWSServiceStub;
 import com.criticalsoftware.mobics.proxy.booking.CustomerNotFoundExceptionException;
+import com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException;
+import com.criticalsoftware.mobics.proxy.fleet.FleetWSServiceStub;
 
 /**
  * Messages action bean
@@ -73,7 +81,43 @@ public class MessagesActionBean extends BaseActionBean {
     }
 
     /**
+     * FIXME
+     * 
+     * @param errors
+     * @throws RemoteException
+     * @throws RemoteException
+     * @throws CarLicensePlateNotFoundExceptionException
+     * @throws UnsupportedEncodingException
+     * @throws CustomerNotFoundExceptionException
+     */
+
+    @ValidationMethod(on = "read", when = ValidationState.NO_ERRORS)
+    public void validation(ValidationErrors errors) throws RemoteException, RemoteException,
+            CarLicensePlateNotFoundExceptionException, UnsupportedEncodingException, CustomerNotFoundExceptionException {
+        CarDTO car = new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint()).getCarDetails(
+                licensePlate.toUpperCase(), null, null);
+        if (car == null) {
+            errors.addGlobalError(new LocalizableError("car.details.validation.car.not.available"));
+        }
+
+        if (!CarState.AVAILABLE.name().equals(car.getState())) {
+            errors.addGlobalError(new LocalizableError("error.CarNotAvailableForBookingExceptionException"));
+        }
+
+        if (errors.size() > 0) {
+            BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
+                    Configuration.INSTANCE.getBookingEndpoint());
+            bookingWSServiceStub._getServiceClient().addHeader(
+                    AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext()
+                            .getUser().getPassword()));
+
+            messages = bookingWSServiceStub.getBookingMessages();
+        }
+    }
+
+    /**
      * Mark a message as read and forward the user to booking
+     * 
      * @return
      * @throws UnsupportedEncodingException
      * @throws RemoteException
@@ -82,7 +126,7 @@ public class MessagesActionBean extends BaseActionBean {
      */
     public Resolution read() throws UnsupportedEncodingException, RemoteException, CustomerNotFoundExceptionException,
             BookingNotificationNotFoundExceptionException {
-        
+
         BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
                 Configuration.INSTANCE.getBookingEndpoint());
         bookingWSServiceStub._getServiceClient().addHeader(
@@ -92,7 +136,7 @@ public class MessagesActionBean extends BaseActionBean {
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("licensePlate", licensePlate);
-        params.put("licensePlateBook", "");
+        params.put("licensePlateBookFromMessages", "");
 
         return new ForwardResolution(ImmediateBookingActionBean.class).addParameters(params);
     }

@@ -37,8 +37,14 @@
 								<fmt:message key="car.details.distance"/> 
 							</span>
 							<span>
-								<mobi:formatMobics value="${actionBean.car.distance}" type="distance" />
-								
+								<c:choose>
+									<c:when test="${! empty actionBean.car.distance}">
+										<mobi:formatMobics value="${actionBean.car.distance}" type="distance" />									
+									</c:when>
+									<c:otherwise>
+										<fmt:message key="application.value.not.available"/>
+									</c:otherwise>
+								</c:choose>
 							</span>
 						</li>
 						<li class="link">

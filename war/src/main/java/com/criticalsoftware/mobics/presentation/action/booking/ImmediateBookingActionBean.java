@@ -132,6 +132,15 @@ public class ImmediateBookingActionBean extends BookingActionBean {
     public Resolution licensePlateBook() {
         return new ForwardResolution("/WEB-INF/book/carBookImmediate.jsp").addParameter("title", 1);
     }
+    
+    /**
+     * Car booking by license plate but for messages action bean usage
+     * 
+     * @return the page resolution
+     */
+    public Resolution licensePlateBookFromMessages() {
+        return new ForwardResolution("/WEB-INF/book/carBookImmediate.jsp").addParameter("title", 1);
+    }
 
     /**
      * Autocomplete list for search by license plate
@@ -145,8 +154,8 @@ public class ImmediateBookingActionBean extends BookingActionBean {
             cars = new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint()).getCarsByLicensePlate(
                     licensePlate, CarTypeEnum.NORMAL.getValue(), latitude != null ? new BigDecimal(latitude) : null,
                     longitude != null ? new BigDecimal(longitude) : null);
-            getContext().getResponse().setHeader("Stripes-Success", "OK");
         }
+        getContext().getResponse().setHeader("Stripes-Success", "OK");
         return new ForwardResolution("/WEB-INF/book/carListImmediate.jsp");
     }
 
@@ -273,7 +282,7 @@ public class ImmediateBookingActionBean extends BookingActionBean {
                         .getPassword()));
         bookingWSServiceStub.createImmediateBookingWithCustomerPin(licensePlate, String.valueOf(pin));
         
-        return new RedirectResolution(TripActionBean.class);
+        return new RedirectResolution(TripActionBean.class).flash(this);
     }
 
     // --------------------------------------------------

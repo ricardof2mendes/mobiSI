@@ -7,7 +7,9 @@
 <t:login title="${title}">
 	<article>
 		<section id="logo">
-		
+			<div>
+				<img src="${actionBean.splashScreenImage}" />
+			</div>
 		</section>
 		<section id="loginErrors">
 			<div class="globalErrors">

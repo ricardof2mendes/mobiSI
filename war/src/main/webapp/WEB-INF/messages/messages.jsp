@@ -26,7 +26,7 @@
 										<div>
 											<span><fmt:message key="messages.car.available"/></span>
 											<span>${msg.carName}&nbsp;${msg.carPlate}</span>
-											<span>${msg.code}</span>
+											<span><fmt:formatDate value="${msg.timestamp.time}" pattern="${applicationScope.configuration.dateTimePattern}"/></span>
 										</div>
 										<div>
 											<span>

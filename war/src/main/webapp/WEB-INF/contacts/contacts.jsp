@@ -21,13 +21,17 @@
 						</div>
 					</li>
 				
-					<li class="detail">
-						<span><fmt:message key="contacts.phone"/></span>
-						<span>${actionBean.context.user.carClub.carClubContactPhone}</span>
+					<li class="link">
+						<a href="tel:${actionBean.context.user.carClub.carClubContactPhone}">
+							<span><fmt:message key="contacts.phone"/></span>
+							<span>${actionBean.context.user.carClub.carClubContactPhone}</span>
+						</a>
 					</li>
-					<li class="detail">
-						<span><fmt:message key="contacts.email"/></span>
-						<span class="ellipsis">${actionBean.context.user.carClub.carClubContactEmail}</span>
+					<li class="link">
+						<a href="mailto:${actionBean.context.user.carClub.carClubContactEmail}">
+							<span><fmt:message key="contacts.email"/></span>
+							<span class="ellipsis">${actionBean.context.user.carClub.carClubContactEmail}</span>
+						</a>
 					</li>
 					<li class="link">
 						<stripes:link href="${actionBean.context.user.carClub.carClubWebSiteURL}" target="_blank">

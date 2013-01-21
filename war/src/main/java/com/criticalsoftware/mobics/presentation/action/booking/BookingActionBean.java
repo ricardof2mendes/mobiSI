@@ -46,8 +46,9 @@ public abstract class BookingActionBean extends BaseActionBean {
             @Validate(field = "zones", converter = ZoneDTOTypeConverter.class) })
     protected CarDTO car;
 
-    @Validate(required = true, on = { "getCarImage", "carLocation", "licensePlateBook", "showPin", "book",
-            "licensePlateBookAdvance", "parkLocation", "carData", "parkData", "carDetails" })
+    @Validate(required = true, on = { "getCarImage", "carLocation", "licensePlateBook", 
+            "licensePlateBookFromMessages", "showPin", "book", "licensePlateBookAdvance", 
+            "parkLocation", "carData", "parkData", "carDetails" })
     protected String licensePlate;
 
     @Validate(required = true, on = { "nearestCarBook"})
@@ -91,7 +92,7 @@ public abstract class BookingActionBean extends BaseActionBean {
      * @throws com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException
      */
     @ValidationMethod(
-            on = { "licensePlateBook", "showPin", "carDetails", "licensePlateBookAdvance" },
+            on = { "licensePlateBook", "licensePlateBookFromMessages", "showPin", "carDetails", "licensePlateBookAdvance" },
             when = ValidationState.NO_ERRORS,
             priority = 1)
     public void validateLicensePlateCar(ValidationErrors errors) throws RemoteException,

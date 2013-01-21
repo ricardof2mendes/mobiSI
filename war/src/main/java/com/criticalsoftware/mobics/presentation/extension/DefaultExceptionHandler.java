@@ -262,6 +262,22 @@ public class DefaultExceptionHandler implements AutoExceptionHandler {
     }
     
     /**
+     * Send them to the request page.
+     * 
+     * @param exception a Car Type Not Found
+     * @param request The HttpServletRequest
+     * @param response The HttpServletResponse
+     * @return A ForwardResolution
+     */
+    public Resolution handle(
+            com.criticalsoftware.mobics.proxy.booking.OverlappedCustomerTripExceptionException exception,
+            HttpServletRequest request,
+            HttpServletResponse response) {
+        LOGGER.error(exception.getMessage(), exception);
+        return insideJob("error.OverlappedCustomerTripExceptionException", request, response);
+    }
+    
+    /**
      * Send them to the global error page.
      * 
      * @param exception a Car Type Not Found
@@ -390,6 +406,21 @@ public class DefaultExceptionHandler implements AutoExceptionHandler {
     }
     
     /**
+     * Send them to the global error page.
+     * 
+     * @param exception a invalid login
+     * @param request The HttpServletRequest
+     * @param response The HttpServletResponse
+     * @return A ForwardResolution
+     */
+    public Resolution handle(com.criticalsoftware.mobics.proxy.customer.InvalidLoginExceptionException exception,
+            HttpServletRequest request,
+            HttpServletResponse response) {
+        LOGGER.error(exception.getMessage(), exception);
+        return insideJob("error.InvalidLoginExceptionException", request, response);
+    }
+    
+    /**
      * Return the action bean page with errors displayed
      * 
      * @param resourceKey
@@ -401,7 +432,6 @@ public class DefaultExceptionHandler implements AutoExceptionHandler {
         resources = ResourceBundle.getBundle("StripesResources", request.getLocale());
         ActionBean bean = (ActionBean) request.getAttribute(StripesConstants.REQ_ATTR_ACTION_BEAN);
         Resolution resolution;
-
         if (bean != null && StringUtils.isNotBlank(bean.getContext().getSourcePage())) {
             bean.getContext().getValidationErrors().addGlobalError(new LocalizableError(resourceKey));
             resolution = new ForwardResolution(bean.getContext().getSourcePage());

@@ -54,7 +54,7 @@ import com.criticalsoftware.mobics.proxy.miscellaneous.MiscellaneousWSServiceStu
  */
 @MobiCSSecure
 public class BookingInterestActionBean extends BaseActionBean {
-    
+
     @Validate(required = true, on = "createBookingInterest", converter = DatetimeTypeConverter.class)
     private Date startDate;
 
@@ -73,12 +73,12 @@ public class BookingInterestActionBean extends BaseActionBean {
     @Validate(required = true, on = "createBookingInterest")
     private Integer stopSending;
 
-    @Validate(required = true, on = "createBookingInterest", maxvalue = 99, maxlength=2)
+    @Validate(required = true, on = "createBookingInterest", maxvalue = 99, maxlength = 2)
     private Integer maxMessages;
 
     @Validate
     private String address;
-    
+
     @Validate
     private String latitude;
 
@@ -114,10 +114,10 @@ public class BookingInterestActionBean extends BaseActionBean {
 
         return new ForwardResolution("/WEB-INF/book/bookingInterest.jsp");
     }
-    
-    @ValidationMethod(on="createBookingInterest", when=ValidationState.NO_ERRORS)
+
+    @ValidationMethod(on = "createBookingInterest", when = ValidationState.NO_ERRORS)
     public void validateAdress(ValidationErrors errors) {
-        if(latitude == null && longitude == null) {
+        if (latitude == null && longitude == null) {
             errors.add("address", new LocalizableError("validation.required.valueNotPresent"));
         }
     }
@@ -147,10 +147,10 @@ public class BookingInterestActionBean extends BaseActionBean {
         Calendar start = Calendar.getInstance();
         start.setTime(startDate);
 
-        // FIXME cannot send 0 has radius
         bookingWSServiceStub.createBookingInterest(start, carClazz, fromMyCarClub, new BigDecimal(longitude),
-                new BigDecimal(latitude), distance != null ? distance.intValue() : 0, startSending.intValue(),
-                stopSending.intValue(), maxMessages.intValue());
+                new BigDecimal(latitude),
+                distance != null ? distance.intValue() : Configuration.INSTANCE.getAnyDistance(),
+                startSending.intValue(), stopSending.intValue(), maxMessages.intValue());
 
         getContext().getMessages().add(new LocalizableMessage("find.car.later.interest.created"));
         return new RedirectResolution(RecentActivitiesActionBean.class).flash(this);
@@ -169,15 +169,14 @@ public class BookingInterestActionBean extends BaseActionBean {
      * Search adress in geolocation
      * 
      * @return
-     * @throws UnsupportedEncodingException 
+     * @throws UnsupportedEncodingException
      */
     public Resolution getAddressFromQuery() throws UnsupportedEncodingException {
         getContext().getResponse().setHeader("Stripes-Success", "OK");
         return new JavaScriptResolution(GeolocationUtil.getAddressFromText(query));
     }
-    
+
     /**
-     * 
      * @return
      */
     public Resolution getAdressFromCoordinates() {

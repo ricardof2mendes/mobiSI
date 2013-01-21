@@ -16,12 +16,12 @@
 					<ul>
 						<li class="detail white">
 							<span class="customComboBox fullWith">
-								<stripes:password name="newPin" class="editable" placeholder="${placeholder}"/>
+								<stripes:text type="number" name="newPin" class="editable" placeholder="${placeholder}"/>
 							</span>
 						</li>				
 						<li class="detail white">
 							<span class="customComboBox fullWith">
-								<stripes:password name="pinConfirm" class="editable" placeholder="${placeholderConfirm}"/>
+								<stripes:text type="number" name="pinConfirm" class="editable" placeholder="${placeholderConfirm}"/>
 							</span>
 						</li>
 					</ul>

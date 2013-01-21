@@ -17,6 +17,11 @@ input:-moz-placeholder {
 	font-weight: normal;
 }
 
+textarea,
+input {
+	-webkit-appearance: none;
+}
+
 ul, li, h1 {
 	padding: 0;
 	margin: 0;
@@ -45,7 +50,16 @@ section#logo {
 	Width: 250px;
 	margin: 10px auto;
 	background-color: rgba(0, 0, 0, 0.5);
-	display: block;
+}
+
+section#logo > div {
+	display: table-cell;
+	margin: auto;;
+}
+
+section#logo > div > img {
+	border : 0;
+	vertical-align: middle;
 }
 
 section h2 {
@@ -1076,7 +1090,7 @@ article.pin div:nth-child(3) > input[type="submit"]:active {
 	width: 100%;
 }
 
-#licensePlateBookForm > div > input.autocomplete {
+input.autocomplete {
 	background: #fff url('../img/ajax-loader-input.gif') no-repeat 100% 50%;
 }
 

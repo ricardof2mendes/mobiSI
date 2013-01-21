@@ -22,23 +22,9 @@
 		<!-- TODO CSS -->
         <link rel="stylesheet" href="${contextPath}/css/normalize.css" />
         <link rel="stylesheet" href="${contextPath}/css/default.css" />
-        <link rel="stylesheet" href="${contextPath}/css/add2home.css" />
     </head>
     <body class="${actionBean.splashScreenStyle}">
-        <jsp:doBody/>
-        
-        
-        <script>
-	        var addToHomeConfig = {
-	        		returningVisitor : true,
-	        		animationIn : 'drop',
-	        		animationOut : 'fade',
-	        		startDelay : 1000,
-	        		lifespan : 10000,
-	        		message: '${message}'
-	        	};
-        </script>
-        <script src="${contextPath}/js/add2home.js"></script>                
+        <jsp:doBody/>             
     </body>
     
 </html>

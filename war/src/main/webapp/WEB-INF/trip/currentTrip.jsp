@@ -85,14 +85,15 @@
 			</nav>
 		</section>
 		
-		<c:if test="${actionBean.current.state == 'IN_USE'}">	
+		<!-- Unlock car -->
+		<c:if test="${actionBean.current.carState == 'BOOKED'}">	
 			<section>
 				<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn gray" event="unlockCar" addSourcePage="true">
 					<stripes:param name="licensePlate">${actionBean.current.licensePlate}</stripes:param>
 					<fmt:message key="current.trip.button.unlock.car"/>
 				</stripes:link>
 			</section>
-		</c:if>			
+		</c:if>
 		
 		<section>
 			<h2><fmt:message key="current.trip.details"/></h2>
@@ -137,7 +138,7 @@
 					</li>
 					
 					<c:choose>
-						<c:when test="${actionBean.current.state == 'IN_USE'}">
+						<c:when test="${actionBean.current.carState == 'BOOKED'}">
 							<li class="detail white">
 								<span>
 									<fmt:message key="current.trip.distance"/>
@@ -162,32 +163,34 @@
 			</nav>
 		</section>
 		
-		
-		
-		<c:if test="${actionBean.current.state == 'IN_USE' && actionBean.current.bookingType == 'ADVANCED'}">		
-			<stripes:link id="showPin" beanclass="com.criticalsoftware.mobics.presentation.action.booking.EditAvanceBookingActionBean" class="linkBtn gray" addSourcePage="true">
-				<stripes:param name="activityCode" value="${actionBean.current.bookingCode}"/>
-				<fmt:message key="current.trip.button.edit"/>
-			</stripes:link>
-		</c:if>
-				
-		<c:if test="${actionBean.current.state == 'ON_TRIP'}">		
-			<stripes:link id="showPin" beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn gray" event="lockCar" addSourcePage="true">
-				<fmt:message key="current.trip.button.lock.car"/>
-			</stripes:link>
-			<div class="warningMessage">
-				<fmt:message key="current.trip.lock.message"/>
-			</div>
-		</c:if>
-		
-		<c:if test="${actionBean.current.state == 'IN_USE'}">		
-			<stripes:link id="showPin" beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn orangered" event="endTrip" addSourcePage="true">
-				<fmt:message key="current.trip.button.end.trip"/>
-			</stripes:link>
-			<div class="warningMessage">
-				<fmt:message key="current.trip.end.message"/>
-			</div>
-		</c:if>
+		<section>
+			<!-- Edit current trip (advance booking) -->
+			<c:if test="${actionBean.current.state == 'IN_USE' && actionBean.current.bookingType == 'ADVANCED'}">		
+				<stripes:link id="showPin" beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn gray" addSourcePage="true">
+					<fmt:message key="current.trip.button.edit"/>
+				</stripes:link>
+			</c:if>
+			
+			<!-- Lock car -->
+			<c:if test="${actionBean.current.carState == 'IN_USE'}">		
+				<stripes:link id="showPin" beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn gray" event="lockCar" addSourcePage="true">
+					<fmt:message key="current.trip.button.lock.car"/>
+				</stripes:link>
+				<div class="warningMessage">
+					<fmt:message key="current.trip.lock.message"/>
+				</div>
+			</c:if>
+			
+			<!-- End trip -->
+			<c:if test="${actionBean.current.state == 'IN_USE'}">		
+				<stripes:link id="showPin" beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn orangered" event="endTrip" addSourcePage="true">
+					<fmt:message key="current.trip.button.end.trip"/>
+				</stripes:link>
+				<div class="warningMessage">
+					<fmt:message key="current.trip.end.message"/>
+				</div>
+			</c:if>
+		</section>
 	</article>
 		
 </t:main>

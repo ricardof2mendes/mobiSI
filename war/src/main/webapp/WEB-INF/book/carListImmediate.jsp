@@ -34,7 +34,14 @@
 													<mobi:formatMobics value="${car.priceInUse}" type="currencyHour" />
 												</span>
 												<span>
-													<mobi:formatMobics value="${car.distance}" type="distance"  />
+													<c:choose>
+														<c:when test="${! empty car.distance}">
+															<mobi:formatMobics value="${car.distance}" type="distance" />									
+														</c:when>
+														<c:otherwise>
+															<fmt:message key="application.value.not.available"/>
+														</c:otherwise>
+													</c:choose>
 												</span>
 											</div>
 										</div>

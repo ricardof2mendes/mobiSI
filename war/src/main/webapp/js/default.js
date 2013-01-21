@@ -21,9 +21,9 @@ $(document).ready(function() {
 		e.preventDefault();
 		var element = $(this); 
 		fillGeoposition(function(position) {
-							var url = element.prop('href')
-									+ '&latitude=' + position.coords.latitude
-									+ '&longitude=' + position.coords.longitude;
+							var url = element.prop('href') +
+									'&latitude=' + position.coords.latitude +
+									'&longitude=' + position.coords.longitude;
 							window.location.href = url;
 						}, function(err) {
 							treatGeolocationError(err);
@@ -44,10 +44,10 @@ $(document).ready(function() {
 						} ,true);
 	});
 	
- 	/**
- 	 * Booking Interest
- 	 */
- 	
+    /**
+     * Booking Interest
+     */
+    
 	/** Search location link */
 	$('#locationLink').on('click', function(e) {
 		e.preventDefault();
@@ -62,7 +62,6 @@ $(document).ready(function() {
 		url += '&' + $('#startSending').prop('name') + '=' + $('#startSending').val(); 
 		url += '&' + $('#stopSending').prop('name') + '=' + $('#stopSending').val(); 
 		url += '&' + $('#maxMessages').prop('name') + '=' + $('#maxMessages').val();
- 		
 		window.location.href = url;
 	});
 	
@@ -219,21 +218,19 @@ $(document).ready(function() {
  	
  	/* report problem license plate search */
  	$('#licenseReport').on('blur', function(){
+ 		var that = this;
  		
- 		//if($(this).val().length == 8 &&
- 			if(	($('#carLicensePlate').length == 0 ||
- 				($('#carLicensePlate').length > 0 && $('#carLicensePlate').val() !=  $(this).val()))){
- 			
+		if(	($('#carLicensePlate').length == 0 ||
+			($('#carLicensePlate').length > 0 && $('#carLicensePlate').val() !=  $(this).val()))){
+		
+			$(this).addClass('autocomplete');
 	 		var url = CONTEXT_PATH+'/contacts/ContactsAndDamageReport.action?licensePlateSearch=&licensePlate='+$(this).val();
 	
 			$.get(url, function(data, textStatus, jqXHR){
 				if (jqXHR.getResponseHeader('Stripes-Success') === 'OK') {
-					if (data.indexOf('<html') == -1) {
+						$(that).removeClass('autocomplete');
 						$('#searchResults').html(data);
 					    $('#searchResults').css('display', 'block');
-					} else {
-					    $('html').html(data);
-					}
 				} else {
 					console.log('An error has occurred or the user\'s session has expired!');
 					$('html').html(data);
@@ -241,7 +238,7 @@ $(document).ready(function() {
 			}, function(data, textStatus, jqXHR) {
 				$('html').html(data.responseText);
 			});
- 		}
+		}
  	});
  	
  	$('#licenseReport').on('keyup', function(){
@@ -397,20 +394,17 @@ function fillGeoposition(callback, error, isLoading) {
  */
 function autocompleteList() {
 	
-	var url = CONTEXT_PATH+'/booking/ImmediateBooking.action?licensePlateAutocomplete=&licensePlate='+$('#licensePlate').val()
+	var url = CONTEXT_PATH+'/booking/ImmediateBooking.action?licensePlateAutocomplete=&licensePlate=' + $('#licensePlate').val()
 					+'&latitude='+$('#latitude').val()
 					+'&longitude='+$('#longitude').val();
 	
 	$.get(url, function(data, textStatus, jqXHR){
+		console.log(data);
 		if (jqXHR.getResponseHeader('Stripes-Success') === 'OK') {
-            if (data.indexOf('<html') == -1) {
-            	$('#articleContainer').html(data);
-                $('#articleContainer').css('display', 'block');
-                $('#licensePlate').removeClass('autocomplete');
-                $('div.delete').toggle();
-            } else {
-                $('html').html(data);
-            }
+        	$('#articleContainer').html(data);
+            $('#articleContainer').css('display', 'block');
+            $('#licensePlate').removeClass('autocomplete');
+            $('div.delete').toggle();
         } else {
             console.log('An error has occurred or the user\'s session has expired!');
             $('html').html(data);
@@ -424,7 +418,7 @@ function autocompleteList() {
  * Get park list by ajax
  */
 function autocompleteZones() {
-	var url = CONTEXT_PATH +'/booking/AdvanceBooking.action?getZones=&location='+$('#location').val();
+	var url = CONTEXT_PATH +'/booking/AdvanceBooking.action?getZones=&location=' + $('#location').val();
 	$.get(url, function(data, textStatus, jqXHR){
 		if (jqXHR.getResponseHeader('Stripes-Success') === 'OK') {
             	data = eval(data);

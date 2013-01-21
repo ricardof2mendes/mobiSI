@@ -75,10 +75,6 @@ public class Configuration implements Serializable{
     
     private final int recentsActivitiesFilterMonthGap = 6;
     
-    private final String helpdeskPhone = "219999000";
-    
-    private final String helpdeskEmail = "helpdesk@mobiag.pt";
-    
     private final String defaultThemeWarmWord = "warm";
     
     private final String defaultThemeStyle = "map";
@@ -86,6 +82,8 @@ public class Configuration implements Serializable{
     private final String defaultThemeColor = "darkgreen";
     
     private final String geolocationServerAllowedCountries = "pt";
+    
+    private final int anyDistance = 9999999;
     
 
     /**
@@ -226,20 +224,6 @@ public class Configuration implements Serializable{
     }
     
     /**
-     * @return the helpdeskPhone
-     */
-    public String getHelpdeskPhone() {
-        return getValue("mobics.config.helpdesk.phone", helpdeskPhone);
-    }
-
-    /**
-     * @return the helpdeskEmail
-     */
-    public String getHelpdeskEmail() {
-        return getValue("mobics.config.helpdesk.email", helpdeskEmail);
-    }
-
-    /**
      * 
      * @return the defaultThemeStyle
      */
@@ -269,6 +253,13 @@ public class Configuration implements Serializable{
      */
     public String getGeolocationServerAllowedCountries() {
         return getValue("mobics.config.geolocation.server.allowed.countries", geolocationServerAllowedCountries);
+    }
+    
+    /**
+     * @return the anyDistance
+     */
+    public int getAnyDistance() {
+        return Integer.valueOf(getValue("mobics.config.radius.any.distance", anyDistance));
     }
 
     private Configuration() {

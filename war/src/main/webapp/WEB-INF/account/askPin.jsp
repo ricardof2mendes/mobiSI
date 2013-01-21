@@ -14,7 +14,7 @@
 					<label><fmt:message key="account.security.enter.pin"/></label>
 				</div>
 				<div>
-					<stripes:password name="pin" id="pin" placeholder="${placeholder}" autocomplete="off"/>						
+					<stripes:text type="number" name="pin" id="pin" placeholder="${placeholder}" autocomplete="off"/>						
 				</div>
 				<div>
 					<stripes:submit name="data"><fmt:message key="pin.button"/></stripes:submit>

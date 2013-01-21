@@ -75,7 +75,7 @@ public class EditBookingInterestActionBean extends BaseActionBean {
     @Validate(required = true, on = "editBookingInterest")
     private Integer stopSending;
 
-    @Validate(required = true, on = "editBookingInterest", maxvalue = 99, maxlength=2)
+    @Validate(required = true, on = "editBookingInterest", maxvalue = 99, maxlength = 2)
     private Integer maxMessages;
 
     @Validate(required = true, on = "createBookingInterest")
@@ -153,8 +153,8 @@ public class EditBookingInterestActionBean extends BaseActionBean {
 
         bookingWSServiceStub.updateBookingInterest(activityCode, getContext().getUser().getCarClub().getCarClubCode(),
                 start, carClazz, fromMyCarClub, new BigDecimal(longitude), new BigDecimal(latitude),
-                distance.intValue(), startSending.intValue(), stopSending.intValue(), maxMessages.intValue(),
-                Calendar.getInstance());
+                distance != null ? distance.intValue() : Configuration.INSTANCE.getAnyDistance(), startSending
+                        .intValue(), stopSending.intValue(), maxMessages.intValue(), Calendar.getInstance());
 
         getContext().getMessages().add(new LocalizableMessage("find.car.later.interest.created"));
         return new RedirectResolution(RecentActivitiesActionBean.class).flash(this);

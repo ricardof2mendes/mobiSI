@@ -223,6 +223,30 @@ public class RecentActivitiesActionBean extends BaseActionBean {
 
         return new ForwardResolution("/WEB-INF/recent/interestBookingDetails.jsp");
     }
+    
+    /**
+     * Cancel booking interest
+     * 
+     * @return a page resolution
+     * @throws RemoteException
+     * @throws UnsupportedEncodingException
+     * @throws BookingNotFoundExceptionException
+     * @throws CustomerNotFoundExceptionException
+     * @throws UnauthorizedCustomerExceptionException
+     */
+    public Resolution cancelInterest() throws RemoteException, UnsupportedEncodingException {
+        BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
+                Configuration.INSTANCE.getBookingEndpoint());
+        bookingWSServiceStub._getServiceClient().addHeader(
+                AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
+                        .getPassword()));
+
+        bookingWSServiceStub.removeBookingInterest(activityCode);
+
+        getContext().getMessages().add(new LocalizableMessage("trip.detail.advance.booking.cancel.success"));
+
+        return new RedirectResolution(this.getClass()).flash(this);
+    }
 
     /**
      * Get trip start location

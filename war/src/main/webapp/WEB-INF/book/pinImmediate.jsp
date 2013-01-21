@@ -29,7 +29,7 @@
 					</label>					
 				</div>
 				<div>
-					<stripes:password name="pin" id="pin" placeholder="${placeholder}" autocomplete="off"/>							
+					<stripes:text type="number" name="pin" id="pin" placeholder="${placeholder}" autocomplete="off"/>							
 				</div>
 				<div>
 					<stripes:submit id="book" name="book"><fmt:message key="pin.button"/></stripes:submit>
