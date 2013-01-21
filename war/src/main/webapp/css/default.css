@@ -40,26 +40,13 @@ body {
 	background-color: #E4E4E4;
 }
 
-article {
-
-}
-
 section#logo {
 	Min-height: 60px;
 	Max-height: 250px;
 	Width: 250px;
 	margin: 10px auto;
 	background-color: rgba(0, 0, 0, 0.5);
-}
-
-section#logo > div {
-	display: table-cell;
-	margin: auto;;
-}
-
-section#logo > div > img {
-	border : 0;
-	vertical-align: middle;
+	text-align: center;
 }
 
 section h2 {
