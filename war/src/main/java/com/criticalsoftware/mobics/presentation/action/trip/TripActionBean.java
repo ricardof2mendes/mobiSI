@@ -24,6 +24,7 @@ import net.sourceforge.stripes.action.LocalizableMessage;
 import net.sourceforge.stripes.action.RedirectResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.ajax.JavaScriptResolution;
+import net.sourceforge.stripes.validation.LocalizableError;
 import net.sourceforge.stripes.validation.Validate;
 
 import org.slf4j.Logger;
@@ -165,7 +166,6 @@ public class TripActionBean extends BaseActionBean {
                 AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
                         .getPassword()));
 
-        // TODO implement this (html+js+java)
         current = bookingWSServiceStub.getCurrentTripDetails();
         Resolution resolution = new RedirectResolution(this.getClass()).flash(this);
 
@@ -176,7 +176,7 @@ public class TripActionBean extends BaseActionBean {
                 getContext().getMessages().add(new LocalizableMessage("current.trip.end.trip.message"));
             } else {
                 // cannot close
-                getContext().getMessages().add(new LocalizableMessage("current.trip.end.trip.error.message"));
+                getContext().getValidationErrors().addGlobalError(new LocalizableError("current.trip.end.trip.error.message"));
                 resolution = new ForwardResolution(this.getClass());
             }
         }
