@@ -522,7 +522,7 @@ Map.prototype = {
 			var bounds = new OpenLayers.Bounds();
 			bounds.extend(geometry.getBounds());
 			// if radius set circle
-			if(this.searchParams && this.searchParams.distance && this.searchParams.distance.length > 0) {
+			if(this.searchParams && this.searchParams.distance && this.searchParams.distance.length > 0 && this.searchParams.distance < anyDistance) {
 				// remove any previous radius layer
 				this.cleanRadius();
 				// add new radius
@@ -599,7 +599,9 @@ Map.prototype = {
 				vectorLayer.addFeatures(feature);
 				
 				// if radius set circle and zoom contents
-				if(that.searchParams && that.searchParams.distance && that.searchParams.distance.length > 0) {
+				if(that.searchParams && that.searchParams.distance && 
+						that.searchParams.distance.length > 0 && 
+						that.searchParams.distance < anyDistance) {
 					// remove any previous radius layer
 					that.cleanRadius();
 					var circleLayer = new OpenLayers.Layer.Vector('radiusLocation', {style: that.redStyle});
@@ -680,10 +682,10 @@ Map.prototype = {
 				$('#distance').html(options.car.formattedDistance);
 			} else if(options.street) {
 				$('#whiteBar nav').show();
-				$('#address').val(options.street.displayName);
 				$('#choosenAddress').html(options.street.displayName);
-				$('#latitude').html(options.street.latitude);
-				$('#longitude').html(options.street.longitude);
+				$('#address').val(options.street.displayName);
+				$('#latitude').val(options.street.latitude);
+				$('#longitude').val(options.street.longitude);
 			} else {
 				$('#whiteBar nav').hide();
 			}

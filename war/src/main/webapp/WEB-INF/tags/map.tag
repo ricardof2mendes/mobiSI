@@ -31,6 +31,7 @@
         <!-- TODO JS -->
         <script>
         	var contextPath = '${contextPath}';
+        	var anyDistance = '${applicationScope.configuration.anyDistance}';
         </script>
         <script src="${contextPath}/js/zepto.js"></script>
         <script src="${contextPath}/js/zepto-gfx.js"></script>

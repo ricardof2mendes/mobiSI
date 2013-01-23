@@ -26,7 +26,9 @@ import net.sourceforge.stripes.validation.Validate;
 
 import com.criticalsoftware.mobics.booking.BookingInterestDTO;
 import com.criticalsoftware.mobics.booking.TripDetailsDTO;
+import com.criticalsoftware.mobics.presentation.action.recent.RecentActivitiesActionBean;
 import com.criticalsoftware.mobics.presentation.security.AuthenticationUtil;
+import com.criticalsoftware.mobics.presentation.security.MobiCSSecure;
 import com.criticalsoftware.mobics.presentation.util.Configuration;
 import com.criticalsoftware.mobics.proxy.booking.BookingNotFoundExceptionException;
 import com.criticalsoftware.mobics.proxy.booking.BookingValidationExceptionException;
@@ -38,6 +40,7 @@ import com.criticalsoftware.mobics.proxy.booking.InvalidCustomerPinExceptionExce
  * @author ltiago
  * @version $Revision: $
  */
+@MobiCSSecure
 public class EditAvanceBookingActionBean extends AdvanceBookingActionBean {
 
     private TripDetailsDTO trip;
@@ -71,6 +74,7 @@ public class EditAvanceBookingActionBean extends AdvanceBookingActionBean {
         trip = bookingWSServiceStub.getTripDetails(activityCode);
 
         Calendar c = bookingWSServiceStub.getNextAdvanceBooking(activityCode);
+        System.out.println(c.getTime());
         extendBookingDate = c == null ? null : c.getTime();
 
         return new ForwardResolution("/WEB-INF/recent/editAdvanceBookingDetails.jsp");
@@ -101,7 +105,7 @@ public class EditAvanceBookingActionBean extends AdvanceBookingActionBean {
 
         getContext().getMessages().add(new LocalizableMessage("trip.detail.advance.booking.edit.success"));
 
-        return new RedirectResolution(this.getClass(), "advanceBookingDetails").addParameter("activityCode",
+        return new RedirectResolution(RecentActivitiesActionBean.class, "advanceBookingDetails").addParameter("activityCode",
                 activityCode).flash(this);
     }
 

@@ -39,7 +39,7 @@ import com.criticalsoftware.mobics.proxy.miscellaneous.MiscellaneousWSServiceStu
  * @version $Revision: $
  */
 @MobiCSSecure
-public class PreferencesActionBean extends BaseActionBean {
+public class EditPreferencesActionBean extends BaseActionBean {
     
     private static final String EMAIL = "EMAIL";
     
@@ -99,7 +99,8 @@ public class PreferencesActionBean extends BaseActionBean {
             }
             
             communicationChannels = new String[3];
-            for(String commChannel : customerPreferencesDTO.getCommunicationChannels()){
+            String[] comms = customerPreferencesDTO.getCommunicationChannels();
+            for(String commChannel : comms){
                 if(EMAIL.equals(commChannel)) {
                     communicationChannels[0] = commChannel;
                 } else if(SMS.equals(commChannel)) {

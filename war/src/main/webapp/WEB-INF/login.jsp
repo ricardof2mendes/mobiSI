@@ -7,7 +7,9 @@
 <t:login title="${title}">
 	<article>
 		<section id="logo">
-			<img src="${contextPath}/Login.action?getSplashScreenImage=" />
+			<div>
+				<img src="${contextPath}/Login.action?getSplashScreenImage=" />
+			</div>
 		</section>
 		<section id="loginErrors">
 			<div class="globalErrors">

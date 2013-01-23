@@ -61,7 +61,7 @@
 							<span><fmt:message key="book.now.search.distance"/></span>
 							<span class="customComboBox">
 								<stripes:select name="distance" value="1">
-									<stripes:option value="">
+									<stripes:option value="${applicationScope.configuration.anyDistance}">
 										<fmt:message key="book.now.search.distance.any"/>
 									</stripes:option>
 									<stripes:option value="500" >

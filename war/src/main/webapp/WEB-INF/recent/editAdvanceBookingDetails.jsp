@@ -94,16 +94,32 @@
 								<fmt:message key="car.details.end.date"/>
 							</span>
 							<span class="customComboBox">
-								<stripes:text id="endDate" name="endDate" class="editable" value="${actionBean.trip.endDate.time}"
-									   placeholder="${placeholder}" formatPattern="${applicationScope.configuration.dateTimePattern}"/>
+							
+							<stripes:text id="limited" name="endDate" class="editable"
+									value="${actionBean.trip.endDate.time}" 
+									placeholder="${placeholder}" formatPattern="${applicationScope.configuration.dateTimePattern}"
+									data-begin="${actionBean.trip.endDate.time}" 
+									data-limit="${actionBean.extendBookingDate}"/>
+									
 							</span>
 						</li>
 					</ul>
 				</nav>
 			</section>
 			<section class="submit">
-				<div class="warningMessage">			
-					<fmt:formatDate value="${actionBean.extendBookingDate}" pattern="${applicationScope.configuration.dateTimePattern}"/>
+				<div class="warningMessage">
+					<c:choose>
+						<c:when test="${not empty actionBean.extendBookingDate}">
+							<fmt:message key="trip.detail.advance.booking.extend.date">
+								<fmt:param>
+									<fmt:formatDate value="${actionBean.extendBookingDate}" pattern="${applicationScope.configuration.dateTimePattern}"/>
+								</fmt:param>
+							</fmt:message>
+						</c:when>
+						<c:otherwise>
+							<fmt:message key="trip.detail.advance.booking.extend.date.free"/>
+						</c:otherwise>
+					</c:choose>			
 				</div>
 				<stripes:submit name="saveAdvanceBooking"  class="submitBtn gray"><fmt:message key="trip.detail.advance.booking.save"/></stripes:submit>
 				<div class="warningMessage">

@@ -115,8 +115,8 @@ public abstract class BookingActionBean extends BaseActionBean {
      */
     public Resolution getCarImage() throws RemoteException, IOException, IOExceptionException {
         DataHandler handler = new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint()).getCarThumbnail(
-                licensePlate, Configuration.INSTANCE.getCarThumbnailWidth(),
-                Configuration.INSTANCE.getCarThumbnailHeight());
+                licensePlate, Configuration.INSTANCE.getThumbnailWidth(),
+                Configuration.INSTANCE.getThumbnailHeight());
         return new StreamingResolution(handler.getContentType(), handler.getInputStream());
     }
 

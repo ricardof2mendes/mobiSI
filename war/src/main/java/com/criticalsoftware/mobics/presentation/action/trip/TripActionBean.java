@@ -14,6 +14,8 @@ package com.criticalsoftware.mobics.presentation.action.trip;
 
 import java.io.UnsupportedEncodingException;
 import java.rmi.RemoteException;
+import java.util.Calendar;
+import java.util.Date;
 
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.DontValidate;
@@ -29,14 +31,19 @@ import org.slf4j.LoggerFactory;
 
 import com.criticalsoftware.mobics.booking.CurrentTripDTO;
 import com.criticalsoftware.mobics.booking.TripDetailsDTO;
+import com.criticalsoftware.mobics.booking.ZoneCategoryEnum;
 import com.criticalsoftware.mobics.presentation.action.BaseActionBean;
+import com.criticalsoftware.mobics.presentation.extension.DatetimeTypeConverter;
 import com.criticalsoftware.mobics.presentation.security.AuthenticationUtil;
 import com.criticalsoftware.mobics.presentation.security.MobiCSSecure;
+import com.criticalsoftware.mobics.presentation.util.CarState;
 import com.criticalsoftware.mobics.presentation.util.Configuration;
 import com.criticalsoftware.mobics.presentation.util.GeolocationUtil;
 import com.criticalsoftware.mobics.proxy.booking.BookingNotFoundExceptionException;
+import com.criticalsoftware.mobics.proxy.booking.BookingValidationExceptionException;
 import com.criticalsoftware.mobics.proxy.booking.BookingWSServiceStub;
 import com.criticalsoftware.mobics.proxy.booking.CustomerNotFoundExceptionException;
+import com.criticalsoftware.mobics.proxy.booking.InvalidCustomerPinExceptionException;
 import com.criticalsoftware.mobics.proxy.car.CarLicensePlateNotFoundExceptionException;
 import com.criticalsoftware.mobics.proxy.car.CarWSServiceStub;
 
@@ -55,7 +62,15 @@ public class TripActionBean extends BaseActionBean {
 
     @Validate(required = true, on = { "lockCar", "unlockCar", "signal" })
     private String licensePlate;
-    
+
+    @Validate(required = true, on = "save", converter = DatetimeTypeConverter.class)
+    private Date endDate;
+
+    @Validate(required = true, on = "save")
+    private String bookingCode;
+
+    private Date extendBookingDate;
+
     /**
      * Recent list resolution
      * 
@@ -82,7 +97,7 @@ public class TripActionBean extends BaseActionBean {
             resolution = new ForwardResolution("/WEB-INF/trip/lastTrip.jsp");
             last = bookingWSServiceStub.getLastTripDetails();
         }
-        
+
         return resolution;
     }
 
@@ -140,37 +155,86 @@ public class TripActionBean extends BaseActionBean {
      * @throws UnsupportedEncodingException
      * @throws RemoteException
      * @throws BookingNotFoundExceptionException
+     * @throws CustomerNotFoundExceptionException
      */
-    public Resolution endTrip() throws UnsupportedEncodingException, RemoteException, BookingNotFoundExceptionException {
+    public Resolution endTrip() throws UnsupportedEncodingException, RemoteException,
+            BookingNotFoundExceptionException, CustomerNotFoundExceptionException {
 
         BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
                 Configuration.INSTANCE.getBookingEndpoint());
         bookingWSServiceStub._getServiceClient().addHeader(
                 AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
                         .getPassword()));
-        
-        // TODO implement this (html+js+java)
-//      current = bookingWSServiceStub.getCurrentTripDetails();
-//      
-////      if (current != null)
-////          if(CarState.IN_USE.name().equals(current.getState()){
-////              
-////          } else if(CarState.IN_ERROR.name().equals(current.getState())){
-////              
-////          }
-////          
-////          if(ZoneCategoryEnum.NORMAL.getValue().equals(current.getCurrentZoneType()) || 
-////              ZoneCategoryEnum.PARKING.getValue().equals(current.getCurrentZoneType())) {
-////          bookingWSServiceStub.closeActiveBooking();
-////          getContext().getMessages().add(new LocalizableMessage("current.trip.end.trip.message"));
-////      }
 
-        if (bookingWSServiceStub.isCustomerInOngoingTrip()) {
-            bookingWSServiceStub.closeActiveBooking();
-            getContext().getMessages().add(new LocalizableMessage("current.trip.end.trip.message"));
+        // TODO implement this (html+js+java)
+        current = bookingWSServiceStub.getCurrentTripDetails();
+        Resolution resolution = new RedirectResolution(this.getClass()).flash(this);
+
+        if (current != null) {
+            if (CarState.IN_USE.name().equals(current.getState()) || CarState.IN_ERROR.name().equals(current.getState())) {
+                if (ZoneCategoryEnum.NORMAL.getValue().equals(current.getCurrentZoneType())
+                        || ZoneCategoryEnum.PARKING.getValue().equals(current.getCurrentZoneType())) {
+                    // close booking
+                    bookingWSServiceStub.closeActiveBooking();
+                    getContext().getMessages().add(new LocalizableMessage("current.trip.end.trip.message"));
+                } else if (ZoneCategoryEnum.UNWANTED.getValue().equals(current.getCurrentZoneType())) {
+                    
+                } else {
+                    // DO NOTHING on special zones
+                }
+            } else {
+                // cannot close
+                getContext().getMessages().add(new LocalizableMessage("current.trip.end.trip.error.message"));
+                resolution = new ForwardResolution(this.getClass());
+            }
+
+          
         }
-        // FIXME this should forward in case of none
-        return new RedirectResolution(this.getClass()).flash(this);
+        
+        return resolution;
+    }
+
+    public Resolution extend() throws RemoteException, UnsupportedEncodingException,
+            CustomerNotFoundExceptionException, BookingNotFoundExceptionException {
+        BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
+                Configuration.INSTANCE.getBookingEndpoint());
+        bookingWSServiceStub._getServiceClient().addHeader(
+                AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
+                        .getPassword()));
+
+        Resolution resolution = new ForwardResolution("/WEB-INF/trip/extendTrip.jsp");
+
+        current = bookingWSServiceStub.getCurrentTripDetails();
+        if (current != null) {
+            bookingCode = current.getBookingCode();
+            endDate = current.getEndDate().getTime();
+
+            Calendar c = bookingWSServiceStub.getNextAdvanceBooking(bookingCode);
+            extendBookingDate = c == null ? null : c.getTime();
+        } else {
+            resolution = new ForwardResolution(this.getClass());
+        }
+
+        return resolution;
+    }
+
+    public Resolution save() throws RemoteException, UnsupportedEncodingException, BookingValidationExceptionException,
+            InvalidCustomerPinExceptionException, BookingNotFoundExceptionException,
+            com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException {
+
+        BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
+                Configuration.INSTANCE.getBookingEndpoint());
+        bookingWSServiceStub._getServiceClient().addHeader(
+                AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
+                        .getPassword()));
+
+        Calendar aux = Calendar.getInstance();
+        aux.setTime(endDate);
+
+        bookingWSServiceStub.extendAdvanceBooking(bookingCode, aux);
+
+        getContext().getMessages().add(new LocalizableMessage("current.trip.extend.trip.message"));
+        return new RedirectResolution(this.getClass());
     }
 
     /**
@@ -239,12 +303,11 @@ public class TripActionBean extends BaseActionBean {
         }
 
         getContext().getResponse().setHeader("Stripes-Success", "OK");
-        
+
         return new JavaScriptResolution(current == null ? null : current.getState());
     }
 
     /**
-     * 
      * @return
      * @throws RemoteException
      * @throws UnsupportedEncodingException
@@ -277,4 +340,38 @@ public class TripActionBean extends BaseActionBean {
         this.licensePlate = licensePlate;
     }
 
+    /**
+     * @return the endDate
+     */
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    /**
+     * @param endDate the endDate to set
+     */
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    /**
+     * @param bookingCode the bookingCode to set
+     */
+    public void setBookingCode(String bookingCode) {
+        this.bookingCode = bookingCode;
+    }
+
+    /**
+     * @return the bookingCode
+     */
+    public String getBookingCode() {
+        return bookingCode;
+    }
+
+    /**
+     * @return the extendBookingDate
+     */
+    public Date getExtendBookingDate() {
+        return extendBookingDate;
+    }
 }

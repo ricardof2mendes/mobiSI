@@ -1,7 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/common/taglibs.jsp"%>
-<c:set var="title" scope="page"><fmt:message key='find.car.later.title' /></c:set>
-<c:set var="dateplaceholder" scope="page"><fmt:message key="interest.details.datetime.placeholder"/></c:set>
+<c:set var="title" scope="page"><fmt:message key='find.car.later.edit.title' /></c:set>
+<c:set var="placeholder" scope="page"><fmt:message key="find.car.later.datetime.placeholder"/></c:set>
 
 <c:set var="currentLocationMessage" scope="page">
 	<fmt:message key="interest.details.current.location"/>
@@ -17,10 +17,12 @@
 
 	<jsp:include page="/WEB-INF/common/message_error.jsp"/>
 
-	<stripes:form id="interestBook" beanclass="com.criticalsoftware.mobics.presentation.action.booking.BookingInterestActionBean" method="post">
+	<stripes:form id="interestBook" beanclass="com.criticalsoftware.mobics.presentation.action.booking.EditBookingInterestActionBean" method="post">
 		<stripes:hidden id="latitude" name="latitude"/>
 		<stripes:hidden id="longitude" name="longitude"/>
 		<stripes:hidden id="address" name="address"/>
+		<stripes:hidden id="activityCode" name="activityCode"/>
+		<span id="edit" class="hidden"></span>
 		
 		<article>
 			<section>
@@ -30,7 +32,8 @@
 						<li class="detail white">
 							<span><fmt:message key="find.car.later.datetime"/></span>
 							<span class="customComboBox">
-								<stripes:text id="startDate" name="startDate" value="${actionBean.startDate}" class="editable" placeholder="${dateplaceholder}" formatPattern="${applicationScope.configuration.dateTimePattern}"/>
+								<stripes:text id="startDate" name="startDate" class="editable"
+									   placeholder="${placeholder}" formatPattern="${applicationScope.configuration.dateTimePattern}"/>
 							</span>
 						</li>
 					</ul>
@@ -44,11 +47,7 @@
 								<stripes:param name="query">${sendToMapAddress}</stripes:param>
 								<span><fmt:message key="find.car.later.location"/></span>
 								<span id="addressSpan">
-									<c:choose>
-										<c:when test="${not empty actionBean.address}">${actionBean.address}</c:when>
-										<c:when test="${not empty actionBean.latitude}">${currentLocationMessage}</c:when>
-										<c:otherwise><fmt:message key="find.car.later.please.choose"/></c:otherwise>
-									</c:choose>
+									${actionBean.address}
 								</span>
 							</stripes:link>
 						</li>
@@ -56,7 +55,7 @@
 							<span><fmt:message key="find.car.later.max.distance"/></span>
 							<span class="customComboBox">
 								<stripes:select id="distance" name="distance">
-									<stripes:option value="">
+									<stripes:option value="${applicationScope.configuration.anyDistance}">
 										<fmt:message key="book.now.search.distance.any"/>
 									</stripes:option>
 									<stripes:option value="500" >
@@ -126,7 +125,7 @@
 									<stripes:option value="-300">
 										<fmt:message key="find.car.later.start.sending.minutes"><fmt:param value="5"/></fmt:message>
 									</stripes:option>
-									<stripes:option value="0">
+									<stripes:option value="-0">
 										<fmt:message key="find.car.later.on.time"/>
 									</stripes:option>
 								</stripes:select>		
@@ -160,8 +159,8 @@
 						<li class="detail white">
 							<span><fmt:message key="find.car.later.max.messages"/></span>
 							<span class="customComboBox">
-								<stripes:text type="number" id="maxMessages" name="maxMessages" 
-									   placeholder="${placeholder}"/>
+								<input type="number" id="maxMessages" name="maxMessages" value="${actionBean.maxMessages}" 
+									   placeholder="<fmt:message key="find.car.later.max.messages.placeholder"/>"/>
 							</span>
 						</li>
 					</ul>
@@ -169,7 +168,7 @@
 			</section>
 			
 			<section class="submit">
-				<stripes:submit name="createBookingInterest" class="submitBtn gray">
+				<stripes:submit name="editBookingInterest" class="submitBtn gray">
 					<fmt:message key="find.car.later.save.button"/>
 				</stripes:submit>
 			</section>

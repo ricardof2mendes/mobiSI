@@ -38,7 +38,7 @@
 			</stripes:link>
 		</li>
 		<li class="preferences ${actionBean.activeMenu == 'preferences' ? 'preferencesActive' : ''}">
-			<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.preferences.PreferencesActionBean">
+			<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.preferences.EditPreferencesActionBean">
 				<fmt:message key="preferences.title"/>
 			</stripes:link>
 		</li>

@@ -1,6 +1,18 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@include file="/WEB-INF/common/taglibs.jsp"%>
 <c:set var="title" scope="page"><fmt:message key='current.trip.title' /></c:set>
+<c:set var="warnTitle" scope="page">
+	<c:choose>
+		<c:when test="${actionBean.trip.undesirableZoneCost > 0}">
+			<fmt:message key="current.trip.end.trip.confirm.h3">
+				<fmt:param>${actionBean.trip.undesirableZoneCost}</fmt:param>
+			</fmt:message>
+		</c:when>
+		<c:otherwise>
+			<fmt:message key="current.trip.end.trip.confirm.h3.no.cost"/>
+		</c:otherwise>
+	</c:choose>
+</c:set>
 
 <t:main title="${title}">
 	
@@ -22,15 +34,25 @@
 	<!-- Modal window for confirmation -->
 	<div class="confirm2">
 		<article>
-			<section>
+			<section id="stateError">
 				<h2><fmt:message key="current.trip.booking.cancelled"/></h2>
 				<h3 id="title1"><fmt:message key="current.trip.booking.cancelled.text"/></h3>
 				<a id="closeBookingImmediate" href="#" class="alertBtn gray" >
 					<fmt:message key="geolocation.alert.button.ok"/>
 				</a>
 			</section>
+			<section id="unwantedZoneError">
+				<h2><fmt:message key="current.trip.end.trip.confirm"/></h2>
+				<h3 id="title1">
+					${pageScope.warnTitle}
+				</h3>
+				<a id="closeBookingImmediate" href="#" class="alertBtn gray" >
+					<fmt:message key="geolocation.alert.button.ok"/>
+				</a>
+			</section>
 		</article>
 	</div>
+	
 	
 	<article>
 		<section>
@@ -78,6 +100,22 @@
 										${actionBean.location}
 									</span>
 								</stripes:link>
+							</li>
+							<li class="detail white">
+								<span>
+									<fmt:message key="car.details.start.date"/>
+								</span>
+								<span>
+									<fmt:formatDate value="${actionBean.current.startDate.time}" pattern="${applicationScope.configuration.dateTimePattern}"/>
+								</span>
+							</li>
+							<li class="detail white">
+								<span>
+									<fmt:message key="car.details.end.date"/>
+								</span>
+								<span>
+									<fmt:formatDate value="${actionBean.current.endDate.time}" pattern="${applicationScope.configuration.dateTimePattern}"/>
+								</span>
 							</li>
 						</c:otherwise>
 					</c:choose>
@@ -165,15 +203,15 @@
 		
 		<section>
 			<!-- Edit current trip (advance booking) -->
-			<c:if test="${actionBean.current.state == 'IN_USE' && actionBean.current.bookingType == 'ADVANCED'}">		
-				<stripes:link id="showPin" beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn gray" addSourcePage="true">
+			<c:if test="${actionBean.current.bookingType == 'ADVANCE'}">		
+				<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn gray" addSourcePage="true" event="extend">
 					<fmt:message key="current.trip.button.edit"/>
 				</stripes:link>
 			</c:if>
 			
 			<!-- Lock car -->
 			<c:if test="${actionBean.current.carState == 'IN_USE'}">		
-				<stripes:link id="showPin" beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn gray" event="lockCar" addSourcePage="true">
+				<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn gray" event="lockCar" addSourcePage="true">
 					<fmt:message key="current.trip.button.lock.car"/>
 				</stripes:link>
 				<div class="warningMessage">
@@ -183,7 +221,7 @@
 			
 			<!-- End trip -->
 			<c:if test="${actionBean.current.state == 'IN_USE'}">		
-				<stripes:link id="showPin" beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn orangered" event="endTrip" addSourcePage="true">
+				<stripes:link id="endTrip" beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn orangered" event="endTrip" addSourcePage="true">
 					<fmt:message key="current.trip.button.end.trip"/>
 				</stripes:link>
 				<div class="warningMessage">

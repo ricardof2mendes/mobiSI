@@ -10,7 +10,7 @@
 				<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.account.EditEmailLoginActionBean" class="linkBtn gray">
 					<fmt:message key="account.change.email"/>
 				</stripes:link>
-				<c:if test="${not actionBean.message}">
+				<c:if test="${actionBean.message}">
 					<div class="warningMessage">
 						<fmt:message key="account.email.pending"/>
 					</div>	

@@ -5,6 +5,24 @@
 <c:set var="placeholder" scope="page">
 	<fmt:message key="interest.details.type.here"/>
 </c:set>
+	<c:choose>
+		<c:when test="${param.edit}">
+			<c:set var="beanclass" scope="page">
+				<c:out value="com.criticalsoftware.mobics.presentation.action.booking.EditBookingInterestActionBean"/>
+			</c:set>
+			<c:set var="method" scope="page">
+				<c:out value="returnToEdit"/>
+			</c:set>
+		</c:when>
+		<c:otherwise>
+			<c:set var="beanclass" scope="page">
+				<c:out value="com.criticalsoftware.mobics.presentation.action.booking.CreateBookingInterestActionBean"/>
+			</c:set>
+			<c:set var="method" scope="page">
+				<c:out value="main"/>
+			</c:set>
+		</c:otherwise>
+	</c:choose>
 
 <t:map title="${title}">
 
@@ -53,8 +71,9 @@
 					<span id="choosenAddress"></span>
 				</div>
 				<div>
+					<!-- Submit button -->
 					<div>
-						<stripes:form beanclass="com.criticalsoftware.mobics.presentation.action.booking.BookingInterestActionBean" method="get">
+						<stripes:form beanclass="${pageScope.beanclass}" method="get">
 							<stripes:hidden id="latitude" name="latitude"/>
 							<stripes:hidden id="longitude" name="longitude"/>
 							<stripes:hidden name="startDate"/>
@@ -65,14 +84,18 @@
 							<stripes:hidden name="stopSending"/>
 							<stripes:hidden name="maxMessages"/>
 							<stripes:hidden id="address" name="address"/>
+							<c:if test="${not empty param.activityCode}">
+								<stripes:hidden name="activityCode" value="${param.activityCode}"/>
+							</c:if>
 							
-							<stripes:submit name="main" class="submitBtn green">
+							<stripes:submit name="${pageScope.method}" class="submitBtn green">
 								<fmt:message key="interest.button.ok"/>
 							</stripes:submit>
 						</stripes:form>
 					</div>
+					<!-- Cancel button -->
 					<div>
-						<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.booking.BookingInterestActionBean" class="linkBtn gray">
+						<stripes:link beanclass="${pageScope.beanclass}" class="linkBtn gray" event="${pageScope.method}">
 							<stripes:param name="latitude" value="${actionBean.latitude}"/>
 							<stripes:param name="longitude" value="${actionBean.longitude}"/>
 							<stripes:param name="startDate"><fmt:formatDate value="${actionBean.startDate}" pattern="${applicationScope.configuration.dateTimePattern}"/></stripes:param>
@@ -83,6 +106,9 @@
 							<stripes:param name="stopSending" value="${actionBean.stopSending}"/>
 							<stripes:param name="maxMessages" value="${actionBean.maxMessages}"/>
 							<stripes:param name="address" value="${actionBean.address}"/>
+							<c:if test="${not empty param.activityCode}">
+								<stripes:param name="activityCode" value="${param.activityCode}"/>
+							</c:if>
 							<fmt:message key="interest.button.cancel"/>
 						</stripes:link>
 					</div>
@@ -93,7 +119,8 @@
 	<article id="addressList" class="hidden">
 		<section>
 			<nav class="oneColumnList">
-				<stripes:link id="linkToBeUsedInList" class="hidden" beanclass="com.criticalsoftware.mobics.presentation.action.booking.BookingInterestActionBean">
+				<!-- Shared link to be used in by places in list display-->
+				<stripes:link id="linkToBeUsedInList" class="hidden" beanclass="${pageScope.beanclass}" event="${pageScope.method}">
 					<stripes:param name="startDate"><fmt:formatDate value="${actionBean.startDate}" pattern="${applicationScope.configuration.dateTimePattern}"/></stripes:param>
 					<stripes:param name="distance" value="${actionBean.distance}"/>
 					<stripes:param name="carClazz" value="${actionBean.carClazz}"/>
@@ -101,6 +128,9 @@
 					<stripes:param name="startSending" value="${actionBean.startSending}"/>
 					<stripes:param name="stopSending" value="${actionBean.stopSending}"/>
 					<stripes:param name="maxMessages" value="${actionBean.maxMessages}"/>
+					<c:if test="${not empty param.activityCode}">
+						<stripes:param name="activityCode" value="${param.activityCode}"/>
+					</c:if>
 				</stripes:link>
 				<ul id="results">
 					

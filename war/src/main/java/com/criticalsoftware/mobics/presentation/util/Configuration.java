@@ -65,9 +65,9 @@ public class Configuration implements Serializable{
 
     private final String geolocationServer = "nominatim.openstreetmap.org";
 
-    private final int carThumbnailWidth = 58;
+    private final int thumbnailWidth = 58;
 
-    private final int carThumbnailHeight = 58;
+    private final int thumbnailHeight = 58;
 
     private final int minResults = 1;
 
@@ -173,15 +173,15 @@ public class Configuration implements Serializable{
     /**
      * @return the carThumbnailWidth
      */
-    public int getCarThumbnailWidth() {
-        return Integer.valueOf(getValue("mobics.config.thumbnail.width", carThumbnailWidth));
+    public int getThumbnailWidth() {
+        return Integer.valueOf(getValue("mobics.config.thumbnail.width", thumbnailWidth));
     }
 
     /**
      * @return the carThumbnailHeight
      */
-    public int getCarThumbnailHeight() {
-        return Integer.valueOf(getValue("mobics.config.thumbnail.height", carThumbnailHeight));
+    public int getThumbnailHeight() {
+        return Integer.valueOf(getValue("mobics.config.thumbnail.height", thumbnailHeight));
     }
 
     /**

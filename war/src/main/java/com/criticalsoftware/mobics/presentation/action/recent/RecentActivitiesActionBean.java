@@ -221,7 +221,7 @@ public class RecentActivitiesActionBean extends BaseActionBean {
 
         booking = bookingWSServiceStub.getBookingInterest(activityCode);
 
-        return new ForwardResolution("/WEB-INF/recent/interestBookingDetails.jsp");
+        return new ForwardResolution("/WEB-INF/recent/detailBookingInterest.jsp");
     }
     
     /**

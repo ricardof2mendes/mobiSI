@@ -38,7 +38,7 @@
 						</span>
 						<span>
 							<c:choose>
-								<c:when test="${actionBean.booking.radius > 0}">
+								<c:when test="${actionBean.booking.radius != applicationScope.configuration.anyDistance}">
 									<mobi:formatMobics value="${actionBean.booking.radius}" type="distance"/>
 								</c:when>
 								<c:otherwise>
@@ -85,8 +85,8 @@
 						</span>
 						<span>
 							<c:choose>
-								<c:when test="${actionBean.booking.notificationStartTime > 0}">
-									<mobi:formatMobics value="${actionBean.booking.notificationStartTime}" type="time"/>&nbsp;<fmt:message key="interest.details.before"/>
+								<c:when test="${actionBean.booking.notificationStartTime < 0}">
+									<mobi:formatMobics value="${-(actionBean.booking.notificationStartTime)}" type="time"/>&nbsp;<fmt:message key="interest.details.before"/>
 								</c:when>
 								<c:otherwise>
 									<fmt:message key="find.car.later.on.time"/>

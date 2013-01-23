@@ -18,7 +18,9 @@ input:-moz-placeholder {
 }
 
 textarea,
-input {
+input[type="text"],
+input[type="number"],
+input[type="password"] {
 	-webkit-appearance: none;
 }
 
@@ -41,12 +43,18 @@ body {
 }
 
 section#logo {
-	Min-height: 60px;
-	Max-height: 250px;
+	height: 60px;
 	Width: 250px;
 	margin: 10px auto;
 	background-color: rgba(0, 0, 0, 0.5);
+}
+
+section#logo > div {
+	height: 60px;
+	Width: 250px;
 	text-align: center;
+	display: table-cell;
+	vertical-align: middle;
 }
 
 section h2 {
@@ -289,6 +297,7 @@ form.loginForm>div>label {
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
 	font-weight: bold;
+	font-size: large;
 	text-align: center;
 	color: #FFF;
 	text-shadow: 0px -1px 1px rgba(0, 0, 0, 0.5);
@@ -679,6 +688,7 @@ nav.panel ul li.image a > div:nth-child(1){
 	border: 1px solid rgba(0, 0, 0, 0.6);
 	margin: 0 10px;
 	float: left;
+	text-align: center;
 }
 
 nav.panel  ul li.imageNoLink > div:nth-child(2),

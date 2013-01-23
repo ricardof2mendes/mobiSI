@@ -5,7 +5,7 @@
 
 <t:main title="${title}">
 	<jsp:include page="/WEB-INF/common/message_error.jsp"/>
-	<stripes:form beanclass="com.criticalsoftware.mobics.presentation.action.preferences.PreferencesActionBean" method="post">
+	<stripes:form beanclass="com.criticalsoftware.mobics.presentation.action.preferences.EditPreferencesActionBean" method="post">
 		<article>
 			<section>
 				<nav class="simpleList">
@@ -17,7 +17,7 @@
 							</span>
 							<span class="customComboBox">
 								<stripes:select name="searchRadius">
-									<stripes:option value="">
+									<stripes:option value="${applicationScope.configuration.anyDistance}">
 										<fmt:message key="book.now.search.distance.any"/>
 									</stripes:option>
 									<stripes:option value="500" >
@@ -132,7 +132,7 @@
 							</span>
 							<span class="customComboBox">
 								<stripes:select id="communicationChannel" name="communicationChannel">
-									<stripes:option value="EMAIL"><fmt:message key="preferences.active.channels.email"/></stripes:option>
+									<stripes:option id="emailOption" value="EMAIL"><fmt:message key="preferences.active.channels.email"/></stripes:option>
 									<stripes:option id="appOption" value="APP" style="${actionBean.communicationChannels[2] != 'APP' ? 'display:none' : ''}">
 										<fmt:message key="preferences.active.channels.app"/>
 									</stripes:option>
@@ -216,7 +216,7 @@
 				</nav>
 			</section>
 			<section class="submit">
-				<stripes:submit name="save"  class="submitBtn gray"><fmt:message key="preferences.save"/></stripes:submit>
+				<stripes:submit name="save" class="submitBtn gray"><fmt:message key="preferences.save"/></stripes:submit>
 			</section>
 		</article>	
 	</stripes:form>

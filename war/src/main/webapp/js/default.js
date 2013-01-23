@@ -62,6 +62,11 @@ $(document).ready(function() {
 		url += '&' + $('#startSending').prop('name') + '=' + $('#startSending').val(); 
 		url += '&' + $('#stopSending').prop('name') + '=' + $('#stopSending').val(); 
 		url += '&' + $('#maxMessages').prop('name') + '=' + $('#maxMessages').val();
+		if($('#edit').length > 0) {
+			url += '&edit=true';
+			url += '&' + $('#activityCode').prop('name') + '=' + $('#activityCode').val();
+		}
+		
 		window.location.href = url;
 	});
 	
@@ -75,7 +80,7 @@ $(document).ready(function() {
 	/**
 	 * License plate autocomplete
 	 */
-	//$('#licensePlate').focus();
+	$('#licensePlate').focus();
 	
  	$('#licensePlate').on('keyup', function(e) {
  		var that = this;
@@ -186,11 +191,37 @@ $(document).ready(function() {
 	    	dateOrder: 'ddmmyy',
 	    	timeFormat: TIME_PATTERN,
 	    	timeWheels: 'HHii',
-	        maxDate: new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds(), now.getMilliseconds()),
+	        maxDate: now,
 	        display: 'modal',
 	        mode: 'scroller',
 	        width: 42
 	    });    
+ 	}
+ 	
+ 	if($('#limited').length > 0){
+ 		console.log($('#limited').attr('data-begin'));
+ 		console.log($('#limited').attr('data-limit'));
+ 		
+	 	var begin = new Date($('#limited').attr('data-begin')),
+	 		limit = new Date($('#limited').attr('data-limit'));
+	 	console.log(begin);
+	 	console.log(limit);
+	    var mobiscroll = $('#limited').mobiscroll().datetime({
+	    	setText: 'OK',
+	    	dateFormat: DATE_PATTERN,
+	    	dateOrder: 'ddmmyy',
+	    	timeFormat: TIME_PATTERN,
+	    	timeWheels: 'HHii',
+	    	minDate: begin,
+	        display: 'modal',
+	        mode: 'scroller',
+	        width: 42
+	    });    
+	    
+	    if(limit.length > 0) {
+	    	console.log(limit);
+	    	mobiscroll.maxDate = limit;
+	    }
  	}
  	
  	/* Modal dialog windows */
@@ -298,17 +329,35 @@ $(document).ready(function() {
  	// click on checkbox will toogle select option
  	$('#app').on('click', function(e){
  		e.stopPropagation();
- 		$('#appOption').prop('disabled', ! $('#appOption').prop('disabled'));
- 		toogleSort('#communicationChannel', '#app', '#app');
+ 		if(this.appOpt == null) {
+ 			this.appOpt = $('#appOption'); 
+ 			this.appOpt.removeAttr('selected');
+ 		}
+ 		if($('#app').prop('checked')) {
+ 			$('#emailOption').after(this.appOpt);
+ 		} else {
+ 			this.appOpt.remove();
+ 		}
  	});
  	// click on checkbox will toogle select option
  	$('#sms').on('click', function(e){
  		e.stopPropagation();
- 		$('#smsOption').prop('disabled', ! $('#smsOption').prop('disabled'));
- 		toogleSort('#communicationChannel', '#sms', '#sms');
+ 		if(this.smsOpt == null) {
+ 			this.smsOpt = $('#smsOption');
+ 			this.smsOpt.removeAttr('selected');
+ 		}
+ 		if($('#sms').prop('checked')) {
+ 			if($('#appOption').length > 0) {
+ 				$('#appOption').after(this.smsOpt);
+ 			} else {
+ 				$('#emailOption').after(this.smsOpt);
+ 			}
+ 		} else {
+ 			this.smsOpt.remove();
+ 		}
  	});
  	
- 	
+ 	// Current trip state pooling
  	if($('#statePooling').length > 0) {
  		// check the state
  		var data = $('#state').text();
@@ -365,6 +414,18 @@ $(document).ready(function() {
  		e.preventDefault();
  		window.location.href = CONTEXT_PATH + '/recent/RecentActivities.action?cancelAdvanceBooking=&activityCode='+$('#activityCode').text();
  	});
+ 	
+ 	$('#endTrip').on('click', function(e) {
+ 		if($("#state").text() === 'UNWANTED') {
+ 			e.preventDefault();
+ 			$('body').addClass('confirmation');
+			$('body').on('touchmove', 'body', function(e){
+				e.preventDefault();
+			});
+				
+ 		} 		
+ 	});
+ 	
 });
 
 
@@ -399,7 +460,6 @@ function autocompleteList() {
 					+'&longitude='+$('#longitude').val();
 	
 	$.get(url, function(data, textStatus, jqXHR){
-		console.log(data);
 		if (jqXHR.getResponseHeader('Stripes-Success') === 'OK') {
         	$('#articleContainer').html(data);
             $('#articleContainer').css('display', 'block');
