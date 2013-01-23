@@ -1487,7 +1487,8 @@ body.confirmation .confirm2 {
 	margin-bottom: 10px; 
 }
 
-.confirm article h3 {
+.confirm article h3,
+.confirm2 article h3 {
 	margin: 0;
 	color: #A0A0A0;
 	font-weight: normal;

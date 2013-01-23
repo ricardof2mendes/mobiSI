@@ -38,7 +38,6 @@ import com.criticalsoftware.mobics.fleet.CarDTO;
 import com.criticalsoftware.mobics.fleet.CarTypeEnum;
 import com.criticalsoftware.mobics.fleet.CoordinateDTO;
 import com.criticalsoftware.mobics.fleet.ZoneWithPolygonDTO;
-import com.criticalsoftware.mobics.miscellaneous.CarClassDTO;
 import com.criticalsoftware.mobics.presentation.action.trip.TripActionBean;
 import com.criticalsoftware.mobics.presentation.security.AuthenticationUtil;
 import com.criticalsoftware.mobics.presentation.security.MobiCSSecure;
@@ -57,11 +56,9 @@ import com.criticalsoftware.mobics.proxy.booking.OverlappedCustomerTripException
 import com.criticalsoftware.mobics.proxy.booking.UnauthorizedCustomerExceptionException;
 import com.criticalsoftware.mobics.proxy.fleet.CarClassNotFoundExceptionException;
 import com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException;
-import com.criticalsoftware.mobics.proxy.fleet.CarNotFoundExceptionException;
 import com.criticalsoftware.mobics.proxy.fleet.CarTypeNotFoundExceptionException;
 import com.criticalsoftware.mobics.proxy.fleet.FleetWSServiceStub;
 import com.criticalsoftware.mobics.proxy.fleet.FuelTypeNotFoundExceptionException;
-import com.criticalsoftware.mobics.proxy.miscellaneous.MiscellaneousWSServiceStub;
 
 /**
  * Booking action bean

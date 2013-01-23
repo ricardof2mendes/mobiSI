@@ -7,19 +7,15 @@
 package com.criticalsoftware.mobics.presentation.action;
 
 import java.math.BigDecimal;
-import java.rmi.RemoteException;
 
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.DontValidate;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.Resolution;
 
-import com.criticalsoftware.mobics.miscellaneous.CarClassDTO;
 import com.criticalsoftware.mobics.presentation.action.booking.AdvanceBookingActionBean;
 import com.criticalsoftware.mobics.presentation.action.booking.CreateBookingInterestActionBean;
 import com.criticalsoftware.mobics.presentation.security.MobiCSSecure;
-import com.criticalsoftware.mobics.presentation.util.Configuration;
-import com.criticalsoftware.mobics.proxy.miscellaneous.MiscellaneousWSServiceStub;
 
 /**
  * Home action bean.

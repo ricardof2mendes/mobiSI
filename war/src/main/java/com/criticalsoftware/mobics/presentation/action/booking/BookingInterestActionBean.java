@@ -13,7 +13,6 @@
 package com.criticalsoftware.mobics.presentation.action.booking;
 
 import java.io.UnsupportedEncodingException;
-import java.rmi.RemoteException;
 import java.util.Date;
 
 import net.sourceforge.stripes.action.ForwardResolution;
@@ -21,13 +20,10 @@ import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.ajax.JavaScriptResolution;
 import net.sourceforge.stripes.validation.Validate;
 
-import com.criticalsoftware.mobics.miscellaneous.CarClassDTO;
 import com.criticalsoftware.mobics.presentation.action.BaseActionBean;
 import com.criticalsoftware.mobics.presentation.extension.DatetimeTypeConverter;
 import com.criticalsoftware.mobics.presentation.security.MobiCSSecure;
-import com.criticalsoftware.mobics.presentation.util.Configuration;
 import com.criticalsoftware.mobics.presentation.util.GeolocationUtil;
-import com.criticalsoftware.mobics.proxy.miscellaneous.MiscellaneousWSServiceStub;
 
 /**
  * @author ltiago

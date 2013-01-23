@@ -31,7 +31,6 @@ import org.slf4j.LoggerFactory;
 
 import com.criticalsoftware.mobics.booking.CurrentTripDTO;
 import com.criticalsoftware.mobics.booking.TripDetailsDTO;
-import com.criticalsoftware.mobics.booking.ZoneCategoryEnum;
 import com.criticalsoftware.mobics.presentation.action.BaseActionBean;
 import com.criticalsoftware.mobics.presentation.extension.DatetimeTypeConverter;
 import com.criticalsoftware.mobics.presentation.security.AuthenticationUtil;

@@ -417,7 +417,7 @@ $(document).ready(function() {
  	});
  	
  	$('#endTrip').on('click', function(e) {
- 		if($("#state").text() === 'UNWANTED') {
+ 		if($("#zone").text() === 'UNWANTED') {
  			e.preventDefault();
  			$('#unwantedZoneError').show();
  			$('body').addClass('confirmation');

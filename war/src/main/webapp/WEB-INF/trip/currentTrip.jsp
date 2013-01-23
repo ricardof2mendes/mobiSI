@@ -3,9 +3,9 @@
 <c:set var="title" scope="page"><fmt:message key='current.trip.title' /></c:set>
 <c:set var="warnTitle" scope="page">
 	<c:choose>
-		<c:when test="${actionBean.trip.undesirableZoneCost > 0}">
+		<c:when test="${actionBean.current.undesirableZoneCost > 0}">
 			<fmt:message key="current.trip.end.trip.confirm.h3">
-				<fmt:param>${actionBean.trip.undesirableZoneCost}</fmt:param>
+				<fmt:param>${actionBean.current.undesirableZoneCost}</fmt:param>
 			</fmt:message>
 		</c:when>
 		<c:otherwise>
@@ -19,6 +19,7 @@
 	<jsp:include page="/WEB-INF/common/message_error.jsp"/>
 	
 	<span id="state" class="hidden">${actionBean.current.state}</span>
+	<span id="zone" class="hidden">${actionBean.current.currentZoneType}</span>
 		
 	<article id="statePooling" class="${actionBean.current.state != 'WAIT_OBS_IMMEDIATE' ? 'hidden' : ''} currentTrip">
 		<section>
@@ -42,13 +43,13 @@
 				</a>
 			</section>
 			<section id="unwantedZoneError" class="hidden">
-				<h2><fmt:message key="current.trip.end.trip.confirm"/></h2>
+				<h2><fmt:message key="current.trip.end.trip.confirm.h2"/></h2>
 				<h3 id="title1">${pageScope.warnTitle}</h3>
-				<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn orangered" event="endTrip" addSourcePage="true">
+				<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="alertBtn orangered" event="endTrip" addSourcePage="true">
 					<fmt:message key="current.trip.button.end.trip"/>
 				</stripes:link>
 				<stripes:link id="closeConfirm" href="#" class="alertBtn gray" >
-					<fmt:message key="current.trip.extend.ok"/>
+					<fmt:message key="current.trip.extend.cancel"/>
 				</stripes:link>
 			</section>
 		</article>
