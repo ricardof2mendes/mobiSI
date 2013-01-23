@@ -125,7 +125,7 @@ public class EditBookingInterestActionBean extends BookingInterestActionBean {
         start.setTime(startDate);
 
         bookingWSServiceStub.updateBookingInterest(activityCode, getContext().getUser().getCarClub().getCarClubCode(),
-                start, carClazz, fromMyCarClub, new BigDecimal(longitude), new BigDecimal(latitude),
+                start, address, carClazz, fromMyCarClub, new BigDecimal(longitude), new BigDecimal(latitude),
                 distance != null ? distance.intValue() : Configuration.INSTANCE.getAnyDistance(), startSending
                         .intValue(), stopSending.intValue(), maxMessages.intValue(), Calendar.getInstance());
 

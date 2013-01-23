@@ -94,8 +94,8 @@ public class TripActionBean extends BaseActionBean {
         current = bookingWSServiceStub.getCurrentTripDetails();
 
         if (current == null || current.getLicensePlate() == null || current.getLicensePlate().length() == 0) {
-            resolution = new ForwardResolution("/WEB-INF/trip/lastTrip.jsp");
             last = bookingWSServiceStub.getLastTripDetails();
+            resolution = new ForwardResolution("/WEB-INF/trip/lastTrip.jsp");
         }
 
         return resolution;
@@ -171,26 +171,16 @@ public class TripActionBean extends BaseActionBean {
         Resolution resolution = new RedirectResolution(this.getClass()).flash(this);
 
         if (current != null) {
-            if (CarState.IN_USE.name().equals(current.getState()) || CarState.IN_ERROR.name().equals(current.getState())) {
-                if (ZoneCategoryEnum.NORMAL.getValue().equals(current.getCurrentZoneType())
-                        || ZoneCategoryEnum.PARKING.getValue().equals(current.getCurrentZoneType())) {
-                    // close booking
-                    bookingWSServiceStub.closeActiveBooking();
-                    getContext().getMessages().add(new LocalizableMessage("current.trip.end.trip.message"));
-                } else if (ZoneCategoryEnum.UNWANTED.getValue().equals(current.getCurrentZoneType())) {
-                    
-                } else {
-                    // DO NOTHING on special zones
-                }
+            if (CarState.IN_USE.name().equals(current.getState())
+                    || CarState.IN_ERROR.name().equals(current.getState())) {
+                bookingWSServiceStub.closeActiveBooking();
+                getContext().getMessages().add(new LocalizableMessage("current.trip.end.trip.message"));
             } else {
                 // cannot close
                 getContext().getMessages().add(new LocalizableMessage("current.trip.end.trip.error.message"));
                 resolution = new ForwardResolution(this.getClass());
             }
-
-          
         }
-        
         return resolution;
     }
 

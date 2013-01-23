@@ -132,7 +132,7 @@ public class ImmediateBookingActionBean extends BookingActionBean {
     public Resolution licensePlateBook() {
         return new ForwardResolution("/WEB-INF/book/carBookImmediate.jsp").addParameter("title", 1);
     }
-    
+
     /**
      * Car booking by license plate but for messages action bean usage
      * 
@@ -281,7 +281,7 @@ public class ImmediateBookingActionBean extends BookingActionBean {
                 AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
                         .getPassword()));
         bookingWSServiceStub.createImmediateBookingWithCustomerPin(licensePlate, String.valueOf(pin));
-        
+
         return new RedirectResolution(TripActionBean.class).flash(this);
     }
 
@@ -323,8 +323,6 @@ public class ImmediateBookingActionBean extends BookingActionBean {
             coordinate = fleet.getCarCoordinatesByLicensePlate(licensePlate);
             zones = fleet.getCarZonesWithPolygons(licensePlate);
             getContext().getResponse().setHeader("Stripes-Success", "OK");
-        } catch (CarNotFoundExceptionException e) {
-            LOGGER.error("Car not found", e);
         } catch (CarLicensePlateNotFoundExceptionException e) {
             LOGGER.error("License plate not found", e);
         }
@@ -365,7 +363,7 @@ public class ImmediateBookingActionBean extends BookingActionBean {
     }
 
     // Validation Methods
-    
+
     /**
      * Validate if car type is com.criticalsoftware.mobics.fleet.CarTypeEnum.NORMAL
      * 
@@ -397,13 +395,6 @@ public class ImmediateBookingActionBean extends BookingActionBean {
                     .toString());
         }
         return location;
-    }
-    
-    /**
-     * @return the carClasses
-     */
-    public CarClassDTO[] getCarClasses() throws RemoteException {
-        return new MiscellaneousWSServiceStub(Configuration.INSTANCE.getMiscellaneousEnpoint()).getAllCarClasses();
     }
 
     /**

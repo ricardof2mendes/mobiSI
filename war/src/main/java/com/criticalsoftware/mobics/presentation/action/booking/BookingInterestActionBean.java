@@ -258,12 +258,4 @@ public class BookingInterestActionBean extends BaseActionBean {
     public void setCarClazz(String carClazz) {
         this.carClazz = carClazz;
     }
-
-    /**
-     * @return the carClasses
-     */
-    public CarClassDTO[] getCarClasses() throws RemoteException {
-        return new MiscellaneousWSServiceStub(Configuration.INSTANCE.getMiscellaneousEnpoint()).getAllCarClasses();
-    }
-
 }

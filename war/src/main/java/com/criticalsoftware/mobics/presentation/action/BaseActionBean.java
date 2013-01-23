@@ -22,12 +22,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.criticalsoftware.mobics.carclub.CarClubSimpleDTO;
+import com.criticalsoftware.mobics.miscellaneous.CarClassDTO;
 import com.criticalsoftware.mobics.presentation.extension.MobiCSActionBeanContext;
 import com.criticalsoftware.mobics.presentation.util.Configuration;
 import com.criticalsoftware.mobics.proxy.carclub.CarClubCodeNotFoundExceptionException;
 import com.criticalsoftware.mobics.proxy.carclub.CarClubWSService;
 import com.criticalsoftware.mobics.proxy.carclub.CarClubWSServiceStub;
 import com.criticalsoftware.mobics.proxy.carclub.CarClubWebSiteURLNotFoundExceptionException;
+import com.criticalsoftware.mobics.proxy.miscellaneous.MiscellaneousWSServiceStub;
 
 /**
  * Base ActionBean class.
@@ -147,6 +149,14 @@ public abstract class BaseActionBean implements ActionBean {
             header = getContext().getUser().getCarClub().getCarClubColorScheme();
         }
         return header.replaceAll("_", "").toLowerCase();
+    }
+    
+    /**
+     * @return the carClasses
+     */
+    public CarClassDTO[] getCarClasses() throws RemoteException {
+        return new MiscellaneousWSServiceStub(Configuration.INSTANCE.getMiscellaneousEnpoint())
+                .getAllCarClasses(getContext().getLocale().getCountry());
     }
 
     /**

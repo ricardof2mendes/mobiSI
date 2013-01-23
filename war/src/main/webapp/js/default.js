@@ -384,6 +384,7 @@ $(document).ready(function() {
  								var evaluated = eval(data);
  								if(evaluated === ERROR) {
  									clearInterval(that); 
+ 									$('#stateError').show();
  									$('body').addClass('confirmation');
  									$('body').on('touchmove', 'body', function(e){
  										e.preventDefault();
@@ -418,6 +419,7 @@ $(document).ready(function() {
  	$('#endTrip').on('click', function(e) {
  		if($("#state").text() === 'UNWANTED') {
  			e.preventDefault();
+ 			$('#unwantedZoneError').show();
  			$('body').addClass('confirmation');
 			$('body').on('touchmove', 'body', function(e){
 				e.preventDefault();

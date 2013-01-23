@@ -233,8 +233,6 @@ public class AdvanceBookingActionBean extends BookingActionBean {
         try {
             zones = fleet.getCarZonesWithPolygons(licensePlate);
             getContext().getResponse().setHeader("Stripes-Success", "OK");
-        } catch (com.criticalsoftware.mobics.proxy.fleet.CarNotFoundExceptionException e) {
-            LOGGER.error("Car not found", e);
         } catch (com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException e) {
             LOGGER.error("License plate not found", e);
         }

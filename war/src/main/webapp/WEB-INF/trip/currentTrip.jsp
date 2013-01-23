@@ -34,21 +34,22 @@
 	<!-- Modal window for confirmation -->
 	<div class="confirm2">
 		<article>
-			<section id="stateError">
+			<section id="stateError" class="hidden">
 				<h2><fmt:message key="current.trip.booking.cancelled"/></h2>
 				<h3 id="title1"><fmt:message key="current.trip.booking.cancelled.text"/></h3>
 				<a id="closeBookingImmediate" href="#" class="alertBtn gray" >
-					<fmt:message key="geolocation.alert.button.ok"/>
+					<fmt:message key="current.trip.extend.ok"/>
 				</a>
 			</section>
-			<section id="unwantedZoneError">
+			<section id="unwantedZoneError" class="hidden">
 				<h2><fmt:message key="current.trip.end.trip.confirm"/></h2>
-				<h3 id="title1">
-					${pageScope.warnTitle}
-				</h3>
-				<a id="closeBookingImmediate" href="#" class="alertBtn gray" >
-					<fmt:message key="geolocation.alert.button.ok"/>
-				</a>
+				<h3 id="title1">${pageScope.warnTitle}</h3>
+				<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn orangered" event="endTrip" addSourcePage="true">
+					<fmt:message key="current.trip.button.end.trip"/>
+				</stripes:link>
+				<stripes:link id="closeConfirm" href="#" class="alertBtn gray" >
+					<fmt:message key="current.trip.extend.ok"/>
+				</stripes:link>
 			</section>
 		</article>
 	</div>

@@ -59,11 +59,4 @@ public class HomeActionBean extends BaseActionBean {
     public String getActiveMenu() {
         return ACTIVE_MENU;
     }
-    
-    /**
-     * @return the carClasses
-     */
-    public CarClassDTO[] getCarClasses() throws RemoteException {
-        return new MiscellaneousWSServiceStub(Configuration.INSTANCE.getMiscellaneousEnpoint()).getAllCarClasses();
-    }
 }
