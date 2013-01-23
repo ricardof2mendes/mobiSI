@@ -74,7 +74,7 @@ public class EditBookingInterestActionBean extends BookingInterestActionBean {
         startDate = booking.getPickupDate().getTime();
         latitude = booking.getLocation().getLatitude().toString();
         longitude = booking.getLocation().getLongitude().toString();
-        address = GeolocationUtil.getAddressFromCoordinates(latitude, longitude);
+        address = booking.getLocationName();
         distance = booking.getRadius();
         carClazz = booking.getCarClass();
         fromMyCarClub = booking.getCarClubCarsOnly();
