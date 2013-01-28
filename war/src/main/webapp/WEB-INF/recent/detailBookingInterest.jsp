@@ -29,7 +29,7 @@
 							<fmt:message key="interest.details.location"/>
 						</span>
 						<span>
-							${actionBean.bookingLocation}
+							${actionBean.booking.locationName}
 						</span>
 					</li>
 					<li class="detail white">

@@ -85,7 +85,7 @@
 								<stripes:select name="clazz">
 									<stripes:option value=""><fmt:message key="CarClazz.NOT_SPECIFIED"/></stripes:option>
 									<c:forEach items="${actionBean.carClasses}" var="class">
-										<stripes:option value="${class.code}"><fmt:message key="CarClazz.${class.description}"/></stripes:option>
+										<stripes:option value="${class.code}">${class.description}</stripes:option>
 									</c:forEach>
 								</stripes:select>
 							</span>

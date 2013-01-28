@@ -94,21 +94,6 @@
 				</nav>
 			</section>
 			
-			<section>
-				<nav class="panel">
-					<ul>
-						<li class="detail white">
-							<span><fmt:message key="account.information.rfidCardNo"/></span>
-							<span class="customComboBox">
-								<stripes:text name="rfidCardNo" class="editable"
-									   placeholder="${placeholder}" 
-									   value="${actionBean.rfidCardNo }"/>
-							</span>
-						</li>
-					</ul>
-				</nav>
-			</section>
-			
 			<section class="submit">
 				<stripes:submit name="saveData" class="submitBtn gray">
 					<fmt:message key="account.button.ok"/>

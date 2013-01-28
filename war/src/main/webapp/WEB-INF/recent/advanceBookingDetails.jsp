@@ -136,7 +136,7 @@
 					<c:choose>
 						<c:when test="${actionBean.trip.cancelCost != null}">
 							<fmt:message key="trip.detail.advance.booking.cancel.cost">
-								<fmt:param><mobi:formatMobics value="${actionBean.time}" type="time"/></fmt:param>
+								<fmt:param><mobi:formatMobics value="${actionBean.trip.cancelTime}" type="time"/></fmt:param>
 								<fmt:param><mobi:formatMobics value="${actionBean.trip.cancelCost}" type="currencySymbol"/></fmt:param>
 							</fmt:message>
 						</c:when>
@@ -156,7 +156,7 @@
 				<c:choose>
 					<c:when test="${actionBean.trip.cancelCost != null}">
 						<fmt:message key="trip.detail.advance.booking.cancel.cost">
-							<fmt:param><mobi:formatMobics value="${actionBean.time}" type="time"/></fmt:param>
+							<fmt:param><mobi:formatMobics value="${actionBean.trip.cancelTime}" type="time"/></fmt:param>
 							<fmt:param><mobi:formatMobics value="${actionBean.trip.cancelCost}" type="currencySymbol"/></fmt:param>
 						</fmt:message>
 					</c:when>

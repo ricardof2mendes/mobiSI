@@ -49,7 +49,7 @@
 							<li class="detail white">
 								<span><fmt:message key="trip.detail.start.date"/></span>
 								<span>
-									<fmt:formatDate value="${actionBean.last.endDate.time}" 
+									<fmt:formatDate value="${actionBean.last.startDate.time}" 
 								    				pattern="${applicationScope.configuration.dateTimePattern}"/>
 								</span>
 							</li>

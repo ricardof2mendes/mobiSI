@@ -156,19 +156,19 @@
 							<span class="customComboBox">
 								<stripes:select name="timeToStartSending">
 									<stripes:option value="120">
-										<fmt:message key="find.car.later.end.sending.hours"><fmt:param value="2"/></fmt:message>
+										<fmt:message key="find.car.later.start.sending.hours"><fmt:param value="2"/></fmt:message>
 									</stripes:option>
 									<stripes:option value="60">
-										<fmt:message key="find.car.later.end.sending.hours"><fmt:param value="1"/></fmt:message>
+										<fmt:message key="find.car.later.start.sending.hours"><fmt:param value="1"/></fmt:message>
 									</stripes:option>
 									<stripes:option value="30">
-										<fmt:message key="find.car.later.end.sending.minutes"><fmt:param value="30"/></fmt:message>
+										<fmt:message key="find.car.later.start.sending.minutes"><fmt:param value="30"/></fmt:message>
 									</stripes:option>
 									<stripes:option value="15">
-										<fmt:message key="find.car.later.end.sending.minutes"><fmt:param value="15"/></fmt:message>
+										<fmt:message key="find.car.later.start.sending.minutes"><fmt:param value="15"/></fmt:message>
 									</stripes:option>
 									<stripes:option value="5">
-										<fmt:message key="find.car.later.end.sending.minutes"><fmt:param value="5"/></fmt:message>
+										<fmt:message key="find.car.later.start.sending.minutes"><fmt:param value="5"/></fmt:message>
 									</stripes:option>
 									<stripes:option value="0">
 										<fmt:message key="find.car.later.on.time"/>
@@ -186,19 +186,19 @@
 										<fmt:message key="find.car.later.on.time"/>
 									</stripes:option>
 									<stripes:option value="5">
-										<fmt:message key="find.car.later.start.sending.minutes"><fmt:param value="5"/></fmt:message>
+										<fmt:message key="find.car.later.end.sending.minutes"><fmt:param value="5"/></fmt:message>
 									</stripes:option>
 									<stripes:option value="15">
-										<fmt:message key="find.car.later.start.sending.minutes"><fmt:param value="15"/></fmt:message>
+										<fmt:message key="find.car.later.end.sending.minutes"><fmt:param value="15"/></fmt:message>
 									</stripes:option>
 									<stripes:option value="30">
-										<fmt:message key="find.car.later.start.sending.minutes"><fmt:param value="30"/></fmt:message>
+										<fmt:message key="find.car.later.end.sending.minutes"><fmt:param value="30"/></fmt:message>
 									</stripes:option>
 									<stripes:option value="60">
-										<fmt:message key="find.car.later.start.sending.hours"><fmt:param value="1"/></fmt:message>
+										<fmt:message key="find.car.later.end.sending.hours"><fmt:param value="1"/></fmt:message>
 									</stripes:option>
 									<stripes:option value="120">
-										<fmt:message key="find.car.later.start.sending.hours"><fmt:param value="2"/></fmt:message>
+										<fmt:message key="find.car.later.end.sending.hours"><fmt:param value="2"/></fmt:message>
 									</stripes:option>
 								</stripes:select>
 							</span>

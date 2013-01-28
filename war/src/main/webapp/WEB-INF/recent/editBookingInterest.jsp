@@ -85,20 +85,22 @@
 								<stripes:select id="carClazz" name="carClazz">
 									<stripes:option value=""><fmt:message key="CarClazz.NOT_SPECIFIED"/></stripes:option>
 									<c:forEach items="${actionBean.carClasses}" var="class">
-										<stripes:option value="${class.code}"><fmt:message key="CarClazz.${class.description}"/></stripes:option>
+										<stripes:option value="${class.code}">${class.description}</stripes:option>
 									</c:forEach>
 								</stripes:select>																
 							</span>
 						</li>
-						<li class="detail white">
-							<span><fmt:message key="find.car.later.from.my.club"/></span>
-							<span class="customComboBox">
-								<stripes:select id="fromMyCarClub" name="fromMyCarClub" >
-									<stripes:option value="false"><fmt:message key="find.car.later.from.my.car.club.false"/></stripes:option>
-									<stripes:option value="true"><fmt:message key="find.car.later.from.my.car.club.true"/></stripes:option>
-								</stripes:select>
-							</span>
+						<c:if test="${not actionBean.context.user.carClub.isStandalone}">
+							<li class="detail white">
+								<span><fmt:message key="find.car.later.from.my.club"/></span>
+								<span class="customComboBox">
+									<stripes:select id="fromMyCarClub" name="fromMyCarClub" >
+										<stripes:option value="false"><fmt:message key="find.car.later.from.my.car.club.false"/></stripes:option>
+										<stripes:option value="true"><fmt:message key="find.car.later.from.my.car.club.true"/></stripes:option>
+									</stripes:select>
+								</span>
 						</li>
+						</c:if>
 					</ul>
 				</nav>
 			</section>
