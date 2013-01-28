@@ -41,7 +41,7 @@ public class BookingInterestActionBean extends BaseActionBean {
     @Validate
     protected String carClazz;
 
-    @Validate(required = true, on = {"createBookingInterest", "editBookingInterest"})
+    @Validate
     protected Boolean fromMyCarClub;
 
     @Validate(required = true, on = {"createBookingInterest", "editBookingInterest"})
@@ -83,15 +83,6 @@ public class BookingInterestActionBean extends BaseActionBean {
     public Resolution getAddressFromQuery() throws UnsupportedEncodingException {
         getContext().getResponse().setHeader("Stripes-Success", "OK");
         return new JavaScriptResolution(GeolocationUtil.getAddressFromText(query));
-    }
-
-    /**
-     * FIXME not used
-     * @return
-     */
-    public Resolution getAddressFromCoordinates() {
-        getContext().getResponse().setHeader("Stripes-Success", "OK");
-        return new JavaScriptResolution(GeolocationUtil.getAddressFromCoordinates(latitude, longitude));
     }
 
     /**

@@ -64,9 +64,6 @@ public class EditInformationContactActionBean extends AskPinActionBean {
     @Validate(required = true, on = "saveData")
     private String taxNumber;
 
-    @Validate(required = true, on = "saveData")
-    private String rfidCardNo;
-
     /**
      * Account page
      * 
@@ -104,7 +101,6 @@ public class EditInformationContactActionBean extends AskPinActionBean {
             this.fullName = customer.getFullName();
             this.locality = customer.getLocality();
             this.phoneNumber = customer.getPhoneNumber();
-            this.rfidCardNo = customer.getRfidCardNo();
             this.taxNumber = customer.getTaxNumber();
             this.zipCode1 = customer.getZipCode1().concat("-").concat(customer.getZipCode2());
         }
@@ -125,7 +121,7 @@ public class EditInformationContactActionBean extends AskPinActionBean {
         String code = zipCode1.substring(zipCode1.indexOf('-') + 1, zipCode1.length());
         
         customerWSServiceStub.updateCustomerDetails(address, locality, zip, code, phoneNumber, countryCode,
-                fullName, taxNumber, rfidCardNo);
+                fullName, taxNumber, null);
 
         getContext().getMessages().add(new LocalizableMessage("account.information.edit.success"));
         return new RedirectResolution(AccountActionBean.class).flash(this);
@@ -233,20 +229,6 @@ public class EditInformationContactActionBean extends AskPinActionBean {
      */
     public void setTaxNumber(String taxNumber) {
         this.taxNumber = taxNumber;
-    }
-
-    /**
-     * @return the rfidCardNo
-     */
-    public String getRfidCardNo() {
-        return rfidCardNo;
-    }
-
-    /**
-     * @param rfidCardNo the rfidCardNo to set
-     */
-    public void setRfidCardNo(String rfidCardNo) {
-        this.rfidCardNo = rfidCardNo;
     }
 
 }

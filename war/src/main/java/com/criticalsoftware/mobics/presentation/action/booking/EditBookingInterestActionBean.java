@@ -48,7 +48,6 @@ public class EditBookingInterestActionBean extends BookingInterestActionBean {
     @Validate(required = true, on = { "main", "editBookingInterest" })
     private String activityCode;
 
-
     /**
      * Edit booking interest page
      * 
@@ -84,7 +83,7 @@ public class EditBookingInterestActionBean extends BookingInterestActionBean {
 
         return new ForwardResolution("/WEB-INF/recent/editBookingInterest.jsp");
     }
-    
+
     /**
      * Resolution to return from map to edit page
      * 
@@ -125,9 +124,10 @@ public class EditBookingInterestActionBean extends BookingInterestActionBean {
         start.setTime(startDate);
 
         bookingWSServiceStub.updateBookingInterest(activityCode, getContext().getUser().getCarClub().getCarClubCode(),
-                start, address, carClazz, fromMyCarClub, new BigDecimal(longitude), new BigDecimal(latitude),
-                distance != null ? distance.intValue() : Configuration.INSTANCE.getAnyDistance(), startSending
-                        .intValue(), stopSending.intValue(), maxMessages.intValue(), Calendar.getInstance());
+                start, address, carClazz, getContext().getUser().getCarClub().getIsStandalone() ? true : fromMyCarClub,
+                new BigDecimal(longitude), new BigDecimal(latitude), distance != null ? distance.intValue()
+                        : Configuration.INSTANCE.getAnyDistance(), startSending.intValue(), stopSending.intValue(),
+                maxMessages.intValue(), Calendar.getInstance());
 
         getContext().getMessages().add(new LocalizableMessage("find.car.later.interest.updated"));
         return new RedirectResolution(RecentActivitiesActionBean.class).flash(this);

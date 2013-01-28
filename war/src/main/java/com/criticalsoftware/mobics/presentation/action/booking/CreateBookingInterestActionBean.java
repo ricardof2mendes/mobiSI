@@ -107,11 +107,9 @@ public class CreateBookingInterestActionBean extends BookingInterestActionBean {
 
         Calendar start = Calendar.getInstance();
         start.setTime(startDate);
-
-        bookingWSServiceStub.createBookingInterest(start, address, carClazz, fromMyCarClub, new BigDecimal(longitude),
-                new BigDecimal(latitude),
-                distance,
-                startSending.intValue(), stopSending.intValue(), maxMessages.intValue());
+        bookingWSServiceStub.createBookingInterest(start, address, carClazz, getContext().getUser().getCarClub()
+                .getIsStandalone() ? true : fromMyCarClub, new BigDecimal(longitude), new BigDecimal(latitude),
+                distance, startSending.intValue(), stopSending.intValue(), maxMessages.intValue());
 
         getContext().getMessages().add(new LocalizableMessage("find.car.later.interest.created"));
         return new RedirectResolution(RecentActivitiesActionBean.class).flash(this);

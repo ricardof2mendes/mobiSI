@@ -13,7 +13,6 @@
 package com.criticalsoftware.mobics.presentation.action.recent;
 
 import java.io.UnsupportedEncodingException;
-import java.math.BigDecimal;
 import java.rmi.RemoteException;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -47,6 +46,8 @@ import com.criticalsoftware.mobics.proxy.booking.CustomerNotFoundExceptionExcept
 import com.criticalsoftware.mobics.proxy.booking.UnauthorizedCustomerExceptionException;
 
 /**
+ * Recent activities action bean
+ * 
  * @author ltiago
  * @version $Revision: $
  */
@@ -60,8 +61,6 @@ public class RecentActivitiesActionBean extends BaseActionBean {
     private TripDetailsDTO trip;
 
     private BookingInterestDTO booking;
-
-    private BigDecimal time;
 
     @Validate(
             required = true,
@@ -130,8 +129,6 @@ public class RecentActivitiesActionBean extends BaseActionBean {
                         .getPassword()));
 
         trip = bookingWSServiceStub.getTripDetails(activityCode);
-        // FIXME this property should be replaced by cancelTime from trip object
-        time = new BigDecimal(3600);
 
         return new ForwardResolution("/WEB-INF/recent/advanceBookingDetails.jsp");
     }
@@ -279,22 +276,6 @@ public class RecentActivitiesActionBean extends BaseActionBean {
     }
 
     /**
-     * Get the booking car location
-     * 
-     * @return
-     */
-    public String getBookingLocation() {
-        String location = new LocalizableMessage("application.value.not.available")
-                .getMessage(getContext().getLocale());
-        if (booking.getLocation() != null && booking.getLocation().getLatitude() != null
-                && booking.getLocation().getLongitude() != null) {
-            location = GeolocationUtil.getAddressFromCoordinates(booking.getLocation().getLatitude().toString(),
-                    booking.getLocation().getLongitude().toString());
-        }
-        return location;
-    }
-
-    /**
      * @return the activityCode
      */
     public String getActivityCode() {
@@ -327,13 +308,6 @@ public class RecentActivitiesActionBean extends BaseActionBean {
      */
     public BookingInterestDTO getBooking() {
         return booking;
-    }
-
-    /**
-     * @return the time
-     */
-    public BigDecimal getTime() {
-        return time;
     }
 
 }
