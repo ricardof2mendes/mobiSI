@@ -795,6 +795,10 @@ nav.threeColumnList  ul li a > div:nth-child(2) > div:nth-child(1) > span:nth-ch
 
 nav.threeColumnList  ul li a > div:nth-child(2) > div:nth-child(1) > span:nth-child(3) {
 	color: #999;
+	display: inline-block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 nav.threeColumnList  ul li a > div:nth-child(2) > div:nth-child(2) {

@@ -302,11 +302,13 @@ nav.oneColumnList  ul li a > div:nth-child(2) {
 }
 
 #legend nav.simpleList ul li:nth-child(1) span {
-	background: #fff url(../img/map/mylocation.png) no-repeat 0 50%;
+	background: #fff url(../img/map/location-user-selected.png) no-repeat 0 50%;
+	background-size: 22px 30px; 
 }
 
 #legend nav.simpleList ul li:nth-child(2) span {
-	background: #fff url(../img/map/car-location.png) no-repeat 0 50%;
+	background: #fff url(../img/map/location-car-selected.png) no-repeat 0 50%;
+	background-size: 22px 30px;
 }
 
 #legend nav.simpleList ul li:nth-child(3) span {
@@ -345,8 +347,15 @@ nav.oneColumnList  ul li a > div:nth-child(2) {
 	div.olControlMyLocation a {
 		background-image: url(../img/map/map-icon-location@2x.png);
 	}
+	
+	#legend nav.simpleList ul li:nth-child(1) span {
+		background: #fff url(../img/map/location-user-selected@2x.png) no-repeat 0 50%;
+	}
+	
+	#legend nav.simpleList ul li:nth-child(2) span {
+		background: #fff url(../img/map/location-car-selected@2x.png) no-repeat 0 50%;
+	}
 }
-
 
 
 
