@@ -40,6 +40,7 @@
         <property name="mobics.config.max.results" value="99"/>
         <property name="mobics.config.min.results" value="1"/>
 		<property name="mobics.config.recents.filter.month.gap" value="6"/>
+		<property name="mobics.config.radius.any.distance" value="9999999"/>
 </system-properties>
 
 <!--
