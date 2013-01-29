@@ -326,36 +326,40 @@ $(document).ready(function() {
  	$('#smsFilter').on('click', function(){
  		$('#sms').trigger('click');
  	});
- 	// click on checkbox will toogle select option
- 	$('#app').on('click', function(e){
- 		e.stopPropagation();
- 		if(this.appOpt == null) {
- 			this.appOpt = $('#appOption'); 
- 			this.appOpt.removeAttr('selected');
+ 	
+ 	// on init hide in needed
+ 	if($('#appOption').length > 0) {
+ 		if(!$('#app').prop('checked')) {
+ 			$('#appOption').hide();
  		}
- 		if($('#app').prop('checked')) {
- 			$('#emailOption').after(this.appOpt);
+ 		if(!$('#sms').prop('checked')) {
+ 			$('#smsOption').hide();
+ 		}
+ 	}	
+ 	// on click checkbox
+	$('#app').on('click', function(e) {
+ 		e.stopPropagation();
+ 		$('#appOption').removeAttr('selected');
+ 	
+		if($('#app').prop('checked')) {
+			$('#appOption').show();
  		} else {
- 			this.appOpt.remove();
+ 			$('#appOption').hide();
  		}
  	});
- 	// click on checkbox will toogle select option
- 	$('#sms').on('click', function(e){
+	// on click checkbox
+	$('#sms').on('click', function(e){
  		e.stopPropagation();
- 		if(this.smsOpt == null) {
- 			this.smsOpt = $('#smsOption');
- 			this.smsOpt.removeAttr('selected');
- 		}
+ 		$('#smsOption').removeAttr('selected');
  		if($('#sms').prop('checked')) {
- 			if($('#appOption').length > 0) {
- 				$('#appOption').after(this.smsOpt);
- 			} else {
- 				$('#emailOption').after(this.smsOpt);
- 			}
+ 			$('#smsOption').show();
  		} else {
- 			this.smsOpt.remove();
+ 			$('#smsOption').hide();
  		}
  	});
+ 	
+ 	
+ 	
  	
  	// Current trip state pooling
  	if($('#statePooling').length > 0) {

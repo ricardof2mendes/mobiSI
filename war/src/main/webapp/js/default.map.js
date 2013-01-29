@@ -41,7 +41,7 @@ $(document).ready(function() {
  			$('#streetSearchForm > div > div > div').addClass('delete')
  				.on('click', function() {
  					$(that).val('');
- 					Map.change($(that).val());
+ 					Map.clear();
  					$('#streetSearchForm > div > div > div').removeClass('delete').off('click');
  			});
  		} else {

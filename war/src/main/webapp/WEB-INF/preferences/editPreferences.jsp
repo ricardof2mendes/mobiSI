@@ -133,10 +133,10 @@
 							<span class="customComboBox">
 								<stripes:select id="communicationChannel" name="communicationChannel">
 									<stripes:option id="emailOption" value="EMAIL"><fmt:message key="preferences.active.channels.email"/></stripes:option>
-									<stripes:option id="appOption" value="APP" style="${actionBean.communicationChannels[2] != 'APP' ? 'display:none' : ''}">
+									<stripes:option id="appOption" value="APP">
 										<fmt:message key="preferences.active.channels.app"/>
 									</stripes:option>
-									<stripes:option id="smsOption" value="SMS" style="${actionBean.communicationChannels[1] != 'SMS' ? 'display:none' : ''}">
+									<stripes:option id="smsOption" value="SMS">
 										<fmt:message key="preferences.active.channels.sms"/>
 									</stripes:option>
 								</stripes:select>

@@ -11,6 +11,8 @@ Map.prototype = {
 		 */
 		construct : function(configuration) {
 			
+			this.retina = window.devicePixelRatio > 1;
+			
 			this.type = configuration.type;
 			this.licensePlate = configuration.licensePlate;
 			this.searchParams = configuration.searchParams;
@@ -20,13 +22,13 @@ Map.prototype = {
 
 			this.points = [];
 			this.mylatlong = {
+					address: null,
 					point: null,
 					latitude: null,
 					longitude: null
 			};
 
 			this.setStyles();
-			
 			this.buildCommon();
 			
 			if(this.type === 'mapACar') {
@@ -36,27 +38,14 @@ Map.prototype = {
 			} else if(this.type === 'mapASearch') {
 				this.fetchSearchCarsData();
 			} else  if(this.type === 'mapAStreet') {
-				this.fetchStreetData();
+				this.fetchLocationData();
 			}
 		},
 		
 		setStyles : function() {
 			
 			// Styling
-			this.defaultStyle = OpenLayers.Util.extend({}, OpenLayers.Feature.Vector.style['default']);
-			this.defaultStyle.pointRadius = 10;
-			this.defaultStyle.graphicOpacity = 1; 
-			this.defaultStyle.fillOpacity = 1;
-			this.defaultStyle.fillColor = '#ee9900';
-			this.defaultStyle.strokeColor = '#000';
-
-			this.selectStyle = OpenLayers.Util.extend({}, OpenLayers.Feature.Vector.style['select']);
-			this.selectStyle.pointRadius = 15;
-			this.selectStyle.fillOpacity = 1;
-			this.selectStyle.fillColor = '#ee9900';
-			this.selectStyle.strokeColor = '#000';
-
-			this.greenStyle = OpenLayers.Util.extend({}, this.defaultStyle);
+			this.greenStyle = OpenLayers.Util.extend({}, OpenLayers.Feature.Vector.style['default']);
 			this.greenStyle.fillOpacity = 0.3;
 			this.greenStyle.fillColor = '#ACE228';
 			this.greenStyle.strokeColor = '#94C222';
@@ -65,21 +54,42 @@ Map.prototype = {
 			this.redStyle.fillColor = '#FF0F0F';
 			this.redStyle.strokeColor = '#FF0004';
 
-			this.yellowStyle = OpenLayers.Util.extend({}, this.sgreenStyle);
+			this.yellowStyle = OpenLayers.Util.extend({}, this.greenStyle);
 			this.yellowStyle.fillColor = '#FFF000';
 			this.yellowStyle.strokeColor = '#B7AD00';
 			
-			this.locationDefautlStyle = OpenLayers.Util.extend({}, OpenLayers.Feature.Vector.style['default']);
-			this.locationDefautlStyle.graphicOpacity = 1; 
-			this.locationDefautlStyle.externalGraphic = '../img/map/mylocation.png';
-			this.locationDefautlStyle.graphicHeight = 25;
-			this.locationDefautlStyle.graphicWidth = 21;
+			var locationDefautlStyle = OpenLayers.Util.extend({}, OpenLayers.Feature.Vector.style['default']);
+			locationDefautlStyle.graphicOpacity = 1; 
+			locationDefautlStyle.graphicHeight = 20;
+			locationDefautlStyle.graphicWidth = 14;
 			
-			this.locationSelectStyle = OpenLayers.Util.extend({}, this.locationDefautlStyle);
-			this.locationSelectStyle.graphicHeight = 35;
-			this.locationSelectStyle.graphicWidth = 31;
+			this.locationSelectStyle = OpenLayers.Util.extend({}, locationDefautlStyle);
+			this.locationSelectStyle.graphicHeight = 30;
+			this.locationSelectStyle.graphicWidth = 22;
+			
+			var carDefaultStyle = OpenLayers.Util.extend({}, locationDefautlStyle);
+			this.carSelectStyle = OpenLayers.Util.extend({}, this.locationSelectStyle);
+			
+			if(this.retina) {
+				locationDefautlStyle.externalGraphic = '../img/map/location-user-unselected@2x.png';
+				carDefaultStyle.externalGraphic = '../img/map/location-car-unselected@2x.png';
+				this.locationSelectStyle.externalGraphic = '../img/map/location-user-selected@2x.png';
+				this.carSelectStyle.externalGraphic = '../img/map/location-car-selected@2x.png';
+			} else {
+				locationDefautlStyle.externalGraphic = '../img/map/location-user-unselected.png';
+				carDefaultStyle.externalGraphic = '../img/map/location-car-unselected.png';
+				this.locationSelectStyle.externalGraphic = '../img/map/location-user-selected.png';
+				this.carSelectStyle.externalGraphic = '../img/map/location-car-selected.png';
+			}
+			
+			this.carStyleMap = new OpenLayers.StyleMap({'default': carDefaultStyle, 'select': this.carSelectStyle});
+			this.locationStyleMap = new OpenLayers.StyleMap({'default': locationDefautlStyle, 'select': this.locationSelectStyle});
+			
 		},
 		
+		/** 
+		 * Build common stuff 
+		 */
 		buildCommon : function() {
 			var that = this;
 			// crete the map, add navigation and zoom controls, add basic layer open street map
@@ -95,20 +105,20 @@ Map.prototype = {
 				layers : [ new OpenLayers.Layer.OSM('OpenStreetMap', null, {
 					transitionEffect : 'resize'
 				}) ],
-		        numZoomLevels: 18,
-		        center: new OpenLayers.LonLat(742000, 5861000),
-		        zoom: 1
+				numZoomLevels: 18,
+				center: new OpenLayers.LonLat(-8, 39.7),
+				zoom: 7
 			});
 			
 			// Add legend control to the map
 			this.map.addControl(new OpenLayers.Control.Legend({
 				onLegendClick : function(evt) {
-			        if (evt.buttonElement === this.legendLink.legend) {
+					if (evt.buttonElement === this.legendLink.legend) {
 						if($('#menu').css('display') != 'none') {
 							toggleFx('#menu', true);
 						}
 						toggleFx('#legend', true);
-			        }
+					}
 				}
 			}));
 			
@@ -116,18 +126,15 @@ Map.prototype = {
 				// add list link
 				this.map.addControl(new OpenLayers.Control.List({
 					onListClick : function(evt) {
-				        if (evt.buttonElement === this.listLink.list) {
-							window.location.href = contextPath+'/booking/ImmediateBooking.action?searchImmediateInList=&price=' + that.searchParams.price 
-								+ '&distance=' + that.searchParams.distance 
-								+ '&clazz=' + that.searchParams.clazz
-								+ '&fuel=' + that.searchParams.fuel 
-								+ '&orderBy=' + that.searchParams.order 
-								+ '&latitude=' + that.searchParams.latitude 
-								+ '&longitude=' + that.searchParams.longitude;
-				        }
+						if (evt.buttonElement === this.listLink.list) {
+							window.location.href = contextPath+'/booking/ImmediateBooking.action?searchImmediateInList=&price=' + that.searchParams.price + 
+							'&distance=' + that.searchParams.distance + '&clazz=' + that.searchParams.clazz + '&fuel=' + that.searchParams.fuel + 
+							'&orderBy=' + that.searchParams.order + '&latitude=' + that.searchParams.latitude + '&longitude=' + that.searchParams.longitude;
+						}
 					}
 				}));
 			}
+			
 			if(this.type === 'mapASearch' || this.type === 'mapAStreet' ) {
 				// add my location link
 				this.map.addControl(new OpenLayers.Control.MyLocation({
@@ -156,8 +163,8 @@ Map.prototype = {
 							that.processZones(evaluated);
 							that.processCar(evaluated);
 							that.trackMyLocation();
-				        } else {
-				            console.log('An error has occurred or the user\'s session has expired!');
+						} else {
+				        	console.log('An error has occurred or the user\'s session has expired!');
 				        }
 				    });	
 		},
@@ -194,7 +201,7 @@ Map.prototype = {
 					+ '&longitude=' + this.searchParams.longitude, 
 					function(data, textStatus, jqXHR){
 						if (jqXHR.getResponseHeader('Stripes-Success') === 'OK') {
-							that.processSearch(eval(data));
+							that.processCars(eval(data));
 							that.trackMyLocation();
 				        } else {
 				            console.log('An error has occurred or the user\'s session has expired!');
@@ -206,30 +213,35 @@ Map.prototype = {
 		 * Fetch data from server related to given adress TODO refactor
 		 * @param licensePlate
 		 */
-		fetchStreetData : function() {
-			if(!this.searchParams.address && this.searchParams.latitude && this.searchParams.longitude) {
-				this.mylatlong = {
-						point: new OpenLayers.Geometry.Point(this.searchParams.longitude, this.searchParams.latitude).transform(this.mapDisplayProjection, this.map.getProjectionObject()),
-						latitude : this.searchParams.latitude, 
-						longitude : this.searchParams.longitude
-				};
-			}
-			this.queryData(this.searchParams.address);
-		},
-		
-		queryData : function(query) {
+		fetchLocationData : function(query) {
 			var that = this;
-			if(query.length > 0) {
+			if(query) {
 				$.get(contextPath + '/booking/BookingInterest.action?getAddressFromQuery=&query=' + encodeURI(query), 
 						function(data, textStatus, jqXHR){
 							if (jqXHR.getResponseHeader('Stripes-Success') === 'OK') {
-								that.processStreet(eval(data));
+								that.processLocation(eval(data));
 					        } else {
 					            console.log('An error has occurred or the user\'s session has expired!');
 					        }
 					    });	
 			} else {
-				that.processStreet();
+				var returnData = [];
+				if(this.searchParams.latitude && this.searchParams.longitude) {
+					var isCurrent = this.searchParams.address !== null && this.searchParams.address.length === 0;
+					if(isCurrent) {
+						this.mylatlong = {
+								address: this.searchParams.placeholder, 
+								point: new OpenLayers.Geometry.Point(this.searchParams.longitude, this.searchParams.latitude).transform(this.mapDisplayProjection, this.map.getProjectionObject()),
+								latitude : this.searchParams.latitude, 
+								longitude : this.searchParams.longitude
+						};
+					} else {
+						returnData = [{displayName: this.searchParams.address,
+										longitude:this.searchParams.longitude,
+										latitude: this.searchParams.latitude}];
+					}
+				}
+				that.processLocation(returnData);
 			}
 		},
 
@@ -281,7 +293,8 @@ Map.prototype = {
 			// car coordinates
 			if(returnData.coordinate) {
 				// create the car vector
-				var objectVector = new OpenLayers.Layer.Vector('objects', {style: this.defaultStyle});
+				
+				var objectVector = new OpenLayers.Layer.Vector('objects', { style: this.carSelectStyle });
 				
 				// create point
 				var point = 
@@ -295,19 +308,14 @@ Map.prototype = {
 		},
 
 		/**
-		 * Process search
+		 * Display the search for cars given criterias
 		 * @param returnData
 		 */
-		processSearch : function(returnData) {
+		processCars : function(returnData) {
 			if(returnData) {
-				// set style
-				var style = new OpenLayers.StyleMap({
-						'default': this.defaultStyle,
-			            'select' : this.selectStyle
-		        	});
 				
 				// create the car vector
-				var objectVector = new OpenLayers.Layer.Vector('objects', { styleMap: style });
+				var objectVector = new OpenLayers.Layer.Vector('objects', { styleMap: this.locationStyleMap });
 				this.map.addLayer(objectVector);
 
 				var firstCar = null,
@@ -340,21 +348,15 @@ Map.prototype = {
 		},
 		
 		/**
-		 * Process street search
+		 * Process location search
 		 * @param returnData
 		 */
-		processStreet : function(returnData) {
+		processLocation : function(returnData) {
 			
 			var selectedFeature = null,
 				that = this;
 			
 			this.points = [];
-			
-			// set style
-			var style = new OpenLayers.StyleMap({
-					'default': this.locationDefautlStyle,
-		            'select' : this.locationSelectStyle
-	        	});
 			
 			// remove any prior object layer
 			var aux = this.map.getLayersByName('objects');
@@ -362,7 +364,7 @@ Map.prototype = {
 				this.map.removeLayer(aux[0]);
 			}
 			// create the objects layer
-			var objectVector = new OpenLayers.Layer.Vector('objects', { styleMap: style });
+			var objectVector = new OpenLayers.Layer.Vector('objects', { styleMap: this.locationStyleMap});
 			// add the new layer
 			this.map.addLayer(objectVector);
 			
@@ -378,17 +380,17 @@ Map.prototype = {
 				}
 			});
 
-	        this.map.addControl(selectCtrl);
-	        selectCtrl.activate();
-	        
-	    	// create the control
+			this.map.addControl(selectCtrl);
+			selectCtrl.activate();
+
+			// create the control
 			var geolocate = new OpenLayers.Control.Geolocate({
-			    bind: false,
-			    geolocationOptions: {
-			    	timeout : 10000,
+				bind: false,
+				geolocationOptions: {
+					timeout : 10000,
 					maximumAge : 60000,
 					enableHighAccuracy : true
-			    }
+				}
 			});
 			this.map.addControl(geolocate);
 			
@@ -413,21 +415,22 @@ Map.prototype = {
 				});
 			}
 			
-			// Let's show user position!
-			if(this.mylatlong.point) {
+			// User selected location...
+			if(this.mylatlong.latitude && this.mylatlong.longitude) {
+
 				var feature = new OpenLayers.Feature.Vector(
 						this.mylatlong.point, {
 									location : true,
 									street : {
-										displayName : this.searchParams.placeholder,
+										displayName : this.mylatlong.address,
 										latitude : this.mylatlong.latitude,
 										longitude : this.mylatlong.longitude
 									}
 								}, null);
-			    objectVector.addFeatures(feature);
-			    
-			    if(selectedFeature === null) {
-			    	selectedFeature = feature;
+				objectVector.addFeatures(feature);
+
+				if(selectedFeature === null) {
+					selectedFeature = feature;
 				}
 			}
 
@@ -443,6 +446,7 @@ Map.prototype = {
 					if(!that.mylatlong.point || that.mylatlong.point.x !== point.x || that.mylatlong.point.y !== point.y) {
 						
 						that.mylatlong = {
+								address: that.searchParams.placeholder,
 								point: point,
 								latitude : e.position.coords.latitude, 
 								longitude : e.position.coords.longitude
@@ -453,11 +457,11 @@ Map.prototype = {
 							objectVector.removeFeatures([objectVector.getFeaturesByAttribute('location', true)[0]]);
 						}
 						
-					    var feature = new OpenLayers.Feature.Vector(
+						var feature = new OpenLayers.Feature.Vector(
 										point, {
 											location : true,
 											street : {
-												displayName : that.searchParams.placeholder,
+												displayName : that.mylatlong.address,
 												latitude : that.mylatlong.latitude,
 												longitude : that.mylatlong.longitude
 											}
@@ -501,7 +505,7 @@ Map.prototype = {
 			var url = $('#linkToBeUsedInList').attr('href'),
 				aux = url;
 			
-			if(this.mylatlong.point) {
+			if(this.mylatlong.latitude) {
 				aux += '&latitude=' + this.mylatlong.latitude + '&longitude=' + this.mylatlong.longitude + '&address='; 
 				html += '<li><a href="'+aux+'"><div><img src="'+contextPath+'/img/map/mylocation.png"/></div><div class="ellipsis" ><span>'+this.searchParams.placeholder+'</span></div></a></li>';
 			}
@@ -558,6 +562,19 @@ Map.prototype = {
 				this.map.removeLayer(aux[0]);
 			}
 		},
+		
+		/** Clean the map*/
+		clearMap : function() {
+			// remove any object layer
+			var aux = this.map.getLayersByName('objects');
+			if(aux.length > 0) {
+				this.map.removeLayer(aux[0]);
+			}
+			// remove any previous radius layer
+			this.cleanRadius();
+			// process my location if any
+			this.processLocation();
+		},
 
 		/**
 		 * Track my location and refresh it in the map
@@ -591,11 +608,7 @@ Map.prototype = {
 			    var feature = new OpenLayers.Feature.Vector(
 								point, {
 									some : 'data'
-								}, {
-									externalGraphic : '../img/map/mylocation.png',
-									graphicHeight : 25,
-									graphicWidth : 21
-								});
+								}, that.locationSelectStyle);
 				vectorLayer.addFeatures(feature);
 				
 				// if radius set circle and zoom contents
@@ -712,5 +725,14 @@ Map.create = function(configuration) {
  * @param documentName
  */
 Map.change = function(query) {
-	Map.CURRENT.queryData(query);
+	Map.CURRENT.fetchLocationData(query);
+};
+
+/**
+ * Change document
+ * 
+ * @param documentName
+ */
+Map.clear = function(query) {
+	Map.CURRENT.clearMap();
 };
