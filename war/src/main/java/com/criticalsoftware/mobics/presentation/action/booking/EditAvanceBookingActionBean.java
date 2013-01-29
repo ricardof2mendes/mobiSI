@@ -74,7 +74,6 @@ public class EditAvanceBookingActionBean extends AdvanceBookingActionBean {
         trip = bookingWSServiceStub.getTripDetails(activityCode);
 
         Calendar c = bookingWSServiceStub.getNextAdvanceBooking(activityCode);
-        System.out.println(c.getTime());
         extendBookingDate = c == null ? null : c.getTime();
 
         return new ForwardResolution("/WEB-INF/recent/editAdvanceBookingDetails.jsp");
