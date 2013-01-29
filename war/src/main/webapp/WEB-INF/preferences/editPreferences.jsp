@@ -97,15 +97,13 @@
 							<span>
 								<fmt:message key="preferences.active.channels"/>
 							</span>
-							<span>
-								
-							</span>
+							<span></span>
 						</li>
 						<li class="filter">
 							<span></span>
 							<span class="customComboBox">
 								<stripes:hidden name="communicationChannels[0]"/>
-								<stripes:hidden name="sortAsc[0]"/>
+								<stripes:hidden name="sortAsc"/>
 								<stripes:checkbox id="email" name="communicationChannels[0]" value="EMAIL" disabled="disabled"/>
 								<fmt:message key="preferences.active.channels.email"/>
 							</span>
@@ -113,15 +111,13 @@
 						<li id="appFilter" class="filter">
 							<span></span>
 							<span class="customComboBox">
-								<stripes:hidden name="sortAsc[2]"/>
-								<stripes:checkbox id="app" name="communicationChannels[2]" value="APP"/>
-								<fmt:message key="preferences.active.channels.app"/>
+								<stripes:checkbox id="app" name="communicationChannels[2]" value="IPHONE"/>
+								<fmt:message key="preferences.active.channels.iphone"/>
 							</span>
 						</li>
 						<li id="smsFilter" class="filter">
 							<span></span>
 							<span class="customComboBox">
-								<stripes:hidden name="sortAsc[1]"/>
 								<stripes:checkbox id="sms" name="communicationChannels[1]" value="SMS"/>
 								<fmt:message key="preferences.active.channels.sms"/>
 							</span>
@@ -133,8 +129,8 @@
 							<span class="customComboBox">
 								<stripes:select id="communicationChannel" name="communicationChannel">
 									<stripes:option id="emailOption" value="EMAIL"><fmt:message key="preferences.active.channels.email"/></stripes:option>
-									<stripes:option id="appOption" value="APP">
-										<fmt:message key="preferences.active.channels.app"/>
+									<stripes:option id="appOption" value="IPHONE">
+										<fmt:message key="preferences.active.channels.iphone"/>
 									</stripes:option>
 									<stripes:option id="smsOption" value="SMS">
 										<fmt:message key="preferences.active.channels.sms"/>
