@@ -24,7 +24,6 @@ import net.sourceforge.stripes.action.RedirectResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.validation.Validate;
 
-import com.criticalsoftware.mobics.booking.BookingInterestDTO;
 import com.criticalsoftware.mobics.booking.TripDetailsDTO;
 import com.criticalsoftware.mobics.presentation.action.recent.RecentActivitiesActionBean;
 import com.criticalsoftware.mobics.presentation.security.AuthenticationUtil;
@@ -44,8 +43,6 @@ import com.criticalsoftware.mobics.proxy.booking.InvalidCustomerPinExceptionExce
 public class EditAvanceBookingActionBean extends AdvanceBookingActionBean {
 
     private TripDetailsDTO trip;
-
-    private BookingInterestDTO booking;
 
     private Date extendBookingDate;
 
@@ -127,13 +124,6 @@ public class EditAvanceBookingActionBean extends AdvanceBookingActionBean {
      */
     public TripDetailsDTO getTrip() {
         return trip;
-    }
-
-    /**
-     * @return the booking
-     */
-    public BookingInterestDTO getBooking() {
-        return booking;
     }
 
     /**
