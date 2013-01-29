@@ -122,11 +122,6 @@
 					</c:choose>			
 				</div>
 				<stripes:submit name="saveAdvanceBooking"  class="submitBtn gray"><fmt:message key="trip.detail.advance.booking.save"/></stripes:submit>
-				<div class="warningMessage">
-					<fmt:message key="trip.detail.advance.booking.edit.cost">
-						<fmt:param><mobi:formatMobics value="${actionBean.trip.extendCost}" type="currencySymbol"/></fmt:param>
-					</fmt:message>
-				</div>
 			</section>
 		</article>	
 	</stripes:form>
