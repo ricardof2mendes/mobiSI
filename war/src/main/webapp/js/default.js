@@ -339,7 +339,10 @@ $(document).ready(function() {
  	// on click checkbox
 	$('#app').on('click', function(e) {
  		e.stopPropagation();
- 		$('#appOption').removeAttr('selected');
+ 		if($('#appOption').prop('selected')) {
+ 			$('#appOption').removeAttr('selected');
+ 			$('#emailOption').attr('selected', 'selected');
+ 		}
  	
 		if($('#app').prop('checked')) {
 			$('#appOption').show();
@@ -350,16 +353,16 @@ $(document).ready(function() {
 	// on click checkbox
 	$('#sms').on('click', function(e){
  		e.stopPropagation();
- 		$('#smsOption').removeAttr('selected');
+ 		if($('#smsOption').prop('selected')){
+ 			$('#smsOption').removeAttr('selected');
+ 			$('#emailOption').attr('selected', 'selected');
+		}
  		if($('#sms').prop('checked')) {
  			$('#smsOption').show();
  		} else {
  			$('#smsOption').hide();
  		}
  	});
- 	
- 	
- 	
  	
  	// Current trip state pooling
  	if($('#statePooling').length > 0) {
