@@ -40,39 +40,39 @@ import com.criticalsoftware.mobics.proxy.miscellaneous.MiscellaneousWSServiceStu
  */
 @MobiCSSecure
 public class EditPreferencesActionBean extends BaseActionBean {
-    
+
     private static final String EMAIL = "EMAIL";
-    
+
     private static final String SMS = "SMS";
 
     /**
      * Sorting columns
      */
-    @Validate(required=true, on="save")
-    private String[] columnNames;
-    
-    @Validate(required=true, on="save")
-    private boolean[] sortAsc;
-    
-    @Validate(required=true, on="save")
+    @Validate(required = true, on = "save")
+    private String[] columnNames = new String[3];
+
+    @Validate(required = true, on = "save")
+    private boolean[] sortAsc = new boolean[3];
+
+    @Validate(required = true, on = "save")
     private int searchRadius;
-    
-    @Validate(required=true, on="save")
+
+    @Validate(required = true, on = "save")
     private String communicationChannel;
-    
-    @Validate(required=true, on="save")
-    private String[] communicationChannels;
-    
-    @Validate(required=true, on="save")
+
+    @Validate(required = true, on = "save")
+    private String[] communicationChannels = new String[3];
+
+    @Validate(required = true, on = "save")
     private int timeToStartSending;
-    
-    @Validate(required=true, on="save")
+
+    @Validate(required = true, on = "save")
     private int timeToStopSending;
-    
-    @Validate(required=true, on="save", maxvalue = 99, maxlength=2)
+
+    @Validate(required = true, on = "save", maxvalue = 99, maxlength = 2)
     private int numberOfNotifications;
-    
-    @Validate(required=true, on="save")
+
+    @Validate(required = true, on = "save")
     private String language;
 
     @DefaultHandler
@@ -97,13 +97,13 @@ public class EditPreferencesActionBean extends BaseActionBean {
                 columnNames[i] = column.getColumnName();
                 sortAsc[i++] = column.getSortAsc();
             }
-            
+
             communicationChannels = new String[3];
             String[] comms = customerPreferencesDTO.getCommunicationChannels();
-            for(String commChannel : comms){
-                if(EMAIL.equals(commChannel)) {
+            for (String commChannel : comms) {
+                if (EMAIL.equals(commChannel)) {
                     communicationChannels[0] = commChannel;
-                } else if(SMS.equals(commChannel)) {
+                } else if (SMS.equals(commChannel)) {
                     communicationChannels[1] = commChannel;
                 } else {
                     communicationChannels[2] = commChannel;
@@ -117,12 +117,13 @@ public class EditPreferencesActionBean extends BaseActionBean {
             numberOfNotifications = customerPreferencesDTO.getNumberOfNotifications();
             language = customerPreferencesDTO.getLanguage();
         }
-        
+
         return new ForwardResolution("/WEB-INF/preferences/editPreferences.jsp");
     }
 
     /**
      * Save
+     * 
      * @return
      * @throws RemoteException
      * @throws UnsupportedEncodingException
@@ -134,6 +135,7 @@ public class EditPreferencesActionBean extends BaseActionBean {
         customerWSServiceStub._getServiceClient().addHeader(
                 AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
                         .getPassword()));
+
         customerWSServiceStub.setCustomerPreferences(columnNames, sortAsc, getContext().getUser()
                 .getCustomerPreferencesDTO().getSearchPosition().getLatitude().toString(), getContext().getUser()
                 .getCustomerPreferencesDTO().getSearchPosition().getLongitude().toString(), searchRadius,
@@ -147,14 +149,15 @@ public class EditPreferencesActionBean extends BaseActionBean {
         return new RedirectResolution(this.getClass()).flash(this);
 
     }
-    
+
     /**
      * @return the columnNames
-     * @throws RemoteException 
+     * @throws RemoteException
      */
     public CountryDTO[] getLanguages() throws RemoteException {
-        //TODO check this getCountries not the same getLanguages!
-        return new MiscellaneousWSServiceStub(Configuration.INSTANCE.getMiscellaneousEnpoint()).getAllCountries(null);
+        // TODO check this getCountries not the same getLanguages!
+        return new MiscellaneousWSServiceStub(Configuration.INSTANCE.getMiscellaneousEnpoint())
+                .getAllCountries(getContext().getLocale().getDisplayCountry());
     }
 
     /**
