@@ -315,7 +315,7 @@ Map.prototype = {
 			if(returnData) {
 				
 				// create the car vector
-				var objectVector = new OpenLayers.Layer.Vector('objects', { styleMap: this.locationStyleMap });
+				var objectVector = new OpenLayers.Layer.Vector('objects', { styleMap: this.carStyleMap });
 				this.map.addLayer(objectVector);
 
 				var firstCar = null,
