@@ -199,29 +199,20 @@ $(document).ready(function() {
  	}
  	
  	if($('#limited').length > 0){
- 		console.log($('#limited').attr('data-begin'));
- 		console.log($('#limited').attr('data-limit'));
- 		
-	 	var begin = new Date($('#limited').attr('data-begin')),
+ 		var begin = new Date($('#limited').attr('data-begin')),
 	 		limit = new Date($('#limited').attr('data-limit'));
-	 	console.log(begin);
-	 	console.log(limit);
-	    var mobiscroll = $('#limited').mobiscroll().datetime({
+	 	var mobiscroll = $('#limited').mobiscroll().datetime({
 	    	setText: 'OK',
 	    	dateFormat: DATE_PATTERN,
 	    	dateOrder: 'ddmmyy',
 	    	timeFormat: TIME_PATTERN,
 	    	timeWheels: 'HHii',
 	    	minDate: begin,
+	    	maxDate: limit,
 	        display: 'modal',
 	        mode: 'scroller',
 	        width: 42
 	    });    
-	    
-	    if(limit.length > 0) {
-	    	console.log(limit);
-	    	mobiscroll.maxDate = limit;
-	    }
  	}
  	
  	/* Modal dialog windows */
@@ -368,8 +359,6 @@ $(document).ready(function() {
  	if($('#statePooling').length > 0) {
  		// check the state
  		var data = $('#state').text();
- 		var WAITING = 'WAIT_OBS_';
- 		var ERROR = 'IN_ERROR';
  		
  		var url = {state : CONTEXT_PATH, 
  				   end : CONTEXT_PATH};
@@ -412,31 +401,96 @@ $(document).ready(function() {
  		}
  	}
  	
- 	// On click booking error confirm box button
- 	$('#closeBookingImmediate').on('click', function(e) {
+ 	// Unlock
+ 	$('#unlock').on('click', function(e) {
  		e.preventDefault();
- 		window.location.href = CONTEXT_PATH + '/trip/Trip.action?endTrip=';
+ 		// show message
+		$('#unlocking').show();
+		var url ={
+ 				lockunlock: $(this).prop('href'), 
+ 				pooling :  CONTEXT_PATH + '/trip/Trip.action?getCurrentTrip=',
+ 				state: IN_USE,
+ 				redirect: CONTEXT_PATH + '/trip/Trip.action?success=true'
+ 				};
+		
+		lockUnlockAndWait(url);
  	});
  	
- 	$('#closeBookingAdvance').on('click', function(e) {
- 		e.preventDefault();
- 		window.location.href = CONTEXT_PATH + '/recent/RecentActivities.action?cancelAdvanceBooking=&activityCode='+$('#activityCode').text();
- 	});
- 	
+ 	// End trip
  	$('#endTrip').on('click', function(e) {
- 		if($("#zone").text() === 'UNWANTED') {
+ 		if($("#zone").text() === UNWANTED_ZONE) {
  			e.preventDefault();
  			$('#unwantedZoneError').show();
  			$('body').addClass('confirmation');
 			$('body').on('touchmove', 'body', function(e){
 				e.preventDefault();
 			});
-				
+ 		} else {
+ 			// show message
+ 			$('#locking').show();
+ 			var url = {
+ 	 				lockunlock: $(this).prop('href'), 
+ 	 				pooling :  CONTEXT_PATH + '/trip/Trip.action?getCurrentTrip=', 
+ 	 				redirect: CONTEXT_PATH + '/trip/Trip.action?success='
+ 	 				};
+ 			lockUnlockAndWait(url);
  		} 		
+ 	});
+
+ 	// End trip
+ 	$('#lockEndTrip').on('click', function(e) {
+		$('#locking').show();
+		var url = {
+				lockunlock: $(this).prop('href'), 
+				pooling :  CONTEXT_PATH + '/trip/Trip.action?getCurrentTrip=', 
+				redirect: CONTEXT_PATH + '/trip/Trip.action?success='
+		};
+		lockUnlockAndWait(url);
  	});
  	
 });
 
+function lockUnlockAndWait(url) {
+	
+	// add modal
+	$('body').addClass('confirmation');
+	$('body').on('touchmove', 'body', function(e){
+		e.preventDefault();
+	});
+	// do active pooling
+	$.get(url.lockunlock, 
+			function(data, textStatus, jqXHR){
+				if (jqXHR.getResponseHeader('Stripes-Success') === 'OK') {
+					if(eval(data) === true) {
+						var times = 15;
+						setInterval(function(){
+							var that = this;
+							if(times !== 0) {
+								$.get(url.pooling, 
+										function(data, textStatus, jqXHR){
+											if (jqXHR.getResponseHeader('Stripes-Success') === 'OK') {
+												var evaluated = eval(data);
+												if(evaluated === null || (url.state && url.state === evaluated.carState)) {
+													clearInterval(that); 
+													window.location.href = url.redirect + 'true';										 			
+										 		} 
+									        } else {
+									            console.log('An error has occurred or the user\'s session has expired!');
+									        }
+									    });
+								times--;
+							} else {
+								clearInterval(this);
+								window.location.href = url.redirect + 'false';	
+							}	
+						}, 3000);
+					}
+		        } else {
+		            console.log('An error has occurred or the user\'s session has expired!');
+		        }
+		    });
+	
+}
 
 /**
  * Obtain geopostion

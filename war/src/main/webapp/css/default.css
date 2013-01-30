@@ -58,15 +58,16 @@ section#logo > div {
 }
 
 section h2 {
-	margin: 0 10px 5px;
-	font-size: normal;
+	margin: 0 15px 5px;
+	font-size: 120%;
 	font-weight: normal;
 	color: #666;
+	text-shadow: 0 1px -1px white;
 }
 
 section h3 {
 	margin: 0 10px 5px;
-	font-size: normal;
+	font-size: 100%;
 	font-weight: normal;
 	color: #666;
 }
@@ -78,13 +79,14 @@ header {
 }
 
 header > h1 {
-    font-size: x-large;
+    font-size: 130%;
     padding-right: 40px;
+    text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.7);
 }
 
 footer {
 	font-weight: bold;
-	font-size: normal;
+	font-size: 90%;
 	text-shadow: 0px -1px 1px rgba(0, 0, 0, 0.5);
 	text-align: center;
 	color: #FFF;
@@ -94,7 +96,7 @@ nav#menu ul li {
 	color: #ccc;
 	background-color: #515151;
 	font-weight: bold;
-	font-size: normal;
+	font-size: 100%;
 	line-height: 45px;
 	border-bottom: 1px solid #797979;
 }
@@ -235,8 +237,8 @@ form.loginForm > div > input  {
 	line-height: 45px;
 	height: 45px;
 	border: 0;
-	border-top: 1px solid #D7D7D7;
-	font-size: normal;
+	border-top: 1px solid #e5e5e5;
+	font-size: 100%;
 	color: #333;
 }
 
@@ -251,7 +253,7 @@ form.loginForm>div>label {
 	line-height: 45px;
 	color: #999;
 	border-top: 1px solid #D7D7D7;
-	font-size: normal;
+	font-size: 100%;
 	padding-left: 10px;
 }
 
@@ -268,7 +270,8 @@ form.loginForm>div>label {
 .bottomShadow {
 	height: 5px;
 	background: transparent url(../img/menu/sombra_menus_10px.png) repeat-x top left;
-	margin-bottom: 5px;
+	/*margin-bottom: 5px;*/
+	margin-bottom: 0;
 }
 .menuBtn {
 	width: 30px;
@@ -297,7 +300,7 @@ form.loginForm>div>label {
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
 	font-weight: bold;
-	font-size: large;
+	font-size: 110%;
 	text-align: center;
 	color: #FFF;
 	text-shadow: 0px -1px 1px rgba(0, 0, 0, 0.5);
@@ -323,7 +326,7 @@ form.loginForm>div>label {
 
 .bigBtn {
 	background-color: #288b07;
-	font-size: xx-large;
+	font-size: 180%;
 	height: 90px;
 	line-height: 90px;
 	background-image: url(../img/bt_up_90px.png);
@@ -339,7 +342,7 @@ span#nearestCar {
 	background-image: url(../img/links/nearest-car.png);
 	background-repeat: no-repeat;
 	background-position: 0 50%;
-	padding-left: 24px;
+	padding-left: 30px;
 }
 
 section.submit {
@@ -350,7 +353,7 @@ section.submit {
 	border-radius: 4px;
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
-	font-size: large;
+	font-size: 120%;
     font-weight: bold;
 	text-shadow: 0px -1px 1px rgba(0, 0, 0, 0.5);
 	text-align: center;
@@ -365,6 +368,7 @@ section.submit {
 	background-repeat: repeat-x;
 	background-position: top left;
 	margin-bottom: 10px;
+	margin-top: 5px;
 }
 
 .submitBtn:active {
@@ -408,7 +412,7 @@ section > nav.simpleList ul {
 section > nav.simpleList ul li {
 	line-height: 45px;
 	text-align: left;
-	font-size: large;
+	font-size: 100%;
 	font-weight: bold;
 	border-bottom: 1px solid #E5E5E5;
 	background-image: url(../img/fakeIco.png), url(../img/seta.png);
@@ -466,9 +470,10 @@ section > nav.simpleList ul li.title {
 	padding-left: 10px;
 	background: none;
 	background-color: #f4f4f4;
-	font-size: normal;
 	font-weight: normal;
 	color: #666;
+	font-size: 100%;
+	text-shadow: 0 1px -1px white;
 }
 
 section > nav.simpleList ul li.anotherTitle {
@@ -476,7 +481,7 @@ section > nav.simpleList ul li.anotherTitle {
 	padding-left: 10px;
 	background: none;
 	background-color: #fff;
-	font-size: normal;
+	font-size: 100%;
 	color: #000;
 }
 
@@ -496,6 +501,8 @@ section > nav.simpleList ul li span:nth-child(1) {
 	text-align: right;
     width: 38%;
 	display: inline-block;
+	color: #333;
+	font-size: 100%;
 }
 
 section > nav.simpleList ul li.link span:nth-child(2) {
@@ -534,7 +541,7 @@ section > nav.simpleList ul li:last-child {
 
 section > nav.simpleList ul li a {
 	color: #333;
-	padding-left: 40px;
+	padding-left: 45px;
 	display: block;
 }
 
@@ -578,6 +585,7 @@ section > nav.panel ul li.link span:nth-child(1) {
 	text-align: right;
     width: 38%;
 	display: inline-block;
+	color:#333
 }
 
 section > nav.panel ul li.link span:nth-child(2) {
@@ -595,23 +603,25 @@ section > nav.panel ul li.link span:nth-child(2) {
 nav.panel ul li.detail,
 nav.panel ul li.link {
 	text-align: left;
-	font-size: large;
+	font-size: 100%;
 	font-weight: bold;
+	color: #333;
 	border-bottom: 1px solid #E5E5E5;
+	text-shadow: 0 1px -1px white;
 }
 
 nav.panel ul li.image {	
-	border-bottom: 1px solid #CCC;
+	border-bottom: 1px solid #E5E5E5;
 }
 
 nav.panel ul li.image a {
-	padding: 5px 0;
+	padding: 10px 0;
 }
 
 nav.panel ul li.imageCarClub,
 nav.panel ul li.imageNoLink {	
-	padding: 5px 0;
-	border-bottom: 1px solid #CCC;
+	padding: 10px 0;
+	border-bottom: 1px solid #E5E5E5;
 }
 
 nav.panel ul li:last-child {	
@@ -673,19 +683,19 @@ nav.panel ul li.imageCarClub > div > div:nth-child(1) > div > img {
 nav.panel ul li.imageCarClub > div > div:nth-child(2) {
 	float: left;
 	font-weight: bold;
-	font-size: x-large;
+	font-size: 100%;
 	color: #333;
-	padding-top: 15px;
+	padding-top: 20px;
 }
 
 nav.panel ul li.imageNoLink > div:nth-child(1),
 nav.panel ul li.image a > div:nth-child(1){
 	width: 60px;
-	Max-height: 60px;
+	height: 60px;
 	border-radius: 4px ;
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
-	border: 1px solid rgba(0, 0, 0, 0.6);
+	border: 1px solid rgba(0, 0, 0, 0.3);
 	margin: 0 10px;
 	float: left;
 	text-align: center;
@@ -700,7 +710,7 @@ nav.panel  ul li.image a > div:nth-child(2){
 
 nav.panel ul li.imageNoLink > div:nth-child(2) > div:nth-child(1) > span,
 nav.panel ul li.image a > div:nth-child(2) > div:nth-child(1) > span {
-	font-size: normal;
+	font-size: 100%;
 	float: left;
 	width: 100%;
 }
@@ -729,17 +739,17 @@ nav.panel  ul li.image a > div:nth-child(2) > div:nth-child(1) > span:nth-child(
 
 nav.threeColumnList ul li {
 	background: #FFF url(../img/seta.png) no-repeat 100% 50%;
-	border-bottom: 1px solid #CCC;
+	border-bottom: 1px solid #E5E5E5;
 }
 
 nav.threeColumnList ul li a {
 	display: block;
-	padding: 5px 0;
+	padding: 10px 0;
 }
 
 nav.threeColumnList  ul li a > div:nth-child(1) {
 	width: 60px;
-	max-height: 60px;
+	height: 60px;
 	border-radius: 4px ;
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
@@ -777,7 +787,7 @@ nav.threeColumnList  ul li a > div:nth-child(2) > div:nth-child(1) {
 }
 
 nav.threeColumnList  ul li a > div:nth-child(2) > div:nth-child(1) > span {
-	font-size: normal;
+	font-size: 100%;
 	float: left;
 	width: 100%;
 }
@@ -807,7 +817,7 @@ nav.threeColumnList  ul li a > div:nth-child(2) > div:nth-child(2) {
 }
 
 nav.threeColumnList  ul li a > div:nth-child(2) > div:nth-child(2) > span {
-	font-size: normal;
+	font-size: 100%;
 	float: right;
 	text-align: right;
 	width: 100%;
@@ -820,6 +830,7 @@ nav.threeColumnList  ul li a > div:nth-child(2) > div:nth-child(2) > span:nth-ch
 
 nav.threeColumnList  ul li a > div:nth-child(2) > div:nth-child(2) > span:nth-child(2) {
 	color: #999;
+	font-size: 90%;
 }
 
 nav.threeColumnList  ul li a > div:nth-child(2) > div:nth-child(2) > span.unavailable {
@@ -836,7 +847,7 @@ nav.threeColumnList  ul li a > div:nth-child(2) > div:nth-child(2) > span.unavai
 
 nav.twoColumnList ul li {
 	background: #FFF url(../img/seta.png) no-repeat 100% 50%;
-	border-bottom: 1px solid #CCC;
+	border-bottom: 1px solid #E5E5E5;
 }
 
 nav.twoColumnList ul li a {
@@ -851,7 +862,7 @@ nav.twoColumnList  ul li a > div:nth-child(1) {
 }
 
 nav.twoColumnList  ul li a > div:nth-child(1) > span {
-	font-size: normal;
+	font-size: 100%;
 	float: left;
 	width: 100%;
 }
@@ -861,6 +872,7 @@ nav.twoColumnList  ul li a > div:nth-child(1) > span:nth-child(1) {
 }
 nav.twoColumnList  ul li a > div:nth-child(1) > span:nth-child(2) {
 	color: #999;
+	font-size: 90%;
 }
 
 nav.twoColumnList  ul li a > div:nth-child(2) {
@@ -903,12 +915,15 @@ nav.orderCriteria ul li {
 nav.orderCriteria ul li a{
 	display:block;
 	color: #333;
+	text-shadow: 0 1px -1px white;
 	font-weight: bold;
 	height: 30px;
 	width: 74px;
 	border: 1px solid rgba(0, 0, 0, 0.6);
-	font: bold 12px/30px Helvetica, Arial, sans-serif;
+	font: bold 90% Arial, sans-serif;
 	background: url('../img/bt_up_30px-height.png');
+	margin-left: -1px;
+	line-height: 28px;
 }
 
 nav.orderCriteria ul li a.selected{
@@ -920,6 +935,7 @@ nav.orderCriteria ul li:first-child a{
 	border-radius: 4px 0 0 4px;
 	-moz-border-radius: 4px 0 0 4px;
 	-webkit-border-radius: 4px 0 0 4px;
+	margin-left: 1px;
 }
 
 nav.orderCriteria ul li:last-child a {
@@ -942,10 +958,11 @@ section#noresults {
 	text-align: center;
 	height: 30px;
 	color: #333;
+	text-shadow: 0 1px -1px white;
 }
 
 section#noresults label:nth-child(1) {
-	font-weight: bold;
+	font-weight: normal;
 }
 
 section#noresultsdamage {
@@ -961,7 +978,7 @@ section#noresultsdamage {
 }
 .customComboBox > textarea {
 	border: 0;
-	color: #666;
+	color: #333;
 	width: 100%;
 	padding: 0 10px;
 	background-color: transparent;
@@ -972,9 +989,10 @@ section#noresultsdamage {
 .customComboBox > input[type="number"],
 .customComboBox > input[type="password"] {
 	border: 0;
-	color: #666;
+	color: #333;
 	width: 100%;
 	background-color: transparent;
+	font-size: 100%
 }
 
 .fullWith {
@@ -984,19 +1002,20 @@ section#noresultsdamage {
 /*---------------------------------- PIN --*/
 
 article.pin div {
-	width: 250px;
+	width: 130px;
 	margin: auto auto 15px;
 	text-align: center;	
 }
 
 article.pin div:nth-child(1) > label {
-	font-size: normal;
+	font-size: 100%;
 	display: block;
 }
 
 article.pin  div:nth-child(1) > label:nth-child(1) {
-	font-weight: bold;
-	color: #333;
+	font-weight: normal;
+	color: #666;
+	text-shadow: 0 1px -1px white;
 }
 
 article.pin div:nth-child(1) > label:nth-child(2) {
@@ -1008,7 +1027,7 @@ article.pin div:nth-child(1) > label:nth-child(3) {
 }
 
 article.pin div:nth-child(1) > label:nth-child(4) {
-	font-size: small;
+	font-size: 90%;
 	color: #999;
 }
 	
@@ -1024,22 +1043,22 @@ article.pin div:nth-child(2) {
 }
 
 article.pin div:nth-child(2) > input {
-	width: 250px;
+	width: 130px;
 	line-height: 45px;
 	height: 45px;
 	border: 0;
-	font-size: normal;
+	font-size: 100%;
 	color: #333;
 	padding-left: 10px;
 }
 
 
 article.pin div:nth-child(3) > input[type="submit"] {
-	width: 250px;
+	width: 130px;
 	border-radius: 4px;
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
-	font-size: large;
+	font-size: 110%;
     font-weight: bold;
 	text-shadow: 0px -1px 1px rgba(0, 0, 0, 0.5);
 	text-align: center;
@@ -1070,9 +1089,6 @@ article.pin div:nth-child(3) > input[type="submit"]:active {
 
 #licensePlateBookForm > div {
 	background: #FFF;
-	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
-	-moz-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
-	-webkit-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
 	border-radius: 12px;
 	-moz-border-radius: 12px;
 	-webkit-border-radius: 12px;
@@ -1080,14 +1096,15 @@ article.pin div:nth-child(3) > input[type="submit"]:active {
 	position: relative;
 	margin: 0 10px;
 	padding: 0 10px 0 10px;
+	border: 1px solid rgba(0,0,0,0.3);
 }
 
 #licensePlateBookForm > div > input {
 	line-height: 24px;
 	height: 24px;
 	border: 0;
-	font-size: normal;
-	color: #999;
+	font-size: 90%;
+	color: #333;
 	width: 100%;
 }
 
@@ -1112,8 +1129,10 @@ input.autocomplete {
 .warningMessage {
 	margin-bottom: 10px;
 	text-align: center;
-	color: #999;
+	color: #666;
 	padding: 0 10px;
+	text-shadow: 0 1px -1px white;
+	font-size: 90%;
 }
 
 /* Errors */
@@ -1141,7 +1160,7 @@ input.autocomplete {
 }
 
 .errors div {
-	font: bold 14px Helvetica, Arial, sans-serif;
+	font: normal 90% Helvetica, Arial, sans-serif;
 	padding-top: 10px;
 	text-align: left;
 	color: #CC0000;
@@ -1152,14 +1171,14 @@ input.autocomplete {
 }
 
 .errors li {
-	color: #b72222;
-	font: 14px Helvetica, Arial, sans-serif;
+	color: #cc0000;
+	font: normal 90% Helvetica, Arial, sans-serif;
 	list-style: none;
 }
 
 .globalErrors .errors li {
 	color: #CC0000;
-	font: bold 14px Helvetica, Arial, sans-serif;
+	font: bold 90% Helvetica, Arial, sans-serif;
 	padding-top: 10px;
 }
 
@@ -1485,18 +1504,25 @@ body.confirmation .confirm2 {
 
 .confirm article h2,
 .confirm2 article h2 {
-	color: #000;
+	color: #333;
 	font-weight: bold;
-	margin: 0;
-	margin-bottom: 10px; 
+	margin: 0 10px 0px 10px;
+	font-size: 100%;
 }
 
 .confirm article h3,
 .confirm2 article h3 {
-	margin: 0;
-	color: #A0A0A0;
+	margin: 0 10px 0px 10px;
+	color: #333;
 	font-weight: normal;
-	margin-bottom: 10px;
+	margin-bottom: 20px;
+	font-size: 100%;
+}
+#unlocking,
+#locking {
+	width: 350px;
+	margin: auto;
+	text-align: center;
 }
 
 #statePooling section{
@@ -1504,7 +1530,8 @@ body.confirmation .confirm2 {
 	margin: auto;
 	text-align: center;
 }
-
+#unlocking h2,
+#locking h2,
 #statePooling h2 {
 	padding-right: 16px;
 	margin: 0;
@@ -1513,7 +1540,7 @@ body.confirmation .confirm2 {
 
 #statePooling div {
 	color: #999;
-	font-size: large;
+	font-size:  100%;;
 	font-weight: normal;
 }
 
