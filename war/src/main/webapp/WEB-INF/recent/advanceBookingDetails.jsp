@@ -5,9 +5,8 @@
 <t:main title="${title}">
 	<jsp:include page="/WEB-INF/common/message_error.jsp"/>
 	
+	<!-- State pooling -->	
 	<span id="state" class="hidden">${actionBean.trip.state}</span>
-	<span id="activityCode" class="hidden">${actionBean.trip.bookingNumber}</span>
-	
 	<article id="statePooling" class="${actionBean.trip.state != 'WAIT_OBS_ADVANCE' ? 'hidden' : ''}">
 		<section>
 			<h2>
@@ -19,15 +18,16 @@
 		</section>
 	</article>
 	
-	<!-- Modal window for confirmation -->
+	<!-- Modal window for error on status-->
 	<div class="confirm2">
 		<article>
 			<section>
 				<h2><fmt:message key="current.trip.booking.cancelled"/></h2>
 				<h3 id="title1"><fmt:message key="current.trip.booking.cancelled.text"/></h3>
-				<a id="closeBookingImmediate" href="#" class="alertBtn gray" >
+				<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.recent.RecentActivitiesActionBean" event="cancelAdvanceBooking" class="alertBtn gray">
+					<stripes:param name="activityCode">${actionBean.trip.bookingNumber}</stripes:param>
 					<fmt:message key="geolocation.alert.button.ok"/>
-				</a>
+				</stripes:link>
 			</section>
 		</article>
 	</div>

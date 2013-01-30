@@ -37,14 +37,22 @@
         <!-- TODO JS -->
         <script src="${contextPath}/js/zepto.js"></script>
         <script src="${contextPath}/js/zepto-gfx.js"></script>
-        
-        <!-- Calendar -->
         <script>
         	var CONTEXT_PATH = '${contextPath}';
         	var ZONE_ALL = '<fmt:message key="book.advance.zone.any" />';
+        	// date patterns for calendar
         	var DATE_PATTERN = '${applicationScope.configuration.jsDatePattern}';
         	var TIME_PATTERN = '${applicationScope.configuration.jsTimePattern}';
+        	// booking status for ajax pooling
+        	var WAITING = 'WAIT_OBS_';
+     		var ERROR = 'OBS_ERROR';
+     		var IN_USE = 'IN_USE';
+     		// unwanted zone
+     		var UNWANTED_ZONE = 'UNWANTED';
         </script>
+        
+        
+        <!-- Calendar -->
         <c:if test="${addCalendar}">
       		<script src="${contextPath}/js/mobiscroll-2.3.1.custom.min.js"></script>      		
         </c:if>
