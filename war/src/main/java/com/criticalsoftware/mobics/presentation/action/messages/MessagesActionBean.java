@@ -94,8 +94,11 @@ public class MessagesActionBean extends BaseActionBean {
     @ValidationMethod(on = "read", when = ValidationState.NO_ERRORS)
     public void validation(ValidationErrors errors) throws RemoteException, RemoteException,
             CarLicensePlateNotFoundExceptionException, UnsupportedEncodingException, CustomerNotFoundExceptionException {
-        CarDTO car = new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint()).getCarDetails(
-                licensePlate.toUpperCase(), null, null);
+        FleetWSServiceStub fleetWSServiceStub = new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint());
+        fleetWSServiceStub._getServiceClient().addHeader(
+                AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
+                        .getPassword()));
+        CarDTO car = fleetWSServiceStub.getCarDetails(licensePlate.toUpperCase(), null, null);
         if (car == null) {
             errors.addGlobalError(new LocalizableError("car.details.validation.car.not.available"));
         }

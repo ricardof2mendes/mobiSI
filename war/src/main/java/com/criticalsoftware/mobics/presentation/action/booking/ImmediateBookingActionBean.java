@@ -176,12 +176,18 @@ public class ImmediateBookingActionBean extends BookingActionBean {
      * @throws FuelTypeNotFoundExceptionException
      * @throws CarClassNotFoundExceptionException
      * @throws CarTypeNotFoundExceptionException
+     * @throws UnsupportedEncodingException 
      * @throws CarValidationExceptionException
      */
     @ValidationMethod(on = "nearestCarBook", when = ValidationState.NO_ERRORS, priority = 1)
     public void validateNearestCar(ValidationErrors errors) throws RemoteException, FuelTypeNotFoundExceptionException,
-            CarClassNotFoundExceptionException, CarTypeNotFoundExceptionException {
-        CarDTO[] dtos = new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint()).searchCars(null, null, null,
+            CarClassNotFoundExceptionException, CarTypeNotFoundExceptionException, UnsupportedEncodingException {
+        FleetWSServiceStub fleetWSServiceStub = new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint()); 
+        fleetWSServiceStub._getServiceClient().addHeader(
+                AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
+                        .getPassword()));
+        
+        CarDTO[] dtos = fleetWSServiceStub.searchCars(null, null, null,
                 null, OrderBy.CAR_DISTANCE.name(), Configuration.INSTANCE.getMinResults(), new BigDecimal(latitude),
                 new BigDecimal(longitude), CarTypeEnum.NORMAL.getValue());
         if (dtos != null) {
@@ -214,10 +220,15 @@ public class ImmediateBookingActionBean extends BookingActionBean {
      * @throws CarTypeNotFoundExceptionException
      * @throws CarValidationExceptionException
      * @return the page resolution
+     * @throws UnsupportedEncodingException 
      */
     public Resolution searchImmediateInList() throws RemoteException, FuelTypeNotFoundExceptionException,
-            CarClassNotFoundExceptionException, CarTypeNotFoundExceptionException {
-        cars = new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint()).searchCars(price, distance, clazz,
+            CarClassNotFoundExceptionException, CarTypeNotFoundExceptionException, UnsupportedEncodingException {
+        FleetWSServiceStub fleetWSServiceStub = new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint()); 
+        fleetWSServiceStub._getServiceClient().addHeader(
+                AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
+                        .getPassword()));
+        cars = fleetWSServiceStub.searchCars(price, distance, clazz,
                 fuel.getType(), orderBy.name(), Configuration.INSTANCE.getMaxResults(),
                 latitude != null ? new BigDecimal(latitude) : null, longitude != null ? new BigDecimal(longitude)
                         : null, CarTypeEnum.NORMAL.getValue());
@@ -333,10 +344,15 @@ public class ImmediateBookingActionBean extends BookingActionBean {
      * @return a resolution page
      * @throws AxisFault
      * @throws RemoteException
+     * @throws UnsupportedEncodingException 
      */
-    public Resolution searchCarsData() throws AxisFault, RemoteException {
+    public Resolution searchCarsData() throws AxisFault, RemoteException, UnsupportedEncodingException {
         try {
-            cars = new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint()).searchCars(price, distance, clazz,
+            FleetWSServiceStub fleetWSServiceStub = new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint()); 
+            fleetWSServiceStub._getServiceClient().addHeader(
+                    AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
+                            .getPassword()));
+            cars = fleetWSServiceStub.searchCars(price, distance, clazz,
                     fuel.getType(), orderBy.name(), Configuration.INSTANCE.getMaxResults(),
                     latitude != null ? new BigDecimal(latitude) : null, longitude != null ? new BigDecimal(longitude)
                             : null, CarTypeEnum.NORMAL.getValue());

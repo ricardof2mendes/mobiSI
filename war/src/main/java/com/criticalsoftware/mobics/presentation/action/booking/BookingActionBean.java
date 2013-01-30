@@ -13,6 +13,7 @@
 package com.criticalsoftware.mobics.presentation.action.booking;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.rmi.RemoteException;
 
@@ -30,6 +31,7 @@ import net.sourceforge.stripes.validation.ValidationState;
 import com.criticalsoftware.mobics.fleet.CarDTO;
 import com.criticalsoftware.mobics.presentation.action.BaseActionBean;
 import com.criticalsoftware.mobics.presentation.extension.ZoneDTOTypeConverter;
+import com.criticalsoftware.mobics.presentation.security.AuthenticationUtil;
 import com.criticalsoftware.mobics.presentation.util.Configuration;
 import com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException;
 import com.criticalsoftware.mobics.proxy.fleet.FleetWSServiceStub;
@@ -90,14 +92,20 @@ public abstract class BookingActionBean extends BaseActionBean {
      * @throws CarValidationExceptionException
      * @throws CarLicensePlateNotFoundExceptionException
      * @throws com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException
+     * @throws UnsupportedEncodingException 
      */
     @ValidationMethod(
             on = { "licensePlateBook", "licensePlateBookFromMessages", "showPin", "carDetails", "licensePlateBookAdvance" },
             when = ValidationState.NO_ERRORS,
             priority = 1)
     public void validateLicensePlateCar(ValidationErrors errors) throws RemoteException,
-            com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException {
-        car = new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint()).getCarDetails(licensePlate
+            com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException, UnsupportedEncodingException {
+        FleetWSServiceStub fleetWSServiceStub = new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint()); 
+        fleetWSServiceStub._getServiceClient().addHeader(
+                AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
+                        .getPassword()));
+        
+        car = fleetWSServiceStub.getCarDetails(licensePlate
                 .toUpperCase(), latitude == null ? null : new BigDecimal(latitude), longitude == null ? null
                 : new BigDecimal(longitude));
         if (car == null) {

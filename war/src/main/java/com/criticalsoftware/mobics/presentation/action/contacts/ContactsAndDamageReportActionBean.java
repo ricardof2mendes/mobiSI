@@ -66,7 +66,7 @@ public class ContactsAndDamageReportActionBean extends BaseActionBean {
     private final static Logger LOGGER = LoggerFactory.getLogger(ContactsAndDamageReportActionBean.class);
 
     private static final int LOGO_WIDTH = 44;
-    
+
     private static final int LOGO_HEIGHT = 44;
 
     @Validate(required = true, on = "saveDamageReport")
@@ -113,8 +113,8 @@ public class ContactsAndDamageReportActionBean extends BaseActionBean {
         StreamingResolution resolution = null;
         CarClubWSServiceStub carClubWSServiceStub = new CarClubWSServiceStub(
                 Configuration.INSTANCE.getCarClubEndpoint());
-        DataHandler data = carClubWSServiceStub.getCarClubSmallThumbnailByCarClubCode(getContext().getUser().getCarClub()
-                .getCarClubCode(), LOGO_WIDTH, LOGO_HEIGHT);
+        DataHandler data = carClubWSServiceStub.getCarClubSmallThumbnailByCarClubCode(getContext().getUser()
+                .getCarClub().getCarClubCode(), LOGO_WIDTH, LOGO_HEIGHT);
         if (data != null) {
             resolution = new StreamingResolution(data.getContentType(), data.getInputStream());
         }
@@ -142,8 +142,11 @@ public class ContactsAndDamageReportActionBean extends BaseActionBean {
         CurrentTripDTO current = bookingWSServiceStub.getCurrentTripDetails();
         if (current != null && current.getLicensePlate() != null) {
             licensePlate = current.getLicensePlate();
-            car = new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint()).getCarDetails(licensePlate, null,
-                    null);
+            FleetWSServiceStub fleetWSServiceStub = new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint());
+            fleetWSServiceStub._getServiceClient().addHeader(
+                    AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext()
+                            .getUser().getPassword()));
+            car = fleetWSServiceStub.getCarDetails(licensePlate, null, null);
         }
         return new ForwardResolution("/WEB-INF/contacts/damageReport.jsp");
     }
@@ -156,9 +159,13 @@ public class ContactsAndDamageReportActionBean extends BaseActionBean {
      * @throws UnsupportedEncodingException
      */
     public Resolution licensePlateSearch() throws RemoteException, UnsupportedEncodingException {
+        FleetWSServiceStub fleetWSServiceStub = new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint());
+        fleetWSServiceStub._getServiceClient().addHeader(
+                AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
+                        .getPassword()));
         try {
-            car = new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint()).getCarDetails(
-                    licensePlate.toUpperCase(), null, null);
+
+            car = fleetWSServiceStub.getCarDetails(licensePlate.toUpperCase(), null, null);
         } catch (CarLicensePlateNotFoundExceptionException e) {
             LOGGER.debug("Car with license plate {} not found", licensePlate);
         }
