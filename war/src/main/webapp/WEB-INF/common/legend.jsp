@@ -37,7 +37,7 @@
 			</ul>
 		</nav>
 	</section>
-	<stripes:link id="closeLegend" href="#toggle" class="linkBtn orangered">
+	<stripes:link id="closeLegend" href="#toggle" class="linkBtn gray">
 		<fmt:message key="location.legend.button.close"/>
 	</stripes:link>
 </article>

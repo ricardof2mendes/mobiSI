@@ -8,7 +8,7 @@
 
 	<jsp:include page="/WEB-INF/common/message_error.jsp"/>
 
-	<article>
+	<article class="bodyWhite">
 		<section>
 			<nav class="orderCriteria">
 				<ul>

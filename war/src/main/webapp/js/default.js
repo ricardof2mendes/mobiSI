@@ -11,8 +11,15 @@ $(document).ready(function() {
 	 */
 	$('.menuBtn').on('click', function(e) {
 		e.preventDefault();
-		toggleMenuFx();
+		$('#menu').toggle();
 	});
+	
+	/**
+	 * Body with white backgroud
+	 */
+	if($('.bodyWhite').length > 0) {
+		$('body').addClass('noBackground');
+	}
 
 	/** 
 	 * Nearest car location 
@@ -410,7 +417,7 @@ $(document).ready(function() {
  				lockunlock: $(this).prop('href'), 
  				pooling :  CONTEXT_PATH + '/trip/Trip.action?getCurrentTrip=',
  				state: IN_USE,
- 				redirect: CONTEXT_PATH + '/trip/Trip.action?success=true'
+ 				redirect: CONTEXT_PATH + '/trip/Trip.action?finish=&unlockOp=true&successOp='
  				};
 		
 		lockUnlockAndWait(url);
@@ -418,8 +425,8 @@ $(document).ready(function() {
  	
  	// End trip
  	$('#endTrip').on('click', function(e) {
+ 		e.preventDefault();
  		if($("#zone").text() === UNWANTED_ZONE) {
- 			e.preventDefault();
  			$('#unwantedZoneError').show();
  			$('body').addClass('confirmation');
 			$('body').on('touchmove', 'body', function(e){
@@ -431,7 +438,7 @@ $(document).ready(function() {
  			var url = {
  	 				lockunlock: $(this).prop('href'), 
  	 				pooling :  CONTEXT_PATH + '/trip/Trip.action?getCurrentTrip=', 
- 	 				redirect: CONTEXT_PATH + '/trip/Trip.action?success='
+ 	 				redirect: CONTEXT_PATH + '/trip/Trip.action?finish=&successOp='
  	 				};
  			lockUnlockAndWait(url);
  		} 		
@@ -439,11 +446,12 @@ $(document).ready(function() {
 
  	// End trip
  	$('#lockEndTrip').on('click', function(e) {
+ 		e.preventDefault();
 		$('#locking').show();
 		var url = {
 				lockunlock: $(this).prop('href'), 
 				pooling :  CONTEXT_PATH + '/trip/Trip.action?getCurrentTrip=', 
-				redirect: CONTEXT_PATH + '/trip/Trip.action?success='
+				redirect: CONTEXT_PATH + '/trip/Trip.action?finish=&successOp='
 		};
 		lockUnlockAndWait(url);
  	});
@@ -470,12 +478,14 @@ function lockUnlockAndWait(url) {
 										function(data, textStatus, jqXHR){
 											if (jqXHR.getResponseHeader('Stripes-Success') === 'OK') {
 												var evaluated = eval(data);
-												if(evaluated === null || (url.state && url.state === evaluated.carState)) {
+												
+												if(evaluated.licensePlate === null || (url.state && url.state === evaluated.carState)) {
 													clearInterval(that); 
 													window.location.href = url.redirect + 'true';										 			
 										 		} 
 									        } else {
 									            console.log('An error has occurred or the user\'s session has expired!');
+									            $('html').html(data);
 									        }
 									    });
 								times--;
@@ -487,10 +497,13 @@ function lockUnlockAndWait(url) {
 					}
 		        } else {
 		            console.log('An error has occurred or the user\'s session has expired!');
+		            $('html').html(data);
 		        }
 		    });
 	
 }
+
+
 
 /**
  * Obtain geopostion
@@ -582,29 +595,6 @@ function treatGeolocationError(err) {
 	$('body').on('touchmove', 'body', function(e){
 		e.preventDefault();
 	});
-}
-
-/**
- * Toogle with fx effects
- * 
- * @param element name
- */
-function toggleMenuFx(element) {
-	//$('div.bottomShadow').toggle();
-	if($('#menu').css('display') == 'none') {
-		$('#menu ul').css('margin-top','-10px').css('margin-bottom', '10px');
-		$('#menu').gfxFadeIn({
-			duration : 500,
-			easing : 'ease-in',
-		});
-	} else {
-		$('#menu').gfxFadeOut({
-			duration : 400,
-			easing : 'ease-out',
-		}, function(){
-			$('#menu ul').css('margin-top','').css('margin-bottom', '');
-		});
-	}
 }
 
 /**

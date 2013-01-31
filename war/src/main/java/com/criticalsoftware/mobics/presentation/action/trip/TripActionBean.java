@@ -70,6 +70,12 @@ public class TripActionBean extends BaseActionBean {
 
     private Date extendBookingDate;
 
+    @Validate(required = true, on = "finish")
+    private Boolean successOp;
+
+    @Validate
+    private Boolean unlockOp;
+
     /**
      * Recent list resolution
      * 
@@ -92,29 +98,9 @@ public class TripActionBean extends BaseActionBean {
 
         current = bookingWSServiceStub.getCurrentTripDetails();
 
-        Boolean successOp = getContext().getRequest().getParameter("success") == null ? null : Boolean
-                .valueOf(getContext().getRequest().getParameter("success"));
-        System.out.println(successOp);
-
         if (current == null || current.getLicensePlate() == null || current.getLicensePlate().length() == 0) {
             last = bookingWSServiceStub.getLastTripDetails();
-            if (successOp != null) {
-                if (successOp) {
-                    getContext().getMessages().add(new LocalizableMessage("current.trip.end.trip.message"));
-
-                } else {
-                    getContext().getValidationErrors().addGlobalError(
-                            new LocalizableError("current.trip.end.trip.message.error"));
-                }
-            }
             resolution = new ForwardResolution("/WEB-INF/trip/lastTrip.jsp");
-        } else if (successOp != null) {
-            if (successOp) {
-                getContext().getMessages().add(new LocalizableMessage("current.trip.unlock.car.message"));
-            } else {
-                getContext().getValidationErrors().addGlobalError(
-                        new LocalizableError("current.trip.unlock.car.message.error"));
-            }
         }
 
         return resolution;
@@ -187,6 +173,38 @@ public class TripActionBean extends BaseActionBean {
                         .getPassword()));
         getContext().getResponse().setHeader("Stripes-Success", "OK");
         return new JavaScriptResolution(carWSServiceStub.lockCar(licensePlate));
+    }
+
+    /**
+     * Put messages after lock unlock
+     * 
+     * @return
+     * @throws BookingNotFoundExceptionException
+     * @throws CustomerNotFoundExceptionException
+     * @throws UnsupportedEncodingException
+     * @throws RemoteException
+     */
+    public Resolution finish() throws RemoteException, UnsupportedEncodingException,
+            CustomerNotFoundExceptionException, BookingNotFoundExceptionException {
+        Resolution resolution = new RedirectResolution(this.getClass()).flash(this);
+        if (successOp) {
+            if (unlockOp != null) {
+                getContext().getMessages().add(new LocalizableMessage("current.trip.unlock.car.message"));
+            } else {
+                getContext().getMessages().add(new LocalizableMessage("current.trip.end.trip.message"));
+            }
+        } else {
+            if (unlockOp != null) {
+                getContext().getValidationErrors().addGlobalError(
+                        new LocalizableError("current.trip.unlock.car.message.error"));
+            } else {
+                getContext().getValidationErrors().addGlobalError(
+                        new LocalizableError("current.trip.end.trip.message.error"));
+            }
+            resolution = main();
+        }
+
+        return resolution;
     }
 
     /**
@@ -402,4 +420,19 @@ public class TripActionBean extends BaseActionBean {
     public Date getExtendBookingDate() {
         return extendBookingDate;
     }
+
+    /**
+     * @param successOp the successOp to set
+     */
+    public void setSuccessOp(Boolean successOp) {
+        this.successOp = successOp;
+    }
+
+    /**
+     * @param unlockOp the unlockOp to set
+     */
+    public void setUnlockOp(Boolean unlockOp) {
+        this.unlockOp = unlockOp;
+    }
+
 }

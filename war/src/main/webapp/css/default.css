@@ -42,6 +42,10 @@ body {
 	background-color: #E4E4E4;
 }
 
+body.noBackground {
+	background-color: transparent !important;
+}
+
 section#logo {
 	height: 60px;
 	Width: 250px;
@@ -270,9 +274,9 @@ form.loginForm>div>label {
 .bottomShadow {
 	height: 5px;
 	background: transparent url(../img/menu/sombra_menus_10px.png) repeat-x top left;
-	/*margin-bottom: 5px;*/
-	margin-bottom: 0;
+	margin-bottom: 5px;
 }
+
 .menuBtn {
 	width: 30px;
 	height: 30px;
@@ -1080,11 +1084,19 @@ article.pin div:nth-child(3) > input[type="submit"]:active {
 
 
 /** ************************************************/
-#licsearch > section {
-	padding-bottom: 15px;
+#licsearch {
+	margin-top: -7px; 
 	background-image: url("../img/menu/sombra_menus_10px.png");
     background-position: left bottom;
     background-repeat: repeat-x;
+    padding-bottom: 5px;
+}
+
+#licsearch > section {
+	height: 38px;
+	padding-top: 6px;
+	background-color: #E4E4E4;
+	
 }
 
 #licensePlateBookForm > div {

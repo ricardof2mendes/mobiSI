@@ -3,13 +3,13 @@ $(document).ready(function() {
 	//Menu button
 	$('.menuBtn').on('click', function(e) {
 		e.preventDefault();
-		toggleFx('#menu', true);
+		toggleFx('#menu');
 	});
 	
 	// Close legend button
 	$('#closeLegend').on('click', function(e) {
 		e.preventDefault();
-		toggleFx('#legend', true);
+		toggleFx('#legend');
 	});
 	
 	var toggle = function() {
@@ -98,7 +98,7 @@ $(document).ready(function() {
  * @param element
  */
 // FIXME this styles should be in css
-var toggleFx = function (element, animate) {
+var toggleFx = function (element) {
 	if($(element).css('display') == 'none') {
 		if(element.indexOf('menu') > 0) {
 			if($('#streetsearch').length > 0) {
@@ -113,23 +113,11 @@ var toggleFx = function (element, animate) {
 			$('#whiteBar').hide();
 			$('#streetsearch').hide();
 		}
-		if(animate){
-			$(element).gfxFadeIn({
-				duration : 500,
-				easing : 'ease-in',
-			});
-		} else {
-			$(element).css('display', 'block');
-		}		
+		$(element).removeClass('hidden');
+				
 	} else {
-		if(animate) {
-			$(element).gfxFadeOut({
-				duration : 100,
-				easing : 'ease-out',
-			});
-		} else {
-			$(element).css('display', 'none');
-		}
+		$(element).addClass('hidden');
+		
 		if(element.indexOf('menu') > 0) {
 			
 			if($('#streetsearch').length > 0) {

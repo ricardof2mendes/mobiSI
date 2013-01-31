@@ -12,7 +12,7 @@
 				<h2><fmt:message key="book.advance.search"/></h2>
 				<nav class="simpleList">
 					<ul>
-						<li class="filter">
+						<li class="filter white">
 							<span><fmt:message key="book.advance.location"/></span>
 							<span class="customComboBox">
 								<stripes:select id="location" name="location">
@@ -20,7 +20,7 @@
 								</stripes:select>								
 							</span>
 						</li>
-						<li class="filter">
+						<li class="filter white">
 							<span><fmt:message key="book.advance.zone"/></span>
 							<span class="customComboBox">
 								<stripes:select id="zone" name="zone">
@@ -34,14 +34,14 @@
 			<section>
 				<nav class="panel">
 					<ul>
-						<li class="detail">
+						<li class="detail white">
 							<span><fmt:message key="book.advance.start.date"/></span>
 							<span class="customComboBox">
 								<stripes:text id="startDate" name="startDate" class="editable" 
 									   placeholder="${placeholder}" formatPattern="${applicationScope.configuration.dateTimePattern}"/>
 							</span>
 						</li>
-						<li class="detail">
+						<li class="detail white">
 							<span><fmt:message key="book.advance.end.date"/></span>
 							<span class="customComboBox">
 								<stripes:text  id="endDate" name="endDate" class="editable" placeholder="${placeholder}" formatPattern="${applicationScope.configuration.dateTimePattern}"/>

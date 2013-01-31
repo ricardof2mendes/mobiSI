@@ -21,7 +21,7 @@
 			</stripes:form>			
 		</section>
 	</article>
-	<article id="articleContainer">
+	<article id="articleContainer" class="bodyWhite">
 		<!-- car list here given by ajax (see javascript) -->
 	</article>
 </t:main>

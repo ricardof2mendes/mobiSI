@@ -9,43 +9,45 @@
 <t:main title="${title}">
 	<jsp:include page="/WEB-INF/common/message_error.jsp"/>
 	
-	<c:choose>
-		<c:when test="${not empty actionBean.messages}">
-			<section>
-				<nav class="threeColumnList">
-					<ul>
-						<c:forEach items="${actionBean.messages}" var="msg">
-							<li>
-								<stripes:link class="messageBook" beanclass="com.criticalsoftware.mobics.presentation.action.messages.MessagesActionBean" event="read" addSourcePage="true">
-									<stripes:param name="licensePlate" value="${msg.carPlate}"/>
-									<stripes:param name="code" value="${msg.code}"/>
-									
-									<div class="msg-read-${msg.isRead}"></div>
-									
-									<div class="msg-body">
-										<div>
-											<span><fmt:message key="messages.car.available"/></span>
-											<span>${msg.carName}&nbsp;${msg.carPlate}</span>
-											<span><fmt:formatDate value="${msg.timestamp.time}" pattern="${applicationScope.configuration.dateTimePattern}"/></span>
+	<article class="bodyWhite">
+		<c:choose>
+			<c:when test="${not empty actionBean.messages}">
+				<section>
+					<nav class="threeColumnList">
+						<ul>
+							<c:forEach items="${actionBean.messages}" var="msg">
+								<li>
+									<stripes:link class="messageBook" beanclass="com.criticalsoftware.mobics.presentation.action.messages.MessagesActionBean" event="read" addSourcePage="true">
+										<stripes:param name="licensePlate" value="${msg.carPlate}"/>
+										<stripes:param name="code" value="${msg.code}"/>
+										
+										<div class="msg-read-${msg.isRead}"></div>
+										
+										<div class="msg-body">
+											<div>
+												<span><fmt:message key="messages.car.available"/></span>
+												<span>${msg.carName}&nbsp;${msg.carPlate}</span>
+												<span><fmt:formatDate value="${msg.timestamp.time}" pattern="${applicationScope.configuration.dateTimePattern}"/></span>
+											</div>
+											<div>
+												<span>
+													${msg.carPlate}
+												</span>
+												<span></span>
+											</div>
 										</div>
-										<div>
-											<span>
-												${msg.carPlate}
-											</span>
-											<span></span>
-										</div>
-									</div>
-								</stripes:link>
-							</li>
-						</c:forEach>
-					</ul>	
-				</nav>
-			</section>
-		</c:when>
-		<c:otherwise>
-			<section id="noresults">
-				<label><fmt:message key="messages.no.results.found"/></label>
-			</section>
-		</c:otherwise>
-	</c:choose>
+									</stripes:link>
+								</li>
+							</c:forEach>
+						</ul>	
+					</nav>
+				</section>
+			</c:when>
+			<c:otherwise>
+				<section id="noresults">
+					<label><fmt:message key="messages.no.results.found"/></label>
+				</section>
+			</c:otherwise>
+		</c:choose>
+	</article>
 </t:main>

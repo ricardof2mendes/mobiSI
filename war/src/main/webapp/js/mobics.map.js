@@ -115,9 +115,9 @@ Map.prototype = {
 				onLegendClick : function(evt) {
 					if (evt.buttonElement === this.legendLink.legend) {
 						if($('#menu').css('display') != 'none') {
-							toggleFx('#menu', true);
+							toggleFx('#menu');
 						}
-						toggleFx('#legend', true);
+						toggleFx('#legend');
 					}
 				}
 			}));

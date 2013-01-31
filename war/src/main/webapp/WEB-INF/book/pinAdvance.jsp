@@ -28,16 +28,6 @@
 						<c:otherwise><label><fmt:message key="application.value.not.available"/></label></c:otherwise>
 					</c:choose>
 					
-					<label>
-						<fmt:message key="pin.dates">
-							<fmt:param>
-								<fmt:formatDate value="${actionBean.startDate}" pattern="${applicationScope.configuration.dateTimePattern}"/>
-							</fmt:param>
-							<fmt:param>
-								<fmt:formatDate value="${actionBean.endDate}" pattern="${applicationScope.configuration.dateTimePattern}"/>
-							</fmt:param>
-						</fmt:message>
-					</label>
 				</div>
 				<div>
 					<stripes:text type="number" name="pin" id="pin" placeholder="${placeholder}" autocomplete="off"/>						

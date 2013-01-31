@@ -6,7 +6,7 @@
 
 	<jsp:include page="/WEB-INF/common/message_error.jsp"/>
 	
-	<article>
+	<article class="bodyWhite">
 		<c:choose>
 			<c:when test="${actionBean.recents != null}">
 				<section>

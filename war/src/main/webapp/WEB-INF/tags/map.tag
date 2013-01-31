@@ -34,7 +34,6 @@
         	var anyDistance = '${applicationScope.configuration.anyDistance}';
         </script>
         <script src="${contextPath}/js/zepto.js"></script>
-        <script src="${contextPath}/js/zepto-gfx.js"></script>
 
         <script src="${contextPath}/js/OpenLayers.mobile.debug.js"></script>
 		<script src="${contextPath}/js/OpenLayers.mobics.extension.js"></script>

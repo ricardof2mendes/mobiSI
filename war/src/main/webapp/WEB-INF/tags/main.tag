@@ -36,7 +36,6 @@
 
         <!-- TODO JS -->
         <script src="${contextPath}/js/zepto.js"></script>
-        <script src="${contextPath}/js/zepto-gfx.js"></script>
         <script>
         	var CONTEXT_PATH = '${contextPath}';
         	var ZONE_ALL = '<fmt:message key="book.advance.zone.any" />';

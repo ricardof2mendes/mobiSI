@@ -7,8 +7,6 @@
 	<h1>${title}</h1>
 </header>
 
-<div class="bottomShadow"></div>
-
 <nav id="menu" class="hidden">
 	<ul>
 		<li class="booking ${actionBean.activeMenu == 'booking' ? 'bookingActive' : ''}">
@@ -50,3 +48,5 @@
 		</li>
 	</ul>
 </nav>
+
+<div class="bottomShadow"></div>
