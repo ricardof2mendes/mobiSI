@@ -612,33 +612,7 @@ Map.prototype = {
 				vectorLayer.addFeatures(feature);
 				
 				// if radius set circle and zoom contents
-				if(that.searchParams && that.searchParams.distance && 
-						that.searchParams.distance.length > 0 && 
-						that.searchParams.distance < anyDistance) {
-					// remove any previous radius layer
-					that.cleanRadius();
-					var circleLayer = new OpenLayers.Layer.Vector('radiusLocation', {style: that.redStyle});
-					that.map.addLayer(circleLayer);
-					var radius = that.searchParams.distance/Math.cos(that.mylatlong.latitude * (Math.PI / 180));
-					var polygon = new OpenLayers.Geometry.Polygon.createRegularPolygon(point, radius, 100, 0);
-					var circle = new OpenLayers.Feature.Vector(polygon);
-					circleLayer.addFeatures(circle);
-					
-					if (firstGeolocation) {
-				        firstGeolocation = false;
-						
-				        var bounds = new OpenLayers.Bounds();
-						bounds.extend(polygon.getBounds());
-						bounds.toBBOX();
-						that.map.zoomToExtent(bounds, false);
-					}
-					
-				} else {
-					if (firstGeolocation) {
-				        firstGeolocation = false;
-				        that.centerAndZoom();
-				    }
-				}
+				that.drawRadius(feature.geometry);
 			});
 			geolocate.events.register('locationfailed',this,function() {
 			    OpenLayers.Console.log('Location detection failed');
@@ -646,6 +620,8 @@ Map.prototype = {
 
 			geolocate.watch = true;
 		    geolocate.activate();
+		    
+		    this.centerAndZoom();
 		},
 
 

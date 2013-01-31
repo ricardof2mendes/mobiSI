@@ -46,7 +46,14 @@
 						</c:otherwise>
 					</c:choose>			
 				</div>
+				
 				<stripes:submit name="save" class="submitBtn green"><fmt:message key="current.trip.extend.ok"/></stripes:submit>
+				<%--
+				<div class="warningMessage">
+					<fmt:message key="trip.detail.advance.booking.edit.cost">
+					<fmt:param><mobi:formatMobics value="${actionBean.current.extendCost}" type="currencySymbol"/></fmt:param>
+					</fmt:message>
+				</div> --%>
 			</section>
 			<section>
 				<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn gray">

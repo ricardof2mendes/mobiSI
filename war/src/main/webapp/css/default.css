@@ -748,7 +748,7 @@ nav.threeColumnList ul li {
 
 nav.threeColumnList ul li a {
 	display: block;
-	padding: 10px 0;
+	padding: 5px 0;
 }
 
 nav.threeColumnList  ul li a > div:nth-child(1) {

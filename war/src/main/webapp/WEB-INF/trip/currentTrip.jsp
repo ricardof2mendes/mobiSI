@@ -18,8 +18,6 @@
 	
 	<jsp:include page="/WEB-INF/common/message_error.jsp"/>
 
-	${actionBean.current.state} ${actionBean.current.carState}
-	
 	<!-- State variable -->
 	<span id="state" class="hidden">${actionBean.current.state}</span>
 	
@@ -180,7 +178,7 @@
 				</ul>
 			</nav>
 		</section>
-		
+
 		<c:if test="${actionBean.current.state != 'WAIT_OBS_IMMEDIATE'}">	
 			<section>
 				<!-- Edit current trip (advance booking) -->

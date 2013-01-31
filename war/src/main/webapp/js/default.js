@@ -175,9 +175,10 @@ $(document).ready(function() {
 	    });    
  	}
  	
+ 	
  	if($('#endDate').length > 0){
-	 	var now = new Date();
-	    $('#endDate').mobiscroll().datetime({
+ 		var now = new Date();
+ 		$('#endDate').mobiscroll().datetime({
 	    	setText: 'OK',
 	    	dateFormat: DATE_PATTERN,
 	    	dateOrder: 'ddmmyy',
@@ -186,7 +187,15 @@ $(document).ready(function() {
 	        minDate: new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours()+1, now.getMinutes(), now.getSeconds(), now.getMilliseconds()),
 	        display: 'modal',
 	        mode: 'scroller',
-	        width: 42
+	        width: 42,
+	        onShow: function() {
+	        	var datetime = $('#startDate').val().split(' ');
+	        	var date = datetime[0].split('/');
+	        	var time = datetime[1].split(':');
+	        	var val = new Date(parseInt(date[2]), parseInt(date[1]) === 0 ? 0 : parseInt(date[1]) - 1, parseInt(date[0]), parseInt(time[0]), parseInt(time[1]), 0, 0);
+	        	$('#endDate').scroller('setValue', [val.getDate(), val.getMonth(), 
+	        			val.getYear(), val.getHours()+1, val.getMinutes()], true);
+	        }
 	    });    
  	}
  	
@@ -206,20 +215,39 @@ $(document).ready(function() {
  	}
  	
  	if($('#limited').length > 0){
- 		var begin = new Date($('#limited').attr('data-begin')),
-	 		limit = new Date($('#limited').attr('data-limit'));
-	 	var mobiscroll = $('#limited').mobiscroll().datetime({
-	    	setText: 'OK',
-	    	dateFormat: DATE_PATTERN,
-	    	dateOrder: 'ddmmyy',
-	    	timeFormat: TIME_PATTERN,
-	    	timeWheels: 'HHii',
-	    	minDate: begin,
-	    	maxDate: limit,
-	        display: 'modal',
-	        mode: 'scroller',
-	        width: 42
-	    });    
+ 		
+ 		var begin = new Date($('#limited').attr('data-begin')),	
+	 		limit = $('#limited').attr('data-limit').length > 0 ? 
+	 					new Date($('#limited').attr('data-limit')) : 
+	 					null;
+ 		
+ 		if(limit !== null) {
+ 			$('#limited').mobiscroll().datetime({
+ 				setText: 'OK',
+ 				dateFormat: DATE_PATTERN,
+ 				dateOrder: 'ddmmyy',
+ 				timeFormat: TIME_PATTERN,
+ 				timeWheels: 'HHii',
+ 				minDate: begin,
+ 				maxDate: limit,
+ 				display: 'modal',
+ 				mode: 'scroller',
+ 				width: 42
+ 			});    
+ 		} else {
+ 			$('#limited').mobiscroll().datetime({
+ 				setText: 'OK',
+ 				dateFormat: DATE_PATTERN,
+ 				dateOrder: 'ddmmyy',
+ 				timeFormat: TIME_PATTERN,
+ 				timeWheels: 'HHii',
+ 				minDate: begin,
+ 				display: 'modal',
+ 				mode: 'scroller',
+ 				width: 42
+ 			});
+ 		}
+
  	}
  	
  	/* Modal dialog windows */
