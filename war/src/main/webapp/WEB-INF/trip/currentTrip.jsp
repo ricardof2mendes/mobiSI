@@ -31,7 +31,7 @@
 			</div>
 		</section>
 	</article>
-	
+
 	<article>
 		<section>
 			<h2><fmt:message key="current.trip.booked.car"/></h2>
@@ -112,20 +112,6 @@
 		</c:if>
 		
 		<section>
-			<h2><fmt:message key="current.trip.details"/></h2>
-			<nav class="panel">
-				<ul>
-					<li class="detail white">
-						<span><fmt:message key="current.trip.cost"/></span>
-						<span>
-							<mobi:formatMobics value="${actionBean.current.currentCost}" type="currencySymbol" />
-						</span>
-					</li>
-				</ul>
-			</nav>
-		</section>
-		
-		<section>
 			<nav class="panel">
 				<ul>
 					<li class="detail white">
@@ -144,6 +130,26 @@
 							<mobi:formatMobics value="${actionBean.current.lockedPrice}" type="currencyHour" />
 						</span>
 					</li>
+					
+					<li class="detail white">
+						<span>
+							<fmt:message key="current.trip.price.included"/>
+						</span>
+						<span>
+							<mobi:formatMobics value="${actionBean.current.distanceThreshold}" type="currencyHour" />
+						</span>
+					</li>
+					<li class="detail white">
+						<span>
+							<fmt:message key="current.trip.price.extra"/>
+						</span>
+						<span>
+							<mobi:formatMobics value="${actionBean.current.lockedPrice}" type="currencyHour" />
+						</span>
+					</li>
+					
+					
+					
 					<li class="detail white">
 						<span>
 							<fmt:message key="current.trip.duration"/>

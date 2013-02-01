@@ -21,7 +21,7 @@
 						</li>				
 						<li class="detail white">
 							<span class="customComboBox fullWith">
-								<stripes:password name="mypass " class="editable" placeholder="${placeholderConfirm}"/>
+								<stripes:password name="checkPassword" class="editable" placeholder="${placeholderConfirm}"/>
 							</span>
 						</li>
 					</ul>
