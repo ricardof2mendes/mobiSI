@@ -239,8 +239,8 @@ $(document).ready(function() {
  				dateOrder: 'ddmmyy',
  				timeFormat: TIME_PATTERN,
  				timeWheels: 'HHii',
- 				minDate: new Date(parseInt(begindate[2]), parseInt(begindate[1]) === 0 ? 0 : parseInt(begindate[1]), parseInt(begindate[0]), parseInt(begintime[0]), parseInt(begintime[1]), 0, 0),
- 				maxDate: new Date(parseInt(limitdate[2]), parseInt(limitdate[1]) === 0 ? 0 : parseInt(limitdate[1]), parseInt(limitdate[0]), parseInt(limittime[0]), parseInt(limittime[1]), 0, 0),
+ 				minDate: new Date(parseInt(begindate[2]), parseInt(begindate[1]) === 0 ? 0 : parseInt(begindate[1])-1, parseInt(begindate[0]), parseInt(begintime[0]), parseInt(begintime[1]), 0, 0),
+ 				maxDate: new Date(parseInt(limitdate[2]), parseInt(limitdate[1]) === 0 ? 0 : parseInt(limitdate[1])-1, parseInt(limitdate[0]), parseInt(limittime[0]), parseInt(limittime[1]), 0, 0),
  				display: 'modal',
  				mode: 'scroller',
  				width: 42
