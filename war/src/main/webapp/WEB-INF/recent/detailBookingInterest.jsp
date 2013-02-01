@@ -2,6 +2,15 @@
 <%@include file="/WEB-INF/common/taglibs.jsp"%>
 <c:set var="title" scope="page"><fmt:message key='interest.detail.title' /></c:set>
 
+<c:set var="address" scope="page">
+	<c:choose>
+		<c:when test="${not actionBean.booking.locationName}">
+			<fmt:message key="interest.details.current.location"/>
+		</c:when>
+		<c:otherwise>${actionBean.booking.locationName}</c:otherwise>
+	</c:choose>
+</c:set>
+
 <t:main title="${title}">
 	<jsp:include page="/WEB-INF/common/message_error.jsp"/>
 	<article>
@@ -29,7 +38,7 @@
 							<fmt:message key="interest.details.location"/>
 						</span>
 						<span>
-							${actionBean.booking.locationName}
+							${pageScope.address}
 						</span>
 					</li>
 					<li class="detail white">

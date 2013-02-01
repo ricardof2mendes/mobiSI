@@ -3,13 +3,10 @@
 <c:set var="title" scope="page"><fmt:message key='find.car.later.edit.title' /></c:set>
 <c:set var="placeholder" scope="page"><fmt:message key="find.car.later.datetime.placeholder"/></c:set>
 
-<c:set var="currentLocationMessage" scope="page">
-	<fmt:message key="interest.details.current.location"/>
-</c:set>
-<c:set var="sendToMapAddress" scope="page">
+<c:set var="address" scope="page">
 	<c:choose>
 		<c:when test="${currentLocationMessage != actionBean.address}">${actionBean.address}</c:when>
-		<c:otherwise></c:otherwise>
+		<c:otherwise><fmt:message key="interest.details.current.location"/></c:otherwise>
 	</c:choose>
 </c:set>
 
@@ -47,7 +44,7 @@
 								<stripes:param name="query">${sendToMapAddress}</stripes:param>
 								<span><fmt:message key="find.car.later.location"/></span>
 								<span id="addressSpan">
-									${actionBean.address}
+									${pageScope.address}
 								</span>
 							</stripes:link>
 						</li>
