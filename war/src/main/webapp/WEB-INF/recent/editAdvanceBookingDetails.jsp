@@ -95,11 +95,18 @@
 							</span>
 							<span class="customComboBox">
 							
+							<c:set var="begin" scope="page">
+								<fmt:formatDate value="${actionBean.trip.endDate.time}" pattern="${applicationScope.configuration.dateTimePattern}"/>
+							</c:set>
+							<c:set var="end" scope="page">
+								<fmt:formatDate value="${actionBean.extendBookingDate}" pattern="${applicationScope.configuration.dateTimePattern}"/>
+							</c:set>
+							
 							<stripes:text id="limited" name="endDate" class="editable"
 									value="${actionBean.trip.endDate.time}" 
 									placeholder="${placeholder}" formatPattern="${applicationScope.configuration.dateTimePattern}"
-									data-begin="${actionBean.trip.endDate.time}" 
-									data-limit="${actionBean.extendBookingDate}"/>
+									data-begin="${pageScope.begin}" 
+									data-limit="${pageScope.end}"/>
 									
 							</span>
 						</li>

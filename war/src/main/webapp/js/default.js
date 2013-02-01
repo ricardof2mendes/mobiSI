@@ -216,10 +216,21 @@ $(document).ready(function() {
  	
  	if($('#limited').length > 0){
  		
- 		var begin = new Date($('#limited').attr('data-begin')),	
-	 		limit = $('#limited').attr('data-limit').length > 0 ? 
-	 					new Date($('#limited').attr('data-limit')) : 
-	 					null;
+// 		var begin = new Date($('#limited').attr('data-begin')),	
+//	 		limit = $('#limited').attr('data-limit').length > 0 ? 
+//	 					new Date($('#limited').attr('data-limit')) : 
+//	 					null;
+	 	console.log($('#limited').attr('data-begin'));
+	 	console.log($('#limited').attr('data-limit'));
+	 	
+	 	var begin = $('#limited').attr('data-begin').split(' ');
+    	var begindate = begin[0].split('/');
+    	var begintime = begin[1].split(':');
+    	
+    	var limit = $('#limited').attr('data-limit').split(' ');
+    	var limitdate = begin[0].split('/');
+    	var limittime = begin[1].split(':');
+    	
  		
  		if(limit !== null) {
  			$('#limited').mobiscroll().datetime({
@@ -228,8 +239,8 @@ $(document).ready(function() {
  				dateOrder: 'ddmmyy',
  				timeFormat: TIME_PATTERN,
  				timeWheels: 'HHii',
- 				minDate: begin,
- 				maxDate: limit,
+ 				minDate: new Date(parseInt(begindate[2]), parseInt(begindate[1]) === 0 ? 0 : parseInt(begindate[1]), parseInt(begindate[0]), parseInt(begintime[0]), parseInt(begintime[1]), 0, 0),
+ 				maxDate: new Date(parseInt(limitdate[2]), parseInt(limitdate[1]) === 0 ? 0 : parseInt(limitdate[1]), parseInt(limitdate[0]), parseInt(limittime[0]), parseInt(limittime[1]), 0, 0),
  				display: 'modal',
  				mode: 'scroller',
  				width: 42
@@ -241,7 +252,7 @@ $(document).ready(function() {
  				dateOrder: 'ddmmyy',
  				timeFormat: TIME_PATTERN,
  				timeWheels: 'HHii',
- 				minDate: begin,
+ 				minDate: new Date(parseInt(begindate[2]), parseInt(begindate[1]) === 0 ? 0 : parseInt(begindate[1]), parseInt(begindate[0]), parseInt(begintime[0]), parseInt(begintime[1]), 0, 0),
  				display: 'modal',
  				mode: 'scroller',
  				width: 42

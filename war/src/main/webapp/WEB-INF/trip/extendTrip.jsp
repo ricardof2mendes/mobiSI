@@ -22,10 +22,18 @@
 						<li class="detail white">
 							<span><fmt:message key="car.details.end.date"/></span>
 							<span class="customComboBox">
+							
+							<c:set var="begin" scope="page">
+								<fmt:formatDate value="${actionBean.current.endDate.time}" pattern="${applicationScope.configuration.dateTimePattern}"/>
+							</c:set>
+							<c:set var="end" scope="page">
+								<fmt:formatDate value="${actionBean.extendBookingDate}" pattern="${applicationScope.configuration.dateTimePattern}"/>
+							</c:set>
+							
 								<stripes:text id="limited" name="endDate" class="editable" 
 									placeholder="${placeholder}" formatPattern="${applicationScope.configuration.dateTimePattern}"
-									data-begin="${actionBean.endDate}" 
-									data-limit="${actionBean.extendBookingDate}"/>
+									data-begin="${pageScope.begin}" 
+									data-limit="${pageScope.end}"/>
 							</span>
 						</li>
 					</ul>
