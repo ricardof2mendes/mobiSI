@@ -215,16 +215,13 @@ $(document).ready(function() {
  	}
  	
  	if($('#limited').length > 0){
- 		console.log($('#limited').attr('data-begin'));
- 		console.log($('#limited').attr('data-limit'));
- 		
-	 	var begin = $('#limited').attr('data-begin').split(' ');
+ 		var begin = $('#limited').attr('data-begin').split(' ');
     	var begindate = begin[0].split('/');
     	var begintime = begin[1].split(':');
     	
     	var limit = $('#limited').attr('data-limit').split(' ');
  		
- 		if(limit.length > 0) {
+    	if(limit.length > 0) {
  			var limitdate = limit[0].split('/');
  			var limittime = limit[1].split(':');
  			
