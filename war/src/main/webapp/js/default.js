@@ -215,24 +215,19 @@ $(document).ready(function() {
  	}
  	
  	if($('#limited').length > 0){
+ 		console.log($('#limited').attr('data-begin'));
+ 		console.log($('#limited').attr('data-limit'));
  		
-// 		var begin = new Date($('#limited').attr('data-begin')),	
-//	 		limit = $('#limited').attr('data-limit').length > 0 ? 
-//	 					new Date($('#limited').attr('data-limit')) : 
-//	 					null;
-	 	console.log($('#limited').attr('data-begin'));
-	 	console.log($('#limited').attr('data-limit'));
-	 	
 	 	var begin = $('#limited').attr('data-begin').split(' ');
     	var begindate = begin[0].split('/');
     	var begintime = begin[1].split(':');
     	
     	var limit = $('#limited').attr('data-limit').split(' ');
-    	var limitdate = begin[0].split('/');
-    	var limittime = begin[1].split(':');
-    	
  		
- 		if(limit !== null) {
+ 		if(limit.length > 0) {
+ 			var limitdate = limit[0].split('/');
+ 			var limittime = limit[1].split(':');
+ 			
  			$('#limited').mobiscroll().datetime({
  				setText: 'OK',
  				dateFormat: DATE_PATTERN,
