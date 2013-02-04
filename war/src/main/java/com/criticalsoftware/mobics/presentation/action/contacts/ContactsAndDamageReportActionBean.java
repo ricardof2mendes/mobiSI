@@ -147,6 +147,7 @@ public class ContactsAndDamageReportActionBean extends BaseActionBean {
                     AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext()
                             .getUser().getPassword()));
             car = fleetWSServiceStub.getCarDetails(licensePlate, null, null);
+            date = new Date();
         }
         return new ForwardResolution("/WEB-INF/contacts/damageReport.jsp");
     }
@@ -164,7 +165,6 @@ public class ContactsAndDamageReportActionBean extends BaseActionBean {
                 AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
                         .getPassword()));
         try {
-
             car = fleetWSServiceStub.getCarDetails(licensePlate.toUpperCase(), null, null);
         } catch (CarLicensePlateNotFoundExceptionException e) {
             LOGGER.debug("Car with license plate {} not found", licensePlate);
