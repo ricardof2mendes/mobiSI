@@ -11,12 +11,12 @@ html, body{
 }
 
 #container.street {
-	top: 90px !important;
+	top: 92px !important;
 }
 
 #container.street,
 #container.white {
-	bottom: 75px !important;
+	bottom: 79px !important;
 }
 
 #container > #map {
@@ -54,10 +54,10 @@ div.olControlZoom,
 div.olControlLegend,
 div.olControlList,
 div.olControlMyLocation {
-	background: none repeat scroll 0 0 rgba(0, 0, 0, 0.4);
-    border-radius: 4px;
-	box-shadow: 0px 7px 5px rgba(0, 0, 0, 0.4);
-    position: absolute;
+	background: none repeat scroll 0 0 rgba(0, 0, 0, 0.3);
+	border-radius: 4px;
+	box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.3);
+	position: absolute;
 }
 
 div.olControlZoom {
@@ -84,20 +84,19 @@ div.olControlZoom a,
 div.olControlLegend a,
 div.olControlList a,
 div.olControlMyLocation a {
-    background-color: #FFF;
-    color: #444;
-    display: block;
-    font-family: sans-serif;
-    font-size: x-large;
-    font-weight: normal;
-    height: 32px;
-    line-height: 32px;
-    padding: 0;
-    text-align: center;
-    text-decoration: none;
-    /*text-shadow: 0 0 3px rgba(0, 0, 0, 0.8);*/
-    width: 32px;
-    margin: 1px;
+	color: #333;
+	display: block;
+	font-family: sans-serif;
+	font-size: 160%;
+	font-weight: normal;
+	height: 32px;
+	line-height: 32px;
+	padding: 0;
+	text-align: center;
+	text-decoration: none;
+	width: 32px;
+	margin: 1px;
+	background: url('../img/bt_up_30px-height.png') repeat-x white;
 }
 
 div.olControlLegend a {
@@ -111,8 +110,11 @@ div.olControlMyLocation a {
 }
 
 div.olControlList a {
-	font-size: large;
-	font-weight: normal;
+	font-size: 90%;
+	font-weight: bold;
+	background: url('../img/bt_up_30px-height.png') repeat-x white;
+	color: #333;
+	text-shadow: 0 1px -1px white;
 	width: 50px;
 }
 
@@ -141,10 +143,10 @@ div.olControlMyLocation a:hover {
 #whiteBar {
 	background: url("../img/menu/sombra_menus_10px.png") repeat-x scroll left top #fff;
 	position:absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 76px;
+    	left: 0;
+    	right: 0;
+    	bottom: 0;
+    	height: 80px;
 }
 
 #whiteBar nav{
@@ -152,11 +154,11 @@ div.olControlMyLocation a:hover {
 }
 
 #whiteBar.addressBar span{
-	background-image: url(../img/map/mylocation.png);
+	background-image: url(../img/map/location-user-selected.png);
 	background-repeat: no-repeat;
 	background-position: center left;
-	padding: 0 0 3px 25px;
-	font-size: large;
+	padding: 15px 0 15px 25px;
+	font-size: 100%;
 	margin-left: 10px;
 	line-height: 30px;
 }
@@ -176,6 +178,7 @@ div.olControlMyLocation a:hover {
 	height: 30px;
 	line-height: 30px;
 	margin: 0 !important;
+	font-size: 90%;
 }
 
 /******************************* Search Form */
@@ -192,16 +195,13 @@ div.olControlMyLocation a:hover {
 
 #streetSearchForm div.left {
 	background: #FFF;
-	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
-	-moz-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
-	-webkit-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
 	border-radius: 12px;
-	-moz-border-radius: 12px;
 	-webkit-border-radius: 12px;
+	overflow: hidden;
 	position: relative;
 	margin: 0 10px;
 	padding: 0 10px 0 10px;
-	overflow: hidden;
+	border: 1px solid rgba(0,0,0,0.3);
 }
 
 
@@ -210,7 +210,7 @@ div.olControlMyLocation a:hover {
 	height: 24px;
 	border: 0;
 	font-size: normal;
-	color: #999;
+	color: #333;
 	width: 100%;
 }
 
@@ -225,6 +225,8 @@ div.olControlMyLocation a:hover {
 }
 
 #streetSearchForm div.right > ul li a {
+	text-shadow: 0 1px -1px white;
+	font-size: 90%;
 	color: #333;
 	font-weight: bold;
 	border: 1px solid rgba(0, 0, 0, 0.6);
@@ -232,8 +234,7 @@ div.olControlMyLocation a:hover {
 	border-radius: 4px;
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
-	padding: 0 10px;	
-    padding: 5px 10px;
+	padding: 5px 10px;
 }
 
 #streetSearchForm div.right > input.autocomplete{
@@ -356,6 +357,9 @@ nav.oneColumnList  ul li a > div:nth-child(2) {
 		background: #fff url(../img/map/location-car-selected@2x.png) no-repeat 0 50%;
 	}
 }
+
+
+
 
 
 

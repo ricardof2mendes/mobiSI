@@ -47,7 +47,9 @@
         <script src="${contextPath}/js/zepto.js"></script>
         <script>
         	var CONTEXT_PATH = '${contextPath}';
+        	// localizable strings
         	var ZONE_ALL = '<fmt:message key="book.advance.zone.any" />';
+        	var GEOLOCATION_NOT_SUPPORTED = '<fmt:message key="geolocation.alert.msg.not.supported"/>';
         	// date patterns for calendar
         	var DATE_PATTERN = '${applicationScope.configuration.jsDatePattern}';
         	var TIME_PATTERN = '${applicationScope.configuration.jsTimePattern}';

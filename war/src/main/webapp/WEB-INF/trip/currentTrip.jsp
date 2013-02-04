@@ -136,7 +136,7 @@
 							<fmt:message key="current.trip.price.included"/>
 						</span>
 						<span>
-							<mobi:formatMobics value="${actionBean.current.distanceThreshold}" type="currencyHour" />
+							<mobi:formatMobics value="${actionBean.current.distanceThreshold}" type="distance"/>
 						</span>
 					</li>
 					<li class="detail white">
@@ -144,7 +144,7 @@
 							<fmt:message key="current.trip.price.extra"/>
 						</span>
 						<span>
-							<mobi:formatMobics value="${actionBean.current.lockedPrice}" type="currencyHour" />
+							<mobi:formatMobics value="${actionBean.current.lockedPrice}" type="currencySymbol" />
 						</span>
 					</li>
 					

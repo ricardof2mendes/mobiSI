@@ -583,13 +583,14 @@ section > nav.panel ul li.link {
 
 section > nav.panel ul li.link a {
 	padding: 10px 0;
+	font-size: 100%;
 }
 
 section > nav.panel ul li.link span:nth-child(1) {
 	text-align: right;
     width: 38%;
 	display: inline-block;
-	color:#333
+	color:#333;
 }
 
 section > nav.panel ul li.link span:nth-child(2) {

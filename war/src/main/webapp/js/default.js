@@ -42,9 +42,9 @@ $(document).ready(function() {
 		e.preventDefault();
 		var element = $(this); 
 		fillGeoposition(function(position) {
-							var url = element.prop('href')
-									+ '&latitude=' + position.coords.latitude
-									+ '&longitude=' + position.coords.longitude;
+							var url = element.prop('href') + 
+								'&latitude=' + position.coords.latitude + 
+								'&longitude=' + position.coords.longitude;
 							window.location.href = url;
 						}, function() {
 							window.location.href = element.prop('href') + '&latitude=&longitude=';
@@ -89,15 +89,16 @@ $(document).ready(function() {
 	 */
 	$('#licensePlate').focus();
 	
- 	$('#licensePlate').on('keyup', function(e) {
- 		var that = this;
- 		// put cross to delete input content
- 		if($(this).val().length >= 1){
- 			$(this).css('text-transform', 'uppercase');
+    $('#licensePlate').on('keyup', function(e) {
+        var that = this;
+        // put cross to delete input content
+
+        if($(this).val().length >= 1){
+            $(this).css('text-transform', 'uppercase');
  			$('#licensePlateBookForm > div > div').addClass('delete')
- 				.on('click', function() {
- 					$(that).val('');
- 					$('#articleContainer').html('').css('display', 'none');
+ 			.on('click', function() {
+ 				$(that).val('');
+ 				$('#articleContainer').html('').css('display', 'none');
  					$('#licensePlateBookForm > div > div').removeClass('delete').off('click');
  					$(that).css('text-transform', 'none');
  			});
@@ -151,7 +152,6 @@ $(document).ready(function() {
  	 */
  	if($('#location').length > 0){
  		autocompleteZones();
- 		
  		$('#location').on('change', function(){
  	 		autocompleteZones();
  	 	});
@@ -276,7 +276,7 @@ $(document).ready(function() {
  		$('body').off('scroll');
  	});
  	
- 	/* report problem license plate search */
+ 	/* Damage Report problem license plate search */
  	$('#licenseReport').on('blur', function(){
  		var that = this;
  		
@@ -301,6 +301,14 @@ $(document).ready(function() {
 		}
  	});
  	
+ 	// Prevents form submition without licenseplate search
+ 	$('#licenseReport').on('keypress', function(e){
+ 		if (e.which == 13) {
+ 			return false;
+ 		}
+ 	});
+ 	
+ 	// 
  	$('#licenseReport').on('keyup', function(){
  		if($(this).val().length >= 1){
  			$(this).css('text-transform', 'uppercase');
@@ -553,7 +561,7 @@ function fillGeoposition(callback, error, isLoading) {
 			enableHighAccuracy : true
 		});
 	} else {
-		alert('Geolocation is not supported by this browser.');
+		alert(GEOLOCATION_NOT_SUPPORTED);
 	}
 }
 
