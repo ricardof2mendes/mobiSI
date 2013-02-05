@@ -22,6 +22,7 @@ import net.sourceforge.stripes.action.LocalizableMessage;
 import net.sourceforge.stripes.action.RedirectResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.Wizard;
+import net.sourceforge.stripes.validation.EmailTypeConverter;
 import net.sourceforge.stripes.validation.LocalizableError;
 import net.sourceforge.stripes.validation.Validate;
 import net.sourceforge.stripes.validation.ValidationErrors;
@@ -45,7 +46,7 @@ import com.criticalsoftware.mobics.proxy.customer.InvalidLoginExceptionException
 @Wizard(startEvents = "main")
 public class EditEmailLoginActionBean extends AskPinActionBean {
 
-    @Validate(required = true, on = "saveData")
+    @Validate(required = true, on = "saveData", converter = EmailTypeConverter.class)
     private String email;
 
     @Validate(required = true, on = "saveData", expression = "this == email")

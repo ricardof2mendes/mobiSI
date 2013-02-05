@@ -39,7 +39,7 @@ import com.criticalsoftware.mobics.proxy.customer.InvalidLoginExceptionException
 @MobiCSSecure
 public class EditPasswordActionBean extends AskPinActionBean {
 
-    @Validate(required = true, on = "saveData")
+    @Validate(required = true, on = "saveData", minlength = 6)
     private String password;
 
     @Validate(required = true, on = "saveData", expression = "this == password")

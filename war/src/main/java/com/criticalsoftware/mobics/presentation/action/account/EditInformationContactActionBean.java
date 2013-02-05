@@ -15,13 +15,19 @@ package com.criticalsoftware.mobics.presentation.action.account;
 import java.io.UnsupportedEncodingException;
 import java.rmi.RemoteException;
 
+import org.apache.commons.lang.StringUtils;
+
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.DontValidate;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.LocalizableMessage;
 import net.sourceforge.stripes.action.RedirectResolution;
 import net.sourceforge.stripes.action.Resolution;
+import net.sourceforge.stripes.validation.LocalizableError;
 import net.sourceforge.stripes.validation.Validate;
+import net.sourceforge.stripes.validation.ValidationErrors;
+import net.sourceforge.stripes.validation.ValidationMethod;
+import net.sourceforge.stripes.validation.ValidationState;
 
 import com.criticalsoftware.mobics.customer.EditCustomerDTO;
 import com.criticalsoftware.mobics.miscellaneous.CountryDTO;
@@ -52,7 +58,7 @@ public class EditInformationContactActionBean extends AskPinActionBean {
     @Validate(required = true, on = "saveData", mask = "^[0-9]{4}-[0-9]{3}$")
     private String zipCode1;
 
-    @Validate(required = true, on = "saveData")
+    @Validate(required = true, on = "saveData", minlength = 9, maxlength = 9)
     private String phoneNumber;
 
     @Validate(required = true, on = "saveData")
@@ -83,8 +89,7 @@ public class EditInformationContactActionBean extends AskPinActionBean {
      * @throws CustomerNotFoundExceptionException
      * @throws UnsupportedEncodingException
      */
-    public Resolution data() throws RemoteException, CustomerNotFoundExceptionException,
-            UnsupportedEncodingException {
+    public Resolution data() throws RemoteException, CustomerNotFoundExceptionException, UnsupportedEncodingException {
 
         CustomerWSServiceStub customerWSServiceStub = new CustomerWSServiceStub(
                 Configuration.INSTANCE.getCustomerEndpoint());
@@ -116,15 +121,58 @@ public class EditInformationContactActionBean extends AskPinActionBean {
         customerWSServiceStub._getServiceClient().addHeader(
                 AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
                         .getPassword()));
-        
+
         String zip = zipCode1.substring(0, zipCode1.indexOf('-'));
         String code = zipCode1.substring(zipCode1.indexOf('-') + 1, zipCode1.length());
-        
-        customerWSServiceStub.updateCustomerDetails(address, locality, zip, code, phoneNumber, countryCode,
-                fullName, taxNumber, null);
+
+        customerWSServiceStub.updateCustomerDetails(address, locality, zip, code, phoneNumber, countryCode, fullName,
+                taxNumber, null);
 
         getContext().getMessages().add(new LocalizableMessage("account.information.edit.success"));
         return new RedirectResolution(AccountActionBean.class).flash(this);
+    }
+
+    @ValidationMethod(on = "saveData", when = ValidationState.NO_ERRORS)
+    public void validate(ValidationErrors errors) {
+        if(!isValidNIF(taxNumber)) {
+            errors.add("taxNumber", new LocalizableError("account.information.taxNumber.invalid"));
+        }
+    }
+
+    /**
+     * Validates the NIF
+     * @param nif
+     * @return true if valid
+     */
+    private boolean isValidNIF(String nif) {
+        char c;
+        int checkDigit = 0;
+
+        // Verifica se é nulo, se é numérico e se tem 9 dígitos
+        if (nif != null && StringUtils.isNumeric(nif) && nif.length() == 9) {
+            // Obtem o primeiro número do NIF
+            c = nif.charAt(0);
+
+            // Verifica se o primeiro número é (1, 2, 5, 6, 8 ou 9)
+            if (c == '1' || c == '2' || c == '5' || c == '6' || c == '8' || c == '9') {
+                // Calculo do Digito de Controle
+                checkDigit = c * 9;
+                for (int i = 2; i <= 8; i++) {
+                    checkDigit += nif.charAt(i - 1) * (10 - i);
+                }
+                checkDigit = 11 - (checkDigit % 11);
+
+                // Se o digito de controle é maior que dez, coloca-o a zero
+                if (checkDigit >= 10)
+                    checkDigit = 0;
+
+                // Compara o digito de controle com o último numero do NIF
+                // Se igual, o NIF é válido.
+                if (checkDigit == nif.charAt(8))
+                    return true;
+            }
+        }
+        return false;
     }
 
     public CountryDTO[] getCountries() throws RemoteException {
