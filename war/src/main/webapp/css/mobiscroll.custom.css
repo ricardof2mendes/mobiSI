@@ -1,0 +1,353 @@
+.dw {
+	min-width: 170px;
+	z-index: 1001;
+	font-family: arial, verdana, sans-serif;
+	font-size: 100%;
+	-webkit-box-sizing: border-box;
+	-webkit-user-select: none;
+}
+
+.dwi {
+	position: static;
+	margin: 5px;
+	display: inline-block
+}
+
+.dwwr {
+	zoom: 1;
+	padding: 0 0px;
+	text-align: center;
+	position: relative;
+	margin: 15px;
+	border-radius: 4px;
+}
+
+.dwo {
+	width: 100%;
+	background: lightGrey;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 1000;
+	opacity: .7;
+}
+
+.dw-bubble-bottom {
+	margin-top: 18px
+}
+
+.dw-bubble-top {
+	margin-top: -18px
+}
+
+.dw-bubble .dw-arrw {
+	position: absolute;
+	left: 0;
+	width: 100%
+}
+
+.dw-bubble-top .dw-arrw {
+	bottom: -36px
+}
+
+.dw-bubble-bottom 
+
+.dw-arrw {
+	top: -36px
+}
+
+.dw-bubble .dw-arrw-i {
+	margin: 0 30px;
+	position: relative;
+	height: 36px
+}
+
+.dw-bubble .dw-arr {
+	display: block
+}
+
+.dw-arr {
+	display: none;
+	position: absolute;
+	left: 0;
+	width: 0;
+	height: 0;
+	border-width: 18px 18px;
+	border-style: solid;
+	margin-left: -18px;
+}
+
+.dw-bubble-bottom .dw-arr {
+	top: 0;
+	border-color: transparent transparent #fff transparent
+}
+
+.dw-bubble-top .dw-arr {
+	bottom: 0;
+	border-color: #fff transparent transparent transparent
+}
+
+.dwc {
+	float: none;
+	margin: 0 0px 5px 0px;
+	padding-top: 30px;
+	display: inline-block;
+	border-top: 1px solid white;
+}
+
+.dwcc {
+	clear: both
+}
+
+.dwl {
+	text-align: center;
+	line-height: 30px;
+	height: 30px;
+	white-space: nowrap;
+	position: absolute;
+	top: -30px;
+	width: 100%;
+}
+
+.dwv {
+	padding: 10px 0;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+	font-size: 150%;
+	font-weight: bold;
+	color: #333;
+	text-shadow: 0 1px -1px white;
+}
+
+.dwrc {
+	-webkit-border-radius: 4px;
+	border-radius: 4px
+}
+
+.dwwc {
+	margin: 5px;
+	position: relative;
+	background: lightGrey;
+	zoom: 1;
+	border: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.dwwl {
+	position: relative;
+	background: -webkit-gradient(linear, left bottom, left top, from(lightGrey),
+		color-stop(0.5, white), color-stop(0.50, white),
+		color-stop(0.5, white), to(lightGrey) );
+	z-index: 1010;
+}
+
+.dww {
+	margin: 0 2px;
+	overflow: hidden;
+}
+
+.dwsc .dww {
+	background: #F0F0F0;
+}
+
+.dww ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	position: relative;
+	z-index: 2;
+}
+
+.dww li {
+	list-style: none;
+	margin: 0;
+	padding: 0 5px;
+	display: block;
+	text-align: center;
+	font-size: 26px;
+	white-space: nowrap;
+	color: rgba(0, 0, 0, 0.6);
+	text-shadow: 0 1px 1px white;
+}
+
+.dww li .dw-v {
+	opacity: 1;
+	filter: Alpha(Opacity = 100)
+}
+
+.dww li .dw-h {
+	visibility: hidden
+}
+
+.dwwb {
+	position: absolute;
+	z-index: 4;
+	left: 0;
+	cursor: pointer;
+	width: 100%;
+	height: 40px;
+	text-align: center;
+	opacity: 1;
+	-webkit-transition: opacity .2s linear
+}
+
+.dwa .dwwb {
+	opacity: 0
+}
+
+.dwwbp {
+	top: 0;
+	-webkit-border-radius: 3px 3px 0 0;
+	border-radius: 3px 3px 0 0;
+	font-size: 40px
+}
+
+.dwwbm {
+	bottom: 0;
+	-webkit-border-radius: 0 0 3px 3px;
+	border-radius: 0 0 3px 3px;
+	font-size: 32px;
+	font-weight: bold
+}
+
+.dwpm .dwwc {
+	background: transparent
+}
+
+.dwpm .dww {
+	margin: -1px
+}
+
+.dwpm .dww li {
+	text-shadow: none
+}
+
+.dwpm .dwwol {
+	display: none
+}
+
+.dwwo {
+	position: absolute;
+	z-index: 3;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: -webkit-gradient(linear, left bottom, left top, from(rgba(0, 0, 0, 0.5)
+		), color-stop(0.4, rgba(255, 255, 255, 0.2) ),
+		color-stop(0.6, rgba(255, 255, 255, 0.2) ), to(rgba(0, 0, 0, 0.5) ) );
+}
+
+.dwwol {
+	position: absolute;
+	z-index: 1;
+	top: 50%;
+	left: 0;
+	width: 100%;
+	height: 0;
+	margin-top: -1px;
+	border-top: 1px solid lightGrey;
+	border-bottom: 2px solid white;
+}
+
+.dwbg .dwb {
+	display: block;
+	height: 45px;
+	line-height: 45px;
+	margin: 0 4px;
+	font-size: 100%;
+	font-weight: bold;
+	text-decoration: none;
+	text-shadow: 0px 1px -1px white;
+	border-radius: 4px;
+	-webkit-border-radius: 4px;
+	color: #333;
+	background:
+		url("https://lh6.googleusercontent.com/-TBuniabaJH4/UPVZ4KTMt6I/AAAAAAAABpc/mTkbjJ17Sp8/s45/bt_up_45px.png")
+		repeat-x lightGrey;
+	cursor: pointer;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	border: 1px solid rgba(0, 0, 0, 0.3);
+	white-space: nowrap;
+}
+
+.dwbc {
+	padding: 5px 0;
+	text-align: center;
+	clear: both;
+}
+
+.dwbw {
+	display: inline-block;
+	width: 50%;
+	position: relative;
+	z-index: 1010;
+}
+
+.dwbc-p .dwbw {
+	width: 33%
+}
+
+.dwhl {
+	padding-top: 10px
+}
+
+.dwhl .dwl {
+	display: none
+}
+
+.dwbg {
+	background: #F4F4F4;
+	-webkit-border-radius: 3px;
+	box-shadow: 0px 5px 10px 2px rgba(0, 0, 0, 0.2);
+	border: 1px solid white;
+	position: absolute;
+	margin: 10px;
+}
+
+.dwbg .dwpm .dww {
+	background: #fff;
+	border: 1px solid #AAA
+}
+
+.dwbg .dwwb {
+	background: #ccc;
+	color: #888;
+	text-shadow: 0 -1px 1px #333;
+	box-shadow: 0 0 5px #333;
+	-webkit-box-shadow: 0 0 5px #333
+}
+
+.dwbg .dwwbp {
+	
+}
+
+.dwbg .dwwbm {
+	
+}
+
+.dwbg .dwb-a {
+	display: block;
+	height: 45px;
+	line-height: 45px;
+	margin: 0 4px;
+	font-size: 100%;
+	font-weight: bold;
+	text-shadow: none;
+	text-decoration: none;
+	border-radius: 4px;
+	-webkit-border-radius: 4px;
+	color: #333;
+	background:
+		url("https://lh4.googleusercontent.com/-x4ZSg3XNngA/UPVZ4APugFI/AAAAAAAABpg/L9UMRuDnM7o/s45/bt_down_45px.png")
+		repeat-x lightGrey;
+	cursor: pointer;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	border: 1px solid rgba(0, 0, 0, 0.3);
+	white-space: nowrap;
+}
+.dwbc > .dwb-s > .dwb {
+	background-color: #288b07;
+	color: #fff;
+	text-shadow: 0px -1px 1px rgba(0, 0, 0, 0.5);
+}

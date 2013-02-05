@@ -102,9 +102,10 @@ var toggleFx = function (element) {
 		if(element.indexOf('menu') > 0) {
 			if($('#streetsearch').length > 0) {
 				$('#container').addClass('menuDownBig');
+				$('div.bottomShadow').addClass('bottomShadowBig');
 			} else {
 				$('#container').addClass('menuDownSmall');
-				$('div.bottomShadow').hide();
+				$('div.bottomShadow').addClass('bottomShadowSmall');
 			}
 		}else {
 			$('#container').hide();
@@ -117,9 +118,10 @@ var toggleFx = function (element) {
 		if(element.indexOf('menu') > 0) {
 			if($('#streetsearch').length > 0) {
 				$('#container').removeClass('menuDownBig');
+				$('div.bottomShadow').removeClass('bottomShadowBig');
 			} else {
 				$('#container').removeClass('menuDownSmall');
-				$('div.bottomShadow').show();
+				$('div.bottomShadow').removeClass('bottomShadowSmall');
 			}
 		} else {
 			$('#container').show();

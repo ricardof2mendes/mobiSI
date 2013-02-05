@@ -37,6 +37,13 @@ $(document).ready(function() {
 						}, true);
 	});
 	
+	/**
+	 * css hack on search car list
+	 */
+	if($('nav.orderCriteria').length > 0) {
+		$('div.bottomShadow').addClass('bottomShadowGray');
+	}
+	
 	/** Find me a car for later */
 	$('#findForLater').on('click', function(e) {
 		e.preventDefault();
@@ -50,10 +57,6 @@ $(document).ready(function() {
 							window.location.href = element.prop('href') + '&latitude=&longitude=';
 						} ,true);
 	});
-	
-    /**
-     * Booking Interest
-     */
     
 	/** Search location link */
 	$('#locationLink').on('click', function(e) {
@@ -163,7 +166,8 @@ $(document).ready(function() {
  	if($('#startDate').length > 0){
  		var now = new Date();
 	    $('#startDate').mobiscroll().datetime({
-	    	setText: 'OK',
+	    	setText: OK_LABEL,
+	    	minuteText: MINUTES_LABEL,
 	    	dateFormat: DATE_PATTERN,
 	    	dateOrder: 'ddmmyy',
 	    	timeFormat: TIME_PATTERN,
@@ -179,7 +183,8 @@ $(document).ready(function() {
  	if($('#endDate').length > 0){
  		var now = new Date();
  		$('#endDate').mobiscroll().datetime({
-	    	setText: 'OK',
+	    	setText: OK_LABEL,
+	    	minuteText: MINUTES_LABEL,
 	    	dateFormat: DATE_PATTERN,
 	    	dateOrder: 'ddmmyy',
 	    	timeFormat: TIME_PATTERN,
@@ -202,7 +207,8 @@ $(document).ready(function() {
  	if($('#reportDamageDate').length > 0){
 	 	var now = new Date();
 	    $('#reportDamageDate').mobiscroll().datetime({
-	    	setText: 'OK',
+	    	setText: OK_LABEL,
+	    	minuteText: MINUTES_LABEL,
 	    	dateFormat: DATE_PATTERN,
 	    	dateOrder: 'ddmmyy',
 	    	timeFormat: TIME_PATTERN,
@@ -226,7 +232,8 @@ $(document).ready(function() {
  			var limittime = limit[1].split(':');
  			
  			$('#limited').mobiscroll().datetime({
- 				setText: 'OK',
+ 				setText: OK_LABEL,
+ 				minuteText: MINUTES_LABEL,
  				dateFormat: DATE_PATTERN,
  				dateOrder: 'ddmmyy',
  				timeFormat: TIME_PATTERN,
@@ -239,7 +246,8 @@ $(document).ready(function() {
  			});    
  		} else {
  			$('#limited').mobiscroll().datetime({
- 				setText: 'OK',
+ 				setText: OK_LABEL,
+ 				minuteText: MINUTES_LABEL,
  				dateFormat: DATE_PATTERN,
  				dateOrder: 'ddmmyy',
  				timeFormat: TIME_PATTERN,
@@ -561,7 +569,7 @@ function fillGeoposition(callback, error, isLoading) {
 			enableHighAccuracy : true
 		});
 	} else {
-		alert(GEOLOCATION_NOT_SUPPORTED);
+		alert(GEOLOCATION_NOT_SUPPORTED_LABEL);
 	}
 }
 
@@ -599,7 +607,7 @@ function autocompleteZones() {
             	data = eval(data);
             	if (data == null || data.length != 1) {
             		$('#zone').html('');
-                    $('#zone').append('<option value="">' + ZONE_ALL + '</option>');
+                    $('#zone').append('<option value="">' + ZONE_ALL_LABEL + '</option>');
                 }
                 if (data != null) {
                     $(data).each(function(e) {

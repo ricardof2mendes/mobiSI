@@ -58,6 +58,10 @@ Map.prototype = {
 			this.yellowStyle.fillColor = '#FFF000';
 			this.yellowStyle.strokeColor = '#B7AD00';
 			
+			this.ganGanStyle = OpenLayers.Util.extend({}, this.greenStyle);
+			this.ganGanStyle.strokeColor = '#008be8';
+			this.ganGanStyle.fillOpacity = 0;
+			
 			var locationDefautlStyle = OpenLayers.Util.extend({}, OpenLayers.Feature.Vector.style['default']);
 			locationDefautlStyle.graphicOpacity = 1; 
 			locationDefautlStyle.graphicHeight = 20;
@@ -530,7 +534,7 @@ Map.prototype = {
 				// remove any previous radius layer
 				this.cleanRadius();
 				// add new radius
-				var circleLayer = new OpenLayers.Layer.Vector('radiusLocation', {style: this.redStyle});
+				var circleLayer = new OpenLayers.Layer.Vector('radiusLocation', {style: this.ganGanStyle});
     			this.map.addLayer(circleLayer);
 				// radius calculation with spherical mercator scale h=1/cos(lat)
 				var radius = this.searchParams.distance/Math.cos(this.mylatlong.latitude * (Math.PI / 180));

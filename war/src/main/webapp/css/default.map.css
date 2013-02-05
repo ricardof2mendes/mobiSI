@@ -2,7 +2,24 @@ html, body{
 	height: 100%;
 }
 
-#container{
+div.bottomShadow {
+	position:absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 45px;
+    z-index: 5000;
+}
+
+.bottomShadowBig {
+	top: 414px !important;
+}
+
+.bottomShadowSmall {
+	top: 366px !important;
+}
+
+#container {
 	position:absolute;
     left: 0;
     right: 0;
@@ -15,7 +32,7 @@ html, body{
 }
 
 #container.menuDownBig {
-	top: 413px !important;
+	top: 414px !important;
 }
 
 #container.menuDownSmall {

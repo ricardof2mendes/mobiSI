@@ -33,7 +33,7 @@
         
         <!-- Calendar -->
         <c:if test="${addCalendar}">
-	        <link rel="stylesheet" href="${contextPath}/css/mobiscroll.core-2.0.3.css" />
+	        <link rel="stylesheet" href="${contextPath}/css/mobiscroll.custom.css" />
         </c:if>
     </head>
     <body>
@@ -48,8 +48,10 @@
         <script>
         	var CONTEXT_PATH = '${contextPath}';
         	// localizable strings
-        	var ZONE_ALL = '<fmt:message key="book.advance.zone.any" />';
-        	var GEOLOCATION_NOT_SUPPORTED = '<fmt:message key="geolocation.alert.msg.not.supported"/>';
+        	var ZONE_ALL_LABEL = '<fmt:message key="book.advance.zone.any" />';
+        	var GEOLOCATION_NOT_SUPPORTED_LABEL = '<fmt:message key="geolocation.alert.msg.not.supported"/>';
+        	var OK_LABEL = '<fmt:message key="calendar.ok"/>'
+        	var MINUTES_LABEL = '<fmt:message key="calendar.minutes"/>'
         	// date patterns for calendar
         	var DATE_PATTERN = '${applicationScope.configuration.jsDatePattern}';
         	var TIME_PATTERN = '${applicationScope.configuration.jsTimePattern}';

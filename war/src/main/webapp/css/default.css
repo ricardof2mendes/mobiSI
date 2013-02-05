@@ -277,6 +277,11 @@ form.loginForm>div>label {
 	margin-bottom: 5px;
 }
 
+.bottomShadowGray {
+	background-color: #E4E4E4;
+	margin-bottom: 0;
+}
+
 .menuBtn {
 	width: 30px;
 	height: 30px;
@@ -896,10 +901,11 @@ nav.twoColumnList  ul li a > div:nth-child(2) > span{
 
 nav.orderCriteria {
 	height: 40px;
-	margin-bottom: 2px;
+	background-color: #E4E4E4;
 	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
 	-moz-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
 	-webkit-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
+	padding-top: 2px;
 }
 
 section > nav.orderCriteria ul:first-child {
@@ -951,7 +957,7 @@ nav.orderCriteria ul li:last-child a {
 }
 
 nav.orderCriteria ul:last-child li a {
-	width: 76px;
+	width: 50px;
 	border-radius: 4px;
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;	
