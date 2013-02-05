@@ -86,28 +86,28 @@ public class EditEmailLoginActionBean extends AskPinActionBean {
         customerWSServiceStub._getServiceClient().addHeader(
                 AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
                         .getPassword()));
-        customerWSServiceStub.updateCustomerEmail(getContext().getUser().getUsername(), getContext().getUser()
-                .getPassword(), email);
+        customerWSServiceStub.updateCustomerEmail(getContext().getUser().getUsername(),
+                AuthenticationUtil.encriptSHA(getContext().getUser().getPassword()), email);
 
         getContext().getMessages().add(new LocalizableMessage("account.authentication.edit.email.login.success"));
         return new RedirectResolution(AccountActionBean.class).flash(this);
     }
 
     /**
-     * Validate email 
+     * Validate email
      * 
      * @param errors
      * @throws UnsupportedEncodingException
      * @throws RemoteException
      */
-    @ValidationMethod(on="saveDate", when=ValidationState.NO_ERRORS)
+    @ValidationMethod(on = "saveDate", when = ValidationState.NO_ERRORS)
     public void validate(ValidationErrors errors) throws UnsupportedEncodingException, RemoteException {
         CustomerWSServiceStub customerWSServiceStub = new CustomerWSServiceStub(
                 Configuration.INSTANCE.getCustomerEndpoint());
         customerWSServiceStub._getServiceClient().addHeader(
                 AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
                         .getPassword()));
-        if(!customerWSServiceStub.validateEmail(email)){
+        if (!customerWSServiceStub.validateEmail(email)) {
             errors.addGlobalError(new LocalizableError("account.authentication.email.error"));
         }
     }

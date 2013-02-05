@@ -72,15 +72,7 @@ public class AuthenticationUtil {
 
     public static OMElement getAuthenticationHeader(String username, String password)
             throws UnsupportedEncodingException {
-        String[] authenticationData = null;
-        String nonce = null;
-        String created = null;
-        String password64 = null;
-
-        authenticationData = auth(password);
-        nonce = authenticationData[0];
-        created = authenticationData[1];
-        password64 = authenticationData[2];
+        String[] authenticationData = auth(password);
 
         OMFactory fac = OMAbstractFactory.getOMFactory();
         OMNamespaceImpl wsse = new OMNamespaceImpl(xsdSecextURL, "wsse");
@@ -93,14 +85,14 @@ public class AuthenticationUtil {
 
         OMElement passwordHeader = new OMElementImpl("Password", wsse, fac);
         passwordHeader.addAttribute(new OMAttributeImpl("Type", null, passwordDigest, fac));
-        passwordHeader.setText(password64);
+        passwordHeader.setText(authenticationData[2]);
 
         OMElement nonceHeader = new OMElementImpl("Nonce", wsse, fac);
         nonceHeader.addAttribute(new OMAttributeImpl("EncodingType", null, base64Binary, fac));
-        nonceHeader.setText(nonce);
+        nonceHeader.setText(authenticationData[0]);
 
         OMElement createdHeader = new OMElementImpl("Created", wsu, fac);
-        createdHeader.setText(created);
+        createdHeader.setText(authenticationData[1]);
         usernameTokenHeader.addChild(usernameHeader);
         usernameTokenHeader.addChild(passwordHeader);
         usernameTokenHeader.addChild(nonceHeader);
