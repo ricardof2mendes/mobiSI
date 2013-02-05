@@ -91,7 +91,7 @@ public class EditEmailLoginActionBean extends AskPinActionBean {
                 AuthenticationUtil.encriptSHA(getContext().getUser().getPassword()), email);
 
         getContext().getMessages().add(new LocalizableMessage("account.authentication.edit.email.login.success"));
-        return new RedirectResolution(AccountActionBean.class).flash(this);
+        return new RedirectResolution(AccountActionBean.class, "authentication").flash(this);
     }
 
     /**

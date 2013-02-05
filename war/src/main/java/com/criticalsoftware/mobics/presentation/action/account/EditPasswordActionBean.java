@@ -88,7 +88,7 @@ public class EditPasswordActionBean extends AskPinActionBean {
         getContext().getUser().setPassword(password);
 
         getContext().getMessages().add(new LocalizableMessage("account.authentication.edit.email.password.success"));
-        return new RedirectResolution(AccountActionBean.class).flash(this);
+        return new RedirectResolution(AccountActionBean.class, "authentication").flash(this);
     }
 
     /**
