@@ -14,6 +14,14 @@ html, body{
 	top: 92px !important;
 }
 
+#container.menuDownBig {
+	top: 413px !important;
+}
+
+#container.menuDownSmall {
+	top: 366px !important;
+}
+
 #container.street,
 #container.white {
 	bottom: 79px !important;

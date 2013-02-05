@@ -94,17 +94,17 @@ $(document).ready(function() {
         // put cross to delete input content
 
         if($(this).val().length >= 1){
-            $(this).css('text-transform', 'uppercase');
+            $(this).addClass('uppercase');
  			$('#licensePlateBookForm > div > div').addClass('delete')
  			.on('click', function() {
  				$(that).val('');
- 				$('#articleContainer').html('').css('display', 'none');
+ 				$('#articleContainer').html('').addClass('hidden');
  					$('#licensePlateBookForm > div > div').removeClass('delete').off('click');
- 					$(that).css('text-transform', 'none');
+ 					$(that).removeClass('uppercase');
  			});
  		} else {
  			$('#licensePlateBookForm > div > div').removeClass('delete').off('click');
- 			$(this).css('text-transform', 'none');
+ 			$(this).removeClass('uppercase');
  		}
  		
  		// add the autocomplete
@@ -129,7 +129,7 @@ $(document).ready(function() {
 			}, 1000);
 			
  		} else {
- 			$('#articleContainer').html('').css('display', 'none');
+ 			$('#articleContainer').html('').addClass('hidden');
  		}
  	});
  	
@@ -290,7 +290,7 @@ $(document).ready(function() {
 				if (jqXHR.getResponseHeader('Stripes-Success') === 'OK') {
 						$(that).removeClass('autocomplete');
 						$('#searchResults').html(data);
-					    $('#searchResults').css('display', 'block');
+					    $('#searchResults').removeClass('hidden');
 				} else {
 					console.log('An error has occurred or the user\'s session has expired!');
 					$('html').html(data);
@@ -311,11 +311,11 @@ $(document).ready(function() {
  	// 
  	$('#licenseReport').on('keyup', function(){
  		if($(this).val().length >= 1){
- 			$(this).css('text-transform', 'uppercase');
+ 			$(this).addClass('uppercase');
  		} else {
- 			$(this).css('text-transform', 'none');
- 			$('#searchResults').css('display', 'none');
+ 			$(this).removeClass('uppercase');
  			$('#searchResults').html('');
+ 			$('#searchResults').addClass('hidden');
  		}
  	});
  	

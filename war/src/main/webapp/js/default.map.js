@@ -17,10 +17,10 @@ $(document).ready(function() {
 		$('#resultmap').toggleClass('hidden');
 		$('#container').toggle();
 		$('#whiteBar').toggle();
-		if($('#addressList').css('display') === 'none') {
-			$('#addressList').show();
+		if($('#addressList').hasClass('hidden')) {
+			$('#addressList').removeClass('hidden');
 		} else {
-			$('#addressList').hide();
+			$('#addressList').addClass('hidden');
 		}
 	};
 	
@@ -97,15 +97,13 @@ $(document).ready(function() {
  * Toggle Menu or Legend
  * @param element
  */
-// FIXME this styles should be in css
 var toggleFx = function (element) {
-	if($(element).css('display') == 'none') {
+	if($(element).hasClass('hidden')) {
 		if(element.indexOf('menu') > 0) {
 			if($('#streetsearch').length > 0) {
-				$('#container.street').css('top', '413px !important');
-				$('#menu ul').css('margin-top','-10px').css('margin-bottom', '10px');
+				$('#container').addClass('menuDownBig');
 			} else {
-				$('#container').css('top', '366px');
+				$('#container').addClass('menuDownSmall');
 				$('div.bottomShadow').hide();
 			}
 		}else {
@@ -114,17 +112,13 @@ var toggleFx = function (element) {
 			$('#streetsearch').hide();
 		}
 		$(element).removeClass('hidden');
-				
 	} else {
 		$(element).addClass('hidden');
-		
 		if(element.indexOf('menu') > 0) {
-			
 			if($('#streetsearch').length > 0) {
-				$('#container.street').css('top', '92px !important');
-				$('#menu ul').css('margin-top','').css('margin-bottom', '');
+				$('#container').removeClass('menuDownBig');
 			} else {
-				$('#container').css('top', '45px');
+				$('#container').removeClass('menuDownSmall');
 				$('div.bottomShadow').show();
 			}
 		} else {

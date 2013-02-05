@@ -114,7 +114,7 @@ Map.prototype = {
 			this.map.addControl(new OpenLayers.Control.Legend({
 				onLegendClick : function(evt) {
 					if (evt.buttonElement === this.legendLink.legend) {
-						if($('#menu').css('display') != 'none') {
+						if(!$('#menu').hasClass('hidden')) {
 							toggleFx('#menu');
 						}
 						toggleFx('#legend');
@@ -507,12 +507,12 @@ Map.prototype = {
 			
 			if(this.mylatlong.latitude) {
 				aux += '&latitude=' + this.mylatlong.latitude + '&longitude=' + this.mylatlong.longitude + '&address='; 
-				html += '<li><a href="'+aux+'"><div><img src="'+contextPath+'/img/map/mylocation.png"/></div><div class="ellipsis" ><span>'+this.searchParams.placeholder+'</span></div></a></li>';
+				html += '<li><a href="'+aux+'"><div><img src="'+contextPath+'/img/map/location-user-selected.png"/></div><div class="ellipsis" ><span>'+this.searchParams.placeholder+'</span></div></a></li>';
 			}
 			if(data) {
 				$(data).each(function(){
 					aux = url + '&latitude=' + this.latitude + '&longitude=' + this.longitude + '&address=' + this.displayName;
-					html += '<li><a href="'+aux+'"><div><img src="'+contextPath+'/img/map/mylocation.png"/></div><div class="ellipsis" ><span>'+ this.displayName +'</span></div></a></li>';
+					html += '<li><a href="'+aux+'"><div><img src="'+contextPath+'/img/map/location-user-selected.png"/></div><div class="ellipsis" ><span>'+ this.displayName +'</span></div></a></li>';
 				});
 			}
 			$('#results').html(html);
