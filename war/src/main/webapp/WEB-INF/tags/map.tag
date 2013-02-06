@@ -35,7 +35,7 @@
         </script>
         <script src="${contextPath}/js/zepto.js"></script>
 
-        <script src="${contextPath}/js/OpenLayers.mobile.debug.js"></script>
+        <script src="${contextPath}/js/OpenLayers.mobile.js"></script>
 		<script src="${contextPath}/js/OpenLayers.mobics.extension.js"></script>
         <script src="${contextPath}/js/mobics.map.js"></script>
         <script src="${contextPath}/js/default.map.js"></script>

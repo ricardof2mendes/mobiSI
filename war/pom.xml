@@ -14,6 +14,15 @@
 	<name>Mobi Car Sharing - Web application</name>
 
 	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>**/*.properties</include>
+				</includes>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -22,23 +31,6 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>filter-resources</id>
-						<phase>process-resources</phase>
-						<configuration>
-							<resources>
-								<resource>
-									<directory>src/main/resources</directory>
-									<filtering>true</filtering>
-									<includes>
-										<include>**/*.properties</include>
-									</includes>
-								</resource>
-							</resources>
-						</configuration>
-					</execution>
-				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -57,13 +49,23 @@
 							<cssSourceFiles>
 								<cssSourceFile>normalize.css</cssSourceFile>
 								<cssSourceFile>default.css</cssSourceFile>
+								<cssSourceFile>default.map.css</cssSourceFile>
+								<cssSourceFile>mobiscroll.custom.css</cssSourceFile>
 							</cssSourceFiles>
 							<cssFinalFile>style.css</cssFinalFile>
 							<jsSourceFiles>
-								<jsSourceFile>zepto.min.js</jsSourceFile>
+								<jsSourceFile>zepto.js</jsSourceFile>
 								<jsSourceFile>default.js</jsSourceFile>
 							</jsSourceFiles>
 							<jsFinalFile>script.js</jsFinalFile>
+							<jsSourceFiles>
+								<jsSourceFile>zepto.js</jsSourceFile>
+								<jsSourceFile>OpenLayers.mobile.js</jsSourceFile>
+								<jsSourceFile>OpenLayers.mobics.extension.js</jsSourceFile>
+								<jsSourceFile>mobics.map.js</jsSourceFile>
+								<jsSourceFile>default.map.js</jsSourceFile>
+							</jsSourceFiles>
+							<jsFinalFile>script-map.js</jsFinalFile>
 						</configuration>
 						<goals>
 							<goal>minify</goal>

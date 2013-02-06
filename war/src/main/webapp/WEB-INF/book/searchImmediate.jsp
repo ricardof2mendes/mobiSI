@@ -71,8 +71,10 @@
 					</li>
 				</ul>
 			</nav>
+			<div class="bottomShadow2"></div>
 		</section>
-		<div class="clear"></div>
+	</article>
+	<article>
 		<c:import url="./carListImmediate.jsp"></c:import>
 	</article>
 </t:main>

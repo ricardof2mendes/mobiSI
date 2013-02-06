@@ -282,6 +282,13 @@ form.loginForm>div>label {
 	margin-bottom: 0;
 }
 
+.bottomShadow2 {
+	height: 5px;
+	background: transparent url(../img/menu/sombra_menus_10px.png) repeat-x top left;
+	margin-bottom: 5px;
+}
+
+
 .menuBtn {
 	width: 30px;
 	height: 30px;

@@ -288,7 +288,7 @@ $(document).ready(function() {
  	$('#licenseReport').on('blur', function(){
  		var that = this;
  		
-		if(	($('#carLicensePlate').length == 0 ||
+		if($(this).val().length > 0 && ($('#carLicensePlate').length == 0 ||
 			($('#carLicensePlate').length > 0 && $('#carLicensePlate').val() !=  $(this).val()))){
 		
 			$(this).addClass('autocomplete');
