@@ -134,29 +134,26 @@ public class EditInformationContactActionBean extends AskPinActionBean {
 
     @ValidationMethod(on = "saveData", when = ValidationState.NO_ERRORS)
     public void validate(ValidationErrors errors) {
-        if(!isValidNIF(taxNumber)) {
+        if (!isValidNIF(taxNumber)) {
             errors.add("taxNumber", new LocalizableError("account.information.taxNumber.invalid"));
         }
     }
 
     /**
      * Validates the NIF
+     * 
      * @param nif
      * @return true if valid
      */
     private boolean isValidNIF(String nif) {
-        char c;
-        int checkDigit = 0;
-
         // Verifica se é nulo, se é numérico e se tem 9 dígitos
         if (nif != null && StringUtils.isNumeric(nif) && nif.length() == 9) {
             // Obtem o primeiro número do NIF
-            c = nif.charAt(0);
-
+            char c = nif.charAt(0);
             // Verifica se o primeiro número é (1, 2, 5, 6, 8 ou 9)
             if (c == '1' || c == '2' || c == '5' || c == '6' || c == '8' || c == '9') {
                 // Calculo do Digito de Controle
-                checkDigit = c * 9;
+                int checkDigit = c * 9;
                 for (int i = 2; i <= 8; i++) {
                     checkDigit += nif.charAt(i - 1) * (10 - i);
                 }
@@ -168,17 +165,23 @@ public class EditInformationContactActionBean extends AskPinActionBean {
 
                 // Compara o digito de controle com o último numero do NIF
                 // Se igual, o NIF é válido.
-                if (checkDigit == nif.charAt(8))
+                if (Character.forDigit(checkDigit, 10) == nif.charAt(8))
                     return true;
             }
         }
         return false;
     }
 
+    /**
+     * get countries
+     * 
+     * @return countries dto
+     * @throws RemoteException
+     */
     public CountryDTO[] getCountries() throws RemoteException {
         MiscellaneousWSServiceStub miscellaneousWSServiceStub = new MiscellaneousWSServiceStub(
                 Configuration.INSTANCE.getMiscellaneousEnpoint());
-        return miscellaneousWSServiceStub.getAllCountries(null);
+        return miscellaneousWSServiceStub.getAllCountries(getContext().getRequest().getLocale().getCountry());
     }
 
     /**

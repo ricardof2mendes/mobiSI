@@ -89,12 +89,9 @@
 						</li>
 						<c:if test="${not actionBean.context.user.carClub.isStandalone}">
 							<li class="detail white">
-								<span><fmt:message key="find.car.later.from.my.club"/></span>
+								<span></span>
 								<span class="customComboBox">
-									<stripes:select id="fromMyCarClub" name="fromMyCarClub" >
-										<stripes:option value="false"><fmt:message key="find.car.later.from.my.car.club.false"/></stripes:option>
-										<stripes:option value="true"><fmt:message key="find.car.later.from.my.car.club.true"/></stripes:option>
-									</stripes:select>
+									<stripes:checkbox id="fromMyCarClub" name="fromMyCarClub" />&nbsp;<fmt:message key="find.car.later.from.my.club"/>
 								</span>
 						</li>
 						</c:if>

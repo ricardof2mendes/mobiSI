@@ -42,7 +42,7 @@ public class BookingInterestActionBean extends BaseActionBean {
     protected String carClazz;
 
     @Validate
-    protected Boolean fromMyCarClub;
+    protected boolean fromMyCarClub;
 
     @Validate(required = true, on = {"createBookingInterest", "editBookingInterest"})
     protected Integer startSending;
@@ -130,14 +130,14 @@ public class BookingInterestActionBean extends BaseActionBean {
     /**
      * @return the fromMyCarClub
      */
-    public Boolean getFromMyCarClub() {
+    public boolean getFromMyCarClub() {
         return fromMyCarClub;
     }
 
     /**
      * @param fromMyCarClub the fromMyCarClub to set
      */
-    public void setFromMyCarClub(Boolean fromMyCarClub) {
+    public void setFromMyCarClub(boolean fromMyCarClub) {
         this.fromMyCarClub = fromMyCarClub;
     }
 
@@ -223,13 +223,6 @@ public class BookingInterestActionBean extends BaseActionBean {
      */
     public void setQuery(String query) {
         this.query = query;
-    }
-
-    /**
-     * @param fromMyCarClub the fromMyCarClub to set
-     */
-    public void setFromMyCarClub(boolean fromMyCarClub) {
-        this.fromMyCarClub = fromMyCarClub;
     }
 
     /**

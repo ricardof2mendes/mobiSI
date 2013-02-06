@@ -56,12 +56,9 @@
 							</span>
 						</li>
 						<li class="detail white">
-							<span><fmt:message key="damage.report.i.assume"/></span>
+							<span></span>
 							<span class="customComboBox">
-								<stripes:select name="assume" >
-									<stripes:option value="false"><fmt:message key="damage.report.i.assume.no"/></stripes:option>
-									<stripes:option value="true"><fmt:message key="damage.report.i.assume.yes"/></stripes:option>
-								</stripes:select>
+								<stripes:checkbox name="assume" />&nbsp;<fmt:message key="damage.report.i.assume"/>
 							</span>
 						</li>
 						<li class="detail white">

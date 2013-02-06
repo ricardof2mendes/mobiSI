@@ -66,7 +66,7 @@
         
         <!-- Calendar -->
         <c:if test="${addCalendar}">
-      		<script src="${contextPath}/js/mobiscroll-2.3.1.custom.min.js"></script>      		
+      		<script src="${contextPath}/js/mobiscroll.datetime-2.4.1.min.js"></script>      		
         </c:if>
         <script src="${contextPath}/js/default.js"></script>
     </body>

@@ -27,7 +27,6 @@ import net.sourceforge.stripes.action.LocalizableMessage;
 import net.sourceforge.stripes.action.RedirectResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.StreamingResolution;
-import net.sourceforge.stripes.validation.BooleanTypeConverter;
 import net.sourceforge.stripes.validation.LocalizableError;
 import net.sourceforge.stripes.validation.Validate;
 import net.sourceforge.stripes.validation.ValidateNestedProperties;
@@ -78,7 +77,7 @@ public class ContactsAndDamageReportActionBean extends BaseActionBean {
     @Validate(required = true, on = "saveDamageReport", converter = DatetimeTypeConverter.class)
     private Date date;
 
-    @Validate(required = true, on = "saveDamageReport", converter = BooleanTypeConverter.class)
+    @Validate
     private boolean assume;
 
     @Validate(required = true, on = "saveDamageReport", maxlength = 1024)
