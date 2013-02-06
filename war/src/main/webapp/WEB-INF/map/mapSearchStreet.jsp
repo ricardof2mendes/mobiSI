@@ -57,6 +57,7 @@
 			</stripes:form>			
 		</section>
 	</article>
+	<div class="streetBottomShadow"></div>
 	<article>
 		<section>
 			<div id="container" class="street">	

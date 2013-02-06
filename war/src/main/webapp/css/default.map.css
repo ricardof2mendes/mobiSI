@@ -19,6 +19,16 @@ div.bottomShadow {
 	top: 366px !important;
 }
 
+div.streetBottomShadow {
+	position:absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 91px;
+	background: transparent url(../img/menu/sombra_menus_10px.png) repeat-x top left;
+    z-index: 5000;
+}
+
 #container {
 	position:absolute;
     left: 0;
@@ -208,9 +218,10 @@ div.olControlMyLocation a:hover {
 
 /******************************* Search Form */
 
+#streetsearch {}
+
 #streetsearch > section {
-	padding-bottom: 13px;
-	background: url("../img/menu/sombra_menus_10px.png") repeat-x scroll left bottom transparent;
+	padding: 10px 0 13px 0;
 }
 
 #streetSearchForm div.right {

@@ -470,20 +470,16 @@ Map.prototype = {
 												longitude : that.mylatlong.longitude
 											}
 										}, null);
-					    objectVector.addFeatures(feature);
-					    
-					    if(!selectedFeature || selectedFeature.attributes.location === true) {
-					    	selectCtrl.select(feature);
+						objectVector.addFeatures(feature);
+						
+						if(!selectedFeature || selectedFeature.attributes.location === true) {
+							selectCtrl.select(feature);
 						}
-					    that.processList(returnData);
-					}
-						
-				});
-						
-	
+						that.processList(returnData);
+					}						
+				});	
 				geolocate.watch = true;
-			    geolocate.activate();
-			    
+				geolocate.activate();
 			}, 1000);
 			
 

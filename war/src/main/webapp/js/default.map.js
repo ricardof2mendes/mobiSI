@@ -103,6 +103,7 @@ var toggleFx = function (element) {
 			if($('#streetsearch').length > 0) {
 				$('#container').addClass('menuDownBig');
 				$('div.bottomShadow').addClass('bottomShadowBig');
+				$('div.streetBottomShadow').toggle();
 			} else {
 				$('#container').addClass('menuDownSmall');
 				$('div.bottomShadow').addClass('bottomShadowSmall');
@@ -119,6 +120,7 @@ var toggleFx = function (element) {
 			if($('#streetsearch').length > 0) {
 				$('#container').removeClass('menuDownBig');
 				$('div.bottomShadow').removeClass('bottomShadowBig');
+				$('div.streetBottomShadow').toggle();
 			} else {
 				$('#container').removeClass('menuDownSmall');
 				$('div.bottomShadow').removeClass('bottomShadowSmall');
