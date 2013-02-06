@@ -114,7 +114,7 @@
 										<fmt:message key="find.car.later.start.sending.hours"><fmt:param value="2"/></fmt:message>
 									</stripes:option>
 									<stripes:option value="-3600">
-										<fmt:message key="find.car.later.start.sending.hours"><fmt:param value="1"/></fmt:message>
+										<fmt:message key="find.car.later.start.sending.hour"><fmt:param value="1"/></fmt:message>
 									</stripes:option>
 									<stripes:option value="-1800">
 										<fmt:message key="find.car.later.start.sending.minutes"><fmt:param value="30"/></fmt:message>

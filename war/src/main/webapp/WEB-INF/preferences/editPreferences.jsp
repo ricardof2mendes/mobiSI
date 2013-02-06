@@ -155,7 +155,7 @@
 										<fmt:message key="find.car.later.start.sending.hours"><fmt:param value="2"/></fmt:message>
 									</stripes:option>
 									<stripes:option value="60">
-										<fmt:message key="find.car.later.start.sending.hours"><fmt:param value="1"/></fmt:message>
+										<fmt:message key="find.car.later.start.sending.hour"><fmt:param value="1"/></fmt:message>
 									</stripes:option>
 									<stripes:option value="30">
 										<fmt:message key="find.car.later.start.sending.minutes"><fmt:param value="30"/></fmt:message>
@@ -191,7 +191,7 @@
 										<fmt:message key="find.car.later.end.sending.minutes"><fmt:param value="30"/></fmt:message>
 									</stripes:option>
 									<stripes:option value="60">
-										<fmt:message key="find.car.later.end.sending.hours"><fmt:param value="1"/></fmt:message>
+										<fmt:message key="find.car.later.end.sending.hour"><fmt:param value="1"/></fmt:message>
 									</stripes:option>
 									<stripes:option value="120">
 										<fmt:message key="find.car.later.end.sending.hours"><fmt:param value="2"/></fmt:message>
