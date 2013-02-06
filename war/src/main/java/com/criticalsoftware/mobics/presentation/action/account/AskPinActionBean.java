@@ -39,7 +39,7 @@ import com.criticalsoftware.mobics.proxy.customer.CustomerWSServiceStub;
 public abstract class AskPinActionBean extends BaseActionBean {
 
     @Validate(required = true, on = { "data", "saveData" }, minlength = 4, maxlength = 4)
-    private String pin;
+    private Integer pin;
 
     /**
      * Main method
@@ -80,7 +80,7 @@ public abstract class AskPinActionBean extends BaseActionBean {
         customerWSServiceStub._getServiceClient().addHeader(
                 AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
                         .getPassword()));
-        if (!customerWSServiceStub.isValidCustomerPin(pin)) {
+        if (!customerWSServiceStub.isValidCustomerPin(pin.toString())) {
             errors.add("pin", new LocalizableError("account.security.check.pin.invalid"));
         }
     }
@@ -88,14 +88,14 @@ public abstract class AskPinActionBean extends BaseActionBean {
     /**
      * @return the pin
      */
-    public String getPin() {
+    public Integer getPin() {
         return pin;
     }
 
     /**
      * @param pin the pin to set
      */
-    public void setPin(String pin) {
+    public void setPin(Integer pin) {
         this.pin = pin;
     }
 }

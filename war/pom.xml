@@ -21,10 +21,30 @@
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>filter-resources</id>
+						<phase>process-resources</phase>
+						<configuration>
+							<resources>
+								<resource>
+									<directory>src/main/resources</directory>
+									<filtering>true</filtering>
+									<includes>
+										<include>**/*.properties</include>
+									</includes>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
-				<!-- configuration>
-					<warSourceExcludes>**/normalize.css,**/default.css,**/zepto.min.js,**/default.js</warSourceExcludes>
-				</configuration-->
+				<!-- configuration> <warSourceExcludes>**/normalize.css,**/default.css,**/zepto.min.js,**/default.js</warSourceExcludes> 
+					</configuration -->
 			</plugin>
 			<plugin>
 				<groupId>com.samaxes.maven</groupId>
@@ -64,7 +84,7 @@
 						<configuration>
 							<packageName>com.criticalsoftware.mobics.proxy.booking</packageName>
 							<wsdlFile>http://mobics02.critical.pt:8080/mobics-webservices/Booking?wsdl</wsdlFile>
-							<!--wsdlFile>src/main/wsdl/Booking.wsdl</wsdlFile-->
+							<!--wsdlFile>src/main/wsdl/Booking.wsdl</wsdlFile -->
 							<unwrap>true</unwrap>
 							<overWrite>true</overWrite>
 							<unpackClasses>true</unpackClasses>
@@ -230,9 +250,9 @@
 			<artifactId>json-simple</artifactId>
 		</dependency>
 		<dependency>
-            <groupId>com.criticalsoftware.mobics</groupId>
-            <artifactId>mobics-formatter</artifactId>
-        </dependency>
+			<groupId>com.criticalsoftware.mobics</groupId>
+			<artifactId>mobics-formatter</artifactId>
+		</dependency>
 	</dependencies>
 
 	<reporting>
