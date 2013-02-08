@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.criticalsoftware.mobics</groupId>
 	<artifactId>mobics</artifactId>
-	<version>1.1-SNAPSHOT</version>
+	<version>0.9.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<name>Mobi Car Sharing</name>
@@ -188,33 +188,6 @@
 
 	<dependencyManagement>
 		<dependencies>
-			<!-- Import -->
-			<dependency>
-				<groupId>org.jboss.arquillian</groupId>
-				<artifactId>arquillian-bom</artifactId>
-				<version>${arquillian.version}</version>
-				<scope>import</scope>
-				<type>pom</type>
-			</dependency>
-			<!-- Test -->
-			<dependency>
-				<groupId>org.jboss.arquillian.extension</groupId>
-				<artifactId>arquillian-jacoco</artifactId>
-				<version>1.0.0.Alpha3</version>
-				<scope>test</scope>
-			</dependency>
-			<dependency>
-				<groupId>org.jacoco</groupId>
-				<artifactId>org.jacoco.core</artifactId>
-				<version>${maven.jacoco.plugin.version}</version>
-				<scope>test</scope>
-			</dependency>
-			<dependency>
-				<groupId>junit</groupId>
-				<artifactId>junit</artifactId>
-				<version>4.10</version>
-				<scope>test</scope>
-			</dependency>
 			<!-- Provided -->
 			<dependency>
 				<groupId>org.jboss.spec</groupId>
@@ -544,15 +517,12 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.build.resourceEncoding>ISO-8859-1</project.build.resourceEncoding>
 		<project.build.javaVersion>1.6</project.build.javaVersion>
-
+		
 		<maven.surefire.plugin.version>2.12.3</maven.surefire.plugin.version>
 		<maven.jacoco.plugin.version>0.5.6.201201232323</maven.jacoco.plugin.version>
 		<maven.checkstyle.plugin.version>2.9.1</maven.checkstyle.plugin.version>
 		<maven.qalab.plugin.version>2.2</maven.qalab.plugin.version><!-- net.objectlab:mvn-qalab-plugin -->
 
-		<arquillian.version>1.0.2.Final</arquillian.version>
 		<jboss.version>7.1.1.Final</jboss.version>
-
-		<wsdl.service.booking>http://mobics02.critical.pt:8080/mobics-webservices/Booking?wsdl</wsdl.service.booking>
 	</properties>
 </project>
