@@ -2,6 +2,9 @@
 <%@include file="/WEB-INF/common/taglibs.jsp"%>
 <%@attribute name="title" required="true" %>
 <%@attribute name="addCalendar" type="java.lang.Boolean" %>
+<c:set var="version" scope="page">
+	<fmt:message key="application.version"/>
+</c:set>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -27,14 +30,15 @@
         <!-- For iPhone with high-resolution Retina display: -->
 		<link rel="apple-touch-icon-precomposed" sizes="114x114" href="${contextPath}/favicon114.png">
 		        
-        <!-- TODO CSS -->
-        <link rel="stylesheet" href="${contextPath}/css/normalize.css" />
-        <link rel="stylesheet" href="${contextPath}/css/default.css" />
-        
-        <!-- Calendar -->
-        <c:if test="${addCalendar}">
-	        <link rel="stylesheet" href="${contextPath}/css/mobiscroll.custom.css" />
-        </c:if>
+        <!-- CSS -->
+        <c:choose>
+	        <c:when test="${addCalendar}">
+		        <link rel="stylesheet" href="${contextPath}/css/style.calendar.min.css?version=${version}" />
+        	</c:when>
+        	<c:otherwise>
+        		<link rel="stylesheet" href="${contextPath}/css/style.min.css?version=${version}" />		
+        	</c:otherwise>
+        </c:choose>
     </head>
     <body>
 		<div class="modal"><!-- Place at bottom of page --></div>
@@ -43,31 +47,14 @@
 
         <jsp:doBody/>
 
-        <!-- TODO JS -->
-        <script src="${contextPath}/js/zepto.js"></script>
-        <script>
-        	var CONTEXT_PATH = '${contextPath}';
-        	// localizable strings
-        	var ZONE_ALL_LABEL = '<fmt:message key="book.advance.zone.any" />';
-        	var GEOLOCATION_NOT_SUPPORTED_LABEL = '<fmt:message key="geolocation.alert.msg.not.supported"/>';
-        	var OK_LABEL = '<fmt:message key="calendar.ok"/>'
-        	var MINUTES_LABEL = '<fmt:message key="calendar.minutes"/>'
-        	// date patterns for calendar
-        	var DATE_PATTERN = '${applicationScope.configuration.jsDatePattern}';
-        	var TIME_PATTERN = '${applicationScope.configuration.jsTimePattern}';
-        	// booking status for ajax pooling
-        	var WAITING = 'WAIT_OBS_';
-     		var ERROR = 'OBS_ERROR';
-     		var IN_USE = 'IN_USE';
-     		// unwanted zone
-     		var UNWANTED_ZONE = 'UNWANTED';
-        </script>
-        
-        
-        <!-- Calendar -->
-        <c:if test="${addCalendar}">
-      		<script src="${contextPath}/js/mobiscroll.datetime-2.4.1.min.js"></script>      		
-        </c:if>
-        <script src="${contextPath}/js/default.js"></script>
+        <!--JS -->
+        <c:choose>
+	        <c:when test="${addCalendar}">
+		        <script type="text/javascript" src="${contextPath}/js/script.calendar.min.jsp?version=${version}"></script>
+        	</c:when>
+        	<c:otherwise>
+        		<script type="text/javascript" src="${contextPath}/js/script.min.jsp?version=${version}"></script>		
+        	</c:otherwise>
+        </c:choose>
     </body>
 </html>

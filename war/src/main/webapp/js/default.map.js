@@ -1,4 +1,10 @@
+'<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>';
+
+var contextPath = '${pageContext.request.contextPath}';
+var anyDistance = '${applicationScope.configuration.anyDistance}';
+
 $(document).ready(function() {
+	'use strict';
 	
 	//Menu button
 	$('.menuBtn').on('click', function(e) {

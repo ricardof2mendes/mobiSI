@@ -44,7 +44,7 @@
 									<stripes:param name="licensePlate" value="${actionBean.current.licensePlate}"/>
 			
 									<span><fmt:message key="current.trip.car"/></span>
-									<span>
+									<span class="ellipsis">
 										${actionBean.current.licensePlate}&nbsp;(${actionBean.current.carBrand}&nbsp;${actionBean.current.carModel})
 									</span>
 								</stripes:link>
@@ -65,7 +65,7 @@
 									<stripes:param name="licensePlate" value="${actionBean.current.licensePlate}"/>
 			
 									<span><fmt:message key="current.trip.car"/></span>
-									<span>
+									<span class="ellipsis">
 										${actionBean.current.licensePlate}&nbsp;(${actionBean.current.carBrand}&nbsp;${actionBean.current.carModel})
 									</span>
 								</stripes:link>

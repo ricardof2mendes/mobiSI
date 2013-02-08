@@ -1,3 +1,21 @@
+'<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>';
+
+var CONTEXT_PATH = '${pageContext.request.contextPath}';
+// localizable strings
+var ZONE_ALL_LABEL = '<fmt:message key="book.advance.zone.any" />';
+var GEOLOCATION_NOT_SUPPORTED_LABEL = '<fmt:message key="geolocation.alert.msg.not.supported"/>';
+var OK_LABEL = '<fmt:message key="calendar.ok"/>';
+var MINUTES_LABEL = '<fmt:message key="calendar.minutes"/>';
+// date patterns for calendar
+var DATE_PATTERN = '${applicationScope.configuration.jsDatePattern}';
+var TIME_PATTERN = '${applicationScope.configuration.jsTimePattern}';
+// booking status for ajax pooling
+var WAITING = 'WAIT_OBS_';
+var ERROR = 'OBS_ERROR';
+var IN_USE = 'IN_USE';
+// unwanted zone
+var UNWANTED_ZONE = 'UNWANTED';
+
 /*
  * Default Script
  */
@@ -225,9 +243,10 @@ $(document).ready(function() {
     	var begindate = begin[0].split('/');
     	var begintime = begin[1].split(':');
     	
-    	var limit = $('#limited').attr('data-limit').split(' ');
+    	var limited = $('#limited').attr('data-limit');
  		
-    	if(limit.length > 0) {
+    	if(limited.length > 0) {
+    		var limit = limited.split(' ');
  			var limitdate = limit[0].split('/');
  			var limittime = limit[1].split(':');
  			

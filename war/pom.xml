@@ -35,8 +35,13 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
-				<!-- configuration> <warSourceExcludes>**/normalize.css,**/default.css,**/zepto.min.js,**/default.js</warSourceExcludes> 
-					</configuration -->
+				<configuration> 
+					<warSourceExcludes>
+					**/normalize.css,**/default.css,**/default.map.css,**/mobiscroll.custom.css,
+					**/zepto.js,**/default.js,**/default.map.js,**/mobics.map.js,**/OpenLayers.mobile.js,
+					**/OpenLayers.mobics.extension.js,**/mobiscroll.datetime-2.4.1.min.js
+					</warSourceExcludes> 
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>com.samaxes.maven</groupId>
@@ -49,15 +54,49 @@
 							<cssSourceFiles>
 								<cssSourceFile>normalize.css</cssSourceFile>
 								<cssSourceFile>default.css</cssSourceFile>
-								<cssSourceFile>default.map.css</cssSourceFile>
-								<cssSourceFile>mobiscroll.custom.css</cssSourceFile>
 							</cssSourceFiles>
 							<cssFinalFile>style.css</cssFinalFile>
 							<jsSourceFiles>
 								<jsSourceFile>zepto.js</jsSourceFile>
 								<jsSourceFile>default.js</jsSourceFile>
 							</jsSourceFiles>
-							<jsFinalFile>script.js</jsFinalFile>
+							<jsFinalFile>script.jsp</jsFinalFile>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>calendar-minify</id>
+						<phase>process-resources</phase>
+						<configuration>
+							<cssSourceFiles>
+								<cssSourceFile>normalize.css</cssSourceFile>
+								<cssSourceFile>default.css</cssSourceFile>
+								<cssSourceFile>mobiscroll.custom.css</cssSourceFile>
+							</cssSourceFiles>
+							<cssFinalFile>style.calendar.css</cssFinalFile>
+							<jsSourceFiles>
+								<jsSourceFile>zepto.js</jsSourceFile>
+								<jsSourceFile>default.js</jsSourceFile>
+								<jsSourceFile>mobiscroll.datetime-2.4.1.min.js</jsSourceFile>
+							</jsSourceFiles>
+							<jsFinalFile>script.calendar.jsp</jsFinalFile>
+						</configuration>
+						<goals>
+							<goal>minify</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>map-minify</id>
+						<phase>process-resources</phase>
+						<configuration>
+							<cssSourceFiles>
+								<cssSourceFile>normalize.css</cssSourceFile>
+								<cssSourceFile>default.css</cssSourceFile>
+								<cssSourceFile>default.map.css</cssSourceFile>
+							</cssSourceFiles>
+							<cssFinalFile>style.map.css</cssFinalFile>
 							<jsSourceFiles>
 								<jsSourceFile>zepto.js</jsSourceFile>
 								<jsSourceFile>OpenLayers.mobile.js</jsSourceFile>
@@ -65,7 +104,7 @@
 								<jsSourceFile>mobics.map.js</jsSourceFile>
 								<jsSourceFile>default.map.js</jsSourceFile>
 							</jsSourceFiles>
-							<jsFinalFile>script-map.js</jsFinalFile>
+							<jsFinalFile>script.map.jsp</jsFinalFile>
 						</configuration>
 						<goals>
 							<goal>minify</goal>
@@ -86,7 +125,6 @@
 						<configuration>
 							<packageName>com.criticalsoftware.mobics.proxy.booking</packageName>
 							<wsdlFile>http://mobics02.critical.pt:8080/mobics-webservices/Booking?wsdl</wsdlFile>
-							<!--wsdlFile>src/main/wsdl/Booking.wsdl</wsdlFile -->
 							<unwrap>true</unwrap>
 							<overWrite>true</overWrite>
 							<unpackClasses>true</unpackClasses>
