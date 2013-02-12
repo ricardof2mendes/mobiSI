@@ -38,7 +38,7 @@
 				<configuration> 
 					<warSourceExcludes>
 					**/normalize.css,**/default.css,**/default.map.css,**/mobiscroll.custom.css,
-					**/zepto.js,**/default.js,**/default.map.js,**/mobics.map.js,**/OpenLayers.mobile.js,
+					**/default.js,**/default.map.js,**/mobics.map.js,
 					**/OpenLayers.mobics.extension.js,**/mobiscroll.datetime-2.4.1.min.js
 					</warSourceExcludes> 
 				</configuration>
@@ -98,11 +98,9 @@
 							</cssSourceFiles>
 							<cssFinalFile>style.map.css</cssFinalFile>
 							<jsSourceFiles>
-								<jsSourceFile>zepto.js</jsSourceFile>
-								<jsSourceFile>OpenLayers.mobile.js</jsSourceFile>
-								<jsSourceFile>OpenLayers.mobics.extension.js</jsSourceFile>
-								<jsSourceFile>mobics.map.js</jsSourceFile>
 								<jsSourceFile>default.map.js</jsSourceFile>
+								<jsSourceFile>mobics.map.js</jsSourceFile>
+								<jsSourceFile>OpenLayers.mobics.extension.js</jsSourceFile>
 							</jsSourceFiles>
 							<jsFinalFile>script.map.jsp</jsFinalFile>
 						</configuration>
