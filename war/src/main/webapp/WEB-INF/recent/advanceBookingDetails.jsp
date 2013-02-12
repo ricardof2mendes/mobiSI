@@ -12,7 +12,7 @@
 	<article id="statePooling" class="${actionBean.trip.state != 'WAIT_OBS_ADVANCE' ? 'hidden' : ''}">
 		<section>
 			<h2>
-				<fmt:message key="current.trip.validating"/>
+				<fmt:message key="current.trip.validating"/>&nbsp;&nbsp;&nbsp;<img src="${contextPath}/img/indicator.gif"/>
 			</h2>
 			<div>
 				<fmt:message key="current.trip.validating.seconds"/>

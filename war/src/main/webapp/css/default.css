@@ -1546,8 +1546,6 @@ body.confirmation .confirm2 {
 }
 #unlocking,
 #locking {
-	width: 350px;
-	margin: auto;
 	text-align: center;
 }
 
@@ -1555,13 +1553,6 @@ body.confirmation .confirm2 {
 	width: 255px;
 	margin: auto;
 	text-align: center;
-}
-#unlocking h2,
-#locking h2,
-#statePooling h2 {
-	padding-right: 16px;
-	margin: 0;
-	background: transparent url("../img/indicator.gif") right center no-repeat;
 }
 
 #statePooling div {

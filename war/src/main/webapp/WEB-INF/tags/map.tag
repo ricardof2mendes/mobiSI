@@ -40,6 +40,8 @@
         <jsp:doBody/>
 
         <!-- JS -->
-        <script src="${contextPath}/js/script.map.jsp?version=${version}"></script>
+        <script type="text/javascript" src="${contextPath}/js/zepto.js"></script>
+        <script type="text/javascript" src="${contextPath}/js/OpenLayers.mobile.js"></script>
+        <script type="text/javascript" src="${contextPath}/js/script.map.min.jsp?version=${version}"></script>
     </body>
 </html>
