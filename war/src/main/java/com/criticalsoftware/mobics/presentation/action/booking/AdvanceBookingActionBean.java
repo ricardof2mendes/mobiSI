@@ -52,6 +52,7 @@ import com.criticalsoftware.mobics.proxy.booking.CarNotFoundExceptionException;
 import com.criticalsoftware.mobics.proxy.booking.CustomerNotFoundExceptionException;
 import com.criticalsoftware.mobics.proxy.booking.ForbiddenZoneExceptionException;
 import com.criticalsoftware.mobics.proxy.booking.IllegalDateExceptionException;
+import com.criticalsoftware.mobics.proxy.booking.InvalidCarBookingExceptionException;
 import com.criticalsoftware.mobics.proxy.booking.InvalidCustomerPinExceptionException;
 import com.criticalsoftware.mobics.proxy.booking.OverlappedCarBookingExceptionException;
 import com.criticalsoftware.mobics.proxy.booking.OverlappedCustomerBookingExceptionException;
@@ -176,13 +177,14 @@ public class AdvanceBookingActionBean extends BookingActionBean {
      * @throws IllegalDateExceptionException
      * @throws UnauthorizedCustomerExceptionException
      * @throws CarLicensePlateNotFoundExceptionException
+     * @throws InvalidCarBookingExceptionException 
      */
     public Resolution book() throws RemoteException, UnsupportedEncodingException,
             InvalidCustomerPinExceptionException, CarNotFoundExceptionException,
             CarNotAvailableForBookingExceptionException, ForbiddenZoneExceptionException,
             IllegalDateExceptionException, UnauthorizedCustomerExceptionException,
             CarLicensePlateNotFoundExceptionException, OverlappedCarBookingExceptionException,
-            OverlappedCustomerBookingExceptionException {
+            OverlappedCustomerBookingExceptionException, InvalidCarBookingExceptionException {
         Calendar start = Calendar.getInstance(), end = Calendar.getInstance();
         start.setTimeInMillis(startDate.getTime());
         end.setTimeInMillis(endDate.getTime());

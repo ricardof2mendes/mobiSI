@@ -50,7 +50,9 @@ import com.criticalsoftware.mobics.presentation.util.GeolocationUtil;
 import com.criticalsoftware.mobics.presentation.util.OrderBy;
 import com.criticalsoftware.mobics.proxy.booking.BookingWSServiceStub;
 import com.criticalsoftware.mobics.proxy.booking.CarNotAvailableForBookingExceptionException;
+import com.criticalsoftware.mobics.proxy.booking.CarNotFoundExceptionException;
 import com.criticalsoftware.mobics.proxy.booking.ForbiddenZoneExceptionException;
+import com.criticalsoftware.mobics.proxy.booking.InvalidCarBookingExceptionException;
 import com.criticalsoftware.mobics.proxy.booking.InvalidCustomerPinExceptionException;
 import com.criticalsoftware.mobics.proxy.booking.OverlappedCustomerTripExceptionException;
 import com.criticalsoftware.mobics.proxy.booking.UnauthorizedCustomerExceptionException;
@@ -145,12 +147,19 @@ public class ImmediateBookingActionBean extends BookingActionBean {
      * @return the page resolution
      * @throws RemoteException a jax-b webservice exception
      * @throws CarTypeNotFoundExceptionException when car type not found
+     * @throws UnsupportedEncodingException
      */
-    public Resolution licensePlateAutocomplete() throws RemoteException, CarTypeNotFoundExceptionException {
+    public Resolution licensePlateAutocomplete() throws RemoteException, CarTypeNotFoundExceptionException,
+            UnsupportedEncodingException {
         if (licensePlate != null) {
-            cars = new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint()).getCarsByLicensePlate(
-                    licensePlate, CarTypeEnum.NORMAL.getValue(), latitude != null ? new BigDecimal(latitude) : null,
-                    longitude != null ? new BigDecimal(longitude) : null);
+            FleetWSServiceStub fleetWSServiceStub = new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint());
+            fleetWSServiceStub._getServiceClient().addHeader(
+                    AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext()
+                            .getUser().getPassword()));
+
+            cars = fleetWSServiceStub.getCarsByLicensePlate(licensePlate, CarTypeEnum.NORMAL.getValue(),
+                    latitude != null ? new BigDecimal(latitude) : null, longitude != null ? new BigDecimal(longitude)
+                            : null);
         }
         getContext().getResponse().setHeader("Stripes-Success", "OK");
         return new ForwardResolution("/WEB-INF/book/carListImmediate.jsp");
@@ -176,20 +185,20 @@ public class ImmediateBookingActionBean extends BookingActionBean {
      * @throws FuelTypeNotFoundExceptionException
      * @throws CarClassNotFoundExceptionException
      * @throws CarTypeNotFoundExceptionException
-     * @throws UnsupportedEncodingException 
+     * @throws UnsupportedEncodingException
      * @throws CarValidationExceptionException
      */
     @ValidationMethod(on = "nearestCarBook", when = ValidationState.NO_ERRORS, priority = 1)
     public void validateNearestCar(ValidationErrors errors) throws RemoteException, FuelTypeNotFoundExceptionException,
             CarClassNotFoundExceptionException, CarTypeNotFoundExceptionException, UnsupportedEncodingException {
-        FleetWSServiceStub fleetWSServiceStub = new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint()); 
+        FleetWSServiceStub fleetWSServiceStub = new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint());
         fleetWSServiceStub._getServiceClient().addHeader(
                 AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
                         .getPassword()));
-        
-        CarDTO[] dtos = fleetWSServiceStub.searchCars(null, null, null,
-                null, OrderBy.CAR_DISTANCE.name(), Configuration.INSTANCE.getMinResults(), new BigDecimal(latitude),
-                new BigDecimal(longitude), CarTypeEnum.NORMAL.getValue());
+
+        CarDTO[] dtos = fleetWSServiceStub.searchCars(null, null, null, null, OrderBy.CAR_DISTANCE.name(),
+                Configuration.INSTANCE.getMinResults(), new BigDecimal(latitude), new BigDecimal(longitude),
+                CarTypeEnum.NORMAL.getValue());
         if (dtos != null) {
             car = dtos[0];
             if (car == null) {
@@ -220,18 +229,17 @@ public class ImmediateBookingActionBean extends BookingActionBean {
      * @throws CarTypeNotFoundExceptionException
      * @throws CarValidationExceptionException
      * @return the page resolution
-     * @throws UnsupportedEncodingException 
+     * @throws UnsupportedEncodingException
      */
     public Resolution searchImmediateInList() throws RemoteException, FuelTypeNotFoundExceptionException,
             CarClassNotFoundExceptionException, CarTypeNotFoundExceptionException, UnsupportedEncodingException {
-        FleetWSServiceStub fleetWSServiceStub = new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint()); 
+        FleetWSServiceStub fleetWSServiceStub = new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint());
         fleetWSServiceStub._getServiceClient().addHeader(
                 AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
                         .getPassword()));
-        cars = fleetWSServiceStub.searchCars(price, distance, clazz,
-                fuel.getType(), orderBy.name(), Configuration.INSTANCE.getMaxResults(),
-                latitude != null ? new BigDecimal(latitude) : null, longitude != null ? new BigDecimal(longitude)
-                        : null, CarTypeEnum.NORMAL.getValue());
+        cars = fleetWSServiceStub.searchCars(price, distance, clazz, fuel.getType(), orderBy.name(),
+                Configuration.INSTANCE.getMaxResults(), latitude != null ? new BigDecimal(latitude) : null,
+                longitude != null ? new BigDecimal(longitude) : null, CarTypeEnum.NORMAL.getValue());
         return new ForwardResolution("/WEB-INF/book/searchImmediate.jsp");
     }
 
@@ -270,18 +278,20 @@ public class ImmediateBookingActionBean extends BookingActionBean {
      * @throws RemoteException
      * @throws UnsupportedEncodingException
      * @throws InvalidCustomerPinExceptionException
+     * @throws com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException
+     * @throws OverlappedCustomerTripExceptionException
      * @throws com.criticalsoftware.mobics.proxy.booking.CarNotFoundExceptionException
      * @throws CarNotAvailableForBookingExceptionException
      * @throws UnauthorizedCustomerExceptionException
      * @throws com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException
      * @throws ForbiddenZoneExceptionException
+     * @throws InvalidCarBookingExceptionException 
      */
     public Resolution book() throws RemoteException, UnsupportedEncodingException,
-            InvalidCustomerPinExceptionException,
-            com.criticalsoftware.mobics.proxy.booking.CarNotFoundExceptionException,
-            CarNotAvailableForBookingExceptionException, UnauthorizedCustomerExceptionException,
-            com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException,
-            ForbiddenZoneExceptionException, OverlappedCustomerTripExceptionException {
+            InvalidCustomerPinExceptionException, OverlappedCustomerTripExceptionException,
+            CarNotAvailableForBookingExceptionException, CarNotFoundExceptionException,
+            ForbiddenZoneExceptionException, UnauthorizedCustomerExceptionException,
+            com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException, InvalidCarBookingExceptionException {
 
         BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
                 Configuration.INSTANCE.getBookingEndpoint());
@@ -344,18 +354,17 @@ public class ImmediateBookingActionBean extends BookingActionBean {
      * @return a resolution page
      * @throws AxisFault
      * @throws RemoteException
-     * @throws UnsupportedEncodingException 
+     * @throws UnsupportedEncodingException
      */
     public Resolution searchCarsData() throws AxisFault, RemoteException, UnsupportedEncodingException {
         try {
-            FleetWSServiceStub fleetWSServiceStub = new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint()); 
+            FleetWSServiceStub fleetWSServiceStub = new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint());
             fleetWSServiceStub._getServiceClient().addHeader(
-                    AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
-                            .getPassword()));
-            cars = fleetWSServiceStub.searchCars(price, distance, clazz,
-                    fuel.getType(), orderBy.name(), Configuration.INSTANCE.getMaxResults(),
-                    latitude != null ? new BigDecimal(latitude) : null, longitude != null ? new BigDecimal(longitude)
-                            : null, CarTypeEnum.NORMAL.getValue());
+                    AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext()
+                            .getUser().getPassword()));
+            cars = fleetWSServiceStub.searchCars(price, distance, clazz, fuel.getType(), orderBy.name(),
+                    Configuration.INSTANCE.getMaxResults(), latitude != null ? new BigDecimal(latitude) : null,
+                    longitude != null ? new BigDecimal(longitude) : null, CarTypeEnum.NORMAL.getValue());
 
             if (cars != null) {
                 carsFormatted = new CarFormattedDTO[cars.length];
