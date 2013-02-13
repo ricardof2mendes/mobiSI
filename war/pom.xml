@@ -98,9 +98,11 @@
 							</cssSourceFiles>
 							<cssFinalFile>style.map.css</cssFinalFile>
 							<jsSourceFiles>
-								<jsSourceFile>default.map.js</jsSourceFile>
-								<jsSourceFile>mobics.map.js</jsSourceFile>
+								<!-- jsSourceFile>zepto.js</jsSourceFile>
+								<jsSourceFile>OpenLayers.mobile.js</jsSourceFile-->
 								<jsSourceFile>OpenLayers.mobics.extension.js</jsSourceFile>
+								<jsSourceFile>mobics.map.js</jsSourceFile>
+								<jsSourceFile>default.map.js</jsSourceFile>
 							</jsSourceFiles>
 							<jsFinalFile>script.map.jsp</jsFinalFile>
 						</configuration>
