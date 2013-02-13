@@ -132,10 +132,8 @@
 			<nav class="panel">
 				<ul>
 					<li class="link white">
-						<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.booking.ImmediateBookingActionBean" event="carDetails" addSourcePage="true" >
+						<stripes:link id="carDetails" beanclass="com.criticalsoftware.mobics.presentation.action.booking.ImmediateBookingActionBean" event="carDetails" addSourcePage="true" >
 							<stripes:param name="licensePlate" value="${actionBean.trip.carLicensePlate}"/>
-							<stripes:param name="latitude" value=""/>
-							<stripes:param name="longitude" value=""/>
 	
 							<span><fmt:message key="trip.detail.license.plate"/></span>
 							<span>

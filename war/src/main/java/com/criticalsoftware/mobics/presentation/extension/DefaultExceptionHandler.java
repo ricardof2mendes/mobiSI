@@ -25,11 +25,14 @@ import net.sourceforge.stripes.exception.SourcePageNotFoundException;
 import net.sourceforge.stripes.validation.LocalizableError;
 import net.sourceforge.stripes.validation.ValidationError;
 
+import org.apache.axis2.AxisFault;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.criticalsoftware.mobics.presentation.action.ErrorActionBean;
+import com.criticalsoftware.mobics.presentation.action.LoginActionBean;
+import com.criticalsoftware.mobics.presentation.util.Configuration;
 
 /**
  * Handles the exceptions thrown by the application.
@@ -97,7 +100,7 @@ public class DefaultExceptionHandler implements AutoExceptionHandler {
         LOGGER.error(exception.getMessage(), exception);
         return insideJobToError("error.BusinessException", request, response);
     }
-    
+
     /**
      * If there's an ActionBean present, send the user back where they came from with a stern warning, otherwise send
      * them to the global error page.
@@ -107,7 +110,10 @@ public class DefaultExceptionHandler implements AutoExceptionHandler {
      * @param response The HttpServletResponse
      * @return A ForwardResolution
      */
-    public Resolution handle(UnsupportedEncodingException exception, HttpServletRequest request, HttpServletResponse response) {
+    public Resolution handle(
+            UnsupportedEncodingException exception,
+            HttpServletRequest request,
+            HttpServletResponse response) {
         LOGGER.error(exception.getMessage(), exception);
         return insideJobToError("error.UnsupportedEncodingException", request, response);
     }
@@ -124,6 +130,26 @@ public class DefaultExceptionHandler implements AutoExceptionHandler {
     public Resolution handle(RemoteException exception, HttpServletRequest request, HttpServletResponse response) {
         LOGGER.error(exception.getMessage(), exception);
         return insideJobToError("error.RemoteException", request, response);
+    }
+
+    /**
+     * If any error due to credential errors send user to login.
+     * 
+     * @param exception a axis fault
+     * @param request The HttpServletRequest
+     * @param response The HttpServletResponse
+     * @return A RedirectResolution
+     */
+    public Resolution handle(AxisFault exception, HttpServletRequest request, HttpServletResponse response) {
+        LOGGER.error(exception.getMessage(), exception);
+        Resolution resolution;
+        if (exception.getMessage().startsWith(Configuration.INSTANCE.getAuthenticationFailureString())) {
+            request.getSession().invalidate();
+            resolution = new RedirectResolution(LoginActionBean.class);
+        } else {
+            resolution = insideJobToError("error.RemoteException", request, response);
+        }
+        return resolution;
     }
 
     /**
@@ -176,7 +202,7 @@ public class DefaultExceptionHandler implements AutoExceptionHandler {
         LOGGER.error(exception.getMessage(), exception);
         return insideJobToError("error.CarClassNotFoundExceptionException", request, response);
     }
-    
+
     /**
      * Send them to the global error page.
      * 
@@ -192,10 +218,9 @@ public class DefaultExceptionHandler implements AutoExceptionHandler {
         LOGGER.error(exception.getMessage(), exception);
         return insideJobToError("error.CarTypeNotFoundExceptionException", request, response);
     }
-    
+
     /* --------------------------------------------------------- Booking */
-    
-    
+
     /**
      * If there's an ActionBean present, send the user back where they came from with a stern warning, otherwise send
      * them to the global error page.
@@ -244,7 +269,7 @@ public class DefaultExceptionHandler implements AutoExceptionHandler {
         LOGGER.error(exception.getMessage(), exception);
         return insideJob("error.OverlappedCarBookingExceptionException", request, response);
     }
-    
+
     /**
      * Send them to the request page.
      * 
@@ -260,7 +285,7 @@ public class DefaultExceptionHandler implements AutoExceptionHandler {
         LOGGER.error(exception.getMessage(), exception);
         return insideJob("error.OverlappedCustomerBookingExceptionException", request, response);
     }
-    
+
     /**
      * Send them to the request page.
      * 
@@ -276,7 +301,7 @@ public class DefaultExceptionHandler implements AutoExceptionHandler {
         LOGGER.error(exception.getMessage(), exception);
         return insideJob("error.OverlappedCustomerTripExceptionException", request, response);
     }
-    
+
     /**
      * Send them to the global error page.
      * 
@@ -292,7 +317,7 @@ public class DefaultExceptionHandler implements AutoExceptionHandler {
         LOGGER.error(exception.getMessage(), exception);
         return insideJob("error.CarNotAvailableForBookingExceptionException", request, response);
     }
-    
+
     /**
      * Send them to the global error page.
      * 
@@ -308,7 +333,7 @@ public class DefaultExceptionHandler implements AutoExceptionHandler {
         LOGGER.error(exception.getMessage(), exception);
         return insideJob("error.ForbiddenZoneExceptionException", request, response);
     }
-    
+
     /**
      * Send them to the global error page.
      * 
@@ -356,7 +381,7 @@ public class DefaultExceptionHandler implements AutoExceptionHandler {
         LOGGER.error(exception.getMessage(), exception);
         return insideJobToError("error.CarLicensePlateNotFoundExceptionException", request, response);
     }
-    
+
     /**
      * Send them to the global error page.
      * 
@@ -372,7 +397,7 @@ public class DefaultExceptionHandler implements AutoExceptionHandler {
         LOGGER.error(exception.getMessage(), exception);
         return insideJobToError("error.BookNotFoundExceptionException", request, response);
     }
-    
+
     /**
      * Send them to the global error page.
      * 
@@ -388,7 +413,7 @@ public class DefaultExceptionHandler implements AutoExceptionHandler {
         LOGGER.error(exception.getMessage(), exception);
         return insideJobToError("error.BookNotFoundExceptionException", request, response);
     }
-    
+
     /**
      * Send them to the global error page.
      * 
@@ -404,7 +429,7 @@ public class DefaultExceptionHandler implements AutoExceptionHandler {
         LOGGER.error(exception.getMessage(), exception);
         return insideJobToError("error.BookNotFoundExceptionException", request, response);
     }
-    
+
     /**
      * Send them to the global error page.
      * 
@@ -413,13 +438,14 @@ public class DefaultExceptionHandler implements AutoExceptionHandler {
      * @param response The HttpServletResponse
      * @return A ForwardResolution
      */
-    public Resolution handle(com.criticalsoftware.mobics.proxy.customer.InvalidLoginExceptionException exception,
+    public Resolution handle(
+            com.criticalsoftware.mobics.proxy.customer.InvalidLoginExceptionException exception,
             HttpServletRequest request,
             HttpServletResponse response) {
         LOGGER.error(exception.getMessage(), exception);
         return insideJob("error.InvalidLoginExceptionException", request, response);
     }
-    
+
     /**
      * Return the action bean page with errors displayed
      * 

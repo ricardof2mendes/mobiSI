@@ -38,11 +38,8 @@ $(document).ready(function() {
 	if($('.bodyWhite').length > 0) {
 		$('body').addClass('noBackground');
 	}
-
-	/** 
-	 * Nearest car location 
-	 */
-	$('#nearestCar').on('click', function(e) {
+	
+	var addLatLon = function(e) {
 		e.preventDefault();
 		var element = $(this); 
 		fillGeoposition(function(position) {
@@ -53,7 +50,20 @@ $(document).ready(function() {
 						}, function(err) {
 							treatGeolocationError(err);
 						}, true);
-	});
+		};
+	
+	
+
+	/** 
+	 * Nearest car location 
+	 */
+	$('#nearestCar').on('click', addLatLon);
+	
+	/**
+	 * Car details (last trip / current trip)
+	 */
+	$('#carDetails').on('click', addLatLon);
+	
 	
 	/**
 	 * css hack on search car list
