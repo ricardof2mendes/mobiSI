@@ -118,6 +118,7 @@ var toggleFx = function (element) {
 			$('#container').hide();
 			$('#whiteBar').hide();
 			$('#streetsearch').hide();
+			$('div.streetBottomShadow').hide();
 		}
 		$(element).removeClass('hidden');
 	} else {
@@ -135,6 +136,7 @@ var toggleFx = function (element) {
 			$('#container').show();
 			$('#whiteBar').show();
 			$('#streetsearch').show();
+			$('div.streetBottomShadow').show();
 		}
 	}
 };

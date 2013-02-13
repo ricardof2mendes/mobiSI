@@ -541,7 +541,7 @@ Map.prototype = {
 				bounds.extend(polygon.getBounds());
 			} 
 			
-			if(this.points.length > 1) {
+			if(this.points.length > 0) {
 				$(this.points).each(function(){
 					bounds.extend(this.getBounds());
 				});
@@ -550,7 +550,7 @@ Map.prototype = {
 			// zoom contents
 			bounds.toBBOX();
 			this.map.zoomToExtent(bounds, false);
-			if(this.points.length > 1) {
+			if(this.points.length > 0) {
 				this.map.zoomTo(this.map.zoom-1);
 			}
 		},
@@ -581,7 +581,6 @@ Map.prototype = {
 		 */
 		trackMyLocation : function() {
 			var vectorLayer = new OpenLayers.Layer.Vector('trackedLocation'),
-				firstGeolocation = true,
 				that = this;
 			this.map.addLayer(vectorLayer);
 			
