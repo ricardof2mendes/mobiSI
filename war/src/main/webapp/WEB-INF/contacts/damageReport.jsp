@@ -55,7 +55,7 @@
 									   placeholder="${placeholderDate}" formatPattern="${applicationScope.configuration.dateTimePattern}"/>
 							</span>
 						</li>
-						<li class="detail white">
+						<li id="check" class="detail white">
 							<span></span>
 							<span class="customComboBox">
 								<stripes:checkbox name="assume" />&nbsp;<fmt:message key="damage.report.i.assume"/>

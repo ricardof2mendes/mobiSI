@@ -38,7 +38,8 @@ $(document).ready(function() {
 	if($('.bodyWhite').length > 0) {
 		$('body').addClass('noBackground');
 	}
-	
+
+	// Add lat long function to the url
 	var addLatLon = function(e) {
 		e.preventDefault();
 		var element = $(this); 
@@ -51,8 +52,6 @@ $(document).ready(function() {
 							treatGeolocationError(err);
 						}, true);
 		};
-	
-	
 
 	/** 
 	 * Nearest car location 
@@ -63,7 +62,6 @@ $(document).ready(function() {
 	 * Car details (last trip / current trip)
 	 */
 	$('#carDetails').on('click', addLatLon);
-	
 	
 	/**
 	 * css hack on search car list
@@ -530,6 +528,15 @@ $(document).ready(function() {
 				redirect: CONTEXT_PATH + '/trip/Trip.action?finish=&successOp='
 		};
 		lockUnlockAndWait(url);
+ 	});
+ 	
+ 	
+ 	// click on li to change checkbox
+ 	$('#check').on('click', function(){
+ 		$('#check input[type="checkbox"]').on('click', function(e){
+ 			e.stopPropagation();
+ 		});
+ 	 	$('#check input[type="checkbox"]').trigger('click');
  	});
  	
 });

@@ -92,7 +92,7 @@
 							</span>
 						</li>
 						<c:if test="${not actionBean.context.user.carClub.isStandalone}">
-							<li class="detail white">
+							<li id="check" class="detail white">
 								<span></span>
 								<span class="customComboBox">
 									<stripes:checkbox id="fromMyCarClub" name="fromMyCarClub" />&nbsp;<fmt:message key="find.car.later.from.my.club"/>
