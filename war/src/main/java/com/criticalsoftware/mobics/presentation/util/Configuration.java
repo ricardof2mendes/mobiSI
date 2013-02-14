@@ -47,6 +47,9 @@ public class Configuration implements Serializable{
 
     /** Date time Pattern **/
     private final String dateTimePattern = "dd/MM/yyyy HH:mm";
+    
+    /** Date time Pattern **/
+    private final String timePattern = "HH:mm";
 
     /** Javascript date pattern **/
     private final String jsDatePattern = "dd/mm/yy";
@@ -91,7 +94,7 @@ public class Configuration implements Serializable{
     private final int maxResults = 99;
     
     /** Recent activities filter month gap **/
-    private final int recentsActivitiesFilterMonthGap = 6;
+    private final int recentActivitiesFilterMonthGap = 6;
     
     /** Default theme warm word **/
     private final String defaultThemeWarmWord = "warm";
@@ -249,7 +252,7 @@ public class Configuration implements Serializable{
     }
     
     public int getRecentActivitiesFilterMonthGap() {
-        return Integer.valueOf(getValue("mobics.config.recents.filter.month.gap", recentsActivitiesFilterMonthGap));
+        return Integer.valueOf(getValue("mobics.config.recents.filter.month.gap", recentActivitiesFilterMonthGap));
     }
     
     /**
@@ -284,6 +287,13 @@ public class Configuration implements Serializable{
         return getValue("mobics.config.geolocation.server.allowed.countries", geolocationServerAllowedCountries);
     }
     
+    /**
+     * @return the timePattern
+     */
+    public String getTimePattern() {
+        return getValue("mobics.config.time.pattern", timePattern);
+    }
+
     /**
      * @return the anyDistance
      */
