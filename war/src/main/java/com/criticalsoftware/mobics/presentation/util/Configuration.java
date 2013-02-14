@@ -26,64 +26,93 @@ public class Configuration implements Serializable{
     /** */
     private static final long serialVersionUID = 7216539220608643618L;
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(Configuration.class);
+
     /**
      * The Configuration instance property.
      */
     public static final Configuration INSTANCE = new Configuration();
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(Configuration.class);
-
-    // Main configurations
-    
+    /** Application Encoding **/
     private final String uriEnconding = "UTF-8";
-
+    
+    /** Meter Pattern **/
     private final String meterPattern = "#";
 
+    /** Kilometer Pattern **/
     private final String kilometerPattern = "#,##0.0";
 
+    /** Currency Pattern **/
     private final String currencyPattern = "#,##0.00";
 
+    /** Date time Pattern **/
     private final String dateTimePattern = "dd/MM/yyyy HH:mm";
 
+    /** Javascript date pattern **/
     private final String jsDatePattern = "dd/mm/yy";
-    
+
+    /** Javascript time pattern **/
     private final String jsTimePattern = "HH:ii";
 
+    /** Authentication failure string return by webservices on Axis fault **/
     private final String authenticationFailureString = "Failed Authentication";
 
+    /** Car Club Endpoint **/
     private final String carClubEndpoint = "http://mobics02.critical.pt:8080/mobics-webservices/CarClub";
     
+    /** Car Endpoint **/
     private final String carEndpoint = "http://mobics02.critical.pt:8080/mobics-webservices/Car";
 
+    /** Fleet Endpoint **/
     private final String fleetEndpoint = "http://mobics02.critical.pt:8080/mobics-webservices/Fleet";
 
+    /** Booking Endpoint **/
     private final String bookingEndpoint = "http://mobics02.critical.pt:8080/mobics-webservices/Booking";
 
+    /** Customer Endpoint **/
     private final String customerEndpoint = "http://mobics02.critical.pt:8080/mobics-webservices/Customer";
 
+    /** Miscellaneous Endpoint **/
     private final String miscellaneousEnpoint = "http://mobics02.critical.pt:8080/mobics-webservices/Miscellaneous";
 
+    /** Geolocation servce **/
     private final String geolocationServer = "nominatim.openstreetmap.org";
 
+    /** Thumbnail width **/
     private final int thumbnailWidth = 58;
 
+    /** Thumbnail height **/
     private final int thumbnailHeight = 58;
 
+    /** Min results **/
     private final int minResults = 1;
 
+    /** Max results **/
     private final int maxResults = 99;
     
+    /** Recent activities filter month gap **/
     private final int recentsActivitiesFilterMonthGap = 6;
     
+    /** Default theme warm word **/
     private final String defaultThemeWarmWord = "warm";
     
+    /** Default theme style **/
     private final String defaultThemeStyle = "map";
 
+    /** Default theme color **/
     private final String defaultThemeColor = "darkgreen";
     
+    /** Allowed countries on search location server **/
     private final String geolocationServerAllowedCountries = "pt";
     
+    /** Any distance for radius **/
     private final int anyDistance = 9999999;
+    
+    /** State polling interval in milliseconds **/
+    private final int statePollingIntervalMilliseconds = 3000;
+    
+    /** State polling timeout in milliseconds **/
+    private final int statePollingTimeoutMilliseconds = 60000;
     
 
     /**
@@ -260,6 +289,20 @@ public class Configuration implements Serializable{
      */
     public int getAnyDistance() {
         return Integer.valueOf(getValue("mobics.config.radius.any.distance", anyDistance));
+    }
+    
+    /**
+     * @return the statePollingIntervalMilliseconds
+     */
+    public int getStatePollingIntervalMilliseconds() {
+        return Integer.valueOf(getValue("mobics.config.state.polling.interval.milliseconds", statePollingIntervalMilliseconds));
+    }
+
+    /**
+     * @return the statePollingTimeoutMilliseconds
+     */
+    public int getStatePollingTimeoutMilliseconds() {
+        return Integer.valueOf(getValue("mobics.config.state.polling.timeout.milliseconds", statePollingTimeoutMilliseconds));
     }
 
     private Configuration() {

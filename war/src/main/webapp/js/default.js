@@ -1,6 +1,10 @@
 '<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>';
 
+// context path
 var CONTEXT_PATH = '${pageContext.request.contextPath}';
+// pooling interval
+var POOLING_INTERVAL = '${applicationScope.configuration.statePollingIntervalMilliseconds}';
+var TIMEOUT_INTERVAL = '${applicationScope.configuration.statePollingTimeoutMilliseconds}';
 // localizable strings
 var ZONE_ALL_LABEL = '<fmt:message key="book.advance.zone.any" />';
 var GEOLOCATION_NOT_SUPPORTED_LABEL = '<fmt:message key="geolocation.alert.msg.not.supported"/>';
@@ -439,9 +443,8 @@ $(document).ready(function() {
  	// Current trip state pooling
  	if($('#statePooling').length > 0) {
  		// check the state
- 		var data = $('#state').text();
- 		
- 		var url = {state : CONTEXT_PATH, 
+ 		var data = $('#state').text(),
+ 			url = {state : CONTEXT_PATH, 
  				   end : CONTEXT_PATH};
  		
  		if($('#statePooling').hasClass('currentTrip')) {
@@ -473,7 +476,7 @@ $(document).ready(function() {
  					            console.log('An error has occurred or the user\'s session has expired!');
  					        }
  					    });	
- 			}, 3000);
+ 			}, POOLING_INTERVAL);
  		} else if(data === ERROR) {
  			$('body').addClass('confirmation');
 			$('body').on('touchmove', 'body', function(e){
@@ -553,10 +556,10 @@ function lockUnlockAndWait(url) {
 			function(data, textStatus, jqXHR){
 				if (jqXHR.getResponseHeader('Stripes-Success') === 'OK') {
 					if(eval(data) === true) {
-						var times = 15;
+						var retries = (TIMEOUT_INTERVAL / POOLING_INTERVAL);
 						setInterval(function(){
 							var that = this;
-							if(times !== 0) {
+							if(retries !== 0) {
 								$.get(url.pooling, 
 										function(data, textStatus, jqXHR){
 											if (jqXHR.getResponseHeader('Stripes-Success') === 'OK') {
@@ -571,12 +574,12 @@ function lockUnlockAndWait(url) {
 									            $('html').html(data);
 									        }
 									    });
-								times--;
+								retries--;
 							} else {
 								clearInterval(this);
 								window.location.href = url.redirect + 'false';	
 							}	
-						}, 3000);
+						}, POOLING_INTERVAL);
 					}
 		        } else {
 		            console.log('An error has occurred or the user\'s session has expired!');
