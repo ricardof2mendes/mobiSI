@@ -451,7 +451,7 @@ $(document).ready(function() {
  			url.end += '/trip/Trip.action?showMessage=';
  		} else {
  			url.state += '/recent/RecentActivities.action?getState=&activityCode=' + $('#activityCode').text();
- 			url.end += '/recent/RecentActivities.action?showMessage=&activityCode=' + $('#activityCode').text();
+ 			url.end += '/recent/RecentActivities.action?showMessage=&activityCode=' + $('#activityCode').text() + '&extended=' + $('#extended').text();
  		}
  		
  		if(data.substring(0, WAITING.length) === WAITING) {

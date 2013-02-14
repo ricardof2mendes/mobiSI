@@ -66,6 +66,9 @@ public class RecentActivitiesActionBean extends BaseActionBean {
             required = true,
             on = { "tripDetails", "bookingDetails", "advanceBookingDetails", "cancelAdvanceBooking" })
     private String activityCode;
+    
+    @Validate
+    private String extended;
 
     /**
      * Main handler
@@ -195,8 +198,11 @@ public class RecentActivitiesActionBean extends BaseActionBean {
         params.put("advanceBookingDetails", "");
         params.put("activityCode", activityCode);
 
-        getContext().getMessages().add(new LocalizableMessage("car.details.book.done"));
-
+        if(Boolean.parseBoolean(extended)) {
+            getContext().getMessages().add(new LocalizableMessage("trip.detail.advance.booking.edit.success"));
+        } else {
+            getContext().getMessages().add(new LocalizableMessage("car.details.book.done"));
+        }
         return new RedirectResolution(this.getClass()).addParameters(params).flash(this);
     }
 
@@ -308,6 +314,20 @@ public class RecentActivitiesActionBean extends BaseActionBean {
      */
     public BookingInterestDTO getBooking() {
         return booking;
+    }
+
+    /**
+     * @return the extended
+     */
+    public String getExtended() {
+        return extended;
+    }
+
+    /**
+     * @param extended the extended to set
+     */
+    public void setExtended(String extended) {
+        this.extended = extended;
     }
 
 }

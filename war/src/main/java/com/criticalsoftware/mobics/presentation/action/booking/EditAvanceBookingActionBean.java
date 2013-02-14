@@ -16,10 +16,11 @@ import java.io.UnsupportedEncodingException;
 import java.rmi.RemoteException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
-import net.sourceforge.stripes.action.LocalizableMessage;
 import net.sourceforge.stripes.action.RedirectResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.validation.Validate;
@@ -99,10 +100,11 @@ public class EditAvanceBookingActionBean extends AdvanceBookingActionBean {
         c.setTime(endDate);
         bookingWSServiceStub.extendAdvanceBooking(activityCode, c);
 
-        getContext().getMessages().add(new LocalizableMessage("trip.detail.advance.booking.edit.success"));
+        Map<String, String> parameters = new HashMap<String, String>();
+        parameters.put("activityCode", activityCode);
+        parameters.put("extended", "true");
 
-        return new RedirectResolution(RecentActivitiesActionBean.class, "advanceBookingDetails").addParameter("activityCode",
-                activityCode).flash(this);
+        return new RedirectResolution(RecentActivitiesActionBean.class, "advanceBookingDetails").addParameters(parameters).flash(this);
     }
 
     /**

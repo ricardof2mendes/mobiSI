@@ -8,6 +8,7 @@
 	<!-- State pooling -->	
 	<span id="state" class="hidden">${actionBean.trip.state}</span>
 	<span id="activityCode" class="hidden">${actionBean.trip.bookingNumber}</span>
+	<span id="extended" class="hidden">${actionBean.extended}</span>
 
 	<article id="statePooling" class="${actionBean.trip.state != 'WAIT_OBS_ADVANCE' ? 'hidden' : ''}">
 		<section>
