@@ -26,12 +26,12 @@
 										<div class="msg-body">
 											<div>
 												<span><fmt:message key="messages.car.available"/></span>
-												<span>${msg.carName}&nbsp;${msg.carPlate}</span>
-												<span><fmt:formatDate value="${msg.timestamp.time}" pattern="${applicationScope.configuration.dateTimePattern}"/></span>
+												<span>${msg.carName},&nbsp;<fmt:message key="FuelType.${msg.fuelType.name}"/></span>
+												<span><mobi:formatMobics type="currencySymbol" value="${msg.priceInUse}"/></span>
 											</div>
 											<div>
 												<span>
-													${msg.carPlate}
+													<fmt:formatDate value="${msg.timestamp.time}" pattern="${applicationScope.configuration.timePattern}"/>
 												</span>
 												<span></span>
 											</div>
