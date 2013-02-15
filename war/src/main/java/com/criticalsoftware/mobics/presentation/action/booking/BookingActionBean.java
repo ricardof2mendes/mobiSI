@@ -28,12 +28,14 @@ import net.sourceforge.stripes.validation.ValidationErrors;
 import net.sourceforge.stripes.validation.ValidationMethod;
 import net.sourceforge.stripes.validation.ValidationState;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.criticalsoftware.mobics.fleet.CarDTO;
 import com.criticalsoftware.mobics.presentation.action.BaseActionBean;
 import com.criticalsoftware.mobics.presentation.extension.ZoneDTOTypeConverter;
 import com.criticalsoftware.mobics.presentation.security.AuthenticationUtil;
 import com.criticalsoftware.mobics.presentation.util.Configuration;
-import com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException;
 import com.criticalsoftware.mobics.proxy.fleet.FleetWSServiceStub;
 import com.criticalsoftware.mobics.proxy.fleet.IOExceptionException;
 
@@ -43,20 +45,21 @@ import com.criticalsoftware.mobics.proxy.fleet.IOExceptionException;
  */
 public abstract class BookingActionBean extends BaseActionBean {
 
+    protected final Logger LOG = LoggerFactory.getLogger(BookingActionBean.class);
+
     @ValidateNestedProperties({ @Validate(field = "licensePlate"), @Validate(field = "carBrandName"),
             @Validate(field = "carModelName"), @Validate(field = "fuelType.name"), @Validate(field = "range"),
             @Validate(field = "zones", converter = ZoneDTOTypeConverter.class) })
     protected CarDTO car;
 
-    @Validate(required = true, on = { "getCarImage", "carLocation", "licensePlateBook", 
-            "licensePlateBookFromMessages", "showPin", "book", "licensePlateBookAdvance", 
-            "parkLocation", "carData", "parkData", "carDetails" })
+    @Validate(required = true, on = { "getCarImage", "carLocation", "licensePlateBook", "licensePlateBookFromMessages",
+            "showPin", "book", "licensePlateBookAdvance", "parkLocation", "carData", "parkData", "carDetails" })
     protected String licensePlate;
 
-    @Validate(required = true, on = { "nearestCarBook"})
+    @Validate(required = true, on = { "nearestCarBook" })
     protected String latitude;
 
-    @Validate(required = true, on = { "nearestCarBook"})
+    @Validate(required = true, on = { "nearestCarBook" })
     protected String longitude;
 
     @Validate(required = true, on = "book", minlength = 4, maxlength = 4)
@@ -92,22 +95,20 @@ public abstract class BookingActionBean extends BaseActionBean {
      * @throws CarValidationExceptionException
      * @throws CarLicensePlateNotFoundExceptionException
      * @throws com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException
-     * @throws UnsupportedEncodingException 
+     * @throws UnsupportedEncodingException
      */
-    @ValidationMethod(
-            on = { "licensePlateBook", "licensePlateBookFromMessages", "showPin", "carDetails", "licensePlateBookAdvance" },
-            when = ValidationState.NO_ERRORS,
-            priority = 1)
+    @ValidationMethod(on = { "licensePlateBook", "licensePlateBookFromMessages", "showPin", "carDetails",
+            "licensePlateBookAdvance" }, when = ValidationState.NO_ERRORS, priority = 1)
     public void validateLicensePlateCar(ValidationErrors errors) throws RemoteException,
-            com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException, UnsupportedEncodingException {
-        FleetWSServiceStub fleetWSServiceStub = new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint()); 
+            com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException,
+            UnsupportedEncodingException {
+        FleetWSServiceStub fleetWSServiceStub = new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint());
         fleetWSServiceStub._getServiceClient().addHeader(
                 AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
                         .getPassword()));
-        
-        car = fleetWSServiceStub.getCarDetails(licensePlate
-                .toUpperCase(), latitude == null ? null : new BigDecimal(latitude), longitude == null ? null
-                : new BigDecimal(longitude));
+
+        car = fleetWSServiceStub.getCarDetails(licensePlate.toUpperCase(), latitude == null ? null : new BigDecimal(
+                latitude), longitude == null ? null : new BigDecimal(longitude));
         if (car == null) {
             errors.addGlobalError(new LocalizableError("car.details.validation.car.not.available"));
         }
@@ -121,11 +122,17 @@ public abstract class BookingActionBean extends BaseActionBean {
      * @throws IOException a exception with car validation
      * @throws IOExceptionException a exception with car validation
      */
-    public Resolution getCarImage() throws RemoteException, IOException, IOExceptionException {
-        DataHandler handler = new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint()).getCarThumbnail(
-                licensePlate, Configuration.INSTANCE.getThumbnailWidth(),
-                Configuration.INSTANCE.getThumbnailHeight());
-        return new StreamingResolution(handler.getContentType(), handler.getInputStream());
+    public Resolution getCarImage() {
+        Resolution resolution = null;
+        try {
+            DataHandler handler = new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint()).getCarThumbnail(
+                    licensePlate, Configuration.INSTANCE.getThumbnailWidth(),
+                    Configuration.INSTANCE.getThumbnailHeight());
+            resolution = new StreamingResolution(handler.getContentType(), handler.getInputStream());
+        } catch (Exception e) {
+            LOG.warn("Could not load image", e.getMessage());
+        }
+        return resolution;
     }
 
     /**

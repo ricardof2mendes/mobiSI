@@ -5,6 +5,10 @@ var CONTEXT_PATH = '${pageContext.request.contextPath}';
 // pooling interval
 var POOLING_INTERVAL = '${applicationScope.configuration.statePollingIntervalMilliseconds}';
 var TIMEOUT_INTERVAL = '${applicationScope.configuration.statePollingTimeoutMilliseconds}';
+// image size
+var IMG_WIDTH = '${applicationScope.configuration.thumbnailWidth}px';
+var IMG_HEIGHT = '${applicationScope.configuration.thumbnailHeight}px';
+
 // localizable strings
 var ZONE_ALL_LABEL = '<fmt:message key="book.advance.zone.any" />';
 var GEOLOCATION_NOT_SUPPORTED_LABEL = '<fmt:message key="geolocation.alert.msg.not.supported"/>';
@@ -26,7 +30,16 @@ var UNWANTED_ZONE = 'UNWANTED';
 $(document).ready(function() {
 	'use strict';
 	
-	// preventCacheOnIos();
+	/**
+	 * Captures all image errors and replace image wdth no photo
+	 */
+	$('.carImage').each(function(){
+		$(this).on('error', function() {
+			$(this).attr('src', CONTEXT_PATH + '/img/ios-webapp-no-photo.png')
+				.attr('width', IMG_WIDTH)
+				.attr('height', IMG_HEIGHT);
+		});
+	});
 
 	/** 
 	 * Menu open/close 
@@ -202,10 +215,27 @@ $(document).ready(function() {
 	    	dateOrder: 'ddmmyy',
 	    	timeFormat: TIME_PATTERN,
 	    	timeWheels: 'HHii',
-	        minDate: new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes(), now.getSeconds(), now.getMilliseconds()),
+	        minDate: now,
 	        display: 'modal',
 	        mode: 'scroller',
-	        width: 42
+	        width: 42,
+	        onClose : function(daDate, scroller) {
+	        	if($('#endDate').length > 0) {
+		        	var datetime = daDate.split(' ');
+		        	var date = datetime[0].split('/');
+		        	var time = datetime[1].split(':');
+		        	var val = new Date(parseInt(date[2]), 
+		        						parseInt(date[1]) === 0 ? 0 : parseInt(date[1]) - 1,
+		        						parseInt(date[0]), 
+		        						parseInt(time[0]) + 1, 
+		        						parseInt(time[1]), 
+		        						0, 
+		        						0);
+		        	$('#endDate').mobiscroll('setValue', [val.getDate(), val.getMonth(), 
+		        	            	        			val.getFullYear(), val.getHours(), val.getMinutes()], true);
+		        	$('#endDate').mobiscroll('option', 'minDate', val);
+	        	}
+	        }
 	    });    
  	}
  	
@@ -222,15 +252,7 @@ $(document).ready(function() {
 	        minDate: new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours()+1, now.getMinutes(), now.getSeconds(), now.getMilliseconds()),
 	        display: 'modal',
 	        mode: 'scroller',
-	        width: 42,
-	        onShow: function() {
-	        	var datetime = $('#startDate').val().split(' ');
-	        	var date = datetime[0].split('/');
-	        	var time = datetime[1].split(':');
-	        	var val = new Date(parseInt(date[2]), parseInt(date[1]) === 0 ? 0 : parseInt(date[1]) - 1, parseInt(date[0]), parseInt(time[0]), parseInt(time[1]), 0, 0);
-	        	$('#endDate').scroller('setValue', [val.getDate(), val.getMonth(), 
-	        			val.getYear(), val.getHours()+1, val.getMinutes()], true);
-	        }
+	        width: 42
 	    });    
  	}
  	
@@ -684,22 +706,11 @@ function treatGeolocationError(err) {
 }
 
 /**
- * Prevent safari browser cache
+ * Toogle sort combo
+ * @param sort2
+ * @param sort1
+ * @param sort0
  */
-function preventCacheOnIos() {
-	if ((/iphone|ipod|ipad.*os 5/gi).test(navigator.appVersion)) {
-		window.onpageshow = function(evt) {
-			// If persisted then it is in the page cache, force a reload of the page.
-			if (evt.persisted) {
-				document.body.style.display = 'none';
-				location.reload();
-			}	
-		};
-	} else {
-		$(window).bind('unload', function(){});
-	}
-}
-
 function toogleSort(sort2, sort1, sort0) {
 	var setted = false;
 	$(sort2 + ' option').each(function(){

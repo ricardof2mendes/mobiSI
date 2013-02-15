@@ -20,7 +20,7 @@
 										<stripes:param name="startDate"><fmt:formatDate value="${actionBean.startDate}" pattern="${applicationScope.configuration.dateTimePattern}"/></stripes:param>
 										<stripes:param name="endDate"><fmt:formatDate value="${actionBean.endDate}" pattern="${applicationScope.configuration.dateTimePattern}"/></stripes:param>
 										<div>
-											<img src="${contextPath}/booking/AdvanceBooking.action?getCarImage=&licensePlate=${car.licensePlate}#${car.licensePlate}.png" />
+											<img class="carImage" src="${contextPath}/booking/AdvanceBooking.action?getCarImage=&licensePlate=${car.licensePlate}" />
 										</div>
 										<div>
 											<div>

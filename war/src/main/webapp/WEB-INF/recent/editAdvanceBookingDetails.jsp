@@ -15,7 +15,7 @@
 							<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.booking.EditAvanceBookingActionBean" event="carDetails" addSourcePage="true">
 								<stripes:param name="licensePlate" value="${actionBean.trip.car.licensePlate}"/>
 								<div>
-									<img src="${contextPath}/booking/AdvanceBooking.action?getCarImage=&licensePlate=${actionBean.trip.car.licensePlate}" />
+									<img class="carImage" src="${contextPath}/booking/AdvanceBooking.action?getCarImage=&licensePlate=${actionBean.trip.car.licensePlate}" />
 								</div>
 								<div>
 									<div>

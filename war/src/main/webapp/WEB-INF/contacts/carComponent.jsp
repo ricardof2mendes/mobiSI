@@ -13,7 +13,7 @@
 				<ul>
 					<li class="imageNoLink">
 						<div>
-							<img src="${contextPath}/booking/ImmediateBooking.action?getCarImage=&licensePlate=${actionBean.car.licensePlate}" />
+							<img class="carImage" src="${contextPath}/booking/ImmediateBooking.action?getCarImage=&licensePlate=${actionBean.car.licensePlate}" />
 						</div>
 						<div>
 							<div>
