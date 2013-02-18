@@ -27,7 +27,7 @@ div.streetBottomShadow {
     bottom: 0;
     top: 91px;
 	background: transparent url(../img/menu/sombra_menus_10px.png) repeat-x top left;
-    z-index: 5000;
+    z-index: 1000;
 }
 
 #container {
@@ -179,10 +179,10 @@ div.olControlMyLocation a:hover {
 #whiteBar {
 	background: url("../img/menu/sombra_menus_10px.png") repeat-x scroll left top #fff;
 	position:absolute;
-    	left: 0;
-    	right: 0;
-    	bottom: 0;
-    	height: 80px;
+   	left: 0;
+   	right: 0;
+   	bottom: 0;
+   	height: 80px;
 }
 
 #whiteBar nav{
@@ -199,8 +199,8 @@ div.olControlMyLocation a:hover {
 	line-height: 30px;
 }
 
-#whiteBar.addressBar div {
-	
+#whiteBar.menuDown {
+	top: 414px;
 }
 
 #whiteBar.addressBar div > div{

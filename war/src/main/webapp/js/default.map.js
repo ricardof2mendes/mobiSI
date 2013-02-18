@@ -18,6 +18,7 @@ $(document).ready(function() {
 		toggleFx('#legend');
 	});
 	
+	// toogle function
 	var toggle = function() {
 		$('#resultlist').toggle();
 		$('#resultmap').toggleClass('hidden');
@@ -29,15 +30,22 @@ $(document).ready(function() {
 			$('#addressList').addClass('hidden');
 		}
 	};
-	
+	// show the results on a list
 	$('#resultlist').on('click', function(e) {
 		e.preventDefault();
 		toggle();
 	});
+	// show the results on a map
 	$('#resultmap').on('click', function(e) {
 		e.preventDefault();
 		toggle();
 	});
+	
+ 	$('#closeConfirm').on('click', function(e) {
+ 		e.preventDefault();
+ 		$('body').removeClass('confirmation');
+ 		$('body').off('scroll');
+ 	});
 	
 	/** delele function*/
 	$('#query').on('keyup', function() {
@@ -114,6 +122,7 @@ var toggleFx = function (element) {
 				$('#container').addClass('menuDownSmall');
 				$('div.bottomShadow').addClass('bottomShadowSmall');
 			}
+			$('#whiteBar').addClass('menuDown');
 		}else {
 			$('#container').hide();
 			$('#whiteBar').hide();
@@ -132,6 +141,7 @@ var toggleFx = function (element) {
 				$('#container').removeClass('menuDownSmall');
 				$('div.bottomShadow').removeClass('bottomShadowSmall');
 			}
+			$('#whiteBar').removeClass('menuDown');
 		} else {
 			$('#container').show();
 			$('#whiteBar').show();

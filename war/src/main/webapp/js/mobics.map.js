@@ -167,8 +167,10 @@ Map.prototype = {
 							that.processZones(evaluated);
 							that.processCar(evaluated);
 							that.trackMyLocation();
+							that.centerAndZoom();
 						} else {
 				        	console.log('An error has occurred or the user\'s session has expired!');
+				        	$('html').html(data);
 				        }
 				    });	
 		},
@@ -184,8 +186,10 @@ Map.prototype = {
 						if (jqXHR.getResponseHeader('Stripes-Success') === 'OK') {
 							that.processZones(eval(data));
 							that.trackMyLocation();
+							that.centerAndZoom();
 				        } else {
 				            console.log('An error has occurred or the user\'s session has expired!');
+				            $('html').html(data);
 				        }
 				    });	
 		},
@@ -207,8 +211,10 @@ Map.prototype = {
 						if (jqXHR.getResponseHeader('Stripes-Success') === 'OK') {
 							that.processCars(eval(data));
 							that.trackMyLocation();
+							that.centerAndZoom();
 				        } else {
 				            console.log('An error has occurred or the user\'s session has expired!');
+				            $('html').html(data);
 				        }
 				    });	
 		},
@@ -223,13 +229,15 @@ Map.prototype = {
 				$.get(contextPath + '/booking/BookingInterest.action?getAddressFromQuery=&query=' + encodeURI(query), 
 						function(data, textStatus, jqXHR){
 							if (jqXHR.getResponseHeader('Stripes-Success') === 'OK') {
-								that.processLocation(eval(data));
+								that.processLocation({results : eval(data).length > 0, data : eval(data)});
 					        } else {
 					            console.log('An error has occurred or the user\'s session has expired!');
+					            $('html').html(data);
 					        }
 					    });	
 			} else {
-				var returnData = [];
+				var returnData = {results : true, data :[]};
+				
 				if(this.searchParams.latitude && this.searchParams.longitude) {
 					var isCurrent = this.searchParams.address !== null && this.searchParams.address.length === 0;
 					if(isCurrent) {
@@ -240,9 +248,9 @@ Map.prototype = {
 								longitude : this.searchParams.longitude
 						};
 					} else {
-						returnData = [{displayName: this.searchParams.address,
+						returnData = {results : true, data :[{displayName: this.searchParams.address,
 										longitude:this.searchParams.longitude,
-										latitude: this.searchParams.latitude}];
+										latitude: this.searchParams.latitude}]};
 					}
 				}
 				that.processLocation(returnData);
@@ -324,18 +332,18 @@ Map.prototype = {
 
 				var firstCar = null,
 					that = this;
-				$(returnData).each(function(){
-					var point = 
-						new OpenLayers.Geometry.Point(this.longitude, this.latitude).transform(that.mapDisplayProjection, that.map.getProjectionObject());
-					that.points.push(point);
-					// add feature
-					var feature = new OpenLayers.Feature.Vector(point, {car : this}, null);
-					objectVector.addFeatures(feature);
-					
-					if(firstCar === null) {
-						firstCar = feature;
-					}
-				});
+					$(returnData).each(function(){
+						var point = 
+							new OpenLayers.Geometry.Point(this.longitude, this.latitude).transform(that.mapDisplayProjection, that.map.getProjectionObject());
+						that.points.push(point);
+						// add feature
+						var feature = new OpenLayers.Feature.Vector(point, {car : this}, null);
+						objectVector.addFeatures(feature);
+						
+						if(firstCar === null) {
+							firstCar = feature;
+						}
+					});
 
 		        var selectCtrl = new OpenLayers.Control.SelectFeature(objectVector, {
 		        	clickout : false,
@@ -348,6 +356,12 @@ Map.prototype = {
 		        selectCtrl.activate();
 		        
         		selectCtrl.select(firstCar);
+			} else {
+				$('#noResults').show();
+				$('body').addClass('confirmation');
+				$('body').on('touchmove', 'body', function(e){
+					e.preventDefault();
+				});
 			}
 		},
 		
@@ -399,8 +413,8 @@ Map.prototype = {
 			this.map.addControl(geolocate);
 			
 			// process the return data with streets
-			if(returnData) {
-				$(returnData).each(function(){
+			if(returnData.results === true) {
+				$(returnData.data).each(function(){
 					var point = 
 						new OpenLayers.Geometry.Point(this.longitude, this.latitude).transform(that.mapDisplayProjection, that.map.getProjectionObject());
 					that.points.push(point);
@@ -416,6 +430,12 @@ Map.prototype = {
 					if(selectedFeature === null) {
 						selectedFeature = feature;
 					}
+				});
+			} else {
+				$('#noResults').show();
+				$('body').addClass('confirmation');
+				$('body').on('touchmove', 'body', function(e){
+					e.preventDefault();
 				});
 			}
 			
@@ -438,55 +458,54 @@ Map.prototype = {
 				}
 			}
 
-			// timeout to avoid geolocation override allready selected
-			window.setTimeout(function(){
-				// add geolocation updates
-				geolocate.events.register('locationupdated', geolocate, function(e) {
-					// if we have geolocation chage the placeholder input
-					$('#query').attr('placeholder', that.searchParams.placeholder);
+
+			// add geolocation updates
+			geolocate.events.register('locationupdated', geolocate, function(e) {
+				// if we have geolocation chage the placeholder input
+				$('#query').attr('placeholder', that.searchParams.placeholder);
+				
+				var point = new OpenLayers.Geometry.Point(e.position.coords.longitude, e.position.coords.latitude).transform(that.mapDisplayProjection, that.map.getProjectionObject());
+				
+				if(!that.mylatlong.point || that.mylatlong.point.x !== point.x || that.mylatlong.point.y !== point.y) {
 					
-					var point = new OpenLayers.Geometry.Point(e.position.coords.longitude, e.position.coords.latitude).transform(that.mapDisplayProjection, that.map.getProjectionObject());
+					that.mylatlong = {
+							address: that.searchParams.placeholder,
+							point: point,
+							latitude : e.position.coords.latitude, 
+							longitude : e.position.coords.longitude
+					};
 					
-					if(!that.mylatlong.point || that.mylatlong.point.x !== point.x || that.mylatlong.point.y !== point.y) {
-						
-						that.mylatlong = {
-								address: that.searchParams.placeholder,
-								point: point,
-								latitude : e.position.coords.latitude, 
-								longitude : e.position.coords.longitude
-						};
-						
-						// remove any geolocation features before creating the new one
-						if(objectVector.getFeaturesByAttribute('location', true).length > 0) {
-							objectVector.removeFeatures([objectVector.getFeaturesByAttribute('location', true)[0]]);
-						}
-						
-						var feature = new OpenLayers.Feature.Vector(
-										point, {
-											location : true,
-											street : {
-												displayName : that.mylatlong.address,
-												latitude : that.mylatlong.latitude,
-												longitude : that.mylatlong.longitude
-											}
-										}, null);
-						objectVector.addFeatures(feature);
-						
-						if(!selectedFeature || selectedFeature.attributes.location === true) {
-							selectCtrl.select(feature);
-						}
-						that.processList(returnData);
-					}						
-				});	
-				geolocate.watch = true;
-				geolocate.activate();
-			}, 1000);
-			
+					// remove any geolocation features before creating the new one
+					if(objectVector.getFeaturesByAttribute('location', true).length > 0) {
+						objectVector.removeFeatures([objectVector.getFeaturesByAttribute('location', true)[0]]);
+					}
+					
+					var feature = new OpenLayers.Feature.Vector(
+									point, {
+										location : true,
+										street : {
+											displayName : that.mylatlong.address,
+											latitude : that.mylatlong.latitude,
+											longitude : that.mylatlong.longitude
+										}
+									}, null);
+					objectVector.addFeatures(feature);
+					
+					if(!selectedFeature || selectedFeature.attributes.location === true) {
+						selectCtrl.select(feature);
+					}
+					that.processList(returnData.data);
+				}						
+			});	
+			geolocate.watch = true;
+			geolocate.activate();
+
 
 			// manually select feature
 			if(selectedFeature) {
 				selectCtrl.select(selectedFeature);
-				this.processList(returnData);
+				this.processList(returnData.data);
+				this.centerAndZoom();
 			} else { // or clear if none selected
 				this.cleanRadius();
 				this.processList();
@@ -523,8 +542,7 @@ Map.prototype = {
 		 * @param geometry
 		 */
 		drawRadius : function(geometry) {
-			var bounds = new OpenLayers.Bounds();
-			bounds.extend(geometry.getBounds());
+			var that = this;
 			// if radius set circle
 			if(this.searchParams && this.searchParams.distance && this.searchParams.distance.length > 0 && this.searchParams.distance < anyDistance) {
 				// remove any previous radius layer
@@ -537,22 +555,12 @@ Map.prototype = {
 				var polygon = new OpenLayers.Geometry.Polygon.createRegularPolygon(geometry, radius, 100, 0);
 				var circle = new OpenLayers.Feature.Vector(polygon);
 				circleLayer.addFeatures(circle);
-
-				bounds.extend(polygon.getBounds());
+				
+				$(polygon.getVertices()).each(function() {
+					that.points.push(this);
+				});
 			} 
 			
-			if(this.points.length > 0) {
-				$(this.points).each(function(){
-					bounds.extend(this.getBounds());
-				});
-			}
-			
-			// zoom contents
-			bounds.toBBOX();
-			this.map.zoomToExtent(bounds, false);
-			if(this.points.length > 0) {
-				this.map.zoomTo(this.map.zoom-1);
-			}
 		},
 		
 		/** Clean the radius from map */
@@ -612,6 +620,7 @@ Map.prototype = {
 				
 				// if radius set circle and zoom contents
 				that.drawRadius(feature.geometry);
+				that.centerAndZoom();
 			});
 			geolocate.events.register('locationfailed',this,function() {
 			    OpenLayers.Console.log('Location detection failed');
@@ -619,8 +628,6 @@ Map.prototype = {
 
 			geolocate.watch = true;
 		    geolocate.activate();
-		    
-		    this.centerAndZoom();
 		},
 
 
@@ -636,7 +643,7 @@ Map.prototype = {
 		    	bounds.extend(this.mylatlong.point);
 		    }
 		    bounds.toBBOX();
-		    this.map.zoomToExtent(bounds, true);
+		    this.map.zoomToExtent(bounds, false);
 		    this.map.zoomTo(this.map.zoom-1);
 		},
 

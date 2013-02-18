@@ -139,5 +139,18 @@
 			</nav>
 		</section>
 	</article>
+	
+	<!-- Modal window for no results -->
+	<div class="confirm2">
+		<article>
+			<section id="noResults" class="hidden">
+				<h2><fmt:message key="find.car.later.no.results.found.header"/></h2>
+				<h3 id="title1"><fmt:message key="find.car.later.no.results.found"/></h3>
+				<stripes:link id="closeConfirm" href="#" class="alertBtn gray" >
+					<fmt:message key="find.car.later.no.results.ok"/>
+				</stripes:link>
+			</section>
+		</article>
+	</div>
 </t:map>
 
