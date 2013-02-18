@@ -155,9 +155,8 @@ public class EditPreferencesActionBean extends BaseActionBean {
      * @throws RemoteException
      */
     public CountryDTO[] getLanguages() throws RemoteException {
-        // TODO check this getCountries not the same getLanguages!
         return new MiscellaneousWSServiceStub(Configuration.INSTANCE.getMiscellaneousEnpoint())
-                .getAllCountries(getContext().getLocale().getDisplayCountry());
+                .getAllCountries(getContext().getUser().getCustomerPreferencesDTO().getLanguage());
     }
 
     /**

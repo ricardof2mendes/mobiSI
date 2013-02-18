@@ -15,8 +15,6 @@ package com.criticalsoftware.mobics.presentation.action.account;
 import java.io.UnsupportedEncodingException;
 import java.rmi.RemoteException;
 
-import org.apache.commons.lang.StringUtils;
-
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.DontValidate;
 import net.sourceforge.stripes.action.ForwardResolution;
@@ -29,8 +27,10 @@ import net.sourceforge.stripes.validation.ValidationErrors;
 import net.sourceforge.stripes.validation.ValidationMethod;
 import net.sourceforge.stripes.validation.ValidationState;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.criticalsoftware.mobics.customer.EditCustomerDTO;
-import com.criticalsoftware.mobics.miscellaneous.CountryDTO;
+import com.criticalsoftware.mobics.customer.CountryDTO;
 import com.criticalsoftware.mobics.presentation.security.AuthenticationUtil;
 import com.criticalsoftware.mobics.presentation.security.MobiCSSecure;
 import com.criticalsoftware.mobics.presentation.util.Configuration;
@@ -38,7 +38,6 @@ import com.criticalsoftware.mobics.proxy.customer.CustomerEditionExceptionExcept
 import com.criticalsoftware.mobics.proxy.customer.CustomerNotFoundExceptionException;
 import com.criticalsoftware.mobics.proxy.customer.CustomerServiceExceptionException;
 import com.criticalsoftware.mobics.proxy.customer.CustomerWSServiceStub;
-import com.criticalsoftware.mobics.proxy.miscellaneous.MiscellaneousWSServiceStub;
 
 /**
  * Account action bean
@@ -69,6 +68,8 @@ public class EditInformationContactActionBean extends AskPinActionBean {
 
     @Validate(required = true, on = "saveData")
     private String taxNumber;
+    
+    private CountryDTO[] countries;
 
     /**
      * Account page
@@ -97,7 +98,8 @@ public class EditInformationContactActionBean extends AskPinActionBean {
                 AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
                         .getPassword()));
 
-        EditCustomerDTO customer = customerWSServiceStub.getCustomerDetails(null);
+        EditCustomerDTO customer = customerWSServiceStub.getCustomerDetails(getContext().getLocale().getLanguage());
+        
         if (customer != null) {
             this.address = customer.getAddress();
             if (customer.getCountry() != null) {
@@ -109,6 +111,9 @@ public class EditInformationContactActionBean extends AskPinActionBean {
             this.taxNumber = customer.getTaxNumber();
             this.zipCode1 = customer.getZipCode1().concat("-").concat(customer.getZipCode2());
         }
+        
+        countries = new CountryDTO[1];
+        countries[0] = customer.getCountry();
 
         return new ForwardResolution("/WEB-INF/account/editInformationContact.jsp");
     }
@@ -176,12 +181,9 @@ public class EditInformationContactActionBean extends AskPinActionBean {
      * get countries
      * 
      * @return countries dto
-     * @throws RemoteException
      */
-    public CountryDTO[] getCountries() throws RemoteException {
-        MiscellaneousWSServiceStub miscellaneousWSServiceStub = new MiscellaneousWSServiceStub(
-                Configuration.INSTANCE.getMiscellaneousEnpoint());
-        return miscellaneousWSServiceStub.getAllCountries(getContext().getRequest().getLocale().getCountry());
+    public CountryDTO[] getCountries() {
+        return countries;
     }
 
     /**
