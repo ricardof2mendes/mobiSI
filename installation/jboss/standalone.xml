@@ -45,8 +45,8 @@
 		<property name="mobics.config.recents.filter.month.gap" value="6"/>
 		<property name="mobics.config.radius.any.distance" value="9999999"/>
 		<!--Pooling interval -->
-		<property name="mobics.config.state.polling.interval.milliseconds" value="30000"/>
-		<property name="mobics.config.state.polling.timeout.milliseconds" value="600000"/>
+		<property name="mobics.config.state.polling.interval.milliseconds" value="3000"/>
+		<property name="mobics.config.state.polling.timeout.milliseconds" value="120000"/>
 		
 </system-properties>
 
