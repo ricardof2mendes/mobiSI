@@ -192,10 +192,7 @@
 									</stripes:option>
 									<stripes:option value="3600">
 										<fmt:message key="find.car.later.end.sending.hour"><fmt:param value="1"/></fmt:message>
-									</stripes:option>
-									<stripes:option value="7200">
-										<fmt:message key="find.car.later.end.sending.hours"><fmt:param value="2"/></fmt:message>
-									</stripes:option>
+									</stripes:option>									
 								</stripes:select>
 							</span>
 						</li>
