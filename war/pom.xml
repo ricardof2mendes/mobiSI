@@ -19,7 +19,7 @@
 				<directory>src/main/resources</directory>
 				<filtering>true</filtering>
 				<includes>
-					<include>**/*.properties</include>
+					<include>**/*</include>
 				</includes>
 			</resource>
 		</resources>
@@ -36,11 +36,11 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
 				<configuration> 
-					<warSourceExcludes>
+					<!--warSourceExcludes>
 					**/normalize.css,**/default.css,**/default.map.css,**/mobiscroll.custom.css,
 					**/default.js,**/default.map.js,**/mobics.map.js,
 					**/OpenLayers.mobics.extension.js,**/mobiscroll.datetime-2.4.1.min.js
-					</warSourceExcludes> 
+					</warSourceExcludes--> 
 				</configuration>
 			</plugin>
 			<plugin>
@@ -58,6 +58,7 @@
 							<cssFinalFile>style.css</cssFinalFile>
 							<jsSourceFiles>
 								<jsSourceFile>zepto.js</jsSourceFile>
+								<jsSourceFile>variables.js</jsSourceFile>
 								<jsSourceFile>default.js</jsSourceFile>
 							</jsSourceFiles>
 							<jsFinalFile>script.jsp</jsFinalFile>
@@ -78,8 +79,10 @@
 							<cssFinalFile>style.calendar.css</cssFinalFile>
 							<jsSourceFiles>
 								<jsSourceFile>zepto.js</jsSourceFile>
-								<jsSourceFile>default.js</jsSourceFile>
 								<jsSourceFile>mobiscroll.datetime-2.4.1.min.js</jsSourceFile>
+								<jsSourceFile>moment.js</jsSourceFile>
+								<jsSourceFile>variables.js</jsSourceFile>
+								<jsSourceFile>default.js</jsSourceFile>
 							</jsSourceFiles>
 							<jsFinalFile>script.calendar.jsp</jsFinalFile>
 						</configuration>
@@ -102,6 +105,7 @@
 								<jsSourceFile>OpenLayers.mobile.js</jsSourceFile-->
 								<jsSourceFile>OpenLayers.mobics.extension.js</jsSourceFile>
 								<jsSourceFile>mobics.map.js</jsSourceFile>
+								<jsSourceFile>variables.js</jsSourceFile>
 								<jsSourceFile>default.map.js</jsSourceFile>
 							</jsSourceFiles>
 							<jsFinalFile>script.map.jsp</jsFinalFile>

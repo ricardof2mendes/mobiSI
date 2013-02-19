@@ -11,14 +11,6 @@ div.bottomShadow {
     z-index: 5000;
 }
 
-.bottomShadowBig {
-	top: 414px !important;
-}
-
-.bottomShadowSmall {
-	top: 366px !important;
-}
-
 div.streetBottomShadow {
 	height: 5px;
 	position:absolute;
@@ -40,14 +32,6 @@ div.streetBottomShadow {
 
 #container.street {
 	top: 92px !important;
-}
-
-#container.menuDownBig {
-	top: 414px !important;
-}
-
-#container.menuDownSmall {
-	top: 366px !important;
 }
 
 #container.street,
@@ -197,10 +181,6 @@ div.olControlMyLocation a:hover {
 	font-size: 100%;
 	margin-left: 10px;
 	line-height: 30px;
-}
-
-#whiteBar.menuDown {
-	top: 414px;
 }
 
 #whiteBar.addressBar div > div{

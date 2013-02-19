@@ -2,11 +2,12 @@
 <%@include file="/WEB-INF/common/taglibs.jsp"%>
 <c:set var="title" scope="page"><fmt:message key='find.car.later.edit.title' /></c:set>
 <c:set var="placeholder" scope="page"><fmt:message key="find.car.later.datetime.placeholder"/></c:set>
+<c:set var="currentLocationMessage" scope="page"><fmt:message key="interest.details.current.location"/></c:set>
 
 <c:set var="address" scope="page">
 	<c:choose>
 		<c:when test="${currentLocationMessage != actionBean.address}">${actionBean.address}</c:when>
-		<c:otherwise><fmt:message key="interest.details.current.location"/></c:otherwise>
+		<c:otherwise>${currentLocationMessage}</c:otherwise>
 	</c:choose>
 </c:set>
 
@@ -41,11 +42,9 @@
 					<ul>
 						<li class="link white">
 							<stripes:link id="locationLink" beanclass="com.criticalsoftware.mobics.presentation.action.booking.BookingInterestActionBean" event="searchLocation" addSourcePage="true">
-								<stripes:param name="query">${sendToMapAddress}</stripes:param>
+								<stripes:param name="query">${pageScope.address}</stripes:param>
 								<span><fmt:message key="find.car.later.location"/></span>
-								<span id="addressSpan">
-									${pageScope.address}
-								</span>
+								<span id="addressSpan">${pageScope.address}</span>
 							</stripes:link>
 						</li>
 						<li class="detail white">

@@ -32,7 +32,7 @@
 	<span id="paramLat" class="hidden">${actionBean.latitude}</span>
 	<span id="paramLon" class="hidden">${actionBean.longitude}</span>
 	<span id="paramCLM" class="hidden"><fmt:message key="interest.details.current.location"/></span>
-	
+		
 	<article id="streetsearch" class="simpleArticle">
 		<section>
 			<stripes:form id="streetSearchForm" beanclass="com.criticalsoftware.mobics.presentation.action.booking.BookingInterestActionBean" method="get">
@@ -89,7 +89,7 @@
 								<stripes:hidden name="activityCode" value="${param.activityCode}"/>
 							</c:if>
 							
-							<stripes:submit name="${pageScope.method}" class="submitBtn green">
+							<stripes:submit id="submit" name="${pageScope.method}" class="submitBtn green">
 								<fmt:message key="interest.button.ok"/>
 							</stripes:submit>
 						</stripes:form>
@@ -106,7 +106,7 @@
 							<stripes:param name="startSending" value="${actionBean.startSending}"/>
 							<stripes:param name="stopSending" value="${actionBean.stopSending}"/>
 							<stripes:param name="maxMessages" value="${actionBean.maxMessages}"/>
-							<stripes:param name="address" value="${actionBean.address}"/>
+							<stripes:param name="address" value="${actionBean.query}"/>
 							<c:if test="${not empty param.activityCode}">
 								<stripes:param name="activityCode" value="${param.activityCode}"/>
 							</c:if>

@@ -2,10 +2,7 @@
 <%@include file="/WEB-INF/common/taglibs.jsp"%>
 <c:set var="title" scope="page"><fmt:message key='find.car.later.title' /></c:set>
 <c:set var="dateplaceholder" scope="page"><fmt:message key="interest.details.datetime.placeholder"/></c:set>
-
-<c:set var="currentLocationMessage" scope="page">
-	<fmt:message key="interest.details.current.location"/>
-</c:set>
+<c:set var="currentLocationMessage" scope="page"><fmt:message key="interest.details.current.location"/></c:set>
 <c:set var="sendToMapAddress" scope="page">
 	<c:choose>
 		<c:when test="${currentLocationMessage != actionBean.address}">${actionBean.address}</c:when>

@@ -1,22 +1,3 @@
-'<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>';
-
-// context path
-var CONTEXT_PATH = '${pageContext.request.contextPath}';
-// pooling interval
-var POOLING_INTERVAL = '${applicationScope.configuration.statePollingIntervalMilliseconds}';
-var TIMEOUT_INTERVAL = '${applicationScope.configuration.statePollingTimeoutMilliseconds}';
-// image size
-var IMG_WIDTH = '${applicationScope.configuration.thumbnailWidth}px';
-var IMG_HEIGHT = '${applicationScope.configuration.thumbnailHeight}px';
-
-// localizable strings
-var ZONE_ALL_LABEL = '<fmt:message key="book.advance.zone.any" />';
-var GEOLOCATION_NOT_SUPPORTED_LABEL = '<fmt:message key="geolocation.alert.msg.not.supported"/>';
-var OK_LABEL = '<fmt:message key="calendar.ok"/>';
-var MINUTES_LABEL = '<fmt:message key="calendar.minutes"/>';
-// date patterns for calendar
-var DATE_PATTERN = '${applicationScope.configuration.jsDatePattern}';
-var TIME_PATTERN = '${applicationScope.configuration.jsTimePattern}';
 // booking status for ajax pooling
 var WAITING = 'WAIT_OBS_';
 var ERROR = 'OBS_ERROR';
@@ -207,6 +188,7 @@ $(document).ready(function() {
  	 *  Calendar setup
  	 */
  	if($('#startDate').length > 0){
+ 		var initialDate = null;
  		var now = new Date();
 	    $('#startDate').mobiscroll().datetime({
 	    	setText: OK_LABEL,
@@ -219,21 +201,18 @@ $(document).ready(function() {
 	        display: 'modal',
 	        mode: 'scroller',
 	        width: 42,
-	        onClose : function(daDate, scroller) {
+	        onShow : function(html, valueText, inst) {
+	        	initialDate = moment(valueText, DATE_TIME_PATTERN);
+	        },
+	        onClose : function(valueText, inst) {
 	        	if($('#endDate').length > 0) {
-		        	var datetime = daDate.split(' ');
-		        	var date = datetime[0].split('/');
-		        	var time = datetime[1].split(':');
-		        	var val = new Date(parseInt(date[2]), 
-		        						parseInt(date[1]) === 0 ? 0 : parseInt(date[1]) - 1,
-		        						parseInt(date[0]), 
-		        						parseInt(time[0]) + 1, 
-		        						parseInt(time[1]), 
-		        						0, 
-		        						0);
-		        	$('#endDate').mobiscroll('setValue', [val.getDate(), val.getMonth(), 
-		        	            	        			val.getFullYear(), val.getHours(), val.getMinutes()], true);
-		        	$('#endDate').mobiscroll('option', 'minDate', val);
+	        		var endDate = moment($('#endDate').val(), DATE_TIME_PATTERN),
+	        			diference = endDate.diff(initialDate, 'minutes', true),
+	        			finalDate = moment(valueText, DATE_TIME_PATTERN).add('minutes', diference);
+
+		        	$('#endDate').mobiscroll('setValue', [finalDate.date(), finalDate.month(), 
+		        	                                      finalDate.year(), finalDate.hours(), finalDate.minutes()], true);
+		        	
 	        	}
 	        }
 	    });    
@@ -252,7 +231,11 @@ $(document).ready(function() {
 	        minDate: new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours()+1, now.getMinutes(), now.getSeconds(), now.getMilliseconds()),
 	        display: 'modal',
 	        mode: 'scroller',
-	        width: 42
+	        width: 42,
+	        onBeforeShow : function(html, inst) {
+	        	var finalDate = moment($('#startDate').val(), DATE_TIME_PATTERN).add('hours', 1);
+	        	inst.init({minDate : finalDate.toDate()});
+	        }
 	    });    
  	}
  	
@@ -512,12 +495,12 @@ $(document).ready(function() {
  		e.preventDefault();
  		// show message
 		$('#unlocking').show();
-		var url ={
+		var url = {
  				lockunlock: $(this).prop('href'), 
  				pooling :  CONTEXT_PATH + '/trip/Trip.action?getCurrentTrip=',
  				state: IN_USE,
  				redirect: CONTEXT_PATH + '/trip/Trip.action?finish=&unlockOp=true&successOp='
- 				};
+ 			};
 		
 		lockUnlockAndWait(url);
  	});
@@ -538,7 +521,7 @@ $(document).ready(function() {
  	 				lockunlock: $(this).prop('href'), 
  	 				pooling :  CONTEXT_PATH + '/trip/Trip.action?getCurrentTrip=', 
  	 				redirect: CONTEXT_PATH + '/trip/Trip.action?finish=&successOp='
- 	 				};
+ 	 			};
  			lockUnlockAndWait(url);
  		} 		
  	});
@@ -551,7 +534,7 @@ $(document).ready(function() {
 				lockunlock: $(this).prop('href'), 
 				pooling :  CONTEXT_PATH + '/trip/Trip.action?getCurrentTrip=', 
 				redirect: CONTEXT_PATH + '/trip/Trip.action?finish=&successOp='
-		};
+			};
 		lockUnlockAndWait(url);
  	});
  	

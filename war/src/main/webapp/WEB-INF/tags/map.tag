@@ -4,6 +4,7 @@
 <c:set var="version" scope="page">
 	<fmt:message key="application.version"/>
 </c:set>
+<c:set var="state" scope="page" value="${applicationScope.configuration.applicationState}"/>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -30,7 +31,19 @@
 		<link rel="apple-touch-icon-precomposed" sizes="114x114" href="${contextPath}/favicon114.png">
 
         <!-- CSS -->
-        <link rel="stylesheet" href="${contextPath}/css/style.map.min.css?version=${version}" />
+        <c:choose>
+       		<c:when test="${pageScope.state == 'PRODUCTION'}">
+		       	<link rel="stylesheet" href="${contextPath}/css/style.map.min.css?version=${version}" />
+       		</c:when>
+       		<c:when test="${pageScope.state == 'DEVELOPMENT'}">
+		       	<link rel="stylesheet" href="${contextPath}/css/style.map.css?version=${version}" />
+       		</c:when>
+       		<c:otherwise>
+       			<link rel="stylesheet" href="${contextPath}/css/normalize.css" />
+       			<link rel="stylesheet" href="${contextPath}/css/default.css" />
+       			<link rel="stylesheet" href="${contextPath}/css/default.map.css" />
+       		</c:otherwise>
+       	</c:choose>
     </head>
     
     <body>
@@ -41,7 +54,28 @@
 
         <!-- JS -->
         <script type="text/javascript" src="${contextPath}/js/zepto.js"></script>
-        <script type="text/javascript" src="${contextPath}/js/OpenLayers.mobile.js"></script>
-        <script type="text/javascript" src="${contextPath}/js/script.map.min.jsp?version=${version}"></script>
+     	<script type="text/javascript" src="${contextPath}/js/OpenLayers.mobile.js"></script>
+		
+		<c:choose>
+       		<c:when test="${pageScope.state == 'PRODUCTION'}">
+        		<script type="text/javascript" src="${contextPath}/js/script.map.min.jsp?version=${version}"></script>
+       		</c:when>
+       		<c:when test="${pageScope.state == 'DEVELOPMENT'}">
+        		<script type="text/javascript" src="${contextPath}/js/script.map.jsp?version=${version}"></script>
+       		</c:when>
+       		<c:otherwise>
+		        <script type="text/javascript" >
+		        	//
+		        	//Any variable declared here must be replicated in variables.js
+		        	//
+		        	var CONTEXT_PATH = '${pageContext.request.contextPath}';
+					var ANY_DISTANCE = '${applicationScope.configuration.anyDistance}';
+		        </script>
+		        
+		        <script type="text/javascript" src="${contextPath}/js/OpenLayers.mobics.extension.js"></script>
+		        <script type="text/javascript" src="${contextPath}/js/mobics.map.js"></script>
+		        <script type="text/javascript" src="${contextPath}/js/default.map.js"></script>
+       		</c:otherwise>
+       	</c:choose>
     </body>
 </html>

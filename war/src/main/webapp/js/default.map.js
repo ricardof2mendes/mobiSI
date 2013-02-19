@@ -1,8 +1,3 @@
-'<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>';
-
-var contextPath = '${pageContext.request.contextPath}';
-var anyDistance = '${applicationScope.configuration.anyDistance}';
-
 $(document).ready(function() {
 	'use strict';
 	
@@ -97,10 +92,13 @@ $(document).ready(function() {
 				placeholder : $('#paramCLM').html()
 			};
 		
+		console.log($('#paramAddr').html());
+		
 		// add event listener to search
 		$('#streetSearchForm').on('submit', function(e){
 			e.preventDefault();
 			Map.change($('#query').val());
+			document.getElementById("submit").focus(); 
 		});
 	}
 	
@@ -113,40 +111,16 @@ $(document).ready(function() {
  */
 var toggleFx = function (element) {
 	if($(element).hasClass('hidden')) {
-		if(element.indexOf('menu') > 0) {
-			if($('#streetsearch').length > 0) {
-				$('#container').addClass('menuDownBig');
-				$('div.bottomShadow').addClass('bottomShadowBig');
-				$('div.streetBottomShadow').toggle();
-			} else {
-				$('#container').addClass('menuDownSmall');
-				$('div.bottomShadow').addClass('bottomShadowSmall');
-			}
-			$('#whiteBar').addClass('menuDown');
-		}else {
-			$('#container').hide();
-			$('#whiteBar').hide();
-			$('#streetsearch').hide();
-			$('div.streetBottomShadow').hide();
-		}
+		$('#container').hide();
+		$('#whiteBar').hide();
+		$('#streetsearch').hide();
+		$('div.streetBottomShadow').hide();
 		$(element).removeClass('hidden');
 	} else {
 		$(element).addClass('hidden');
-		if(element.indexOf('menu') > 0) {
-			if($('#streetsearch').length > 0) {
-				$('#container').removeClass('menuDownBig');
-				$('div.bottomShadow').removeClass('bottomShadowBig');
-				$('div.streetBottomShadow').toggle();
-			} else {
-				$('#container').removeClass('menuDownSmall');
-				$('div.bottomShadow').removeClass('bottomShadowSmall');
-			}
-			$('#whiteBar').removeClass('menuDown');
-		} else {
-			$('#container').show();
-			$('#whiteBar').show();
-			$('#streetsearch').show();
-			$('div.streetBottomShadow').show();
-		}
+		$('#container').show();
+		$('#whiteBar').show();
+		$('#streetsearch').show();
+		$('div.streetBottomShadow').show();
 	}
 };

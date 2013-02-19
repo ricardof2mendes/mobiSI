@@ -7,6 +7,7 @@
 <c:set var="version" scope="page">
 	<fmt:message key="application.version"/>
 </c:set>
+<c:set var="state" scope="page" value="${applicationScope.configuration.applicationState}"/>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -32,7 +33,19 @@
         <!-- For iPhone with high-resolution Retina display: -->
 		<link rel="apple-touch-icon-precomposed" sizes="114x114" href="${contextPath}/favicon114.png">
 
-        <link rel="stylesheet" href="${contextPath}/css/style.min.css?version=${version}" />
+		<!-- CSS -->
+		<c:choose>
+       		<c:when test="${pageScope.state == 'PRODUCTION'}">
+		        <link rel="stylesheet" href="${contextPath}/css/style.min.css?version=${version}" />
+       		</c:when>
+       		<c:when test="${pageScope.state == 'DEVELOPMENT'}">
+		        <link rel="stylesheet" href="${contextPath}/css/style.css?version=${version}" />
+       		</c:when>
+       		<c:otherwise>
+       			<link rel="stylesheet" href="${contextPath}/css/normalize.css" />
+        		<link rel="stylesheet" href="${contextPath}/css/default.css" />        			
+       		</c:otherwise>
+       	</c:choose>
     </head>
     <body class="${actionBean.splashScreenStyle}">
         <jsp:doBody/>             

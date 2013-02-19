@@ -131,7 +131,7 @@ Map.prototype = {
 				this.map.addControl(new OpenLayers.Control.List({
 					onListClick : function(evt) {
 						if (evt.buttonElement === this.listLink.list) {
-							window.location.href = contextPath+'/booking/ImmediateBooking.action?searchImmediateInList=&price=' + that.searchParams.price + 
+							window.location.href = CONTEXT_PATH +'/booking/ImmediateBooking.action?searchImmediateInList=&price=' + that.searchParams.price + 
 							'&distance=' + that.searchParams.distance + '&clazz=' + that.searchParams.clazz + '&fuel=' + that.searchParams.fuel + 
 							'&orderBy=' + that.searchParams.order + '&latitude=' + that.searchParams.latitude + '&longitude=' + that.searchParams.longitude;
 						}
@@ -160,7 +160,7 @@ Map.prototype = {
 		 */
 		fetchCarData : function() {
 			var that = this;
-			$.get(contextPath + '/booking/ImmediateBooking.action?carData=&licensePlate=' + this.licensePlate, 
+			$.get(CONTEXT_PATH + '/booking/ImmediateBooking.action?carData=&licensePlate=' + this.licensePlate, 
 					function(data, textStatus, jqXHR){
 						if (jqXHR.getResponseHeader('Stripes-Success') === 'OK') {
 							var evaluated = eval(data);
@@ -181,7 +181,7 @@ Map.prototype = {
 		 */
 		fetchZonesData : function() {
 			var that = this;
-			$.get(contextPath + '/booking/AdvanceBooking.action?parkData=&licensePlate=' + this.licensePlate, 
+			$.get(CONTEXT_PATH + '/booking/AdvanceBooking.action?parkData=&licensePlate=' + this.licensePlate, 
 					function(data, textStatus, jqXHR){
 						if (jqXHR.getResponseHeader('Stripes-Success') === 'OK') {
 							that.processZones(eval(data));
@@ -200,7 +200,7 @@ Map.prototype = {
 		 */
 		fetchSearchCarsData : function() {
 			var that = this;
-			$.get(contextPath + '/booking/ImmediateBooking.action?searchCarsData=&price=' + this.searchParams.price 
+			$.get(CONTEXT_PATH + '/booking/ImmediateBooking.action?searchCarsData=&price=' + this.searchParams.price 
 					+ '&distance=' + this.searchParams.distance 
 					+ '&clazz=' + this.searchParams.clazz 
 					+ '&fuel=' + this.searchParams.fuel 
@@ -226,7 +226,7 @@ Map.prototype = {
 		fetchLocationData : function(query) {
 			var that = this;
 			if(query) {
-				$.get(contextPath + '/booking/BookingInterest.action?getAddressFromQuery=&query=' + encodeURI(query), 
+				$.get(CONTEXT_PATH + '/booking/BookingInterest.action?getAddressFromQuery=&query=' + encodeURI(query), 
 						function(data, textStatus, jqXHR){
 							if (jqXHR.getResponseHeader('Stripes-Success') === 'OK') {
 								that.processLocation({results : eval(data).length > 0, data : eval(data)});
@@ -248,9 +248,14 @@ Map.prototype = {
 								longitude : this.searchParams.longitude
 						};
 					} else {
-						returnData = {results : true, data :[{displayName: this.searchParams.address,
-										longitude:this.searchParams.longitude,
-										latitude: this.searchParams.latitude}]};
+						returnData = {
+								results : true, 
+								data : [ {
+									displayName: this.searchParams.address,
+									longitude:this.searchParams.longitude,
+									latitude: this.searchParams.latitude
+									}]
+						};
 					}
 				}
 				that.processLocation(returnData);
@@ -526,12 +531,12 @@ Map.prototype = {
 			
 			if(this.mylatlong.latitude) {
 				aux += '&latitude=' + this.mylatlong.latitude + '&longitude=' + this.mylatlong.longitude + '&address='; 
-				html += '<li><a href="'+aux+'"><div><img src="'+contextPath+'/img/map/location-user-selected.png"/></div><div class="ellipsis" ><span>'+this.searchParams.placeholder+'</span></div></a></li>';
+				html += '<li><a href="'+aux+'"><div><img src="'+ CONTEXT_PATH +'/img/map/location-user-selected.png"/></div><div class="ellipsis" ><span>'+this.searchParams.placeholder+'</span></div></a></li>';
 			}
 			if(data) {
 				$(data).each(function(){
 					aux = url + '&latitude=' + this.latitude + '&longitude=' + this.longitude + '&address=' + this.displayName;
-					html += '<li><a href="'+aux+'"><div><img src="'+contextPath+'/img/map/location-user-selected.png"/></div><div class="ellipsis" ><span>'+ this.displayName +'</span></div></a></li>';
+					html += '<li><a href="'+aux+'"><div><img src="'+ CONTEXT_PATH +'/img/map/location-user-selected.png"/></div><div class="ellipsis" ><span>'+ this.displayName +'</span></div></a></li>';
 				});
 			}
 			$('#results').html(html);
@@ -544,7 +549,7 @@ Map.prototype = {
 		drawRadius : function(geometry) {
 			var that = this;
 			// if radius set circle
-			if(this.searchParams && this.searchParams.distance && this.searchParams.distance.length > 0 && this.searchParams.distance < anyDistance) {
+			if(this.searchParams && this.searchParams.distance && this.searchParams.distance.length > 0 && this.searchParams.distance < ANY_DISTANCE) {
 				// remove any previous radius layer
 				this.cleanRadius();
 				// add new radius
@@ -581,7 +586,7 @@ Map.prototype = {
 			// remove any previous radius layer
 			this.cleanRadius();
 			// process my location if any
-			this.processLocation();
+			this.processLocation({results:true, data:[]});
 		},
 
 		/**
@@ -668,7 +673,7 @@ Map.prototype = {
 				);
 				
 				// Set image
-				$('#whiteBar img').prop('src', contextPath + '/booking/ImmediateBooking.action?getCarImage=&licensePlate=' + options.car.licensePlate);
+				$('#whiteBar img').prop('src', CONTEXT_PATH + '/booking/ImmediateBooking.action?getCarImage=&licensePlate=' + options.car.licensePlate);
 				// set other content
 				$('#licensePlate').html(options.car.licensePlate);
 				$('#carBrandName').html(options.car.carBrandName + '&nbsp;' + options.car.carModelName);
