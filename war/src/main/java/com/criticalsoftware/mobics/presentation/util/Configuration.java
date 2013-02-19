@@ -22,6 +22,16 @@ import org.slf4j.LoggerFactory;
  * @version $Revision: $
  */
 public class Configuration implements Serializable{
+    
+    /**
+     * Application state
+     * 
+     * @author ltiago
+     * @version $Revision: $
+     */
+    public enum ApplicationState {
+        PRODUCTION, DEVELOPMENT, DEVELOPMENT_WITH_JREBEL
+    }
 
     /** */
     private static final long serialVersionUID = 7216539220608643618L;
@@ -32,6 +42,9 @@ public class Configuration implements Serializable{
      * The Configuration instance property.
      */
     public static final Configuration INSTANCE = new Configuration();
+    
+    /** Application state */
+    private ApplicationState applicationState = ApplicationState.PRODUCTION;
 
     /** Application Encoding **/
     private final String uriEnconding = "UTF-8";
@@ -51,6 +64,9 @@ public class Configuration implements Serializable{
     /** Date time Pattern **/
     private final String timePattern = "HH:mm";
 
+    /** Javascript date time pattern moment.js**/
+    private final String jsDateTimePattern = "DD/MM/YYYY HH:mm";
+    
     /** Javascript date pattern **/
     private final String jsDatePattern = "dd/mm/yy";
 
@@ -123,6 +139,13 @@ public class Configuration implements Serializable{
      */
     public String getUriEnconding() {
         return getValue("org.apache.catalina.connector.URI_ENCODING", uriEnconding);
+    }
+    
+    /**
+     * @return the applicationState
+     */
+    public ApplicationState getApplicationState() {
+        return ApplicationState.valueOf(getValue("mobics.config.application.state", applicationState.name()));
     }
 
     /**
@@ -235,6 +258,13 @@ public class Configuration implements Serializable{
      */
     public String getJsDatePattern() {
         return getValue("mobics.config.js.date.pattern", jsDatePattern);
+    }
+    
+    /**
+     * @return the dateTimePattern
+     */
+    public String getJsDateTimePattern() {
+        return getValue("mobics.config.js.date.time.pattern", jsDateTimePattern);
     }
 
     /**
