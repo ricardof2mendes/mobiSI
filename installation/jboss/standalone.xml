@@ -8,7 +8,9 @@
         <property name="org.apache.catalina.connector.USE_BODY_ENCODING_FOR_QUERY_STRING" value="true"/>
         <property name="org.apache.coyote.http11.Http11Protocol.COMPRESSION" value="on"/>
         <property name="org.apache.coyote.http11.Http11Protocol.COMPRESSION_MIME_TYPES" value="text/html,text/xml,text/plain,text/css,text/javascript,application/xhtml+xml,application/xml,application/javascript,application/json"/>
-		<!--Patterns -->
+		<!--Application state : PRODUCTION, DEVELOPMENT, DEVELOPMENT_WITH_JREBEL -->
+		<property name="mobics.config.application.state" value="PRODUCTION"/>
+		<!--Patterns (js patterns are used by different components, that is why they differ)-->
         <property name="mobics.config.meter.pattern" value="#"/>
         <property name="mobics.config.kilometer.pattern" value="#,##0.0"/>
         <property name="mobics.config.currency.pattern" value="#,##0.00"/>
@@ -16,6 +18,7 @@
         <property name="mobics.config.datetime.pattern" value="dd/MM/yyyy HH:mm"/>
 		<property name="mobics.config.time.pattern" value="HH:mm"/>
 		<property name="mobics.config.week.pattern" value="E"/>
+		<property name="mobics.config.js.date.time.pattern" value="DD/MM/YYYY HH:mm"/>
         <property name="mobics.config.js.date.pattern" value="dd/mm/yy"/>
         <property name="mobics.config.js.time.pattern" value="HH:ii"/>
 		<!--Failure authentication string-->
@@ -41,6 +44,10 @@
         <property name="mobics.config.min.results" value="1"/>
 		<property name="mobics.config.recents.filter.month.gap" value="6"/>
 		<property name="mobics.config.radius.any.distance" value="9999999"/>
+		<!--Pooling interval -->
+		<property name="mobics.config.state.polling.interval.milliseconds" value="30000"/>
+		<property name="mobics.config.state.polling.timeout.milliseconds" value="600000"/>
+		
 </system-properties>
 
 <!--
