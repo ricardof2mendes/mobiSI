@@ -16,7 +16,11 @@
 				<fmt:message key="current.trip.validating"/>&nbsp;&nbsp;&nbsp;<img src="${contextPath}/img/indicator.gif"/>
 			</h2>
 			<div>
-				<fmt:message key="current.trip.validating.seconds"/>
+				<fmt:message key="current.trip.validating.seconds">
+					<fmt:param>
+						<mobi:formatMobics type="milliseconds" value="${applicationScope.configuration.statePollingTimeoutMilliseconds}"/>
+					</fmt:param>
+				</fmt:message>
 			</div>
 		</section>
 	</article>

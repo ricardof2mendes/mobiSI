@@ -461,8 +461,7 @@ $(document).ready(function() {
  		}
  		
  		if(data.substring(0, WAITING.length) === WAITING) {
- 			setInterval(function(){
- 				var that = this;
+ 			var that = setInterval(function(){
  				$.get(url.state, 
  						function(data, textStatus, jqXHR){
  							if (jqXHR.getResponseHeader('Stripes-Success') === 'OK') {
@@ -496,6 +495,7 @@ $(document).ready(function() {
  		// show message
 		$('#unlocking').show();
 		var url = {
+				timeout : UNLOCK_TIMEOUT_INTERVAL,
  				lockunlock: $(this).prop('href'), 
  				pooling :  CONTEXT_PATH + '/trip/Trip.action?getCurrentTrip=',
  				state: IN_USE,
@@ -518,6 +518,7 @@ $(document).ready(function() {
  			// show message
  			$('#locking').show();
  			var url = {
+ 					timeout : LOCK_TIMEOUT_INTERVAL,
  	 				lockunlock: $(this).prop('href'), 
  	 				pooling :  CONTEXT_PATH + '/trip/Trip.action?getCurrentTrip=', 
  	 				redirect: CONTEXT_PATH + '/trip/Trip.action?finish=&successOp='
@@ -531,6 +532,7 @@ $(document).ready(function() {
  		e.preventDefault();
 		$('#locking').show();
 		var url = {
+				timeout : LOCK_TIMEOUT_INTERVAL,
 				lockunlock: $(this).prop('href'), 
 				pooling :  CONTEXT_PATH + '/trip/Trip.action?getCurrentTrip=', 
 				redirect: CONTEXT_PATH + '/trip/Trip.action?finish=&successOp='
@@ -561,9 +563,8 @@ function lockUnlockAndWait(url) {
 			function(data, textStatus, jqXHR){
 				if (jqXHR.getResponseHeader('Stripes-Success') === 'OK') {
 					if(eval(data) === true) {
-						var retries = (TIMEOUT_INTERVAL / POOLING_INTERVAL);
-						setInterval(function(){
-							var that = this;
+						var retries = (url.timeout / POOLING_INTERVAL);
+						var that = setInterval(function(){
 							if(retries !== 0) {
 								$.get(url.pooling, 
 										function(data, textStatus, jqXHR){
@@ -581,7 +582,7 @@ function lockUnlockAndWait(url) {
 									    });
 								retries--;
 							} else {
-								clearInterval(this);
+								clearInterval(that);
 								window.location.href = url.redirect + 'false';	
 							}	
 						}, POOLING_INTERVAL);

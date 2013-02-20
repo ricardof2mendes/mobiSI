@@ -90,8 +90,9 @@
 					     	// context path
 					        var CONTEXT_PATH = '${pageContext.request.contextPath}';
 					        // pooling interval
-					        var POOLING_INTERVAL = '${applicationScope.configuration.statePollingIntervalMilliseconds}';
-					        var TIMEOUT_INTERVAL = '${applicationScope.configuration.statePollingTimeoutMilliseconds}';
+					        var POOLING_INTERVAL = '${applicationScope.configuration.pollingIntervalMilliseconds}';
+					        var UNLOCK_TIMEOUT_INTERVAL = '${applicationScope.configuration.unlockPollingTimeoutMilliseconds}';
+					        var LOCK_TIMEOUT_INTERVAL = '${applicationScope.configuration.lockEndPollingTimeoutMilliseconds}';
 					        // image size
 					        var IMG_WIDTH = '${applicationScope.configuration.thumbnailWidth}px';
 					        var IMG_HEIGHT = '${applicationScope.configuration.thumbnailHeight}px';
@@ -129,8 +130,9 @@
 					     	// context path
 					        var CONTEXT_PATH = '${pageContext.request.contextPath}';
 					        // pooling interval
-					        var POOLING_INTERVAL = '${applicationScope.configuration.statePollingIntervalMilliseconds}';
-					        var TIMEOUT_INTERVAL = '${applicationScope.configuration.statePollingTimeoutMilliseconds}';
+					        var POOLING_INTERVAL = '${applicationScope.configuration.pollingIntervalMilliseconds}';
+					        var UNLOCK_TIMEOUT_INTERVAL = '${applicationScope.configuration.unlockPollingTimeoutMilliseconds}';
+					        var LOCK_TIMEOUT_INTERVAL = '${applicationScope.configuration.lockEndPollingTimeoutMilliseconds}';
 					        // image size
 					        var IMG_WIDTH = '${applicationScope.configuration.thumbnailWidth}px';
 					        var IMG_HEIGHT = '${applicationScope.configuration.thumbnailHeight}px';

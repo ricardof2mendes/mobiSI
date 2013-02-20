@@ -188,16 +188,11 @@ public class TripActionBean extends BaseActionBean {
             CustomerNotFoundExceptionException, BookingNotFoundExceptionException {
         Resolution resolution = new RedirectResolution(this.getClass()).flash(this);
         if (successOp) {
-            if (unlockOp != null) {
-//                 getContext().getMessages().add(new LocalizableMessage("current.trip.unlock.car.message"));
-            } else {
+            if (unlockOp == null) {
                 getContext().getMessages().add(new LocalizableMessage("current.trip.end.trip.message"));
             }
         } else {
-            if (unlockOp != null) {
-//                getContext().getValidationErrors().addGlobalError(
-//                        new LocalizableError("current.trip.unlock.car.message.error"));
-            } else {
+            if (unlockOp == null) {
                 getContext().getValidationErrors().addGlobalError(
                         new LocalizableError("current.trip.end.trip.message.error"));
             }

@@ -44,7 +44,7 @@ public class Configuration implements Serializable{
     public static final Configuration INSTANCE = new Configuration();
     
     /** Application state */
-    private ApplicationState applicationState = ApplicationState.PRODUCTION;
+    private final ApplicationState applicationState = ApplicationState.PRODUCTION;
 
     /** Application Encoding **/
     private final String uriEnconding = "UTF-8";
@@ -128,10 +128,16 @@ public class Configuration implements Serializable{
     private final int anyDistance = 9999999;
     
     /** State polling interval in milliseconds **/
-    private final int statePollingIntervalMilliseconds = 3000;
+    private final int pollingIntervalMilliseconds = 15000;
     
     /** State polling timeout in milliseconds **/
-    private final int statePollingTimeoutMilliseconds = 60000;
+    private final int statePollingTimeoutMilliseconds = 120000;
+    
+    /** State polling timeout in milliseconds **/
+    private final int unlockPollingTimeoutMilliseconds = 60000;
+    
+    /** State polling timeout in milliseconds **/
+    private final int lockEndPollingTimeoutMilliseconds = 60000;
     
 
     /**
@@ -332,10 +338,10 @@ public class Configuration implements Serializable{
     }
     
     /**
-     * @return the statePollingIntervalMilliseconds
+     * @return the pollingIntervalMilliseconds
      */
-    public int getStatePollingIntervalMilliseconds() {
-        return Integer.valueOf(getValue("mobics.config.state.polling.interval.milliseconds", statePollingIntervalMilliseconds));
+    public int getPollingIntervalMilliseconds() {
+        return Integer.valueOf(getValue("mobics.config.polling.interval.milliseconds", pollingIntervalMilliseconds));
     }
 
     /**
@@ -343,6 +349,20 @@ public class Configuration implements Serializable{
      */
     public int getStatePollingTimeoutMilliseconds() {
         return Integer.valueOf(getValue("mobics.config.state.polling.timeout.milliseconds", statePollingTimeoutMilliseconds));
+    }
+    
+    /**
+     * @return the unlockPollingTimeoutMilliseconds
+     */
+    public int getUnlockPollingTimeoutMilliseconds() {
+        return Integer.valueOf(getValue("mobics.config.unlock.polling.timeout.milliseconds", unlockPollingTimeoutMilliseconds));
+    }
+
+    /**
+     * @return the lockEndPollingTimeoutMilliseconds
+     */
+    public int getLockEndPollingTimeoutMilliseconds() {
+        return Integer.valueOf(getValue("mobics.config.lock.end.polling.timeout.milliseconds", lockEndPollingTimeoutMilliseconds));
     }
 
     private Configuration() {
