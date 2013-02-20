@@ -37,6 +37,8 @@ public class FormatUtils {
     public static final String DISTANCE = "distance";
 
     public static final String TIME = "time";
+    
+    public static final String MILLISECONDS = "milliseconds";
 
     public static final String TIME_WEEK = "timeWeek";
 
@@ -126,7 +128,6 @@ public class FormatUtils {
         if (TIME.equals(type)) {
             key = "time.minutes";
             Integer minutes = (((BigDecimal) value).intValue() % 3600) / 60;
-            formatted = MessageFormat.format(resources.getString(key), minutes);
             if (((BigDecimal) value).intValue() >= 3600) {
                 Integer hours = ((BigDecimal) value).intValue() / 3600;
                 if (new Integer(0).equals(minutes)) {
@@ -135,6 +136,8 @@ public class FormatUtils {
                     key = "time.hours.minutes";
                 }
                 formatted = MessageFormat.format(resources.getString(key), hours, minutes);
+            } else {
+                formatted = MessageFormat.format(resources.getString(key), minutes);
             }
         } else
 
@@ -162,6 +165,24 @@ public class FormatUtils {
             }
             formatter = new DecimalFormat(formatPattern, symbols);
             formatted = MessageFormat.format(resources.getString(key), formatter.format(value));
+        } else 
+        /* ----------------- Format miliseconds to seconds or minutes -------------------*/
+        if (MILLISECONDS.equals(type)){
+            key = "time.seconds";
+            Integer seconds = ((BigDecimal) value).intValue() / 1000;
+            if (seconds >= 60) {
+                Integer minutes = seconds / 60;
+                seconds = seconds % 60;
+                if (seconds == 0) {
+                    key = "time.minutes";
+                } else {
+                    key = "time.minutes.seconds";
+                }
+                formatted = MessageFormat.format(resources.getString(key), minutes, seconds);
+            } else {
+                formatted = MessageFormat.format(resources.getString(key), seconds);                
+            }
+            
         }
 
         return formatted;
