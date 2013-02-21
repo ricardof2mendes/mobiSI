@@ -1556,7 +1556,6 @@ body.confirmation .confirm2 {
 	   screen and (min-resolution: 1.5dppx) {
 	   
 	footer {
-		margin: 60px auto 0 auto;
 		background-image: url(../img/mobiag-logo-spash@2x.png);
 	}
 	
