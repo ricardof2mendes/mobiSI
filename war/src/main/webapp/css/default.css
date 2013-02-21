@@ -48,14 +48,14 @@ body.noBackground {
 
 section#logo {
 	height: 60px;
-	Width: 250px;
+	width: 250px;
 	margin: 10px auto;
 	background-color: rgba(0, 0, 0, 0.5);
 }
 
 section#logo > div {
 	height: 60px;
-	Width: 250px;
+	width: 250px;
 	text-align: center;
 	display: table-cell;
 	vertical-align: middle;
@@ -88,12 +88,13 @@ header > h1 {
     text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.7);
 }
 
-footer {
-	font-weight: bold;
-	font-size: 90%;
-	text-shadow: 0px -1px 1px rgba(0, 0, 0, 0.5);
-	text-align: center;
-	color: #FFF;
+section#footer {
+	margin: 30px auto 0 auto;
+	background-size: 197px 76px;
+	background-image: url(../img/mobiag-logo-spash.png);
+	background-repeat: no-repeat;
+	background-position: center center;
+	height: 76px;	
 }
 
 nav#menu ul li {
@@ -224,7 +225,6 @@ form.loginForm {
 }
 
 form.loginForm > div {
-	float: left;
 	background: #FFF;
 	border: 1px solid #E5E5E5;
 	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
@@ -235,7 +235,6 @@ form.loginForm > div {
 	-webkit-border-radius: 4px;
 }
 form.loginForm > div > input  {
-	float: left;
 	width: 100%;
 	padding-left: 10px;
 	line-height: 45px;
@@ -246,20 +245,6 @@ form.loginForm > div > input  {
 	color: #333;
 }
 
-form.loginForm>div:first-child {
-	border-top: 0;
-}
-
-form.loginForm>div>label {
-	float: left;
-	width: 35%;
-	height: 45px;
-	line-height: 45px;
-	color: #999;
-	border-top: 1px solid #D7D7D7;
-	font-size: 100%;
-	padding-left: 10px;
-}
 
 /* Util classes */
 .clear {
@@ -407,7 +392,6 @@ section.submit {
 }
 
 .loginBtn {
-	float: left;
 	width: 250px;
 	margin: 10px auto;
 }
@@ -1570,6 +1554,11 @@ body.confirmation .confirm2 {
 @media screen and (-webkit-min-device-pixel-ratio: 1.5),
 	   screen and (min-device-pixel-ratio: 1.5),
 	   screen and (min-resolution: 1.5dppx) {
+	   
+	footer {
+		margin: 60px auto 0 auto;
+		background-image: url(../img/mobiag-logo-spash@2x.png);
+	}
 	
 	span#nearestCar {
 		background-image: url(../img/links/nearest-car@2x.png);

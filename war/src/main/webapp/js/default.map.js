@@ -92,8 +92,6 @@ $(document).ready(function() {
 				placeholder : $('#paramCLM').html()
 			};
 		
-		console.log($('#paramAddr').html());
-		
 		// add event listener to search
 		$('#streetSearchForm').on('submit', function(e){
 			e.preventDefault();

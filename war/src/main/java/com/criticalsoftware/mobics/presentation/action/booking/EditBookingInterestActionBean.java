@@ -29,7 +29,6 @@ import com.criticalsoftware.mobics.booking.BookingInterestDTO;
 import com.criticalsoftware.mobics.presentation.action.recent.RecentActivitiesActionBean;
 import com.criticalsoftware.mobics.presentation.security.AuthenticationUtil;
 import com.criticalsoftware.mobics.presentation.util.Configuration;
-import com.criticalsoftware.mobics.presentation.util.GeolocationUtil;
 import com.criticalsoftware.mobics.proxy.booking.BookingInterestNotFoundExceptionException;
 import com.criticalsoftware.mobics.proxy.booking.BookingValidationExceptionException;
 import com.criticalsoftware.mobics.proxy.booking.BookingWSServiceStub;
@@ -90,7 +89,6 @@ public class EditBookingInterestActionBean extends BookingInterestActionBean {
      * @return resolution
      */
     public Resolution returnToEdit() {
-        address = address == null ? GeolocationUtil.getAddressFromCoordinates(latitude, longitude) : address;
         return new ForwardResolution("/WEB-INF/recent/editBookingInterest.jsp");
     }
 

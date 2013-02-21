@@ -5,28 +5,24 @@
 <c:set var="placeholderPass" scope="page"><fmt:message key="login.j_password" /></c:set>
 
 <t:login title="${title}">
-	<article>
-		<section id="logo">
+	<section id="logo">
+		<div>
+			<img src="${contextPath}/Login.action?getSplashScreenImage=" />
+		</div>
+	</section>
+	<section id="loginErrors">
+		<div class="globalErrors">
+			<stripes:errors/>
+		</div>
+	</section>
+	<section id="login">
+		<stripes:form class="loginForm" beanclass="com.criticalsoftware.mobics.presentation.action.LoginActionBean" method="post">
 			<div>
-				<img src="${contextPath}/Login.action?getSplashScreenImage=" />
+				<stripes:text type="email" id="username" name="username" placeholder="${placeholderLogin}"/>
+				<stripes:password id="password" name="password" placeholder="${placeholderPass}"/>
 			</div>
-		</section>
-		<section id="loginErrors">
-			<div class="globalErrors">
-				<stripes:errors/>
-			</div>
-		</section>
-		<section id="login">
-			<stripes:form class="loginForm" beanclass="com.criticalsoftware.mobics.presentation.action.LoginActionBean" method="post">
-				<div>
-					<stripes:text type="email" id="username" name="username" placeholder="${placeholderLogin}"/>
-					<stripes:password id="password" name="password" placeholder="${placeholderPass}"/>
-				</div>
-				<stripes:submit id="authenticate" name="authenticate" class="submitBtn loginBtn"><fmt:message key="login.submit"/></stripes:submit>
-			</stripes:form>
-		</section>
-	</article>
-	<footer class="clear">
-		<fmt:message key="login.powered"/>
-	</footer>
+			<stripes:submit id="authenticate" name="authenticate" class="submitBtn loginBtn"><fmt:message key="login.submit"/></stripes:submit>
+		</stripes:form>
+	</section>
+	<section id="footer"></section>   
 </t:login>
