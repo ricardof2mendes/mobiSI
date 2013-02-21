@@ -91,7 +91,7 @@ header > h1 {
 section#footer {
 	margin: 30px auto 0 auto;
 	background-size: 197px 76px;
-	background-image: url(../img/mobiag-logo-spash.png);
+	background-image: url(../img/webapp-mobiag-logo-spash.png);
 	background-repeat: no-repeat;
 	background-position: center center;
 	height: 76px;	
@@ -258,7 +258,11 @@ form.loginForm > div > input  {
 /* Application Classes */
 .bottomShadow {
 	height: 5px;
-	background: transparent url(../img/menu/sombra_menus_10px.png) repeat-x top left;
+	background-color: transparent;
+	background-image: url(../img/menu/sombra_menus_10px.png);
+	background-position: top left;
+	background-repeat: repeat-x;
+	background-size: 1px 5px;
 	margin-bottom: 5px;
 }
 
@@ -269,7 +273,11 @@ form.loginForm > div > input  {
 
 .bottomShadow2 {
 	height: 5px;
-	background: transparent url(../img/menu/sombra_menus_10px.png) repeat-x top left;
+	background-image: url(../img/menu/sombra_menus_10px.png);
+	background-color: transparent;
+	background-position: top left;
+	background-repeat: repeat-x;
+	background-size: 1px 5px;
 	margin-bottom: 5px;
 }
 
@@ -284,12 +292,20 @@ form.loginForm > div > input  {
 	float: left;
 	margin-top: 7px;
 	margin-left: 10px;
-	background: transparent url(../img/bt_up_30px.png) no-repeat top left;
+	background-color: transparent;
+	background-image: url(../img/bt_up_30px.png);
+	background-position: top left;
+	background-repeat: repeat-x;
+	background-size: 28px 28px;
 }
 
 .menuBtn:active {
 	border: 1px solid rgba(0, 0, 0, 0.5);
-	background: transparent url(../img/bt_down_30px.png) no-repeat top left;
+	background-color: transparent;
+	background-image: url(../img/bt_down_30px.png);
+	background-position: top left;
+	background-repeat: repeat-x;
+	background-size: 28px 28px;
 }
 
 .alertBtn,
@@ -307,6 +323,7 @@ form.loginForm > div > input  {
 	text-shadow: 0px -1px 1px rgba(0, 0, 0, 0.5);
 	border: 1px solid rgba(0, 0, 0, 0.3);	
 	background-image: url(../img/bt_up_45px.png);
+	background-size: 1px 45px;
 	background-repeat: repeat-x;
 	background-position: top left;
 }
@@ -323,6 +340,7 @@ form.loginForm > div > input  {
 .linkBtn:active {
 	border: 1px solid rgba(0, 0, 0, 0.5);
 	background-image: url(../img/bt_down_45px.png);
+	background-size: 1px 45px;
 }
 
 .bigBtn {
@@ -331,11 +349,13 @@ form.loginForm > div > input  {
 	height: 90px;
 	line-height: 90px;
 	background-image: url(../img/bt_up_90px.png);
+	background-size: 1px 90px;
 }
 
 .bigBtn:active {
 	border: 1px solid rgba(0, 0, 0, 0.5);
 	background-image: url(../img/bt_down_90px.png);
+	background-size: 1px 90px;
 }
 
 span#nearestCar {
@@ -366,6 +386,7 @@ section.submit {
 	border: 1px solid rgba(0, 0, 0, 0.3);
 	background-color: lightgray;
 	background-image: url(../img/bt_up_45px.png);
+	background-size: 1px 45px;
 	background-repeat: repeat-x;
 	background-position: top left;
 	margin-bottom: 10px;
@@ -374,6 +395,7 @@ section.submit {
 
 .submitBtn:active {
 	background-image: url(../img/bt_down_45px.png);
+	background-size: 1px 45px;
 	border: 1px solid rgba(0, 0, 0, 0.5);
 }
 
@@ -415,7 +437,6 @@ section > nav.simpleList ul li {
 	font-size: 100%;
 	font-weight: bold;
 	border-bottom: 1px solid #E5E5E5;
-	background-image: url(../img/fakeIco.png), url(../img/seta.png);
 	background-repeat: no-repeat, no-repeat;
 	background-position: 10px 50%, 100% 50%;
 }
@@ -924,12 +945,14 @@ nav.orderCriteria ul li a{
 	border: 1px solid rgba(0, 0, 0, 0.6);
 	font: bold 90% Arial, sans-serif;
 	background: url('../img/bt_up_30px-height.png');
+	background-size: 1px 30px;
 	margin-left: -1px;
 	line-height: 28px;
 }
 
 nav.orderCriteria ul li a.selected{
 	background: url('../img/bt_down_30px-height.png');
+	background-size: 1px 30px;
 }
 
 nav.orderCriteria ul li:first-child a{
@@ -1070,6 +1093,7 @@ article.pin div:nth-child(3) > input[type="submit"] {
 	display: block;
 	background-color: #288b07;
 	background-image: url(../img/bt_up_45px.png);
+	background-size: 1px 45px;
 	background-repeat: repeat-x;
 	background-position: top left;
 	border: 1px solid rgba(0, 0, 0, 0.3);
@@ -1077,6 +1101,7 @@ article.pin div:nth-child(3) > input[type="submit"] {
 
 article.pin div:nth-child(3) > input[type="submit"]:active {
 	background-image: url(../img/bt_down_45px.png);
+	background-size: 1px 45px;
 	border: 1px solid rgba(0, 0, 0, 0.5);
 }
 
@@ -1085,6 +1110,7 @@ article.pin div:nth-child(3) > input[type="submit"]:active {
 #licsearch {
 	margin-top: -7px; 
 	background-image: url("../img/menu/sombra_menus_10px.png");
+	background-size: 1px 5px;
     background-position: left bottom;
     background-repeat: repeat-x;
     padding-bottom: 5px;
@@ -1228,6 +1254,7 @@ input.autocomplete {
 /* Theme Classes */
 .map {
 	background-image: url(../img/theme/mapa.png), url(../img/theme/background_login.png);
+	background-size: 439px 408px, 5px 9px;
 	background-repeat: no-repeat, repeat;
 	background-position: 50% 0, top left;
 }
@@ -1555,8 +1582,54 @@ body.confirmation .confirm2 {
 	   screen and (min-device-pixel-ratio: 1.5),
 	   screen and (min-resolution: 1.5dppx) {
 	   
-	footer {
-		background-image: url(../img/mobiag-logo-spash@2x.png);
+   	.bottomShadow,
+   	.bottomShadow2,
+	#licsearch {
+   		background-image: url(../img/menu/sombra_menu_20px.png);
+   	}
+	   
+	section#footer {
+		background-image: url(../img/webapp-mobiag-logo-spash@2x.png);
+	}
+	
+	.menuBtn {
+		background-image: url(../img/bt_up_60px.png);
+	}
+	
+	.menuBtn:active {
+		background-image: url(../img/bt_down_60px.png);
+	}
+	
+	.bigBtn {
+		background-image: url(../img/bt_up_180px.png);
+	}
+	
+	.bigBtn:active {
+		background-image: url(../img/bt_down_180px.png);
+	}
+	
+	.submitBtn {
+		background-image: url(../img/bt_up_90px.png);
+	}
+	
+	.submitBtn:active {
+		background-image: url(../img/bt_down_90px.png);
+	}
+	
+	nav.orderCriteria ul li a {
+		background: url('../img/bt_up_60px-height.png');
+	}
+	
+	nav.orderCriteria ul li a.selected {
+		background: url('../img/bt_down_60px-height.png');
+	}
+	
+	article.pin div:nth-child(3) > input[type="submit"] {
+		background-image: url(../img/bt_up_90px.png);
+	}
+	
+	article.pin div:nth-child(3) > input[type="submit"]:active {
+		background-image: url(../img/bt_down_90px.png);
 	}
 	
 	span#nearestCar {
@@ -1596,7 +1669,7 @@ body.confirmation .confirm2 {
 	}
 	
 	nav#menu ul li.bookingActive {
-		background-image: url(../img/menu/bookacar-active@2x.png), url(../img/menu/sombra_menu_20px.png), url(../img/bt_down_45px.png);
+		background-image: url(../img/menu/bookacar-active@2x.png), url(../img/menu/sombra_menu_20px.png), url(../img/bt_down_90px.png);
 	}
 	
 	nav#menu ul li.trip {
@@ -1604,7 +1677,7 @@ body.confirmation .confirm2 {
 	}
 	
 	nav#menu ul li.tripActive {
-		background-image: url(../img/menu/trip-active@2x.png), url(../img/bt_down_45px.png);
+		background-image: url(../img/menu/trip-active@2x.png), url(../img/bt_down_90px.png);
 	}
 	
 	nav#menu ul li.recent {
@@ -1612,7 +1685,7 @@ body.confirmation .confirm2 {
 	}
 	
 	nav#menu ul li.recentActive {
-		background-image: url(../img/menu/recent-active@2x.png), url(../img/bt_down_45px.png);
+		background-image: url(../img/menu/recent-active@2x.png), url(../img/bt_down_90px.png);
 	}
 	
 	nav#menu ul li.messages {
@@ -1620,7 +1693,7 @@ body.confirmation .confirm2 {
 	}
 	
 	nav#menu ul li.messagesActive {
-		background-image: url(../img/menu/messages-active@2x.png), url(../img/bt_down_45px.png);
+		background-image: url(../img/menu/messages-active@2x.png), url(../img/bt_down_90px.png);
 	}
 	
 	nav#menu ul li.contacts {
@@ -1628,7 +1701,7 @@ body.confirmation .confirm2 {
 	}
 	
 	nav#menu ul li.contactsActive {
-		background-image: url(../img/menu/contacts-active@2x.png), url(../img/bt_down_45px.png);
+		background-image: url(../img/menu/contacts-active@2x.png), url(../img/bt_down_90px.png);
 	}
 	
 	nav#menu ul li.preferences {
@@ -1636,7 +1709,7 @@ body.confirmation .confirm2 {
 	}
 	
 	nav#menu ul li.preferencesActive {
-		background-image: url(../img/menu/preferences-active@2x.png), url(../img/bt_down_45px.png);
+		background-image: url(../img/menu/preferences-active@2x.png), url(../img/bt_down_90px.png);
 	}
 	
 	nav#menu ul li.account {
@@ -1644,7 +1717,14 @@ body.confirmation .confirm2 {
 	}
 	
 	nav#menu ul li.accountActive {
-		background-image: url(../img/menu/account-active@2x.png), url(../img/menu/sombra_menu_20px_flipped.png), url(../img/bt_down_45px.png);
+		background-image: url(../img/menu/account-active@2x.png), url(../img/menu/sombra_menu_20px_flipped.png), url(../img/bt_down_90px.png);
+	}
+	
+	.alertBtn,
+	.linkBtn,
+	.alertBtn:active,
+	.linkBtn:active {
+		background-image: url(../img/bt_down_90px.png);
 	}
 	
 	/**App theme*/

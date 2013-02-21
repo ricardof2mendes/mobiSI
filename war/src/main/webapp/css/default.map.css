@@ -1,4 +1,4 @@
-html, body{
+simhtml, body{
 	height: 100%;
 }
 
@@ -175,6 +175,7 @@ div.olControlMyLocation a:hover {
 
 #whiteBar.addressBar span{
 	background-image: url(../img/map/location-user-selected.png);
+	background-size: 22px 30px;
 	background-repeat: no-repeat;
 	background-position: center left;
 	padding: 15px 0 15px 25px;
@@ -301,6 +302,11 @@ nav.oneColumnList  ul li a > div:nth-child(2) {
 	line-height: 60px;
 }
 
+img.userLocation {
+	width: 22px;
+	height: 30px;
+}
+
 /******************************* Map Legend*/
 #legend {
 	padding-top: 10px;
@@ -372,6 +378,10 @@ nav.oneColumnList  ul li a > div:nth-child(2) {
 	
 	#legend nav.simpleList ul li:nth-child(2) span {
 		background: #fff url(../img/map/location-car-selected@2x.png) no-repeat 0 50%;
+	}
+	
+	#whiteBar.addressBar span {
+    	background-image: url("../img/map/location-user-selected@2x.png");
 	}
 }
 

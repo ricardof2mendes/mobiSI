@@ -33,7 +33,7 @@
 	<span id="paramLon" class="hidden">${actionBean.longitude}</span>
 	<span id="paramCLM" class="hidden"><fmt:message key="interest.details.current.location"/></span>
 		
-	<article id="streetsearch" class="simpleArticle">
+	<article id="streetsearch" class="simpleArticle white">
 		<section>
 			<stripes:form id="streetSearchForm" beanclass="com.criticalsoftware.mobics.presentation.action.booking.BookingInterestActionBean" method="get">
 				<div>

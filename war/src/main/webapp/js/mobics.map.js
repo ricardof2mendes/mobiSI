@@ -529,14 +529,16 @@ Map.prototype = {
 			var url = $('#linkToBeUsedInList').attr('href'),
 				aux = url;
 			
+			var icon = this.retina ? 'location-user-selected@2x.png' : 'location-user-selected.png';
+			
 			if(this.mylatlong.latitude) {
 				aux += '&latitude=' + this.mylatlong.latitude + '&longitude=' + this.mylatlong.longitude + '&address='; 
-				html += '<li><a href="'+aux+'"><div><img src="'+ CONTEXT_PATH +'/img/map/location-user-selected.png"/></div><div class="ellipsis" ><span>'+this.searchParams.placeholder+'</span></div></a></li>';
+				html += '<li><a href="'+aux+'"><div><img class="userLocation" src="'+ CONTEXT_PATH +'/img/map/'+icon+'"/></div><div class="ellipsis" ><span>'+this.searchParams.placeholder+'</span></div></a></li>';
 			}
 			if(data) {
 				$(data).each(function(){
 					aux = url + '&latitude=' + this.latitude + '&longitude=' + this.longitude + '&address=' + this.displayName;
-					html += '<li><a href="'+aux+'"><div><img src="'+ CONTEXT_PATH +'/img/map/location-user-selected.png"/></div><div class="ellipsis" ><span>'+ this.displayName +'</span></div></a></li>';
+					html += '<li><a href="'+aux+'"><div><img class="userLocation" src="'+ CONTEXT_PATH +'/img/map/'+icon+'"/></div><div class="ellipsis" ><span>'+ this.displayName +'</span></div></a></li>';
 				});
 			}
 			$('#results').html(html);
