@@ -1,7 +1,8 @@
 '<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>';
-//
-// Any variable declared here must be replicated in the correct jsp tag (main/map)
-//
+
+// ***********************************************************************************
+// * Any variable declared here must be replicated in the correct jsp tag (main/map) *
+// ***********************************************************************************
 
 // context path
 var CONTEXT_PATH = '${pageContext.request.contextPath}';
