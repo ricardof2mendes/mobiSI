@@ -87,16 +87,16 @@
 				        <script type="text/javascript" src="${contextPath}/js/moment.js"></script>
 				        
 				        <script type="text/javascript" >
-					     	// context path
+				     		// *****************************************************************
+			        		// * Any variable declared here must be replicated in variables.js *
+			        		// *****************************************************************
+			        	
+				        	// context path
 					        var CONTEXT_PATH = '${pageContext.request.contextPath}';
 					        // pooling interval
 					        var POOLING_INTERVAL = '${applicationScope.configuration.pollingIntervalMilliseconds}';
 					        var UNLOCK_TIMEOUT_INTERVAL = '${applicationScope.configuration.unlockPollingTimeoutMilliseconds}';
 					        var LOCK_TIMEOUT_INTERVAL = '${applicationScope.configuration.lockEndPollingTimeoutMilliseconds}';
-					        // image size
-					        var IMG_WIDTH = '${applicationScope.configuration.thumbnailWidth}px';
-					        var IMG_HEIGHT = '${applicationScope.configuration.thumbnailHeight}px';
-	
 					        // localizable strings
 					        var ZONE_ALL_LABEL = '<fmt:message key="book.advance.zone.any" />';
 					        var GEOLOCATION_NOT_SUPPORTED_LABEL = '<fmt:message key="geolocation.alert.msg.not.supported"/>';
@@ -123,9 +123,9 @@
 	        		<c:otherwise>
 				        <script type="text/javascript" src="${contextPath}/js/zepto.js"></script>
 				        <script type="text/javascript" >
-				        	//
-				        	//Any variable declared here must be replicated in variables.js
-				        	//
+				        	// *****************************************************************
+				        	// * Any variable declared here must be replicated in variables.js *
+				        	// *****************************************************************
 				        	
 					     	// context path
 					        var CONTEXT_PATH = '${pageContext.request.contextPath}';
@@ -133,10 +133,6 @@
 					        var POOLING_INTERVAL = '${applicationScope.configuration.pollingIntervalMilliseconds}';
 					        var UNLOCK_TIMEOUT_INTERVAL = '${applicationScope.configuration.unlockPollingTimeoutMilliseconds}';
 					        var LOCK_TIMEOUT_INTERVAL = '${applicationScope.configuration.lockEndPollingTimeoutMilliseconds}';
-					        // image size
-					        var IMG_WIDTH = '${applicationScope.configuration.thumbnailWidth}px';
-					        var IMG_HEIGHT = '${applicationScope.configuration.thumbnailHeight}px';
-	
 					        // localizable strings
 					        var ZONE_ALL_LABEL = '<fmt:message key="book.advance.zone.any" />';
 					        var GEOLOCATION_NOT_SUPPORTED_LABEL = '<fmt:message key="geolocation.alert.msg.not.supported"/>';

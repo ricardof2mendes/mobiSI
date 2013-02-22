@@ -47,8 +47,13 @@
        		</c:otherwise>
        	</c:choose>
     </head>
-    <body class="${actionBean.splashScreenStyle}">
-        <jsp:doBody/>             
+    <body class="${actionBean.splashScreenStyle}" onload="onLoad();">
+        <jsp:doBody/>    
+        <script type="text/javascript" >
+	        function onLoad() {
+	            document.getElementById('retina').value = window.devicePixelRatio > 1;
+	        }	
+        </script>         
     </body>
     
 </html>

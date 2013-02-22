@@ -15,7 +15,7 @@
 										<stripes:param name="latitude" value="${actionBean.latitude}"/>
 										<stripes:param name="longitude" value="${actionBean.longitude}"/>
 										<div>
-											<img class="carImage" src="${contextPath}/booking/ImmediateBooking.action?getCarImage=&licensePlate=${car.licensePlate}" />
+											<img class="carImage" src="${contextPath}/booking/ImmediateBooking.action?getCarImage=&licensePlate=${car.licensePlate}&width=58&height=58" />
 										</div>
 										<div>
 											<div>
@@ -53,7 +53,7 @@
 										<stripes:param name="latitude" value="${actionBean.latitude}"/>
 										<stripes:param name="longitude" value="${actionBean.longitude}"/>
 										<div>
-											<img class="carImage" src="${contextPath}/booking/ImmediateBooking.action?getCarImage=&licensePlate=${car.licensePlate}" />
+											<img class="carImage" src="${contextPath}/booking/ImmediateBooking.action?getCarImage=&licensePlate=${car.licensePlate}&width=58&height=58" />
 										</div>
 										<div>
 											<div>

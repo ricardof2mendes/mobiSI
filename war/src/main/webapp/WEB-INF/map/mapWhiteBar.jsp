@@ -27,10 +27,10 @@
 		<section id="whiteBar">
 			<nav class="threeColumnList hidden">
 				<ul>
-					<li>
+					<li class="noBorder">
 						<stripes:link href="${contextPath}/booking/ImmediateBooking.action?licensePlateBook=">
 							<div>
-								<img src="" />
+								<img class="carImage" src="" />
 							</div>
 							<div>
 								<div>
