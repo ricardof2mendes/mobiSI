@@ -13,13 +13,6 @@ $(document).ready(function() {
 		toggleFx('#legend');
 	});
 	
-	/**
-	 * Body with white backgroud
-	 */
-	if($('.bodyWhite').length > 0) {
-		$('body').addClass('noBackground');
-	}
-	
 	// toogle function
 	var toggle = function() {
 		$('#resultlist').toggle();
@@ -28,8 +21,10 @@ $(document).ready(function() {
 		$('#whiteBar').toggle();
 		if($('#addressList').hasClass('hidden')) {
 			$('#addressList').removeClass('hidden');
+			$('body').addClass('noBackground');
 		} else {
 			$('#addressList').addClass('hidden');
+			$('body').removeClass('noBackground');
 		}
 	};
 	// show the results on a list
