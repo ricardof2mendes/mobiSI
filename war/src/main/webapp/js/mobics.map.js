@@ -675,7 +675,7 @@ Map.prototype = {
 				);
 				
 				// Set image
-				$('#whiteBar img').prop('src', CONTEXT_PATH + '/booking/ImmediateBooking.action?getCarImage=&licensePlate=' + options.car.licensePlate);
+				$('#whiteBar img').prop('src', CONTEXT_PATH + '/booking/ImmediateBooking.action?getCarImage=&width=58&height=58&licensePlate=' + options.car.licensePlate);
 				// set other content
 				$('#licensePlate').html(options.car.licensePlate);
 				$('#carBrandName').html(options.car.carBrandName + '&nbsp;' + options.car.carModelName);

@@ -571,6 +571,11 @@ section > nav.simpleList ul li.account a {
 }
 
 /****************************** Panel detail **/
+img.carImage {
+	max-width: 58px;
+	max-height: 58px;	
+}
+
 section > nav.panel ul {
 	margin: 0 10px 15px;
 	background: #FFF;
@@ -1576,6 +1581,9 @@ body.confirmation .confirm2 {
 	text-transform : uppercase;
 }
 
+.noBorder {
+	border: 0 !important;
+}
 /********************************************************************* Media Queries */
 
 @media screen and (-webkit-min-device-pixel-ratio: 1.5),

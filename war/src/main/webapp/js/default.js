@@ -16,9 +16,8 @@ $(document).ready(function() {
 	 */
 	$('.carImage').each(function(){
 		$(this).on('error', function() {
-			$(this).attr('src', CONTEXT_PATH + '/img/ios-webapp-no-photo.png')
-				.attr('width', IMG_WIDTH)
-				.attr('height', IMG_HEIGHT);
+			var noPhoto = window.devicePixelRatio > 1 ? 'ios-webapp-no-photo@2x.png' : 'ios-webapp-no-photo.png';
+			$(this).attr('src', CONTEXT_PATH + '/img/' + noPhoto);
 		});
 	});
 
