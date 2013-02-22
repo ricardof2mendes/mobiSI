@@ -117,6 +117,9 @@ Map.prototype = {
 			// Add legend control to the map
 			this.map.addControl(new OpenLayers.Control.Legend({
 				onLegendClick : function(evt) {
+					if(document.getElementById('submit')) {
+						document.getElementById('submit').focus(); 
+					} 
 					if (evt.buttonElement === this.legendLink.legend) {
 						if(!$('#menu').hasClass('hidden')) {
 							toggleFx('#menu');
@@ -130,6 +133,9 @@ Map.prototype = {
 				// add list link
 				this.map.addControl(new OpenLayers.Control.List({
 					onListClick : function(evt) {
+						if(document.getElementById('submit')) {
+							document.getElementById('submit').focus(); 
+						} 
 						if (evt.buttonElement === this.listLink.list) {
 							window.location.href = CONTEXT_PATH +'/booking/ImmediateBooking.action?searchImmediateInList=&price=' + that.searchParams.price + 
 							'&distance=' + that.searchParams.distance + '&clazz=' + that.searchParams.clazz + '&fuel=' + that.searchParams.fuel + 
@@ -143,6 +149,9 @@ Map.prototype = {
 				// add my location link
 				this.map.addControl(new OpenLayers.Control.MyLocation({
 					onMyLocationClick : function(evt) {
+						if(document.getElementById('submit')) {
+							document.getElementById('submit').focus(); 
+						}
 						if (evt.buttonElement === this.myLocationLink.myLocation) {
 							if(that.mylatlong.latitude && that.mylatlong.longitude) {
 								var mapCenter = new OpenLayers.LonLat(that.mylatlong.longitude, that.mylatlong.latitude );

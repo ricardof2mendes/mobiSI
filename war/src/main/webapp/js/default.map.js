@@ -30,6 +30,9 @@ $(document).ready(function() {
 	// show the results on a list
 	$('#resultlist').on('click', function(e) {
 		e.preventDefault();
+		if(document.getElementById('submit')) {
+			document.getElementById('submit').focus();
+		}
 		toggle();
 	});
 	// show the results on a map
@@ -54,6 +57,7 @@ $(document).ready(function() {
  					$(that).val('');
  					Map.clear();
  					$('#streetSearchForm > div > div > div').removeClass('delete').off('click');
+ 					document.getElementById('query').focus();
  			});
  		} else {
  			$('#streetSearchForm > div > div > div').removeClass('delete').off('click');
@@ -98,7 +102,7 @@ $(document).ready(function() {
 		$('#streetSearchForm').on('submit', function(e){
 			e.preventDefault();
 			Map.change($('#query').val());
-			document.getElementById("submit").focus(); 
+			document.getElementById('submit').focus(); 
 		});
 	}
 	
