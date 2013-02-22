@@ -1,4 +1,4 @@
-simhtml, body{
+html, body{
 	height: 100%;
 }
 
@@ -28,6 +28,7 @@ div.streetBottomShadow {
     right: 0;
     bottom: 0;
     top: 45px;
+    background-color: #E4E4E4;
 }
 
 #container.street {
@@ -200,7 +201,9 @@ div.olControlMyLocation a:hover {
 
 /******************************* Search Form */
 
-#streetsearch {}
+#streetsearch {
+	background-color: #E4E4E4;
+}
 
 #streetsearch > section {
 	padding: 10px 0 13px 0;

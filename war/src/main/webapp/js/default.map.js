@@ -13,6 +13,13 @@ $(document).ready(function() {
 		toggleFx('#legend');
 	});
 	
+	/**
+	 * Body with white backgroud
+	 */
+	if($('.bodyWhite').length > 0) {
+		$('body').addClass('noBackground');
+	}
+	
 	// toogle function
 	var toggle = function() {
 		$('#resultlist').toggle();
