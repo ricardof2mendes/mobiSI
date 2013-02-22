@@ -41,6 +41,7 @@ import com.criticalsoftware.mobics.presentation.util.Configuration;
 import com.criticalsoftware.mobics.presentation.util.GeolocationUtil;
 import com.criticalsoftware.mobics.proxy.booking.BookingInterestNotFoundExceptionException;
 import com.criticalsoftware.mobics.proxy.booking.BookingNotFoundExceptionException;
+import com.criticalsoftware.mobics.proxy.booking.BookingWrongStateExceptionException;
 import com.criticalsoftware.mobics.proxy.booking.BookingWSServiceStub;
 import com.criticalsoftware.mobics.proxy.booking.CustomerNotFoundExceptionException;
 import com.criticalsoftware.mobics.proxy.booking.UnauthorizedCustomerExceptionException;
@@ -148,7 +149,7 @@ public class RecentActivitiesActionBean extends BaseActionBean {
      */
     public Resolution cancelAdvanceBooking() throws RemoteException, UnsupportedEncodingException,
             BookingNotFoundExceptionException, CustomerNotFoundExceptionException,
-            UnauthorizedCustomerExceptionException {
+            UnauthorizedCustomerExceptionException, BookingWrongStateExceptionException {
         BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
                 Configuration.INSTANCE.getBookingEndpoint());
         bookingWSServiceStub._getServiceClient().addHeader(

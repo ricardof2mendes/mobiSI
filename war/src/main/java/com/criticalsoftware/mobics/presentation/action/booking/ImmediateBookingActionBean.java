@@ -196,9 +196,8 @@ public class ImmediateBookingActionBean extends BookingActionBean {
                 AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
                         .getPassword()));
 
-        CarDTO[] dtos = fleetWSServiceStub.searchCars(null, null, null, null, OrderBy.CAR_DISTANCE.name(),
-                Configuration.INSTANCE.getMinResults(), new BigDecimal(latitude), new BigDecimal(longitude),
-                CarTypeEnum.NORMAL.getValue());
+        CarDTO[] dtos = fleetWSServiceStub.searchCars(null, null, null, null, OrderBy.CAR_DISTANCE.name(), 1,
+                new BigDecimal(latitude), new BigDecimal(longitude), CarTypeEnum.NORMAL.getValue());
         if (dtos != null) {
             car = dtos[0];
             if (car == null) {
@@ -285,13 +284,14 @@ public class ImmediateBookingActionBean extends BookingActionBean {
      * @throws UnauthorizedCustomerExceptionException
      * @throws com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException
      * @throws ForbiddenZoneExceptionException
-     * @throws InvalidCarBookingExceptionException 
+     * @throws InvalidCarBookingExceptionException
      */
     public Resolution book() throws RemoteException, UnsupportedEncodingException,
             InvalidCustomerPinExceptionException, OverlappedCustomerTripExceptionException,
             CarNotAvailableForBookingExceptionException, CarNotFoundExceptionException,
             ForbiddenZoneExceptionException, UnauthorizedCustomerExceptionException,
-            com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException, InvalidCarBookingExceptionException {
+            com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException,
+            InvalidCarBookingExceptionException {
 
         BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
                 Configuration.INSTANCE.getBookingEndpoint());

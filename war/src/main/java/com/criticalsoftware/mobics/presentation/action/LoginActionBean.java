@@ -42,6 +42,9 @@ public class LoginActionBean extends BaseActionBean {
 
     @Validate
     private String password;
+    
+    @Validate
+    private boolean retina;
 
     @DefaultHandler
     @DontValidate
@@ -75,6 +78,7 @@ public class LoginActionBean extends BaseActionBean {
                         AuthenticationUtil.getAuthenticationHeader(username, password));
                 this.getContext().setUser(
                         new User(username, password, carClubDTO, customerWSServiceStub.getCustomerPreferences()));
+                this.getContext().setRetina(retina);
             } else {
                 this.getContext().getValidationErrors().addGlobalError(new LocalizableError("login.carclub.error"));
                 resolution = new ForwardResolution("/WEB-INF/login.jsp");
@@ -116,6 +120,20 @@ public class LoginActionBean extends BaseActionBean {
      */
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    /**
+     * @return the retina
+     */
+    public boolean isRetina() {
+        return retina;
+    }
+
+    /**
+     * @param retina the retina to set
+     */
+    public void setRetina(boolean retina) {
+        this.retina = retina;
     }
 
 }

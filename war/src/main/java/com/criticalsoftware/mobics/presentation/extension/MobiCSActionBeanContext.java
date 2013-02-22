@@ -32,4 +32,14 @@ public class MobiCSActionBeanContext extends ActionBeanContext {
     public void logout() {
         getRequest().getSession().invalidate();
     }
+    
+    /** Sets the retina display. */
+    public void setRetina(boolean retina) {
+        getRequest().getSession().setAttribute("retina", retina);
+    }
+    
+    /** Gets the retina display. */
+    public boolean getRetina() {
+        return (Boolean) getRequest().getSession().getAttribute("retina");
+    }
 }

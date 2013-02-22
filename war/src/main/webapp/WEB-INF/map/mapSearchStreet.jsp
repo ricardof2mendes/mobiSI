@@ -117,7 +117,7 @@
 			</nav>
 		</section>	
 	</article>
-	<article id="addressList" class="hidden">
+	<article id="addressList" class="bodyWhite hidden">
 		<section>
 			<nav class="oneColumnList">
 				<!-- Shared link to be used in by places in list display-->

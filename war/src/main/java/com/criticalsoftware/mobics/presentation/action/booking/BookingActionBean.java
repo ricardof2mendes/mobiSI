@@ -64,6 +64,12 @@ public abstract class BookingActionBean extends BaseActionBean {
 
     @Validate(required = true, on = "book", minlength = 4, maxlength = 4)
     protected Integer pin;
+    
+    @Validate
+    protected Integer width = 58;
+     
+    @Validate
+    protected Integer height = 58;
 
     /**
      * Show pin to user
@@ -125,9 +131,11 @@ public abstract class BookingActionBean extends BaseActionBean {
     public Resolution getCarImage() {
         Resolution resolution = null;
         try {
+            int w = this.getContext().getRetina() ? 2 * width : width;
+            int h = this.getContext().getRetina() ? 2 * height : height;
+
             DataHandler handler = new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint()).getCarThumbnail(
-                    licensePlate, Configuration.INSTANCE.getThumbnailWidth(),
-                    Configuration.INSTANCE.getThumbnailHeight());
+                    licensePlate, w, h);
             resolution = new StreamingResolution(handler.getContentType(), handler.getInputStream());
         } catch (Exception e) {
             LOG.warn("Could not load image", e.getMessage());
@@ -204,4 +212,33 @@ public abstract class BookingActionBean extends BaseActionBean {
     public void setLongitude(String longitude) {
         this.longitude = longitude;
     }
+
+    /**
+     * @return the width
+     */
+    public Integer getWidth() {
+        return width;
+    }
+
+    /**
+     * @param width the width to set
+     */
+    public void setWidth(Integer width) {
+        this.width = width;
+    }
+
+    /**
+     * @return the height
+     */
+    public Integer getHeight() {
+        return height;
+    }
+
+    /**
+     * @param height the height to set
+     */
+    public void setHeight(Integer height) {
+        this.height = height;
+    }
+    
 }

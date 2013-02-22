@@ -73,11 +73,11 @@
 						</span>
 					</li>
 					<li class="detail white">
+						<span></span>
 						<span>
-							<fmt:message key="interest.details.from.my.car.club"/>
-						</span>
-						<span>
-							<fmt:message key="application.value.${actionBean.booking.carClubCarsOnly}"/>
+							<stripes:form partial="true" beanclass="com.criticalsoftware.mobics.presentation.action.recent.RecentActivitiesActionBean">
+								<stripes:checkbox name="booking.carClubCarsOnly" disabled="disabled"/>&nbsp;<fmt:message key="interest.details.from.my.car.club"/>
+							</stripes:form>	
 						</span>
 					</li>
 				</ul>
