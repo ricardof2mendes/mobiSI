@@ -34,14 +34,11 @@
         <property name="mobics.config.geolocation.server" value="nominatim.openstreetmap.org"/>
 		<property name="mobics.config.geolocation.server.allowed.countries" value="pt"/>
 		<!--Styling-->
-        <property name="mobics.config.thumbnail.width" value="58"/>
-        <property name="mobics.config.thumbnail.height" value="58"/>
 		<property name="mobics.config.default.theme.style" value="map"/>
 		<property name="mobics.config.default.theme.color" value="darkred"/>
 		<property name="mobics.config.default.theme.warm.word" value="warm"/>		
 		<!--Search result numbers-->
         <property name="mobics.config.max.results" value="99"/>
-        <property name="mobics.config.min.results" value="1"/>
 		<property name="mobics.config.recents.filter.month.gap" value="6"/>
 		<property name="mobics.config.radius.any.distance" value="9999999"/>
 		<!--Pooling interval -->
