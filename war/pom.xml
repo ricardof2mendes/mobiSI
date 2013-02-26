@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>com.criticalsoftware.mobics</groupId>
 		<artifactId>mobics</artifactId>
-		<version>1.1-SNAPSHOT</version>
+		<version>0.10.0</version>
 	</parent>
 
 	<artifactId>mobics-war</artifactId>
@@ -120,7 +120,7 @@
 	</build>
 
 	<dependencies>
-		<!-- Test -->
+		<!-- Test 
 		<dependency>
 			<groupId>org.jboss.arquillian.junit</groupId>
 			<artifactId>arquillian-junit-container</artifactId>
@@ -129,7 +129,7 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-		</dependency>
+		</dependency>-->
 		<!-- Provided -->
 		<dependency>
 			<groupId>org.jboss.spec</groupId>

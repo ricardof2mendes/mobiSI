@@ -8,7 +8,7 @@
     <parent>
         <groupId>com.criticalsoftware.mobics</groupId>
         <artifactId>mobics</artifactId>
-        <version>1.1-SNAPSHOT</version>
+        <version>0.10.0</version>
     </parent>
 
     <artifactId>mobics-build-tools</artifactId>
