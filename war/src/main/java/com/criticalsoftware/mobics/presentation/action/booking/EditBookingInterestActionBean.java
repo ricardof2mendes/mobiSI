@@ -36,7 +36,6 @@ import com.criticalsoftware.mobics.proxy.booking.CarClassNotFoundExceptionExcept
 import com.criticalsoftware.mobics.proxy.booking.CustomerNotFoundExceptionException;
 import com.criticalsoftware.mobics.proxy.booking.ExpiredBookingInterestExceptionException;
 import com.criticalsoftware.mobics.proxy.booking.IllegalDateExceptionException;
-import com.criticalsoftware.mobics.proxy.booking.InvalidBookingInterestUpdateExceptionException;
 import com.criticalsoftware.mobics.proxy.booking.OverlappedCarBookingExceptionException;
 
 /**
@@ -61,25 +60,25 @@ public class EditBookingInterestActionBean extends BookingInterestActionBean {
     public Resolution main() throws RemoteException, UnsupportedEncodingException,
             BookingInterestNotFoundExceptionException {
 
-        final BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
+        BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
                 Configuration.INSTANCE.getBookingEndpoint());
         bookingWSServiceStub._getServiceClient().addHeader(
-                AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this.getContext()
-                        .getUser().getPassword()));
+                AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
+                        .getPassword()));
 
-        final BookingInterestDTO booking = bookingWSServiceStub.getBookingInterest(this.activityCode);
+        BookingInterestDTO booking = bookingWSServiceStub.getBookingInterest(activityCode);
 
-        this.activityCode = booking.getCode();
-        this.startDate = booking.getPickupDate().getTime();
-        this.latitude = booking.getLocation().getLatitude().toString();
-        this.longitude = booking.getLocation().getLongitude().toString();
-        this.address = booking.getLocationName();
-        this.distance = booking.getRadius();
-        this.carClazz = booking.getCarClass();
-        this.fromMyCarClub = booking.getCarClubCarsOnly();
-        this.startSending = booking.getNotificationStartTime();
-        this.stopSending = booking.getNotificationStopTime();
-        this.maxMessages = booking.getNumOfNotifications();
+        activityCode = booking.getCode();
+        startDate = booking.getPickupDate().getTime();
+        latitude = booking.getLocation().getLatitude().toString();
+        longitude = booking.getLocation().getLongitude().toString();
+        address = booking.getLocationName();
+        distance = booking.getRadius();
+        carClazz = booking.getCarClass();
+        fromMyCarClub = booking.getCarClubCarsOnly();
+        startSending = booking.getNotificationStartTime();
+        stopSending = booking.getNotificationStopTime();
+        maxMessages = booking.getNumOfNotifications();
 
         return new ForwardResolution("/WEB-INF/recent/editBookingInterest.jsp");
     }
@@ -114,24 +113,22 @@ public class EditBookingInterestActionBean extends BookingInterestActionBean {
             CarClassNotFoundExceptionException, CustomerNotFoundExceptionException,
             BookingValidationExceptionException, IllegalDateExceptionException,
             ExpiredBookingInterestExceptionException, InvalidBookingInterestUpdateExceptionException {
-        final BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
+        BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
                 Configuration.INSTANCE.getBookingEndpoint());
         bookingWSServiceStub._getServiceClient().addHeader(
-                AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this.getContext()
-                        .getUser().getPassword()));
+                AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
+                        .getPassword()));
 
-        final Calendar start = Calendar.getInstance();
-        start.setTime(this.startDate);
+        Calendar start = Calendar.getInstance();
+        start.setTime(startDate);
 
-        bookingWSServiceStub.updateBookingInterest(this.activityCode, this.getContext().getUser().getCarClub()
-                .getCarClubCode(), start, this.address, this.carClazz, this.getContext().getUser().getCarClub()
-                .getIsStandalone() ? true : this.fromMyCarClub, new BigDecimal(this.longitude), new BigDecimal(
-                this.latitude),
-                this.distance != null ? this.distance.intValue() : Configuration.INSTANCE.getAnyDistance(),
-                this.startSending.intValue(), this.stopSending.intValue(), this.maxMessages.intValue(), Calendar
-                        .getInstance());
+        bookingWSServiceStub.updateBookingInterest(activityCode, getContext().getUser().getCarClub().getCarClubCode(),
+                start, address, carClazz, getContext().getUser().getCarClub().getIsStandalone() ? true : fromMyCarClub,
+                new BigDecimal(longitude), new BigDecimal(latitude), distance != null ? distance.intValue()
+                        : Configuration.INSTANCE.getAnyDistance(), startSending.intValue(), stopSending.intValue(),
+                maxMessages.intValue(), Calendar.getInstance());
 
-        this.getContext().getMessages().add(new LocalizableMessage("find.car.later.interest.updated"));
+        getContext().getMessages().add(new LocalizableMessage("find.car.later.interest.updated"));
         return new RedirectResolution(RecentActivitiesActionBean.class).flash(this);
     }
 
@@ -139,13 +136,13 @@ public class EditBookingInterestActionBean extends BookingInterestActionBean {
      * @return the activityCode
      */
     public String getActivityCode() {
-        return this.activityCode;
+        return activityCode;
     }
 
     /**
      * @param activityCode the activityCode to set
      */
-    public void setActivityCode(final String activityCode) {
+    public void setActivityCode(String activityCode) {
         this.activityCode = activityCode;
     }
 
