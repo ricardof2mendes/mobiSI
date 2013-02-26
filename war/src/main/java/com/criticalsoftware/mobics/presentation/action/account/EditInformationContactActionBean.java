@@ -22,11 +22,13 @@ import net.sourceforge.stripes.action.LocalizableMessage;
 import net.sourceforge.stripes.action.RedirectResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.validation.LocalizableError;
+import net.sourceforge.stripes.validation.ObjectTypeConverter;
 import net.sourceforge.stripes.validation.Validate;
 import net.sourceforge.stripes.validation.ValidationErrors;
 import net.sourceforge.stripes.validation.ValidationMethod;
 import net.sourceforge.stripes.validation.ValidationState;
 
+import org.apache.axis2.AxisFault;
 import org.apache.commons.lang.StringUtils;
 
 import com.criticalsoftware.mobics.customer.EditCustomerDTO;
@@ -68,7 +70,8 @@ public class EditInformationContactActionBean extends AskPinActionBean {
 
     @Validate(required = true, on = "saveData")
     private String taxNumber;
-    
+
+    @Validate(converter = ObjectTypeConverter.class)
     private CountryDTO[] countries;
 
     /**
@@ -99,7 +102,7 @@ public class EditInformationContactActionBean extends AskPinActionBean {
                         .getPassword()));
 
         EditCustomerDTO customer = customerWSServiceStub.getCustomerDetails(getContext().getLocale().getLanguage());
-        
+
         if (customer != null) {
             this.address = customer.getAddress();
             if (customer.getCountry() != null) {
@@ -111,9 +114,6 @@ public class EditInformationContactActionBean extends AskPinActionBean {
             this.taxNumber = customer.getTaxNumber();
             this.zipCode1 = customer.getZipCode1().concat("-").concat(customer.getZipCode2());
         }
-        
-        countries = new CountryDTO[1];
-        countries[0] = customer.getCountry();
 
         return new ForwardResolution("/WEB-INF/account/editInformationContact.jsp");
     }
@@ -181,8 +181,23 @@ public class EditInformationContactActionBean extends AskPinActionBean {
      * get countries
      * 
      * @return countries dto
+     * @throws UnsupportedEncodingException
+     * @throws CustomerNotFoundExceptionException
+     * @throws RemoteException
      */
-    public CountryDTO[] getCountries() {
+    public CountryDTO[] getCountries() throws UnsupportedEncodingException, RemoteException,
+            CustomerNotFoundExceptionException {
+        countries = new CountryDTO[1];
+        CustomerWSServiceStub customerWSServiceStub = new CustomerWSServiceStub(
+                Configuration.INSTANCE.getCustomerEndpoint());
+        customerWSServiceStub._getServiceClient().addHeader(
+                AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
+                        .getPassword()));
+        EditCustomerDTO customer = customerWSServiceStub.getCustomerDetails(getContext().getLocale().getLanguage());
+        if (customer != null) {
+            countries[0] = customer.getCountry();
+        }
+
         return countries;
     }
 

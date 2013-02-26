@@ -36,6 +36,7 @@ import com.criticalsoftware.mobics.proxy.booking.CarClassNotFoundExceptionExcept
 import com.criticalsoftware.mobics.proxy.booking.CustomerNotFoundExceptionException;
 import com.criticalsoftware.mobics.proxy.booking.ExpiredBookingInterestExceptionException;
 import com.criticalsoftware.mobics.proxy.booking.IllegalDateExceptionException;
+import com.criticalsoftware.mobics.proxy.booking.InvalidBookingInterestUpdateExceptionException;
 import com.criticalsoftware.mobics.proxy.booking.OverlappedCarBookingExceptionException;
 
 /**
