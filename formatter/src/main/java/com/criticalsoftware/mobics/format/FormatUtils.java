@@ -131,7 +131,7 @@ public class FormatUtils {
             if (((BigDecimal) value).intValue() >= 3600) {
                 Integer hours = ((BigDecimal) value).intValue() / 3600;
                 if (new Integer(0).equals(minutes)) {
-                    key = "time.hours";
+                    key = hours == 1 ? "time.hour" : "time.hours";
                 } else {
                     key = "time.hours.minutes";
                 }

@@ -5,7 +5,7 @@
 
 	<groupId>com.criticalsoftware.mobics</groupId>
 	<artifactId>mobics</artifactId>
-	<version>0.11.0</version>
+	<version>0.12.0</version>
 	<packaging>pom</packaging>
 
 	<name>Mobi Car Sharing</name>
