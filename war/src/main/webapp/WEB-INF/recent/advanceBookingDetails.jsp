@@ -159,16 +159,14 @@
 		<article>
 			<section>
 				<h2><fmt:message key="trip.detail.advance.booking.cancel.header"/></h2>
-				<h3>
-				<c:choose>
-					<c:when test="${actionBean.trip.cancelCost != null && actionBean.trip.cancelCost != 0}">
-						<fmt:message key="trip.detail.advance.booking.cancel.cost">
-							<fmt:param><mobi:formatMobics value="${actionBean.trip.cancelTime}" type="time"/></fmt:param>
-							<fmt:param><mobi:formatMobics value="${actionBean.trip.cancelCost}" type="currencySymbol"/></fmt:param>
-						</fmt:message>
-					</c:when>
-					<c:otherwise><fmt:message key="trip.detail.advance.booking.cancel.no.fees"/></c:otherwise>
-				</c:choose>
+				<h3 id="haveFee" class="hidden">
+					<fmt:message key="trip.detail.advance.booking.cancel.cost">
+						<fmt:param><mobi:formatMobics value="${actionBean.trip.cancelTime}" type="time"/></fmt:param>
+						<fmt:param><mobi:formatMobics value="${actionBean.trip.cancelCost}" type="currencySymbol"/></fmt:param>
+					</fmt:message>
+				</h3>
+				<h3 id="dontHaveFee" class="hidden">
+					<fmt:message key="trip.detail.advance.booking.cancel.no.fees"/>
 				</h3>
 				<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.recent.RecentActivitiesActionBean" class="alertBtn orangered" event="cancelAdvanceBooking" addSourcePage="true">
 					<stripes:param name="activityCode" value="${actionBean.trip.bookingNumber}"/>

@@ -54,7 +54,7 @@ import com.criticalsoftware.mobics.proxy.booking.UnauthorizedCustomerExceptionEx
  */
 @MobiCSSecure
 public class RecentActivitiesActionBean extends BaseActionBean {
-    
+
     private static final Logger LOGGER = LoggerFactory.getLogger(RecentActivitiesActionBean.class);
 
     private CustomerActivityListDTO[] recents;
@@ -67,7 +67,7 @@ public class RecentActivitiesActionBean extends BaseActionBean {
             required = true,
             on = { "tripDetails", "bookingDetails", "advanceBookingDetails", "cancelAdvanceBooking" })
     private String activityCode;
-    
+
     @Validate
     private String extended;
 
@@ -138,6 +138,25 @@ public class RecentActivitiesActionBean extends BaseActionBean {
     }
 
     /**
+     * Check if it has cancel cost
+     * 
+     * @return
+     * @throws RemoteException
+     * @throws UnsupportedEncodingException
+     * @throws BookingNotFoundExceptionException
+     */
+    public Resolution hasCancelCost() throws RemoteException, UnsupportedEncodingException,
+            BookingNotFoundExceptionException {
+        BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
+                Configuration.INSTANCE.getBookingEndpoint());
+        bookingWSServiceStub._getServiceClient().addHeader(
+                AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
+                        .getPassword()));
+        getContext().getResponse().setHeader("Stripes-Success", "OK");
+        return new JavaScriptResolution(bookingWSServiceStub.getTripDetails(activityCode));
+    }
+
+    /**
      * Cancel advance booking
      * 
      * @return a page resolution
@@ -165,26 +184,27 @@ public class RecentActivitiesActionBean extends BaseActionBean {
 
     /**
      * Get the advance booking state
+     * 
      * @return booking state
      * @throws RemoteException
      * @throws UnsupportedEncodingException
      */
-    public Resolution getState() throws RemoteException, UnsupportedEncodingException  {
+    public Resolution getState() throws RemoteException, UnsupportedEncodingException {
         BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
                 Configuration.INSTANCE.getBookingEndpoint());
         bookingWSServiceStub._getServiceClient().addHeader(
                 AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
                         .getPassword()));
-        
+
         try {
             trip = bookingWSServiceStub.getTripDetails(activityCode);
         } catch (BookingNotFoundExceptionException e) {
             LOGGER.error("Booking not found", e);
         }
-        
+
         getContext().getResponse().setHeader("Stripes-Success", "OK");
 
-        return new JavaScriptResolution(trip == null? null : trip.getState());
+        return new JavaScriptResolution(trip == null ? null : trip.getState());
     }
 
     /**
@@ -199,7 +219,7 @@ public class RecentActivitiesActionBean extends BaseActionBean {
         params.put("advanceBookingDetails", "");
         params.put("activityCode", activityCode);
 
-        if(Boolean.parseBoolean(extended)) {
+        if (Boolean.parseBoolean(extended)) {
             getContext().getMessages().add(new LocalizableMessage("trip.detail.advance.booking.edit.success"));
         } else {
             getContext().getMessages().add(new LocalizableMessage("car.details.book.done"));
@@ -227,7 +247,7 @@ public class RecentActivitiesActionBean extends BaseActionBean {
 
         return new ForwardResolution("/WEB-INF/recent/detailBookingInterest.jsp");
     }
-    
+
     /**
      * Cancel booking interest
      * 

@@ -305,6 +305,26 @@ $(document).ready(function() {
  			e.preventDefault();
  		});
  		
+ 		if($('#haveFee').length > 0) {
+	 		var url = CONTEXT_PATH+'/recent/RecentActivities.action?hasCancelCost=&activityCode=' + $('#activityCode').text();
+	 		
+			$.get(url, function(data, textStatus, jqXHR){
+				if (jqXHR.getResponseHeader('Stripes-Success') === 'OK') {
+					var returnData = eval(data);
+					if(returnData && returnData.hasCancelCosts) {
+						$('#haveFee').removeClass('hidden');
+					} else {
+						$('#dontHaveFee').removeClass('hidden');
+					}
+				} else {
+					console.log('An error has occurred or the user\'s session has expired!');
+					$('html').html(data);
+				}
+			}, function(data, textStatus, jqXHR) {
+				$('html').html(data.responseText);
+			});
+ 		}
+		
 // 		var windowHeight = document.documentElement.clientHeight;
 // 		var elementHeight = $('.confirm article').height();
 // 		$('.confirm article').css({
