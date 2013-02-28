@@ -311,9 +311,11 @@ $(document).ready(function() {
 			$.get(url, function(data, textStatus, jqXHR){
 				if (jqXHR.getResponseHeader('Stripes-Success') === 'OK') {
 					var returnData = eval(data);
-					if(returnData && returnData.hasCancelCosts) {
+					if(returnData && returnData.hasCancelCosts === true) {
+						$('#dontHaveFee').addClass('hidden');
 						$('#haveFee').removeClass('hidden');
 					} else {
+						$('#haveFee').addClass('hidden');
 						$('#dontHaveFee').removeClass('hidden');
 					}
 				} else {
