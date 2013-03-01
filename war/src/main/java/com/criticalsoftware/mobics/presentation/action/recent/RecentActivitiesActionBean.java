@@ -25,6 +25,7 @@ import net.sourceforge.stripes.action.LocalizableMessage;
 import net.sourceforge.stripes.action.RedirectResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.ajax.JavaScriptResolution;
+import net.sourceforge.stripes.validation.LocalizableError;
 import net.sourceforge.stripes.validation.Validate;
 
 import org.slf4j.Logger;
@@ -35,8 +36,10 @@ import com.criticalsoftware.mobics.booking.CustomerActivityEnum;
 import com.criticalsoftware.mobics.booking.CustomerActivityListDTO;
 import com.criticalsoftware.mobics.booking.TripDetailsDTO;
 import com.criticalsoftware.mobics.presentation.action.BaseActionBean;
+import com.criticalsoftware.mobics.presentation.action.trip.TripActionBean;
 import com.criticalsoftware.mobics.presentation.security.AuthenticationUtil;
 import com.criticalsoftware.mobics.presentation.security.MobiCSSecure;
+import com.criticalsoftware.mobics.presentation.util.BookingState;
 import com.criticalsoftware.mobics.presentation.util.Configuration;
 import com.criticalsoftware.mobics.presentation.util.GeolocationUtil;
 import com.criticalsoftware.mobics.proxy.booking.BookingInterestNotFoundExceptionException;
@@ -133,8 +136,13 @@ public class RecentActivitiesActionBean extends BaseActionBean {
                         .getPassword()));
 
         trip = bookingWSServiceStub.getTripDetails(activityCode);
+        Resolution resolution = new ForwardResolution("/WEB-INF/recent/advanceBookingDetails.jsp");
 
-        return new ForwardResolution("/WEB-INF/recent/advanceBookingDetails.jsp");
+        if (BookingState.IN_USE.name().equals(trip.getState())) {
+            resolution = new RedirectResolution(TripActionBean.class);
+        }
+
+        return resolution;
     }
 
     /**
@@ -168,18 +176,25 @@ public class RecentActivitiesActionBean extends BaseActionBean {
      */
     public Resolution cancelAdvanceBooking() throws RemoteException, UnsupportedEncodingException,
             BookingNotFoundExceptionException, CustomerNotFoundExceptionException,
-            UnauthorizedCustomerExceptionException, BookingWrongStateExceptionException {
+            UnauthorizedCustomerExceptionException {
+        Class<? extends BaseActionBean> clazz = this.getClass();
         BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
                 Configuration.INSTANCE.getBookingEndpoint());
         bookingWSServiceStub._getServiceClient().addHeader(
                 AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
                         .getPassword()));
 
-        bookingWSServiceStub.cancelAdvanceBooking(activityCode);
+        try {
+            bookingWSServiceStub.cancelAdvanceBooking(activityCode);
+            getContext().getMessages().add(new LocalizableMessage("trip.detail.advance.booking.cancel.success"));
+        } catch (BookingWrongStateExceptionException e) {
+            LOGGER.debug("Could not cancel advance booking. Booking is in wrong state to cancel!");
+            getContext().getValidationErrors().addGlobalError(
+                    new LocalizableError("trip.detail.advance.booking.cancel.unsuccess"));
+            clazz = TripActionBean.class;
+        }
 
-        getContext().getMessages().add(new LocalizableMessage("trip.detail.advance.booking.cancel.success"));
-
-        return new RedirectResolution(this.getClass()).flash(this);
+        return new RedirectResolution(clazz).flash(this);
     }
 
     /**
