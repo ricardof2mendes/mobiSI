@@ -227,12 +227,12 @@ $(document).ready(function() {
 	    	dateOrder: 'ddmmyy',
 	    	timeFormat: TIME_PATTERN,
 	    	timeWheels: 'HHii',
-	        minDate: new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes() + 1, now.getSeconds(), now.getMilliseconds()),
+	        minDate: new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes() + 5, now.getSeconds(), now.getMilliseconds()),
 	        display: 'modal',
 	        mode: 'scroller',
 	        width: 42,
 	        onBeforeShow : function(html, inst) {
-	        	var finalDate = moment($('#startDate').val(), DATE_TIME_PATTERN).add('minutes', 1);
+	        	var finalDate = moment($('#startDate').val(), DATE_TIME_PATTERN).add('minutes', 5);
 	        	inst.init({minDate : finalDate.toDate()});
 	        }
 	    });    
