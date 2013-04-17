@@ -131,7 +131,7 @@
 					</li>
 				</ul>
 			</nav>
-			<c:if test="${actionBean.trip.state != 'WAIT_OBS_ADVANCE' && actionBean.trip.state != 'IN_ERROR'}">
+			<c:if test="${actionBean.trip.state != 'CANCELED' && actionBean.trip.state != 'WAIT_OBS_ADVANCE' && actionBean.trip.state != 'IN_ERROR'}">
 				<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.booking.EditAvanceBookingActionBean" class="linkBtn gray" addSourcePage="true">
 					<stripes:param name="activityCode" value="${actionBean.trip.bookingNumber}"/>
 					<fmt:message key="trip.detail.advance.booking.edit"/>
@@ -150,6 +150,11 @@
 						<c:otherwise><fmt:message key="trip.detail.advance.booking.cancel.no.fees"/></c:otherwise>
 					</c:choose>
 				</div>
+			</c:if>
+			<c:if test="${actionBean.trip.state == 'CANCELED'}">
+			  <div class="warningMessage">
+			    <fmt:message key="trip.detail.advance.booking.cancel.already"/>
+			  </div>
 			</c:if>
 		</section>
 	</article>
