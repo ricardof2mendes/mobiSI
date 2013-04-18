@@ -141,7 +141,7 @@
 				</a>
 				<div class="warningMessage">
 					<c:choose>
-						<c:when test="${actionBean.trip.cancelCost != null && actionBean.trip.cancelCost != 0}">
+						<c:when test="${actionBean.trip.cancelCost != null && actionBean.trip.cancelCost.unscaledValue() != 0}">
 							<fmt:message key="trip.detail.advance.booking.cancel.cost">
 								<fmt:param><mobi:formatMobics value="${actionBean.trip.cancelTime}" type="time"/></fmt:param>
 								<fmt:param><mobi:formatMobics value="${actionBean.trip.cancelCost}" type="currencySymbol"/></fmt:param>

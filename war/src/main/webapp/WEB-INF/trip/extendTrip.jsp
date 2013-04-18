@@ -58,9 +58,16 @@
 				<stripes:submit name="save" class="submitBtn green"><fmt:message key="current.trip.extend.ok"/></stripes:submit>
 				
 				<div class="warningMessage">
-					<fmt:message key="trip.detail.advance.booking.edit.cost">
-					<fmt:param><mobi:formatMobics value="${actionBean.current.extendCost}" type="currencySymbol"/></fmt:param>
-					</fmt:message>
+				  <c:choose>
+				    <c:when test="${actionBean.current.extendCost.unscaledValue() != 0}">
+							<fmt:message key="trip.detail.advance.booking.edit.cost">
+							<fmt:param><mobi:formatMobics value="${actionBean.current.extendCost}" type="currencySymbol"/></fmt:param>
+							</fmt:message>
+            </c:when>
+            <c:otherwise>	
+              <fmt:message key="trip.detail.advance.booking.edit.no.fees"/>
+            </c:otherwise>
+          </c:choose>   					
 				</div>
 			</section>
 			<section>
