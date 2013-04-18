@@ -132,14 +132,23 @@
 			<nav class="panel">
 				<ul>
 					<li class="link white">
-						<stripes:link id="carDetails" beanclass="com.criticalsoftware.mobics.presentation.action.booking.ImmediateBookingActionBean" event="carDetails" addSourcePage="true" >
-							<stripes:param name="licensePlate" value="${actionBean.trip.carLicensePlate}"/>
-	
-							<span><fmt:message key="trip.detail.license.plate"/></span>
-							<span>
-								${actionBean.trip.carLicensePlate}
-							</span>
-						</stripes:link>
+            <c:choose>
+              <c:when test="${actionBean.trip.bookingType == 'IMMEDIATE'}">
+                <c:set var="bookingTypeBean" value="com.criticalsoftware.mobics.presentation.action.booking.ImmediateBookingActionBean"/>
+              </c:when>
+              <c:otherwise>
+                <c:set var="bookingTypeBean" value="com.criticalsoftware.mobics.presentation.action.booking.AdvanceBookingActionBean"/>               
+              </c:otherwise>
+            </c:choose>	
+              
+            <stripes:link id="carDetails" beanclass="${pageScope.bookingTypeBean}" event="carDetails" addSourcePage="true" >
+              <stripes:param name="licensePlate" value="${actionBean.trip.carLicensePlate}"/>
+  
+              <span><fmt:message key="trip.detail.license.plate"/></span>
+              <span>
+                ${actionBean.trip.carLicensePlate}
+              </span>
+            </stripes:link>              				
 					</li>
 				</ul>
 			</nav>
