@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>com.criticalsoftware.mobics</groupId>
 		<artifactId>mobics</artifactId>
-		<version>0.12.0</version>
+		<version>0.13.0</version>
 	</parent>
 
 	<artifactId>mobics-war</artifactId>
