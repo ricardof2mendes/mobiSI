@@ -685,6 +685,10 @@ Map.prototype = {
 				
 				// Set image
 				$('#whiteBar img').prop('src', CONTEXT_PATH + '/booking/ImmediateBooking.action?getCarImage=&width=58&height=58&licensePlate=' + options.car.licensePlate);
+                $('#whiteBar img').on('error', function() {
+                        var noPhoto = window.devicePixelRatio > 1 ? 'ios-webapp-no-photo@2x.png' : 'ios-webapp-no-photo.png';
+                        $(this).attr('src', CONTEXT_PATH + '/img/' + noPhoto);
+                    });
 				// set other content
 				$('#licensePlate').html(options.car.licensePlate);
 				$('#carBrandName').html(options.car.carBrandName + '&nbsp;' + options.car.carModelName);
