@@ -24,6 +24,7 @@ import org.slf4j.LoggerFactory;
 import com.criticalsoftware.mobics.carclub.CarClubSimpleDTO;
 import com.criticalsoftware.mobics.miscellaneous.CarClassDTO;
 import com.criticalsoftware.mobics.presentation.extension.MobiCSActionBeanContext;
+import com.criticalsoftware.mobics.presentation.security.CarClubSimple;
 import com.criticalsoftware.mobics.presentation.util.Configuration;
 import com.criticalsoftware.mobics.proxy.carclub.CarClubCodeNotFoundExceptionException;
 import com.criticalsoftware.mobics.proxy.carclub.CarClubWSService;
@@ -100,6 +101,12 @@ public abstract class BaseActionBean implements ActionBean {
         try {
             carClubSimpleDTO = new CarClubWSServiceStub(Configuration.INSTANCE.getCarClubEndpoint())
                     .getCarClubSimpleByURL(builder.toString());
+            if (getContext().getCarClub() == null) {
+                getContext().setCarClub(
+                        new CarClubSimple(carClubSimpleDTO.getCarClubName(), carClubSimpleDTO.getCarClubContactPhone(),
+                                carClubSimpleDTO.getCarClubContactEmail()));
+            }
+
         } catch (Exception e) {
             LOG.warn("Could not obtain car club theme style based on supplied url: {}", builder.toString());
         }
@@ -128,6 +135,13 @@ public abstract class BaseActionBean implements ActionBean {
         try {
             CarClubWSService carClubService = new CarClubWSServiceStub(Configuration.INSTANCE.getCarClubEndpoint());
             carClubSimpleDTO = carClubService.getCarClubSimpleByURL(builder.toString());
+
+            if (getContext().getCarClub() == null) {
+                getContext().setCarClub(
+                        new CarClubSimple(carClubSimpleDTO.getCarClubName(), carClubSimpleDTO.getCarClubContactPhone(),
+                                carClubSimpleDTO.getCarClubContactEmail()));
+            }
+
             handler = carClubService.getCarClubThumbnailByCarClubCode(carClubSimpleDTO.getCarClubCode(),
                     LOGO_DIMENSIONS[0], LOGO_DIMENSIONS[1]);
             resolution = new StreamingResolution(handler.getContentType(), handler.getInputStream());
@@ -150,7 +164,7 @@ public abstract class BaseActionBean implements ActionBean {
         }
         return header.replaceAll("_", "").toLowerCase();
     }
-    
+
     /**
      * @return the carClasses
      */
