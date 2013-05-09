@@ -34,7 +34,9 @@ Map.prototype = {
 			if(this.type === 'mapACar') {
 				this.fetchCarData();
 			} else if(this.type === 'mapAZone') {
-				this.fetchZonesData();
+				// changed method to fix MOBICS-1581
+				//this.fetchParkData();
+				this.fetchCarData();
 			} else if(this.type === 'mapASearch') {
 				this.fetchSearchCarsData();
 			} else  if(this.type === 'mapAStreet') {
@@ -188,12 +190,13 @@ Map.prototype = {
 		 * Fetch data from server related to given park
 		 * @param licensePlate
 		 */
-		fetchZonesData : function() {
+		fetchParkData : function() {
 			var that = this;
 			$.get(CONTEXT_PATH + '/booking/AdvanceBooking.action?parkData=&licensePlate=' + this.licensePlate, 
 					function(data, textStatus, jqXHR){
 						if (jqXHR.getResponseHeader('Stripes-Success') === 'OK') {
-							that.processZones(eval(data));
+							var evaluated = eval(data);
+							that.processZones(evaluated);
 							that.trackMyLocation();
 							that.centerAndZoom();
 				        } else {
