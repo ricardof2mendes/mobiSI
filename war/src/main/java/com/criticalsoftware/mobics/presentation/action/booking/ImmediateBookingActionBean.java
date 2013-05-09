@@ -82,15 +82,11 @@ public class ImmediateBookingActionBean extends BookingActionBean {
     @Validate
     private String clazz;
 
-    @Validate(
-            required = true,
-            on = { "searchImmediateInList", "searchImmediateInMap" },
+    @Validate(required = true, on = { "searchImmediateInList", "searchImmediateInMap" },
             converter = EnumeratedTypeConverter.class)
     private FuelType fuel;
 
-    @Validate(
-            required = true,
-            on = { "searchImmediateInList", "searchImmediateInMap" },
+    @Validate(required = true, on = { "searchImmediateInList", "searchImmediateInMap" },
             converter = EnumeratedTypeConverter.class)
     private OrderBy orderBy;
 
@@ -189,8 +185,9 @@ public class ImmediateBookingActionBean extends BookingActionBean {
      * @throws CarValidationExceptionException
      */
     @ValidationMethod(on = "nearestCarBook", when = ValidationState.NO_ERRORS, priority = 1)
-    public void validateNearestCar(ValidationErrors errors) throws RemoteException, FuelTypeNotFoundExceptionException,
-            CarClassNotFoundExceptionException, CarTypeNotFoundExceptionException, UnsupportedEncodingException {
+    public void validateNearestCar(final ValidationErrors errors) throws RemoteException,
+            FuelTypeNotFoundExceptionException, CarClassNotFoundExceptionException, CarTypeNotFoundExceptionException,
+            UnsupportedEncodingException {
         FleetWSServiceStub fleetWSServiceStub = new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint());
         fleetWSServiceStub._getServiceClient().addHeader(
                 AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
@@ -209,7 +206,7 @@ public class ImmediateBookingActionBean extends BookingActionBean {
     }
 
     @ValidationMethod(on = { "licensePlateBook", "nearestCarBook" }, when = ValidationState.NO_ERRORS, priority = 2)
-    public void validateCar(ValidationErrors errors) {
+    public void validateCar(final ValidationErrors errors) {
         if (!CarState.AVAILABLE.name().equals(car.getState())) {
             errors.addGlobalError(new LocalizableError("error.CarNotAvailableForBookingExceptionException"));
         }
@@ -266,6 +263,7 @@ public class ImmediateBookingActionBean extends BookingActionBean {
      * 
      * @return the pin page resolution
      */
+    @Override
     public Resolution showPin() {
         return new ForwardResolution("/WEB-INF/book/pinImmediate.jsp");
     }
@@ -286,6 +284,7 @@ public class ImmediateBookingActionBean extends BookingActionBean {
      * @throws ForbiddenZoneExceptionException
      * @throws InvalidCarBookingExceptionException
      */
+    @Override
     public Resolution book() throws RemoteException, UnsupportedEncodingException,
             InvalidCustomerPinExceptionException, OverlappedCustomerTripExceptionException,
             CarNotAvailableForBookingExceptionException, CarNotFoundExceptionException,
@@ -312,6 +311,7 @@ public class ImmediateBookingActionBean extends BookingActionBean {
      * 
      * @return the car detail page
      */
+    @Override
     public Resolution carDetails() {
         return new ForwardResolution("/WEB-INF/car/carDetails.jsp");
     }
@@ -331,10 +331,13 @@ public class ImmediateBookingActionBean extends BookingActionBean {
      * @return a json object containing car data for display in map
      * @throws RemoteException a jax-b webservice exception
      */
-    public Resolution carData() throws RemoteException {
+    public Resolution carData() throws RemoteException, UnsupportedEncodingException {
 
         // Get the first car
         FleetWSServiceStub fleet = new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint());
+        fleet._getServiceClient().addHeader(
+                AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
+                        .getPassword()));
         CoordinateDTO coordinate = null;
         ZoneWithPolygonDTO[] zones = null;
         try {
@@ -393,11 +396,9 @@ public class ImmediateBookingActionBean extends BookingActionBean {
      * @throws RemoteException
      * @throws com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException
      */
-    @ValidationMethod(
-            on = { "licensePlateBook", "showPin", "carDetails" },
-            when = ValidationState.NO_ERRORS,
+    @ValidationMethod(on = { "licensePlateBook", "showPin", "carDetails" }, when = ValidationState.NO_ERRORS,
             priority = 2)
-    public void validateCarType(ValidationErrors errors) throws RemoteException,
+    public void validateCarType(final ValidationErrors errors) throws RemoteException,
             com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException {
         if (!CarTypeEnum.NORMAL.equals(car.getCarType())) {
             errors.addGlobalError(new LocalizableError("car.details.validation.car.not.available"));
@@ -412,7 +413,7 @@ public class ImmediateBookingActionBean extends BookingActionBean {
     public String getLocation() {
         String location = new LocalizableMessage("application.value.not.available")
                 .getMessage(getContext().getLocale());
-        if (car.getLatitude() != null && car.getLongitude() != null) {
+        if ((car.getLatitude() != null) && (car.getLongitude() != null)) {
             location = GeolocationUtil.getAddressFromCoordinates(car.getLatitude().toString(), car.getLongitude()
                     .toString());
         }
@@ -436,7 +437,7 @@ public class ImmediateBookingActionBean extends BookingActionBean {
     /**
      * @param orderBy the orderBy to set
      */
-    public void setOrderBy(OrderBy orderBy) {
+    public void setOrderBy(final OrderBy orderBy) {
         this.orderBy = orderBy;
     }
 
@@ -450,7 +451,7 @@ public class ImmediateBookingActionBean extends BookingActionBean {
     /**
      * @param price the price to set
      */
-    public void setPrice(BigDecimal price) {
+    public void setPrice(final BigDecimal price) {
         this.price = price;
     }
 
@@ -464,7 +465,7 @@ public class ImmediateBookingActionBean extends BookingActionBean {
     /**
      * @param distance the distance to set
      */
-    public void setDistance(BigDecimal distance) {
+    public void setDistance(final BigDecimal distance) {
         this.distance = distance;
     }
 
@@ -478,7 +479,7 @@ public class ImmediateBookingActionBean extends BookingActionBean {
     /**
      * @param fuel the fuel to set
      */
-    public void setFuel(FuelType fuel) {
+    public void setFuel(final FuelType fuel) {
         this.fuel = fuel;
     }
 
@@ -492,7 +493,7 @@ public class ImmediateBookingActionBean extends BookingActionBean {
     /**
      * @param clazz the clazz to set
      */
-    public void setClazz(String clazz) {
+    public void setClazz(final String clazz) {
         this.clazz = clazz;
     }
 
