@@ -678,7 +678,7 @@ function autocompleteZones() {
                 if (data != null) {
                     $(data).each(function(e) {
                         if (this.zone != null)
-                            $('#zone').append('<option value="' + this.zone + '">' + this.zone + '</option>');
+                            $('#zone').append('<option value="' + this.code + '">' + this.zone + '</option>');
                     });
                 }
         } else {
