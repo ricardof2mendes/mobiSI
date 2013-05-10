@@ -148,7 +148,7 @@
 							<fmt:message key="current.trip.price.extra"/>
 						</span>
 						<span>
-							<mobi:formatMobics value="${actionBean.current.lockedPrice}" type="currencySymbol" />
+							<mobi:formatMobics value="${actionBean.current.costPerExtraKm}" type="currencySymbol" />
 						</span>
 					</li>
 					
