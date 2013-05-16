@@ -42,11 +42,18 @@ $(document).ready(function() {
 		var element = $(this); 
 		fillGeoposition(function(position) {
 							var url = element.prop('href') +
-									'&latitude=' + position.coords.latitude +
-									'&longitude=' + position.coords.longitude;
+								'&latitude=' + position.coords.latitude +
+								'&longitude=' + position.coords.longitude;
 							window.location.href = url;
 						}, function(err) {
-							treatGeolocationError(err);
+							if (element.prop('id') == 'carDetails') {
+								var url = element.prop('href') +
+									'&latitude=0' +
+									'&longitude=0';
+								window.location.href = url;
+							} else {							
+								treatGeolocationError(err);
+							}
 						}, true);
 		};
 

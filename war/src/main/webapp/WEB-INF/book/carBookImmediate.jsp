@@ -91,4 +91,5 @@
 			</c:if>
 		</section>
 	</article>	
+	<jsp:include page="/WEB-INF/common/geolocationErrorAlert.jsp"/>
 </t:main>
