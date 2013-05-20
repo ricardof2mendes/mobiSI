@@ -5,7 +5,7 @@
 	<c:choose>
 		<c:when test="${actionBean.current.undesirableZoneCost > 0}">
 			<fmt:message key="current.trip.end.trip.confirm.h3">
-				<fmt:param>${actionBean.current.undesirableZoneCost}</fmt:param>
+			  <fmt:param><mobi:formatMobics value="${actionBean.current.undesirableZoneCost}" type="currencySymbol"/></fmt:param>
 			</fmt:message>
 		</c:when>
 		<c:otherwise>
