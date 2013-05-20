@@ -28,11 +28,9 @@ import net.sourceforge.stripes.validation.ValidationErrors;
 import net.sourceforge.stripes.validation.ValidationMethod;
 import net.sourceforge.stripes.validation.ValidationState;
 
-import org.apache.axis2.AxisFault;
 import org.apache.commons.lang.StringUtils;
 
 import com.criticalsoftware.mobics.customer.EditCustomerDTO;
-import com.criticalsoftware.mobics.customer.CountryDTO;
 import com.criticalsoftware.mobics.presentation.security.AuthenticationUtil;
 import com.criticalsoftware.mobics.presentation.security.MobiCSSecure;
 import com.criticalsoftware.mobics.presentation.util.Configuration;
@@ -40,6 +38,7 @@ import com.criticalsoftware.mobics.proxy.customer.CustomerEditionExceptionExcept
 import com.criticalsoftware.mobics.proxy.customer.CustomerNotFoundExceptionException;
 import com.criticalsoftware.mobics.proxy.customer.CustomerServiceExceptionException;
 import com.criticalsoftware.mobics.proxy.customer.CustomerWSServiceStub;
+import com.criticalsoftware.www.mobios.services.accounting.dto.CountryDTO;
 
 /**
  * Account action bean
@@ -79,6 +78,7 @@ public class EditInformationContactActionBean extends AskPinActionBean {
      * 
      * @return the page resolution
      */
+    @Override
     @DefaultHandler
     @DontValidate
     public Resolution main() {
@@ -93,6 +93,7 @@ public class EditInformationContactActionBean extends AskPinActionBean {
      * @throws CustomerNotFoundExceptionException
      * @throws UnsupportedEncodingException
      */
+    @Override
     public Resolution data() throws RemoteException, CustomerNotFoundExceptionException, UnsupportedEncodingException {
 
         CustomerWSServiceStub customerWSServiceStub = new CustomerWSServiceStub(
@@ -104,20 +105,21 @@ public class EditInformationContactActionBean extends AskPinActionBean {
         EditCustomerDTO customer = customerWSServiceStub.getCustomerDetails(getContext().getLocale().getLanguage());
 
         if (customer != null) {
-            this.address = customer.getAddress();
+            address = customer.getAddress();
             if (customer.getCountry() != null) {
-                this.countryCode = customer.getCountry().getCode();
+                countryCode = customer.getCountry().getCode();
             }
-            this.fullName = customer.getFullName();
-            this.locality = customer.getLocality();
-            this.phoneNumber = customer.getPhoneNumber();
-            this.taxNumber = customer.getTaxNumber();
-            this.zipCode1 = customer.getZipCode1().concat("-").concat(customer.getZipCode2());
+            fullName = customer.getFullName();
+            locality = customer.getLocality();
+            phoneNumber = customer.getPhoneNumber();
+            taxNumber = customer.getTaxNumber();
+            zipCode1 = customer.getZipCode1().concat("-").concat(customer.getZipCode2());
         }
 
         return new ForwardResolution("/WEB-INF/account/editInformationContact.jsp");
     }
 
+    @Override
     public Resolution saveData() throws RemoteException, CustomerNotFoundExceptionException,
             UnsupportedEncodingException, CustomerEditionExceptionException, CustomerServiceExceptionException {
 
@@ -138,7 +140,7 @@ public class EditInformationContactActionBean extends AskPinActionBean {
     }
 
     @ValidationMethod(on = "saveData", when = ValidationState.NO_ERRORS)
-    public void validate(ValidationErrors errors) {
+    public void validate(final ValidationErrors errors) {
         if (!isValidNIF(taxNumber)) {
             errors.add("taxNumber", new LocalizableError("account.information.taxNumber.invalid"));
         }
@@ -150,13 +152,13 @@ public class EditInformationContactActionBean extends AskPinActionBean {
      * @param nif
      * @return true if valid
      */
-    private boolean isValidNIF(String nif) {
+    private boolean isValidNIF(final String nif) {
         // Verifica se é nulo, se é numérico e se tem 9 dígitos
-        if (nif != null && StringUtils.isNumeric(nif) && nif.length() == 9) {
+        if ((nif != null) && StringUtils.isNumeric(nif) && (nif.length() == 9)) {
             // Obtem o primeiro número do NIF
             char c = nif.charAt(0);
             // Verifica se o primeiro número é (1, 2, 5, 6, 8 ou 9)
-            if (c == '1' || c == '2' || c == '5' || c == '6' || c == '8' || c == '9') {
+            if ((c == '1') || (c == '2') || (c == '5') || (c == '6') || (c == '8') || (c == '9')) {
                 // Calculo do Digito de Controle
                 int checkDigit = c * 9;
                 for (int i = 2; i <= 8; i++) {
@@ -165,13 +167,15 @@ public class EditInformationContactActionBean extends AskPinActionBean {
                 checkDigit = 11 - (checkDigit % 11);
 
                 // Se o digito de controle é maior que dez, coloca-o a zero
-                if (checkDigit >= 10)
+                if (checkDigit >= 10) {
                     checkDigit = 0;
+                }
 
                 // Compara o digito de controle com o último numero do NIF
                 // Se igual, o NIF é válido.
-                if (Character.forDigit(checkDigit, 10) == nif.charAt(8))
+                if (Character.forDigit(checkDigit, 10) == nif.charAt(8)) {
                     return true;
+                }
             }
         }
         return false;
@@ -211,7 +215,7 @@ public class EditInformationContactActionBean extends AskPinActionBean {
     /**
      * @param address the address to set
      */
-    public void setAddress(String address) {
+    public void setAddress(final String address) {
         this.address = address;
     }
 
@@ -225,7 +229,7 @@ public class EditInformationContactActionBean extends AskPinActionBean {
     /**
      * @param locality the locality to set
      */
-    public void setLocality(String locality) {
+    public void setLocality(final String locality) {
         this.locality = locality;
     }
 
@@ -239,7 +243,7 @@ public class EditInformationContactActionBean extends AskPinActionBean {
     /**
      * @param zipCode1 the zipCode1 to set
      */
-    public void setZipCode1(String zipCode1) {
+    public void setZipCode1(final String zipCode1) {
         this.zipCode1 = zipCode1;
     }
 
@@ -253,7 +257,7 @@ public class EditInformationContactActionBean extends AskPinActionBean {
     /**
      * @param phoneNumber the phoneNumber to set
      */
-    public void setPhoneNumber(String phoneNumber) {
+    public void setPhoneNumber(final String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
@@ -267,7 +271,7 @@ public class EditInformationContactActionBean extends AskPinActionBean {
     /**
      * @param countryCode the countryCode to set
      */
-    public void setCountryCode(String countryCode) {
+    public void setCountryCode(final String countryCode) {
         this.countryCode = countryCode;
     }
 
@@ -281,7 +285,7 @@ public class EditInformationContactActionBean extends AskPinActionBean {
     /**
      * @param fullName the fullName to set
      */
-    public void setFullName(String fullName) {
+    public void setFullName(final String fullName) {
         this.fullName = fullName;
     }
 
@@ -295,7 +299,7 @@ public class EditInformationContactActionBean extends AskPinActionBean {
     /**
      * @param taxNumber the taxNumber to set
      */
-    public void setTaxNumber(String taxNumber) {
+    public void setTaxNumber(final String taxNumber) {
         this.taxNumber = taxNumber;
     }
 

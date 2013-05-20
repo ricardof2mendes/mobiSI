@@ -25,7 +25,6 @@ import net.sourceforge.stripes.validation.Validate;
 
 import com.criticalsoftware.mobics.customer.CustomerColumnPreferenceDTO;
 import com.criticalsoftware.mobics.customer.CustomerPreferencesDTO;
-import com.criticalsoftware.mobics.miscellaneous.CountryDTO;
 import com.criticalsoftware.mobics.presentation.action.BaseActionBean;
 import com.criticalsoftware.mobics.presentation.security.AuthenticationUtil;
 import com.criticalsoftware.mobics.presentation.security.MobiCSSecure;
@@ -33,6 +32,7 @@ import com.criticalsoftware.mobics.presentation.util.Configuration;
 import com.criticalsoftware.mobics.proxy.customer.CustomerNotFoundExceptionException;
 import com.criticalsoftware.mobics.proxy.customer.CustomerWSServiceStub;
 import com.criticalsoftware.mobics.proxy.miscellaneous.MiscellaneousWSServiceStub;
+import com.criticalsoftware.www.mobios.services.accounting.dto.CountryDTO;
 
 /**
  * @author ltiago
@@ -169,7 +169,7 @@ public class EditPreferencesActionBean extends BaseActionBean {
     /**
      * @param columnNames the columnNames to set
      */
-    public void setColumnNames(String[] columnNames) {
+    public void setColumnNames(final String[] columnNames) {
         this.columnNames = columnNames;
     }
 
@@ -183,7 +183,7 @@ public class EditPreferencesActionBean extends BaseActionBean {
     /**
      * @param sortAsc the sortAsc to set
      */
-    public void setSortAsc(boolean[] sortAsc) {
+    public void setSortAsc(final boolean[] sortAsc) {
         this.sortAsc = sortAsc;
     }
 
@@ -197,7 +197,7 @@ public class EditPreferencesActionBean extends BaseActionBean {
     /**
      * @param searchRadius the searchRadius to set
      */
-    public void setSearchRadius(int searchRadius) {
+    public void setSearchRadius(final int searchRadius) {
         this.searchRadius = searchRadius;
     }
 
@@ -211,7 +211,7 @@ public class EditPreferencesActionBean extends BaseActionBean {
     /**
      * @param communicationChannel the communicationChannel to set
      */
-    public void setCommunicationChannel(String communicationChannel) {
+    public void setCommunicationChannel(final String communicationChannel) {
         this.communicationChannel = communicationChannel;
     }
 
@@ -225,7 +225,7 @@ public class EditPreferencesActionBean extends BaseActionBean {
     /**
      * @param communicationChannels the communicationChannels to set
      */
-    public void setCommunicationChannels(String[] communicationChannels) {
+    public void setCommunicationChannels(final String[] communicationChannels) {
         this.communicationChannels = communicationChannels;
     }
 
@@ -239,7 +239,7 @@ public class EditPreferencesActionBean extends BaseActionBean {
     /**
      * @param timeToStartSending the timeToStartSending to set
      */
-    public void setTimeToStartSending(int timeToStartSending) {
+    public void setTimeToStartSending(final int timeToStartSending) {
         this.timeToStartSending = timeToStartSending;
     }
 
@@ -253,7 +253,7 @@ public class EditPreferencesActionBean extends BaseActionBean {
     /**
      * @param timeToStopSending the timeToStopSending to set
      */
-    public void setTimeToStopSending(int timeToStopSending) {
+    public void setTimeToStopSending(final int timeToStopSending) {
         this.timeToStopSending = timeToStopSending;
     }
 
@@ -267,7 +267,7 @@ public class EditPreferencesActionBean extends BaseActionBean {
     /**
      * @param numberOfNotifications the numberOfNotifications to set
      */
-    public void setNumberOfNotifications(int numberOfNotifications) {
+    public void setNumberOfNotifications(final int numberOfNotifications) {
         this.numberOfNotifications = numberOfNotifications;
     }
 
@@ -281,7 +281,7 @@ public class EditPreferencesActionBean extends BaseActionBean {
     /**
      * @param language the language to set
      */
-    public void setLanguage(String language) {
+    public void setLanguage(final String language) {
         this.language = language;
     }
 }
