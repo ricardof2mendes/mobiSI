@@ -4,6 +4,8 @@ var ERROR = 'OBS_ERROR';
 var IN_USE = 'IN_USE';
 // unwanted zone
 var UNWANTED_ZONE = 'UNWANTED';
+// forbidden zone
+var FORBIDDEN = 'FORBIDDEN';
 
 /*
  * Default Script
@@ -538,6 +540,12 @@ $(document).ready(function() {
  		e.preventDefault();
  		if($("#zone").text() === UNWANTED_ZONE) {
  			$('#unwantedZoneError').show();
+ 			$('body').addClass('confirmation');
+			$('body').on('touchmove', 'body', function(e){
+				e.preventDefault();
+			});
+ 		} else if($("#zone").text() === FORBIDDEN) {
+ 			$('#forbiddenZoneError').show();
  			$('body').addClass('confirmation');
 			$('body').on('touchmove', 'body', function(e){
 				e.preventDefault();

@@ -236,6 +236,13 @@
 					<fmt:message key="current.trip.extend.cancel"/>
 				</stripes:link>
 			</section>
+			<section id="forbiddenZoneError" class="hidden">
+			  <h2><fmt:message key="current.trip.end.trip.error.forbidden.h2"/></h2>
+        <h3><fmt:message key="current.trip.end.trip.error.forbidden.h3"/></h3>
+        <stripes:link id="closeConfirm" href="#" class="alertBtn gray" >
+          <fmt:message key="current.trip.end.trip.error.forbidden.close"/>
+        </stripes:link>
+			</section>
 			<section id="unlocking" class="hidden">
 				<h2><fmt:message key="current.trip.unlocking.car"/>&nbsp;&nbsp;&nbsp;<img src="${contextPath}/img/indicator.gif"/></h2>
 				<h3>
