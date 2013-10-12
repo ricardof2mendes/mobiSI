@@ -127,12 +127,16 @@ public class AdvanceBookingActionBean extends BookingActionBean {
      */
     public Resolution searchCarsAdvance() throws RemoteException, CustomerNotFoundExceptionException,
             IllegalDateExceptionException, CarLicensePlateNotFoundExceptionException,
-            CarClubCodeNotFoundExceptionException {
+            CarClubCodeNotFoundExceptionException, UnsupportedEncodingException {
 
         Calendar start = Calendar.getInstance(), end = Calendar.getInstance();
         start.setTime(startDate);
         end.setTime(endDate);
-        cars = new BookingWSServiceStub(Configuration.INSTANCE.getBookingEndpoint()).getCarsForAdvanceBooking(
+        BookingWSServiceStub stub = new BookingWSServiceStub(Configuration.INSTANCE.getBookingEndpoint());
+        stub._getServiceClient().addHeader(
+                AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext()
+                        .getUser().getPassword()));
+        cars = stub.getCarsForAdvanceBooking(
                 getContext().getUser().getCarClub().getCarClubCode(), zone, location, start, end);
 
         return new ForwardResolution("/WEB-INF/book/carListAdvance.jsp");

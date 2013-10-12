@@ -34,12 +34,61 @@
 					<li class="detail white">
 						<span><fmt:message key="trip.detail.total.cost"/></span>
 						<span>
-							<mobi:formatMobics value="${actionBean.trip.cost}" type="currencySymbol" />
+							<mobi:formatMobics value="${actionBean.trip.totalCost}" type="currencySymbol" />
 						</span>
 					</li>
 				</ul>
 			</nav>
 		</section>
+
+        <section>
+            <nav class="panel">
+                <ul>
+                    <li class="detail white">
+                        <span><fmt:message key="trip.detail.trip.cost"/></span>
+						<span>
+							<mobi:formatMobics value="${actionBean.trip.tripCost}" type="currencySymbol" />
+						</span>
+                    </li>
+                </ul>
+            </nav>
+        </section>
+
+        <section>
+            <nav class="panel">
+                <ul>
+                    <li class="detail white">
+                        <stripes:link id="carDetails" beanclass="com.criticalsoftware.mobics.presentation.action.addons.AddOnsActionBean" event="main" addSourcePage="true" >
+                            <stripes:param name="code" value="${actionBean.trip.addonCode}"/>
+                            <span><fmt:message key="trip.detail.addon"/></span>
+                            <span>${actionBean.trip.addonName}</span>
+                        </stripes:link>
+                    </li>
+                    <li class="detail white">
+                        <span><fmt:message key="trip.detail.discount"/></span>
+						<span><mobi:formatMobics value="${actionBean.trip.discount}" type="currencySymbol" />&nbsp;(<mobi:formatMobics value="${actionBean.trip.percentageDiscount}" type="percentage" />)</span>
+                    </li>
+                </ul>
+            </nav>
+        </section>
+
+        <section>
+            <nav class="panel">
+                <ul>
+                    <li class="detail white">
+                        <stripes:link id="carDetails" beanclass="com.criticalsoftware.mobics.presentation.action.promotions.PromotionsActionBean" event="main" addSourcePage="true" >
+                            <stripes:param name="code" value="${actionBean.trip.promotionCode}"/>
+                            <span><fmt:message key="trip.detail.promotion"/></span>
+                            <span>${actionBean.trip.promotionName}</span>
+                        </stripes:link>
+                    </li>
+                    <li class="detail white">
+                        <span><fmt:message key="trip.detail.bonus"/></span>
+                        <span><mobi:formatMobics value="${actionBean.trip.promotionBonus}" type="currencySymbol" /></span>
+                    </li>
+                </ul>
+            </nav>
+        </section>
 		
 		<section>
 			<nav class="panel">
@@ -132,23 +181,23 @@
 			<nav class="panel">
 				<ul>
 					<li class="link white">
-            <c:choose>
-              <c:when test="${actionBean.trip.bookingType == 'IMMEDIATE'}">
-                <c:set var="bookingTypeBean" value="com.criticalsoftware.mobics.presentation.action.booking.ImmediateBookingActionBean"/>
-              </c:when>
-              <c:otherwise>
-                <c:set var="bookingTypeBean" value="com.criticalsoftware.mobics.presentation.action.booking.AdvanceBookingActionBean"/>               
-              </c:otherwise>
-            </c:choose>	
-              
-            <stripes:link id="carDetails" beanclass="${pageScope.bookingTypeBean}" event="carDetails" addSourcePage="true" >
-              <stripes:param name="licensePlate" value="${actionBean.trip.carLicensePlate}"/>
-  
-              <span><fmt:message key="trip.detail.license.plate"/></span>
-              <span>
-                ${actionBean.trip.carLicensePlate}
-              </span>
-            </stripes:link>              				
+                        <c:choose>
+                          <c:when test="${actionBean.trip.bookingType == 'IMMEDIATE'}">
+                            <c:set var="bookingTypeBean" value="com.criticalsoftware.mobics.presentation.action.booking.ImmediateBookingActionBean"/>
+                          </c:when>
+                          <c:otherwise>
+                            <c:set var="bookingTypeBean" value="com.criticalsoftware.mobics.presentation.action.booking.AdvanceBookingActionBean"/>
+                          </c:otherwise>
+                        </c:choose>
+
+                        <stripes:link id="carDetails" beanclass="${pageScope.bookingTypeBean}" event="carDetails" addSourcePage="true" >
+                          <stripes:param name="licensePlate" value="${actionBean.trip.carLicensePlate}"/>
+
+                          <span><fmt:message key="trip.detail.license.plate"/></span>
+                          <span>
+                            ${actionBean.trip.carLicensePlate}
+                          </span>
+                        </stripes:link>
 					</li>
 				</ul>
 			</nav>

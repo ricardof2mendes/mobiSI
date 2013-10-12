@@ -36,7 +36,11 @@
 												<span>
 													<mobi:formatMobics value="${car.priceInUse}" type="currencyHour" />
 												</span>
-												<span></span>
+												<span><!--Not showing distance--></span>
+                                                <span>
+                                                    <span class="${!empty car.addOns ? 'showAddOn' : ''}"></span>
+                                                    <span class="${!empty car.promotions ? 'showPromotion' : ''}"></span>
+                                                </span>
 											</div>
 										</div>
 									</stripes:link>

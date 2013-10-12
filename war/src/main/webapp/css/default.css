@@ -66,7 +66,7 @@ section h2 {
 	font-size: 120%;
 	font-weight: normal;
 	color: #666;
-	text-shadow: 0 1px -1px white;
+	text-shadow: 0 1px 1px white;
 }
 
 section h3 {
@@ -164,6 +164,36 @@ nav#menu ul li.messagesActive {
 	background-repeat: no-repeat, repeat-x;
 	background-position: 10px 50%, top left;
 	color: #fff;
+}
+
+nav#menu ul li.bonus {
+    background-size: 40px 30px;
+    background-image: url(../img/menu/bonus-account-inactive.png);
+    background-repeat: no-repeat;
+    background-position: 10px 50%;
+}
+
+nav#menu ul li.bonusActive {
+    background-size: 40px 30px, 1px 45px;
+    background-image: url(../img/menu/bonus-account-active.png), url(../img/bt_down_45px.png);
+    background-repeat: no-repeat, repeat-x;
+    background-position: 10px 50%, top left;
+    color: #fff;
+}
+
+nav#menu ul li.promotions {
+    background-size: 40px 30px;
+    background-image: url(../img/menu/promotions-inactive.png);
+    background-repeat: no-repeat;
+    background-position: 10px 50%;
+}
+
+nav#menu ul li.promotionsActive {
+    background-size: 40px 30px, 1px 45px;
+    background-image: url(../img/menu/promotions-active.png), url(../img/bt_down_45px.png);
+    background-repeat: no-repeat, repeat-x;
+    background-position: 10px 50%, top left;
+    color: #fff;
 }
 
 nav#menu ul li.contacts {
@@ -419,7 +449,7 @@ section.submit {
 }
 
 /* Lists */
-section > nav.simpleList ul {
+nav.simpleList ul {
 	margin: 0 10px 15px;
 	background: #FFF;
 	border: 1px solid #E5E5E5;
@@ -431,7 +461,7 @@ section > nav.simpleList ul {
 	-webkit-border-radius: 4px;
 }
 
-section > nav.simpleList ul li {
+nav.simpleList ul li {
 	line-height: 45px;
 	text-align: left;
 	font-size: 100%;
@@ -441,52 +471,85 @@ section > nav.simpleList ul li {
 	background-position: 10px 50%, 100% 50%;
 }
 
-section > nav.simpleList ul li.bookForNow {
+nav.simpleList ul li.bookForNow {
 	background-size: 24px 24px, 19px 13px;
 	background-image: url(../img/links/book-for-now.png), url(../img/seta.png);
 }
 
-section > nav.simpleList ul li.findForLater {
+nav.simpleList ul li.findForLater {
 	background-size: 24px 24px, 19px 13px;
 	background-image: url(../img/links/find-a-car-for-later.png), url(../img/seta.png);
 }
 
-section > nav.simpleList ul li.bookAdvance {
+nav.simpleList ul li.bookAdvance {
 	background-size: 24px 24px, 19px 13px;
 	background-image: url(../img/links/book-in-advance.png), url(../img/seta.png);
 }
 
-section > nav.simpleList ul li.nearestcarsearch {
+nav.simpleList ul li.nearestcarsearch {
 	background-size: 24px 24px, 19px 13px;
 	background-image: url(../img/links/nearest-car-internal.png), url(../img/seta.png);
 }
 
-section > nav.simpleList ul li.licenseplatesearch {
+nav.simpleList ul li.licenseplatesearch {
 	background-size: 24px 24px, 19px 13px;
 	background-image: url(../img/links/license-plate.png), url(../img/seta.png);
 }
 
-section > nav.simpleList ul li.listsearch {
+nav.simpleList ul li.listsearch {
 	background-size: 24px 24px, 19px 13px;
 	background-image: url(../img/links/search.png), url(../img/seta.png);
 }
 
-section > nav.simpleList ul li.account {
+nav.simpleList ul li.account {
 	background: url(../img/seta.png) no-repeat 100% 50%;
 }
 
-section > nav.simpleList ul li:first-child {
+nav.simpleList ul li.cDetail {
+    background-size: 20px 20px, 19px 13px;
+    background-color: #f4f4f4;
+    font-weight: normal;
+    color: #666;
+    font-size: 100%;
+    text-shadow: 0 1px 1px white;
+}
+
+nav.simpleList ul li.cDetail a {
+    padding: 0 30px 0 40px;
+}
+
+nav.simpleList ul li.cDetail a span:nth-child(1) {
+    text-align: left;
+    font-weight: bold;
+    display: inline !important;
+}
+
+nav.simpleList ul li.cDetail a span:nth-child(2) {
+    text-align: right;
+    display: inline !important;
+    float: right;
+}
+
+nav.simpleList ul li.addonDetail {
+    background-image: url(../img/links/ios-webapp-add-on-list.png), url(../img/seta.png);
+}
+
+nav.simpleList ul li.promotionDetail {
+    background-image: url(../img/links/ios-webapp-promotion-list.png), url(../img/seta.png);
+}
+
+nav.simpleList ul li:first-child {
 	border-radius: 4px 4px 0 0;
 	-moz-border-radius: 4px 4px 0 0;
 	-webkit-border-radius: 4px 4px 0 0;
 }
-section > nav.simpleList ul li:last-child {
+nav.simpleList ul li:last-child {
 	border-radius: 0 0 4px 4px;
 	-moz-border-radius: 0 0 4px;
 	-webkit-border-radius: 0 0 4px;
 }
 
-section > nav.simpleList ul li.title {
+nav.simpleList ul li.title {
 	line-height: 26px;
 	padding-left: 10px;
 	background: none;
@@ -494,10 +557,10 @@ section > nav.simpleList ul li.title {
 	font-weight: normal;
 	color: #666;
 	font-size: 100%;
-	text-shadow: 0 1px -1px white;
+	text-shadow: 0 1px 1px white;
 }
 
-section > nav.simpleList ul li.anotherTitle {
+nav.simpleList ul li.anotherTitle {
 	line-height: 26px;
 	padding-left: 10px;
 	background: none;
@@ -506,19 +569,19 @@ section > nav.simpleList ul li.anotherTitle {
 	color: #000;
 }
 
-section > nav.simpleList ul li.link {
+nav.simpleList ul li.link {
 	background: #f4f4f4 url(../img/seta.png) no-repeat 100% 50%;
 }
 
 
-section > nav.simpleList ul li.link a {
+nav.simpleList ul li.link a {
 	padding: 0;
 	height: 45px;
 	line-height: 45px;
 }
 
 
-section > nav.simpleList ul li span:nth-child(1) {
+nav.simpleList ul li span:nth-child(1) {
 	text-align: right;
     width: 38%;
 	display: inline-block;
@@ -526,7 +589,7 @@ section > nav.simpleList ul li span:nth-child(1) {
 	font-size: 100%;
 }
 
-section > nav.simpleList ul li.link span:nth-child(2) {
+nav.simpleList ul li.link span:nth-child(2) {
 	text-align: left;
 	width: 60%;
 	display: inline-block;
@@ -540,14 +603,14 @@ section > nav.simpleList ul li.link span:nth-child(2) {
     vertical-align: top;
 }
 
-section > nav.simpleList ul li.filter {
+nav.simpleList ul li.filter {
 	line-height: normal;
 	padding: 10px 0;
 	background: none;
 	background-color: #f4f4f4;
 }
 
-section > nav.simpleList ul li.filter span:nth-child(2) {
+nav.simpleList ul li.filter span:nth-child(2) {
 	width: 60%;
 	display: inline-block;
 	padding-left: 10px;
@@ -556,18 +619,221 @@ section > nav.simpleList ul li.filter span:nth-child(2) {
 	vertical-align: top;
 }
 
-section > nav.simpleList ul li:last-child {
+nav.simpleList ul li:last-child {
 	border-bottom: 0;
 }
 
-section > nav.simpleList ul li a {
+nav.simpleList ul li a {
 	color: #333;
 	padding-left: 45px;
 	display: block;
 }
 
-section > nav.simpleList ul li.account a {
+nav.simpleList ul li.account a {
 	padding-left: 10px;
+}
+
+nav.simpleList ul li.balance {
+    padding: 0 10px 0 10px;
+    height: 45px;
+    line-height: normal;
+    padding-top: 5px;
+}
+
+nav.simpleList ul li.balance div {
+    float: left;
+    width: 100%;
+}
+
+nav.simpleList ul li.balance div:nth-child(2) {
+    font-weight: normal;
+    color: #999;
+    font-size: 80%;
+}
+
+/****************************** Three column list **/
+
+nav.threeColumnList ul li {
+    background: #FFF url(../img/seta.png) no-repeat 100% 50%;
+    border-bottom: 1px solid #E5E5E5;
+}
+
+nav.threeColumnList ul li a {
+    display: block;
+    padding: 5px 0;
+}
+
+nav.threeColumnList  ul li a > div:nth-child(1) {
+    width: 60px;
+    height: 60px;
+    margin: 0 10px;
+    float: left;
+}
+
+nav.threeColumnList  ul li a > div.msg-read-true,
+nav.threeColumnList  ul li a > div.msg-read-false {
+    border: none !important;
+    width: 13px !important;
+    height: 60px;
+    background: none !important;
+}
+
+nav.threeColumnList  ul li a > div.msg-read-false {
+    background-size: 13px 13px;
+    background: transparent url(../img/links/new-message-icon.png) no-repeat 50% 50% !important;
+}
+
+nav.threeColumnList  ul li a > div.msg-body {
+    margin-left: 33px !important;
+}
+
+nav.threeColumnList  ul li a > div:nth-child(2) {
+    height: 60px;
+    margin-left: 80px;
+    margin-right: 25px;
+}
+
+nav.threeColumnList  ul li a > div:nth-child(2) > div:nth-child(1) {
+    width: 60%;
+    float: left;
+}
+
+nav.threeColumnList  ul li a > div:nth-child(2) > div:nth-child(1) > span {
+    font-size: 100%;
+    float: left;
+    width: 100%;
+}
+nav.threeColumnList  ul li a > div:nth-child(2) > div:nth-child(1) > span:nth-child(1) {
+    font-weight: bold;
+    color: #333;
+}
+nav.threeColumnList  ul li a > div:nth-child(2) > div:nth-child(1) > span:nth-child(2) {
+    color: #333;
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+nav.threeColumnList  ul li a > div:nth-child(2) > div:nth-child(1) > span:nth-child(3) {
+    color: #999;
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+nav.threeColumnList  ul li a > div:nth-child(2) > div:nth-child(2) {
+    width: 40%;
+    float: right;
+}
+
+nav.threeColumnList  ul li a > div:nth-child(2) > div:nth-child(2) > span {
+    font-size: 100%;
+    float: right;
+    text-align: right;
+    width: 100%;
+}
+
+nav.threeColumnList  ul li a > div:nth-child(2) > div:nth-child(2) > span:nth-child(1) {
+    font-weight: bold;
+    color: #333;
+}
+
+nav.threeColumnList  ul li a > div:nth-child(2) > div:nth-child(2) > span:nth-child(2) {
+    color: #999;
+    font-size: 90%;
+}
+
+nav.threeColumnList  ul li a > div:nth-child(2) > div:nth-child(2) > span.unavailable {
+    color: #FF0000;
+}
+
+nav.threeColumnList  ul li a > div:nth-child(2) > div:nth-child(2) > span:nth-child(3) > span {
+    padding: 10px 10px;
+    background-size: 20px 20px;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
+}
+
+nav.threeColumnList span.showAddOn {
+    background-image: url(../img/links/ios-webapp-add-on-list.png);
+}
+nav.threeColumnList span.showPromotion {
+    background-image: url(../img/links/ios-webapp-promotion-list.png);
+}
+
+.ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/************************************ Two columns list */
+
+nav.twoColumnList ul li {
+    background: #FFF url(../img/seta.png) no-repeat 100% 50%;
+    border-bottom: 1px solid #E5E5E5;
+}
+
+nav.twoColumnList ul li a {
+    display: block;
+    padding: 5px 0 0 10px;
+    min-height: 45px;
+}
+
+nav.twoColumnList  ul li a > div:nth-child(1) {
+    width: 60%;
+    float: left;
+}
+
+nav.twoColumnList  ul li a > div:nth-child(1) > span {
+    font-size: 100%;
+    float: left;
+    width: 100%;
+}
+nav.twoColumnList  ul li a > div:nth-child(1) > span:nth-child(1) {
+    font-weight: bold;
+    color: #333;
+}
+nav.twoColumnList  ul li a > div:nth-child(1) > span:nth-child(2) {
+    color: #999;
+    font-size: 90%;
+}
+
+nav.twoColumnList  ul li a > div:nth-child(2) {
+    width: 40%;
+    float: right;
+    padding-right: 25px;
+    text-align: right;
+}
+
+nav.twoColumnList ul li a > div:nth-child(2) > span{
+    color: #999;
+}
+
+nav.twoColumnList ul li.transactions {
+
+}
+
+nav.twoColumnList ul li.transactions div {
+    float: left;
+    width: 50%;
+    font-weight: bold;
+    color: #333;
+}
+
+nav.twoColumnList ul li.transactions div:nth-child(4),
+nav.twoColumnList ul li.transactions div:nth-child(5) {
+    font-weight: normal;
+    color: #999;
+    font-size: 80%;
+}
+
+nav.twoColumnList ul li.transactions div:nth-child(2),
+nav.twoColumnList ul li.transactions div:nth-child(5){
+    text-align: right;
+    padding-right: 25px;
 }
 
 /****************************** Panel detail **/
@@ -580,7 +846,7 @@ img.carImage {
     -webkit-border-radius: 4px;
 }
 
-section > nav.panel ul {
+nav.panel ul {
 	margin: 0 10px 15px;
 	background: #FFF;
 	border: 1px solid #E5E5E5;
@@ -603,27 +869,27 @@ ul li.white {
 	background-color: #fff !important;
 }
 
-section > nav.panel ul li.link {
+nav.panel ul li.link {
 	background: #f4f4f4 url(../img/seta.png) no-repeat 100% 50%;
 }
 
-section > nav.panel ul li.link a {
+nav.panel ul li.link a {
 	padding: 10px 0;
 	font-size: 100%;
 }
 
-section > nav.panel ul li.link span:nth-child(1) {
+nav.panel ul li.link span:nth-child(1) {
 	text-align: right;
     width: 38%;
 	display: inline-block;
 	color:#333;
 }
 
-section > nav.panel ul li.link span:nth-child(2) {
+nav.panel ul li.link span:nth-child(2) {
 	text-align: left;
 	width: 60%;
 	display: inline-block;
-    white-space: break-word;
+    word-wrap: break-word;
 	padding-right: 15px;
 	color: #666666;
     font-weight: normal;
@@ -638,7 +904,7 @@ nav.panel ul li.link {
 	font-weight: bold;
 	color: #333;
 	border-bottom: 1px solid #E5E5E5;
-	text-shadow: 0 1px -1px white;
+	text-shadow: 0 1px 1px white;
 }
 
 nav.panel ul li.image {	
@@ -659,22 +925,60 @@ nav.panel ul li:last-child {
 	border-bottom: none;
 }
 
-section > nav.panel ul li.detail {
+nav.panel ul li.promoRest {
+    line-height: 0px !important;
+    text-align: left;
+    font-size: 100%;
+    font-weight: bold;
+    color: #333;
+    text-shadow: 0 1px 1px white;
+    padding: 11px 0px;
+    background: none;
+    background-color: #f4f4f4;
+}
+
+nav.panel ul li.promoRest:first-child {
+    padding-top: 20px !important;
+}
+nav.panel ul li.promoRest:last-child {
+    padding-bottom: 20px !important;
+}
+
+nav.panel ul li.promoRest span {
+    display: inline-block;
+}
+
+nav.panel ul li.promoRest span:nth-child(1) {
+    text-align: right;
+    width: 38%;
+}
+
+nav.panel ul li.promoRest span:nth-child(2) {
+    padding-left: 10px;
+    color: #666;
+    font-weight: normal;
+    width: 60%;
+    vertical-align: top;
+}
+
+
+
+nav.panel ul li.detail {
 	padding: 10px 0;
 	background: none;
 	background-color: #f4f4f4;
 }
 
-section > nav.panel ul li.detail span {
+nav.panel ul li.detail span {
 	display: inline-block;
 }
 
-section > nav.panel ul li.detail span:nth-child(1) {
+nav.panel ul li.detail span:nth-child(1) {
 	text-align: right;
 	width: 38%;
 }
 
-section > nav.panel ul li.detail span:nth-child(2) {
+nav.panel ul li.detail span:nth-child(2) {
 	padding-left: 10px;
 	color: #666;
 	font-weight: normal;
@@ -682,7 +986,7 @@ section > nav.panel ul li.detail span:nth-child(2) {
 	vertical-align: top;
 }
 
-section > nav.panel ul li:last-child{
+nav.panel ul li:last-child{
 	border-bottom: 0;
 }
 
@@ -762,154 +1066,6 @@ nav.panel  ul li.image a > div:nth-child(2) > div:nth-child(1) > span:nth-child(
 	color: #999;
 }
 
-/****************************** Three column list **/
-
-nav.threeColumnList ul li {
-	background: #FFF url(../img/seta.png) no-repeat 100% 50%;
-	border-bottom: 1px solid #E5E5E5;
-}
-
-nav.threeColumnList ul li a {
-	display: block;
-	padding: 5px 0;
-}
-
-nav.threeColumnList  ul li a > div:nth-child(1) {
-	width: 60px;
-	height: 60px;
-	margin: 0 10px;
-	float: left;
-}
-
-nav.threeColumnList  ul li a > div.msg-read-true,
-nav.threeColumnList  ul li a > div.msg-read-false {
-	border: none !important;
-	width: 13px !important;
-	height: 60px;
-	background: none !important;
-}
-
-nav.threeColumnList  ul li a > div.msg-read-false {
-	background-size: 13px 13px;
-	background: transparent url(../img/links/new-message-icon.png) no-repeat 50% 50% !important;	
-}
-
-nav.threeColumnList  ul li a > div.msg-body {
-	margin-left: 33px !important;
-}
-
-nav.threeColumnList  ul li a > div:nth-child(2) {
-	height: 60px;
-	margin-left: 80px;
-	margin-right: 25px;
-}
-
-nav.threeColumnList  ul li a > div:nth-child(2) > div:nth-child(1) {
-	width: 60%;
-	float: left;
-}
-
-nav.threeColumnList  ul li a > div:nth-child(2) > div:nth-child(1) > span {
-	font-size: 100%;
-	float: left;
-	width: 100%;
-}
-nav.threeColumnList  ul li a > div:nth-child(2) > div:nth-child(1) > span:nth-child(1) {
-	font-weight: bold;
-	color: #333;
-}
-nav.threeColumnList  ul li a > div:nth-child(2) > div:nth-child(1) > span:nth-child(2) {
-	color: #333;
-	display: inline-block;
-	overflow: hidden;
-	text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-nav.threeColumnList  ul li a > div:nth-child(2) > div:nth-child(1) > span:nth-child(3) {
-	color: #999;
-	display: inline-block;
-	overflow: hidden;
-	text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-nav.threeColumnList  ul li a > div:nth-child(2) > div:nth-child(2) {
-	width: 40%;
-	float: right;
-}
-
-nav.threeColumnList  ul li a > div:nth-child(2) > div:nth-child(2) > span {
-	font-size: 100%;
-	float: right;
-	text-align: right;
-	width: 100%;
-}
-
-nav.threeColumnList  ul li a > div:nth-child(2) > div:nth-child(2) > span:nth-child(1) {
-	font-weight: bold;
-	color: #333;
-}
-
-nav.threeColumnList  ul li a > div:nth-child(2) > div:nth-child(2) > span:nth-child(2) {
-	color: #999;
-	font-size: 90%;
-}
-
-nav.threeColumnList  ul li a > div:nth-child(2) > div:nth-child(2) > span.unavailable {
-	color: #FF0000;
-}
-
-.ellipsis {
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-}
-
-/************************************ Two columns list */
-
-nav.twoColumnList ul li {
-	background: #FFF url(../img/seta.png) no-repeat 100% 50%;
-	border-bottom: 1px solid #E5E5E5;
-}
-
-nav.twoColumnList ul li a {
-	display: block;
-	padding: 5px 0 0 10px;
-	min-height: 45px;
-}
-
-nav.twoColumnList  ul li a > div:nth-child(1) {
-	width: 60%;
-	float: left;
-}
-
-nav.twoColumnList  ul li a > div:nth-child(1) > span {
-	font-size: 100%;
-	float: left;
-	width: 100%;
-}
-nav.twoColumnList  ul li a > div:nth-child(1) > span:nth-child(1) {
-	font-weight: bold;
-	color: #333;
-}
-nav.twoColumnList  ul li a > div:nth-child(1) > span:nth-child(2) {
-	color: #999;
-	font-size: 90%;
-}
-
-nav.twoColumnList  ul li a > div:nth-child(2) {
-	width: 40%;
-	float: right;
-	padding-right: 25px;
-	text-align: right;
-}
-
-nav.twoColumnList  ul li a > div:nth-child(2) > span{
-	color: #999;
-}
-
-
 /************************************ Order navigation bar*/
 
 nav.orderCriteria {
@@ -921,12 +1077,12 @@ nav.orderCriteria {
 	padding-top: 2px;
 }
 
-section > nav.orderCriteria ul:first-child {
+nav.orderCriteria ul:first-child {
 	float: left;
 	padding-left: 10px;
 }
 
-section > nav.orderCriteria ul:last-child {
+nav.orderCriteria ul:last-child {
 	float: right;
 	padding-right: 10px;
 }
@@ -939,10 +1095,10 @@ nav.orderCriteria ul li {
 nav.orderCriteria ul li a{
 	display:block;
 	color: #333;
-	text-shadow: 0 1px -1px white;
+	text-shadow: 0 1px 1px white;
 	font-weight: bold;
 	height: 30px;
-	width: 74px;
+	width: 76px;
 	border: 1px solid rgba(0, 0, 0, 0.6);
 	font: bold 90% Arial, sans-serif;
 	background: url('../img/bt_up_30px-height.png');
@@ -957,7 +1113,6 @@ nav.orderCriteria ul li a.selected{
 }
 
 nav.orderCriteria ul li:first-child a{
-	width: 76px;
 	border-radius: 4px 0 0 4px;
 	-moz-border-radius: 4px 0 0 4px;
 	-webkit-border-radius: 4px 0 0 4px;
@@ -965,7 +1120,6 @@ nav.orderCriteria ul li:first-child a{
 }
 
 nav.orderCriteria ul li:last-child a {
-	width: 76px;
 	border-radius: 0 4px 4px 0;
 	-moz-border-radius: 0 4px 4px 0;
 	-webkit-border-radius: 0 4px 4px 0;
@@ -978,13 +1132,22 @@ nav.orderCriteria ul:last-child li a {
 	-webkit-border-radius: 4px;	
 }
 
-/* No result list */
+nav.orderCriteria ul.mid {
+    width: 220px;
+    margin: 0 auto;
+    float: none !important;
+}
+nav.orderCriteria ul.mid li a{
+    width: 100px;
+}
+
+/************************************ No result list */
 section#noresults {
 	margin: 80px auto auto;
 	text-align: center;
 	height: 30px;
 	color: #333;
-	text-shadow: 0 1px -1px white;
+	text-shadow: 0 1px 1px white;
 }
 
 section#noresults label:nth-child(1) {
@@ -996,6 +1159,13 @@ section#noresultsdamage {
 	text-align: center;
 	height: 30px;
 	color: #999;
+}
+
+section#noresultsrestrictions {
+    margin: 10px auto auto;
+    text-align: center;
+    height: 30px;
+    font-weight: bold;
 }
 
 /* Custom selectBox */
@@ -1041,7 +1211,7 @@ article.pin div:nth-child(1) > label {
 article.pin  div:nth-child(1) > label:nth-child(1) {
 	font-weight: normal;
 	color: #666;
-	text-shadow: 0 1px -1px white;
+	text-shadow: 0 1px 1px white;
 }
 
 article.pin div:nth-child(1) > label:nth-child(2) {
@@ -1168,7 +1338,7 @@ input.autocomplete {
 	text-align: center;
 	color: #666;
 	padding: 0 10px;
-	text-shadow: 0 1px -1px white;
+	text-shadow: 0 1px 1px white;
 	font-size: 90%;
 }
 
@@ -1240,6 +1410,10 @@ input.autocomplete {
 	color: #0099FF;
 }
 
+.redText{
+    color: #ff0000 !important;
+}
+
 /* Messages */
 .msg {
 	border: 1px solid #AACE65;
@@ -1267,17 +1441,17 @@ input.autocomplete {
 
 .red,
 .red .loginBtn {
-      background-color: #CC1A1A !important;
+      background-color: #cc1a1a !important;
 }
 
 .orange,
 .orange .loginBtn {
-    background-color: #F09000 !important; 
+    background-color: #f09000 !important; 
 }
 
 .lightgreen,
 .lightgreen .loginBtn {
-    background-color: #78CC0A !important;
+    background-color: #78cc0a !important;
 }
 
 .darkgreen,
@@ -1287,7 +1461,7 @@ input.autocomplete {
 
 .lightblue,
 .lightblue .loginBtn {
-    background-color: #008BE8 !important;
+    background-color: #008be8 !important;
 }
 .darkblue,
 .darkblue .loginBtn {
@@ -1296,17 +1470,17 @@ input.autocomplete {
 
 .purple,
 .purple .loginBtn {
-    background-color: #4A0D86 !important;
+    background-color: #4a0d86 !important;
 }
 
 .pink,
 .pink .loginBtn {
-    background-color: #CC00CC
+    background-color: #cc00cc
 }
 
 .darkgray,
 .darkgray .loginBtn {
-    background-color: #1A1A1A
+    background-color: #1a1a1a
 }
 
 /*****/
@@ -1321,21 +1495,21 @@ input.autocomplete {
 .warmred,
 .warmred .loginBtn {
 	background-size: 320px 410px;
-      background: #CC1A1A url(../img/theme/CC1A1A/webapp-splash-gradient-normal-CC1A1A.png) no-repeat 50% 0;
-	  background-size: 100%;
+    background: #cc1a1a url(../img/theme/cc1a1a/webapp-splash-gradient-normal-cc1a1a.png) no-repeat 50% 0;
+    background-size: 100%;
 }
 
 .warmorange,
 .warmorange .loginBtn {
 	background-size: 320px 410px;
-	background: #F09000 url(../img/theme/F09000/webapp-splash-gradient-normal-F09000.png) no-repeat 50% 0;
+	background: #f09000 url(../img/theme/f09000/webapp-splash-gradient-normal-f09000.png) no-repeat 50% 0;
 	background-size: 100%;
 }
 
 .warmlightgreen,
 .warmlightgreen .loginBtn {
 	background-size: 320px 410px;
-	background: #78CC0A url(../img/theme/78CC0A/webapp-splash-gradient-normal-78CC0A.png) no-repeat 50% 0;
+	background: #78cc0a url(../img/theme/78cc0a/webapp-splash-gradient-normal-78cc0a.png) no-repeat 50% 0;
     background-size: 100%;
 }
 
@@ -1349,7 +1523,7 @@ input.autocomplete {
 .warmlightblue,
 .warmlightblue .loginBtn {
 	background-size: 320px 410px;
-	background: #008BE8 url(../img/theme/008BE8/webapp-splash-gradient-normal-008BE8.png) no-repeat 50% 0;
+	background: #008be8 url(../img/theme/008be8/webapp-splash-gradient-normal-008be8.png) no-repeat 50% 0;
 	background-size: 100%;
 }
 
@@ -1363,21 +1537,21 @@ input.autocomplete {
 .warmpurple,
 .warmpurple .loginBtn {
 	background-size: 320px 410px;
-	background: #4A0D86 url(../img/theme/4A0D86/webapp-splash-gradient-normal-4A0D86.png) no-repeat 50% 0;
+	background: #4a0d86 url(../img/theme/4a0d86/webapp-splash-gradient-normal-4a0d86.png) no-repeat 50% 0;
 	background-size: 100%;
 }
 
 .warmpink,
 .warmpink .loginBtn {
 	background-size: 320px 410px;
-	background: #CC00CC url(../img/theme/CC00CC/webapp-splash-gradient-normal-CC00CC.png) no-repeat 50% 0;
+	background: #cc00cc url(../img/theme/cc00cc/webapp-splash-gradient-normal-cc00cc.png) no-repeat 50% 0;
 	background-size: 100%;
 }
 
 .warmdarkgray,
 .warmdarkgray .loginBtn {
 	background-size: 320px 410px;
-	background: #1A1A1A url(../img/theme/1A1A1A/webapp-splash-gradient-normal-1A1A1A.png) no-repeat 50% 0;
+	background: #1a1a1a url(../img/theme/1a1a1a/webapp-splash-gradient-normal-1a1a1a.png) no-repeat 50% 0;
 	background-size: 100%;
 }
 
@@ -1389,16 +1563,16 @@ li.imageCarClub div.mapdarkred {
 }
 
 li.imageCarClub div.mapred {
-	background: transparent url(../img/theme/CC1A1A/ios-webapp-contacts-world-normal-CC1A1A.png) no-repeat 50% 50%;
+	background: transparent url(../img/theme/cc1a1a/ios-webapp-contacts-world-normal-cc1a1a.png) no-repeat 50% 50%;
 	background-size: 64px 64px;
 }
 
 li.imageCarClub div.maporange {
-	background: transparent url(../img/theme/F09000/ios-webapp-contacts-world-normal-F09000.png) no-repeat 50% 50%;
+	background: transparent url(../img/theme/f09000/ios-webapp-contacts-world-normal-f09000.png) no-repeat 50% 50%;
 	background-size: 64px 64px;
 }
 li.imageCarClub div.maplightgreen {
-	background: transparent url(../img/theme/78CC0A/ios-webapp-contacts-world-normal-78CC0A.png) no-repeat 50% 50%;
+	background: transparent url(../img/theme/78cc0a/ios-webapp-contacts-world-normal-78cc0a.png) no-repeat 50% 50%;
 	background-size: 64px 64px;
 }
 
@@ -1408,7 +1582,7 @@ li.imageCarClub div.mapdarkgreen {
 }
 
 li.imageCarClub div.maplightblue {
-	background: transparent url(../img/theme/008BE8/ios-webapp-contacts-world-normal-008BE8.png) no-repeat 50% 50%;
+	background: transparent url(../img/theme/008be8/ios-webapp-contacts-world-normal-008be8.png) no-repeat 50% 50%;
 	background-size: 64px 64px;
 }
 
@@ -1418,17 +1592,17 @@ li.imageCarClub div.mapdarkblue {
 }
 
 li.imageCarClub div.mappurple {
-	background: transparent url(../img/theme/4A0D86/ios-webapp-contacts-world-normal-4A0D86.png) no-repeat 50% 50%;
+	background: transparent url(../img/theme/4a0d86/ios-webapp-contacts-world-normal-4a0d86.png) no-repeat 50% 50%;
 	background-size: 64px 64px;
 }
 
 li.imageCarClub div.mappink {
-	background: transparent url(../img/theme/CC00CC/ios-webapp-contacts-world-normal-CC00CC.png) no-repeat 50% 50%;
+	background: transparent url(../img/theme/cc00cc/ios-webapp-contacts-world-normal-cc00cc.png) no-repeat 50% 50%;
 	background-size: 64px 64px;
 }
 
 li.imageCarClub div.mapdarkgray {
-	background: transparent url(../img/theme/1A1A1A/ios-webapp-contacts-world-normal-1A1A1A.png) no-repeat 50% 50%;
+	background: transparent url(../img/theme/1a1a1a/ios-webapp-contacts-world-normal-1a1a1a.png) no-repeat 50% 50%;
 	background-size: 64px 64px;
 }
 
@@ -1439,16 +1613,16 @@ li.imageCarClub div.warmdarkred {
 }
 
 li.imageCarClub div.warmred {
-	background: transparent url(../img/theme/CC1A1A/ios-webapp-contacts-warm-normal-CC1A1A.png) no-repeat 50% 50%;
+	background: transparent url(../img/theme/cc1a1a/ios-webapp-contacts-warm-normal-cc1a1a.png) no-repeat 50% 50%;
 	background-size: 64px 64px;
 }
 
 li.imageCarClub div.warmorange {
-	background: transparent url(../img/theme/F09000/ios-webapp-contacts-warm-normal-F09000.png) no-repeat 50% 50%;
+	background: transparent url(../img/theme/f09000/ios-webapp-contacts-warm-normal-f09000.png) no-repeat 50% 50%;
 	background-size: 64px 64px;
 }
 li.imageCarClub div.warmlightgreen {
-	background: transparent url(../img/theme/78CC0A/ios-webapp-contacts-warm-normal-78CC0A.png) no-repeat 50% 50%;
+	background: transparent url(../img/theme/78cc0a/ios-webapp-contacts-warm-normal-78cc0a.png) no-repeat 50% 50%;
 	background-size: 64px 64px;
 }
 
@@ -1458,7 +1632,7 @@ li.imageCarClub div.warmdarkgreen {
 }
 
 li.imageCarClub div.warmlightblue {
-	background: transparent url(../img/theme/008BE8/ios-webapp-contacts-warm-normal-008BE8.png) no-repeat 50% 50%;
+	background: transparent url(../img/theme/008be8/ios-webapp-contacts-warm-normal-008be8.png) no-repeat 50% 50%;
 	background-size: 64px 64px;
 }
 
@@ -1468,17 +1642,17 @@ li.imageCarClub div.warmdarkblue {
 }
 
 li.imageCarClub div.warmpurple {
-	background: transparent url(../img/theme/4A0D86/ios-webapp-contacts-warm-normal-4A0D86.png) no-repeat 50% 50%;
+	background: transparent url(../img/theme/4a0d86/ios-webapp-contacts-warm-normal-4a0d86.png) no-repeat 50% 50%;
 	background-size: 64px 64px;
 }
 
 li.imageCarClub div.warmpink {
-	background: transparent url(../img/theme/CC00CC/ios-webapp-contacts-warm-normal-CC00CC.png) no-repeat 50% 50%;
+	background: transparent url(../img/theme/cc00cc/ios-webapp-contacts-warm-normal-cc00cc.png) no-repeat 50% 50%;
 	background-size: 64px 64px;
 }
 
 li.imageCarClub div.warmdarkgray {
-	background: transparent url(../img/theme/1A1A1A/ios-webapp-contacts-warm-normal-1A1A1A.png) no-repeat 50% 50%;
+	background: transparent url(../img/theme/1a1a1a/ios-webapp-contacts-warm-normal-1a1a1a.png) no-repeat 50% 50%;
 	background-size: 64px 64px;
 }
 
@@ -1569,7 +1743,7 @@ body.confirmation .confirm2 {
 
 #statePooling div {
 	color: #999;
-	font-size:  100%;;
+	font-size:  100%;
 	font-weight: normal;
 }
 
@@ -1580,6 +1754,55 @@ body.confirmation .confirm2 {
 .noBorder {
 	border: 0 !important;
 }
+
+.promoTitle {
+    height: 20px;
+    background-color: rgba(153, 153, 153, 0.7);
+    background-image: url(../img/menu/sombra_menu_20px_flipped.png), url(../img/menu/sombra_menu_20px.png);
+    background-position: bottom left, top left;
+    background-repeat: repeat-x, repeat-x;
+    background-size: 1px 5px;
+    font-weight: bold;
+    padding-left: 10px;
+}
+
+.correctMargin {
+    margin-top: -10px;
+}
+
+#nopromotions {
+    margin: auto auto;
+    text-align: center;
+    line-height: 45px;
+    color: #333;
+    text-shadow: 0 1px 1px white;
+}
+
+.promotionsGray {
+    background-color: #f3f3f3 !important;
+}
+
+.promotionsLightGray {
+    background-color: #f8f8f8 !important;
+}
+
+nav.threeColumnList ul li a.high > div:nth-child(2) > div:nth-child(1) > span:nth-child(2),
+nav.threeColumnList ul li a.high > div:nth-child(2) > div:nth-child(1) > span:last-child {
+    font-size: 80% !important;
+}
+
+section#promotionsDiscount {
+    margin: auto auto;
+    text-align: center;
+    height: 45px;
+    color: #333;
+    text-shadow: 0 1px 1px white;
+}
+
+section#promotionsDiscount label:nth-child(1) {
+    font-weight: normal;
+}
+
 /********************************************************************* Media Queries */
 
 @media screen and (-webkit-min-device-pixel-ratio: 1.5),
@@ -1619,13 +1842,15 @@ body.confirmation .confirm2 {
 	.submitBtn:active {
 		background-image: url(../img/bt_down_90px.png);
 	}
-	
+
+    nav.bonusCriteria ul li a,
 	nav.orderCriteria ul li a {
-		background: url('../img/bt_up_60px-height.png');
+		background-image: url('../img/bt_up_60px-height.png');
 	}
-	
+
+    nav.bonusCriteria ul li a.selected,
 	nav.orderCriteria ul li a.selected {
-		background: url('../img/bt_down_60px-height.png');
+		background-image: url('../img/bt_down_60px-height.png');
 	}
 	
 	article.pin div:nth-child(3) > input[type="submit"] {
@@ -1640,33 +1865,40 @@ body.confirmation .confirm2 {
 		background-image: url(../img/links/nearest-car@2x.png);
 	}
 	
-	section > nav.simpleList ul li.bookForNow {
+	nav.simpleList ul li.bookForNow {
 		background-image: url(../img/links/book-for-now@2x.png), url(../img/seta.png);
 	}
 	
-	section > nav.simpleList ul li.findForLater {
+	nav.simpleList ul li.findForLater {
 		background-image: url(../img/links/find-a-car-for-later@2x.png), url(../img/seta.png);
 	}
 	
-	section > nav.simpleList ul li.bookAdvance {
+	nav.simpleList ul li.bookAdvance {
 		background-image: url(../img/links/book-in-advance@2x.png), url(../img/seta.png);
 	}
 	
-	section > nav.simpleList ul li.nearestcarsearch {
+	nav.simpleList ul li.nearestcarsearch {
 		background-image: url(../img/links/nearest-car-internal@2x.png), url(../img/seta.png);
 	}
 	
-	section > nav.simpleList ul li.licenseplatesearch {
+	nav.simpleList ul li.licenseplatesearch {
 		background-image: url(../img/links/license-plate@2x.png), url(../img/seta.png);
 	}
 	
-	section > nav.simpleList ul li.listsearch {
+	nav.simpleList ul li.listsearch {
 		background-image: url(../img/links/search@2x.png), url(../img/seta.png);
 	}
 	
 	nav.threeColumnList  ul li a > div.msg-read-false {
-		background-image: transparent url(../img/links/new-message-icon@2x.png);	
+		background-image: url(../img/links/new-message-icon@2x.png);
 	}
+
+    nav.threeColumnList span.showAddOn {
+        background-image: url(../img/links/ios-webapp-add-on-list@2x.png);
+    }
+    nav.threeColumnList span.showPromotion {
+        background-image: url(../img/links/ios-webapp-promotion-list@2x.png);
+    }
 	
 	nav#menu ul li.booking {
 		background-image: url(../img/menu/bookacar-inactive@2x.png), url(../img/menu/sombra_menu_20px.png);
@@ -1723,6 +1955,22 @@ body.confirmation .confirm2 {
 	nav#menu ul li.accountActive {
 		background-image: url(../img/menu/account-active@2x.png), url(../img/menu/sombra_menu_20px_flipped.png), url(../img/bt_down_90px.png);
 	}
+
+    nav#menu ul li.bonus {
+        background-image: url(../img/menu/bonus-account-inactive@2x.png), url(../img/menu/sombra_menu_20px_flipped.png);
+    }
+
+    nav#menu ul li.bonusActive {
+        background-image: url(../img/menu/bonus-account-active@2x.png), url(../img/menu/sombra_menu_20px_flipped.png), url(../img/bt_down_90px.png);
+    }
+
+    nav#menu ul li.promotions {
+        background-image: url(../img/menu/promotions-inactive@2x.png), url(../img/menu/sombra_menu_20px_flipped.png);
+    }
+
+    nav#menu ul li.promotionsActive {
+        background-image: url(../img/menu/promotions-active@2x.png), url(../img/menu/sombra_menu_20px_flipped.png), url(../img/bt_down_90px.png);
+    }
 	
 	.alertBtn,
 	.linkBtn,
@@ -1743,17 +1991,17 @@ body.confirmation .confirm2 {
 	
 	.warmred,
 	.warmred .loginBtn {
-	      background-image: url(../img/theme/CC1A1A/webapp-splash-gradient-retina-CC1A1A.png);
+	      background-image: url(../img/theme/cc1a1a/webapp-splash-gradient-retina-cc1a1a.png);
 	}
 	
 	.warmorange,
 	.warmorange .loginBtn {
-		background-image: url(../img/theme/F09000/webapp-splash-gradient-retina-F09000.png);
+		background-image: url(../img/theme/f09000/webapp-splash-gradient-retina-f09000.png);
 	}
 	
 	.warmlightgreen,
 	.warmlightgreen .loginBtn {
-		background-image: url(../img/theme/78CC0A/webapp-splash-gradient-retina-78CC0A.png);
+		background-image: url(../img/theme/78cc0a/webapp-splash-gradient-retina-78cc0a.png);
 	}
 	
 	.warmdarkgreen,
@@ -1763,7 +2011,7 @@ body.confirmation .confirm2 {
 	
 	.warmlightblue,
 	.warmlightblue .loginBtn {
-		background-image: url(../img/theme/008BE8/webapp-splash-gradient-retina-008BE8.png);
+		background-image: url(../img/theme/008be8/webapp-splash-gradient-retina-008be8.png);
 	}
 	
 	.warmdarkblue,
@@ -1773,17 +2021,17 @@ body.confirmation .confirm2 {
 	
 	.warmpurple,
 	.warmpurple .loginBtn {
-		background-image: url(../img/theme/4A0D86/webapp-splash-gradient-retina-4A0D86.png);
+		background-image: url(../img/theme/4a0d86/webapp-splash-gradient-retina-4a0d86.png);
 	}
 	
 	.warmpink,
 	.warmpink .loginBtn {
-		background-image: url(../img/theme/CC00CC/webapp-splash-gradient-retina-CC00CC.png);
+		background-image: url(../img/theme/cc00cc/webapp-splash-gradient-retina-cc00cc.png);
 	}
 	
 	.warmdarkgray,
 	.warmdarkgray .loginBtn {
-		background-image: url(../img/theme/1A1A1A/webapp-splash-gradient-retina-1A1A1A.png);
+		background-image: url(../img/theme/1a1a1a/webapp-splash-gradient-retina-1a1a1a.png);
 	}		
 	
 	/* Contacts image theme */
@@ -1793,15 +2041,15 @@ body.confirmation .confirm2 {
 	}
 	
 	li.imageCarClub div.mapred {
-		background-image: url(../img/theme/CC1A1A/ios-webapp-contacts-world-retina-CC1A1A.png);		
+		background-image: url(../img/theme/cc1a1a/ios-webapp-contacts-world-retina-cc1a1a.png);		
 	}
 	
 	li.imageCarClub div.maporange {
-		background-image: url(../img/theme/F09000/ios-webapp-contacts-world-retina-F09000.png);		
+		background-image: url(../img/theme/f09000/ios-webapp-contacts-world-retina-f09000.png);		
 	}
 	
 	li.imageCarClub div.maplightgreen {
-		background-image: url(../img/theme/78CC0A/ios-webapp-contacts-world-retina-78CC0A.png);		
+		background-image: url(../img/theme/78cc0a/ios-webapp-contacts-world-retina-78cc0a.png);		
 	}
 	
 	li.imageCarClub div.mapdarkgreen {
@@ -1809,7 +2057,7 @@ body.confirmation .confirm2 {
 	}
 	
 	li.imageCarClub div.maplightblue {
-		background-image: url(../img/theme/008BE8/ios-webapp-contacts-world-retina-008BE8.png);		
+		background-image: url(../img/theme/008be8/ios-webapp-contacts-world-retina-008be8.png);		
 	}
 	
 	li.imageCarClub div.mapdarkblue {
@@ -1817,15 +2065,15 @@ body.confirmation .confirm2 {
 	}
 	
 	li.imageCarClub div.mappurple {
-		background-image: url(../img/theme/4A0D86/ios-webapp-contacts-world-retina-4A0D86.png);		
+		background-image: url(../img/theme/4a0d86/ios-webapp-contacts-world-retina-4a0d86.png);		
 	}
 	
 	li.imageCarClub div.mappink {
-		background-image: url(../img/theme/CC00CC/ios-webapp-contacts-world-retina-CC00CC.png);		
+		background-image: url(../img/theme/cc00cc/ios-webapp-contacts-world-retina-cc00cc.png);		
 	}
 	
 	li.imageCarClub div.mapdarkgray {
-		background-image: url(../img/theme/1A1A1A/ios-webapp-contacts-world-retina-1A1A1A.png);		
+		background-image: url(../img/theme/1a1a1a/ios-webapp-contacts-world-retina-1a1a1a.png);		
 	}
 	
 	/*********/
@@ -1834,14 +2082,14 @@ body.confirmation .confirm2 {
 	}
 	
 	li.imageCarClub div.warmred {
-		background-image: url(../img/theme/CC1A1A/ios-webapp-contacts-warm-retina-CC1A1A.png);		
+		background-image: url(../img/theme/cc1a1a/ios-webapp-contacts-warm-retina-cc1a1a.png);		
 	}
 	
 	li.imageCarClub div.warmorange {
-		background-image: url(../img/theme/F09000/ios-webapp-contacts-warm-retina-F09000.png);		
+		background-image: url(../img/theme/f09000/ios-webapp-contacts-warm-retina-f09000.png);		
 	}
 	li.imageCarClub div.warmlightgreen {
-		background-image: url(../img/theme/78CC0A/ios-webapp-contacts-warm-retina-78CC0A.png);		
+		background-image: url(../img/theme/78cc0a/ios-webapp-contacts-warm-retina-78cc0a.png);		
 	}
 	
 	li.imageCarClub div.warmdarkgreen {
@@ -1849,7 +2097,7 @@ body.confirmation .confirm2 {
 	}
 	
 	li.imageCarClub div.warmlightblue {
-		background-image: url(../img/theme/008BE8/ios-webapp-contacts-warm-retina-008BE8.png);
+		background-image: url(../img/theme/008be8/ios-webapp-contacts-warm-retina-008be8.png);
 	}
 	
 	li.imageCarClub div.warmdarkblue {
@@ -1857,14 +2105,14 @@ body.confirmation .confirm2 {
 	}
 	
 	li.imageCarClub div.warmpurple {
-		background-image: url(../img/theme/4A0D86/ios-webapp-contacts-warm-retina-4A0D86.png);		
+		background-image: url(../img/theme/4a0d86/ios-webapp-contacts-warm-retina-4a0d86.png);		
 	}
 	
 	li.imageCarClub div.warmpink {
-		background-image: url(../img/theme/CC00CC/ios-webapp-contacts-warm-retina-CC00CC.png);		
+		background-image: url(../img/theme/cc00cc/ios-webapp-contacts-warm-retina-cc00cc.png);		
 	}
 	
 	li.imageCarClub div.warmdarkgray {
-		background-image: url(../img/theme/1A1A1A/ios-webapp-contacts-warm-retina-1A1A1A.png);		
+		background-image: url(../img/theme/1a1a1a/ios-webapp-contacts-warm-retina-1a1a1a.png);		
 	}
 }

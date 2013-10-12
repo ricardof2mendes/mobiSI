@@ -98,8 +98,6 @@ public abstract class BookingActionBean extends BaseActionBean {
      * Validate and load the car
      * 
      * @throws RemoteException
-     * @throws CarValidationExceptionException
-     * @throws CarLicensePlateNotFoundExceptionException
      * @throws com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException
      * @throws UnsupportedEncodingException
      */

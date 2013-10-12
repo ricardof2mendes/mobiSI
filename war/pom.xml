@@ -308,9 +308,6 @@
 									<unwrap>true</unwrap>
 									<overWrite>true</overWrite>
 									<unpackClasses>true</unpackClasses>
-									<action>
-										<ignore />
-									</action>
 								</configuration>
 							</execution>
 							<execution>
@@ -373,6 +370,19 @@
 								<configuration>
 									<packageName>com.criticalsoftware.mobics.proxy.miscellaneous</packageName>
 									<wsdlFile>http://mobics02.critical.pt:8080/mobics-webservices/Miscellaneous?wsdl</wsdlFile>
+									<unwrap>true</unwrap>
+									<overWrite>true</overWrite>
+									<unpackClasses>true</unpackClasses>
+								</configuration>
+							</execution>
+                            <execution>
+								<id>billing</id>
+								<goals>
+									<goal>wsdl2code</goal>
+								</goals>
+								<configuration>
+									<packageName>com.criticalsoftware.mobics.proxy.billing</packageName>
+									<wsdlFile>http://mobics02.critical.pt:8080/mobics-webservices/Billing?wsdl</wsdlFile>
 									<unwrap>true</unwrap>
 									<overWrite>true</overWrite>
 									<unpackClasses>true</unpackClasses>

@@ -698,6 +698,17 @@ Map.prototype = {
 				$('#fuelType').html(options.car.formattedFuel);
 				$('#priceInUse').html(options.car.formattedPrice);
 				$('#distance').html(options.car.formattedDistance);
+                if(options.car.promotions) {
+                    $('#promo').addClass('showPromotion');
+                } else {
+                    $('#promo').removeClass('showPromotion');
+                }
+                if(options.car.addOns) {
+                    $('#add').addClass('showAddOn');
+                } else {
+                    $('#add').removeClass('showAddOn');
+                }
+
 			} else if(options.street) {
 				$('#whiteBar nav').show();
 				$('#choosenAddress').html(options.street.displayName);

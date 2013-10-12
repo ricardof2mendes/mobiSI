@@ -30,12 +30,32 @@
 				<fmt:message key="messages.title"/>
 			</stripes:link>
 		</li>
+
+        <li class="bonus ${actionBean.activeMenu == 'bonus' ? 'bonusActive' : ''}">
+            <stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.bonus.BonusAccountActionBean">
+                <fmt:message key="bonus.account.title"/>
+            </stripes:link>
+        </li>
+
+        <!--li class="addons ${actionBean.activeMenu == 'addons' ? 'addonsActive' : ''}">
+            <stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.addons.AddOnsActionBean">
+                <fmt:message key="add.ons.title"/>
+            </stripes:link>
+        </li-->
+
+        <li class="promotions ${actionBean.activeMenu == 'promotions' ? 'promotionsActive' : ''}">
+            <stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.promotions.PromotionsActionBean">
+                <fmt:message key="promotions.title"/>
+            </stripes:link>
+        </li>
+
 		<li class="contacts ${actionBean.activeMenu == 'contacts' ? 'contactsActive' : ''}">
 			<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.contacts.ContactsAndDamageReportActionBean">
 				<fmt:message key="contacts.title"/>
 			</stripes:link>
 		</li>
-		<li class="preferences ${actionBean.activeMenu == 'preferences' ? 'preferencesActive' : ''}">
+
+        <li class="preferences ${actionBean.activeMenu == 'preferences' ? 'preferencesActive' : ''}">
 			<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.preferences.EditPreferencesActionBean">
 				<fmt:message key="preferences.title"/>
 			</stripes:link>

@@ -43,6 +43,10 @@
 														</c:otherwise>
 													</c:choose>
 												</span>
+                                                <span>
+                                                    <span class="${!empty car.addOns ? 'showAddOn' : ''}"></span>
+                                                    <span class="${!empty car.promotions ? 'showPromotion' : ''}"></span>
+                                                </span>
 											</div>
 										</div>
 									</stripes:link>
@@ -82,10 +86,10 @@
 			</nav>
 		</section>
 	</c:when>
-<c:otherwise>
-	<section id="noresults">
-		<label><fmt:message key="book.now.no.results.found.header"/></label><br/>
-		<label><fmt:message key="book.now.no.results.found"/></label>
-	</section>
-</c:otherwise>
+    <c:otherwise>
+        <section id="noresults">
+            <label><fmt:message key="book.now.no.results.found.header"/></label><br/>
+            <label><fmt:message key="book.now.no.results.found"/></label>
+        </section>
+    </c:otherwise>
 </c:choose>

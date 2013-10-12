@@ -17,5 +17,5 @@ package com.criticalsoftware.mobics.presentation.util;
  * @version $Revision: $
  */
 public enum OrderBy {
-    CAR_DISTANCE, CAR_FARE, CAR_CATEGORY
+    CAR_DISTANCE, CAR_FARE, CAR_CATEGORY, BALANCE, TRANSACTIONS
 }

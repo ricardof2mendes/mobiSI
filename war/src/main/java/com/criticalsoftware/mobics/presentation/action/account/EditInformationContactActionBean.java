@@ -132,8 +132,9 @@ public class EditInformationContactActionBean extends AskPinActionBean {
         String zip = zipCode1.substring(0, zipCode1.indexOf('-'));
         String code = zipCode1.substring(zipCode1.indexOf('-') + 1, zipCode1.length());
 
+        // TODO ver isto
         customerWSServiceStub.updateCustomerDetails(address, locality, zip, code, phoneNumber, countryCode, fullName,
-                taxNumber, null);
+                taxNumber, null, null);
 
         getContext().getMessages().add(new LocalizableMessage("account.information.edit.success"));
         return new RedirectResolution(AccountActionBean.class).flash(this);

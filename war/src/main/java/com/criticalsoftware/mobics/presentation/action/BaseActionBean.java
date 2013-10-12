@@ -93,7 +93,7 @@ public abstract class BaseActionBean implements ActionBean {
      * @throws RemoteException
      * @throws AxisFault
      */
-    public final String getSplashScreenStyle() throws AxisFault, RemoteException {
+    public final String getSplashScreenStyle() throws RemoteException {
         CarClubSimpleDTO carClubSimpleDTO = null;
         StringBuilder builder = new StringBuilder(getContext().getRequest().isSecure() ? SECURE_PROTOCOL
                 : NONSECURE_PROTOCOL).append(getContext().getRequest().getServerName()).append(":")
@@ -110,7 +110,7 @@ public abstract class BaseActionBean implements ActionBean {
         } catch (Exception e) {
             LOG.warn("Could not obtain car club theme style based on supplied url: {}", builder.toString());
         }
-
+        // TODO parece que não está a devolver a cor correcta
         String style = new StringBuilder((carClubSimpleDTO != null ? carClubSimpleDTO.getCarClubColorScheme()
                 : Configuration.INSTANCE.getDefaultThemeStyle()).replaceAll("_", ""))
                 .append(" ")

@@ -46,6 +46,8 @@ public class FormatUtils {
 
     public static final String CURRENCY_SYMBOL = "currencySymbol";
 
+    public static final String PERCENTAGE = "percentage";
+
     public static String format(String type, Object value, Locale locale) {
         String formatted = null;
         // Create formatter
@@ -183,6 +185,9 @@ public class FormatUtils {
                 formatted = MessageFormat.format(resources.getString(key), seconds);                
             }
             
+        } else
+        if(PERCENTAGE.equals(type)) {
+            formatted = MessageFormat.format(resources.getString("value.percentage"), ((BigDecimal) value).doubleValue() * 100);
         }
 
         return formatted;

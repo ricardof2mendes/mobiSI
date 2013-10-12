@@ -41,6 +41,10 @@
 								<div>
 									<span id="priceInUse"></span>
 									<span id="distance"></span>
+                                    <span>
+                                        <span id="add"></span>
+                                        <span id="promo"></span>
+                                    </span>
 								</div>
 							</div>
 						</stripes:link>

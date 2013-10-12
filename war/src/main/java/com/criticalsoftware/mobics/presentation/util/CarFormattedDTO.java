@@ -46,6 +46,8 @@ public class CarFormattedDTO extends CarDTO {
         super.setCarBrandName(carDTO.getCarBrandName());
         super.setCarModelName(carDTO.getCarModelName());
         super.setLicensePlate(carDTO.getLicensePlate());
+        super.setAddOns(carDTO.getAddOns());
+        super.setPromotions(carDTO.getPromotions());
 
         this.formattedPrice = carDTO.getPriceInUse() != null ? FormatUtils.format(FormatUtils.CURRENCY_HOUR,
                 carDTO.getPriceInUse(), locale) : "";

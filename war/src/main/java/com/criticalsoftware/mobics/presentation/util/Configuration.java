@@ -14,6 +14,7 @@ package com.criticalsoftware.mobics.presentation.util;
 
 import java.io.Serializable;
 
+import org.apache.axis2.context.ConfigurationContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,7 +23,6 @@ import org.slf4j.LoggerFactory;
  * @version $Revision: $
  */
 public class Configuration implements Serializable{
-    
     /**
      * Application state
      * 
@@ -57,6 +57,9 @@ public class Configuration implements Serializable{
 
     /** Currency Pattern **/
     private final String currencyPattern = "#,##0.00";
+
+    /** Date time **/
+    private final String datePattern = "dd/MM/yyyy";
 
     /** Date time Pattern **/
     private final String dateTimePattern = "dd/MM/yyyy HH:mm";
@@ -94,14 +97,14 @@ public class Configuration implements Serializable{
     /** Miscellaneous Endpoint **/
     private final String miscellaneousEnpoint = "http://mobics02.critical.pt:8080/mobics-webservices/Miscellaneous";
 
+    /** Billing Endpoint **/
+    private final String billingEndpoint = "http://mobics02.critical.pt:8080/mobics-webservices/Billing";
+
     /** Geolocation servce **/
     private final String geolocationServer = "nominatim.openstreetmap.org";
 
     /** Max results **/
     private final int maxResults = 99;
-    
-    /** Recent activities filter month gap **/
-    private final int recentActivitiesFilterMonthGap = 6;
     
     /** Default theme warm word **/
     private final String defaultThemeWarmWord = "warm";
@@ -216,6 +219,13 @@ public class Configuration implements Serializable{
     }
 
     /**
+     * @return the billing endpoint
+     */
+    public String getBillingEndpoint() {
+        return getValue("mobics.config.endpoint.billing", billingEndpoint);
+    }
+
+    /**
      * @return the geolocationServer
      */
     public String getGeolocationServer() {
@@ -256,9 +266,12 @@ public class Configuration implements Serializable{
     public String getDateTimePattern() {
         return getValue("mobics.config.datetime.pattern", dateTimePattern);
     }
-    
-    public int getRecentActivitiesFilterMonthGap() {
-        return Integer.valueOf(getValue("mobics.config.recents.filter.month.gap", recentActivitiesFilterMonthGap));
+
+    /**
+     * @return the datePattern
+     */
+    public String getDatePattern() {
+        return getValue("mobics.config.date.pattern", datePattern);
     }
     
     /**
