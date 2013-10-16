@@ -18,11 +18,13 @@ package com.criticalsoftware.mobics.presentation.security;
  */
 public class CarClubSimple {
     private String name;
+    private String code;
     private String phone;
     private String email;
 
-    public CarClubSimple(String name, String phone, String email) {
+    public CarClubSimple(String name, String code, String phone, String email) {
         this.name = name;
+        this.code = code;
         this.phone = phone;
         this.email = email;
     }
@@ -31,23 +33,15 @@ public class CarClubSimple {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getPhone() {
         return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public String getCode() {
+        return code;
     }
 }

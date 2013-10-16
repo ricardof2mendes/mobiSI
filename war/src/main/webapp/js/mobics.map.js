@@ -33,10 +33,10 @@ Map.prototype = {
 			
 			if(this.type === 'mapACar') {
 				this.fetchCarData();
+			} else if(this.type === 'mapAPark') {
+				this.fetchParkData();
 			} else if(this.type === 'mapAZone') {
-				// changed method to fix MOBICS-1581
-				//this.fetchParkData();
-				this.fetchCarData();
+				this.fetchZoneData();
 			} else if(this.type === 'mapASearch') {
 				this.fetchSearchCarsData();
 			} else  if(this.type === 'mapAStreet') {
@@ -59,6 +59,10 @@ Map.prototype = {
 			this.yellowStyle = OpenLayers.Util.extend({}, this.greenStyle);
 			this.yellowStyle.fillColor = '#FFF000';
 			this.yellowStyle.strokeColor = '#B7AD00';
+
+            this.blueStyle = OpenLayers.Util.extend({}, this.greenStyle);
+            this.blueStyle.fillColor = '#4FD3FF';
+            this.blueStyle.strokeColor = '#0099FF';
 			
 			this.ganGanStyle = OpenLayers.Util.extend({}, this.greenStyle);
 			this.ganGanStyle.strokeColor = '#008be8';
@@ -206,6 +210,26 @@ Map.prototype = {
 				    });	
 		},
 
+        /**
+         * Fetch data from server related to given zone
+         * @param licensePlate
+         */
+        fetchZoneData : function() {
+            var that = this;
+            $.get(CONTEXT_PATH + '/addons/AddOns.action?zoneData=&code=' + this.licensePlate,
+                function(data, textStatus, jqXHR){
+                    if (jqXHR.getResponseHeader('Stripes-Success') === 'OK') {
+                        var evaluated = eval(data);
+                        that.processZone(evaluated);
+                        that.trackMyLocation();
+                        that.centerAndZoom();
+                    } else {
+                        console.log('An error has occurred or the user\'s session has expired!');
+                        $('html').html(data);
+                    }
+                });
+        },
+
 		/**
 		 * Fetch data from server related to given license plate
 		 * @param licensePlate
@@ -297,7 +321,7 @@ Map.prototype = {
 						// PARKING
 						zonesVector = new OpenLayers.Layer.Vector('zones', {style: that.greenStyle});
 					}
-					
+
 					 var pointList = [];
 					 $(this.polygon.coordenates).each(function() {
 						 var newPoint = new OpenLayers.Geometry.Point(this.longitude, this.latitude).transform(that.mapDisplayProjection, that.map.getProjectionObject());
@@ -307,12 +331,33 @@ Map.prototype = {
 					 pointList.push(pointList[0]);
 					 var linearRing = new OpenLayers.Geometry.LinearRing(pointList);
 					 var polygonFeature = new OpenLayers.Feature.Vector(
-							 new OpenLayers.Geometry.Polygon([linearRing])); 
+							 new OpenLayers.Geometry.Polygon([linearRing]));
 					 zonesVector.addFeatures(polygonFeature);
-					 that.map.addLayer(zonesVector);			
+					 that.map.addLayer(zonesVector);
 				});		
 			}
 		},
+
+        /**
+         * Process the received server data
+         * @param returnData
+         */
+        processZone : function(returnData) {
+            var zonesVector = new OpenLayers.Layer.Vector('zones', {style: this.blueStyle});
+            var pointList = [];
+            var that = this;
+            $(returnData.polygon.coordenates).each(function() {
+                var newPoint = new OpenLayers.Geometry.Point(this.longitude, this.latitude).transform(that.mapDisplayProjection, that.map.getProjectionObject());
+                pointList.push(newPoint);
+                that.points.push(newPoint);
+            });
+            pointList.push(pointList[0]);
+            var linearRing = new OpenLayers.Geometry.LinearRing(pointList);
+            var polygonFeature = new OpenLayers.Feature.Vector(
+                new OpenLayers.Geometry.Polygon([linearRing]));
+            zonesVector.addFeatures(polygonFeature);
+            this.map.addLayer(zonesVector);
+        },
 		
 		/**
 		 * Process the received server data

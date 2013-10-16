@@ -9,6 +9,7 @@ package com.criticalsoftware.mobics.presentation.action;
 import java.io.UnsupportedEncodingException;
 import java.rmi.RemoteException;
 
+import com.criticalsoftware.mobics.presentation.security.CarClubSimple;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.DontValidate;
 import net.sourceforge.stripes.action.ForwardResolution;
@@ -76,6 +77,9 @@ public class LoginActionBean extends BaseActionBean {
                         Configuration.INSTANCE.getCustomerEndpoint());
                 customerWSServiceStub._getServiceClient().addHeader(
                         AuthenticationUtil.getAuthenticationHeader(username, password));
+
+                this.getContext().setCarClub(new CarClubSimple(carClubDTO.getCarClubName(), carClubDTO.getCarClubCode(),
+                        carClubDTO.getCarClubContactPhone(), carClubDTO.getCarClubContactEmail()));
                 this.getContext().setUser(
                         new User(username, password, carClubDTO, customerWSServiceStub.getCustomerPreferences()));
                 this.getContext().setRetina(retina);

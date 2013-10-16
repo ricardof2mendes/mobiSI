@@ -13,15 +13,18 @@
 	        <span id="paramLicensePlate" class="hidden">${param.licensePlate}</span>
     	</c:when>
     	<c:when test="${param.parkLocation == ''}">
-    		<span id="paramZone" class="hidden">${param.zone}</span>
+    		<span id="paramPark" class="hidden">${param.licensePlate}</span>
     	</c:when>
+        <c:when test="${param.zoneLocation == ''}">
+            <span id="paramZone" class="hidden">${param.zone}</span>
+        </c:when>
     </c:choose>
     
 	<article>
 		<section>
-			<div id="container">	
+			<div id="container">
 				<div id="map"><!-- Map will be included here--></div>
-			</div>		
+			</div>
 		</section>
 	</article>
 		

@@ -111,5 +111,64 @@
 				<fmt:message key="booking.charge.message.advance"/>
 			</div>
 		</section>
+
+        <c:if test="${!empty actionBean.car.addOns}">
+            <article>
+                <section>
+                    <h2><fmt:message key="booking.addons.message" /></h2>
+                    <nav class="simpleList">
+                        <ul>
+                            <c:forEach items="${actionBean.car.addOns}" var="addon">
+                                <li class="cDetail addonDetail">
+                                    <stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.addons.AddOnsActionBean" event="detail" addSourcePage="true">
+                                        <stripes:param name="code">${addon.code}</stripes:param>
+                                        <div>
+                                            <span>${addon.name}</span>
+                                            <span><fmt:formatNumber value="${addon.discount}" pattern="${applicationScope.configuration.meterPattern}"/>&nbsp;%</span>
+                                        </div>
+                                    </stripes:link>
+                                </li>
+                            </c:forEach>
+                        </ul>
+                    </nav>
+                </section>
+            </article>
+        </c:if>
+
+        <c:if test="${!empty actionBean.car.promotions}">
+            <article>
+                <section>
+                    <h2><fmt:message key="booking.promotions.message" /></h2>
+                    <nav class="simpleList">
+                        <ul>
+                            <c:forEach items="${actionBean.car.promotions}" var="promo">
+                                <li class="cDetail promotionDetail">
+                                    <stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.promotions.PromotionsActionBean" event="detail" addSourcePage="true">
+                                        <stripes:param name="code">${promo.code}</stripes:param>
+                                        <div>
+                                            <span>${promo.name}</span>
+                                        <span>
+                                            <fmt:formatNumber value="${promo.discount}" pattern="${applicationScope.configuration.meterPattern}"/>&nbsp;%
+                                        </span>
+                                        </div>
+                                    </stripes:link>
+                                </li>
+                            </c:forEach>
+                        </ul>
+                    </nav>
+                </section>
+            </article>
+        </c:if>
+
+        <c:if test="${!empty actionBean.car.addOns || !empty actionBean.car.promotions}">
+            <article>
+                <section>
+                    <div class="warningMessage">
+                        <fmt:message key="booking.addons.promotions.message"/>
+                    </div>
+                </section>
+            </article>
+        </c:if>
+
 	</article>	
 </t:main>

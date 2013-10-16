@@ -103,8 +103,8 @@ public abstract class BaseActionBean implements ActionBean {
                     .getCarClubSimpleByURL(builder.toString());
             if (getContext().getCarClub() == null) {
                 getContext().setCarClub(
-                        new CarClubSimple(carClubSimpleDTO.getCarClubName(), carClubSimpleDTO.getCarClubContactPhone(),
-                                carClubSimpleDTO.getCarClubContactEmail()));
+                        new CarClubSimple(carClubSimpleDTO.getCarClubName(), carClubSimpleDTO.getCarClubCode(),
+                                carClubSimpleDTO.getCarClubContactPhone(), carClubSimpleDTO.getCarClubContactEmail()));
             }
 
         } catch (Exception e) {
@@ -138,8 +138,8 @@ public abstract class BaseActionBean implements ActionBean {
 
             if (getContext().getCarClub() == null) {
                 getContext().setCarClub(
-                        new CarClubSimple(carClubSimpleDTO.getCarClubName(), carClubSimpleDTO.getCarClubContactPhone(),
-                                carClubSimpleDTO.getCarClubContactEmail()));
+                        new CarClubSimple(carClubSimpleDTO.getCarClubName(), carClubSimpleDTO.getCarClubCode(),
+                                carClubSimpleDTO.getCarClubContactPhone(), carClubSimpleDTO.getCarClubContactEmail()));
             }
 
             handler = carClubService.getCarClubThumbnailByCarClubCode(carClubSimpleDTO.getCarClubCode(),

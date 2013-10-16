@@ -80,14 +80,14 @@ public class PromotionsActionBean extends BaseActionBean {
         return new ForwardResolution("/WEB-INF/promotions/promotions.jsp");
     }
 
-    @DontValidate
+    @DontValidate(ignoreBindingErrors = false)
     public Resolution detail() throws RemoteException, PromotionCodeNotFoundExceptionException, UnsupportedEncodingException {
         CarClubWSServiceStub stub = new CarClubWSServiceStub(Configuration.INSTANCE.getCarClubEndpoint());
         promotion = stub.getPromotionDetail(code, false);
         return new ForwardResolution("/WEB-INF/promotions/promotionDetail.jsp");
     }
 
-    @DontValidate
+    @DontValidate(ignoreBindingErrors = false)
     public Resolution getPromotionImage() {
         Resolution resolution = null;
         try {
@@ -137,14 +137,6 @@ public class PromotionsActionBean extends BaseActionBean {
         this.code = code;
     }
 
-    public String getCode() {
-        return code;
-    }
-
-    public PromotionsDetailListDTO getPromotion() {
-        return promotion;
-    }
-
     public Map<String, List<DayRestrictionDTO>> getRestrictions() {
         Map<String, List<DayRestrictionDTO>> days = null;
         for (CalendarRestrictionsDTO dto : promotion.getRestrictions()) {
@@ -162,6 +154,14 @@ public class PromotionsActionBean extends BaseActionBean {
             }
         }
         return days;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public PromotionsDetailListDTO getPromotion() {
+        return promotion;
     }
 
 

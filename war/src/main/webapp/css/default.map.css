@@ -350,6 +350,10 @@ img.userLocation {
 	background: #fff url(../img/map/forbidden-zone.png) no-repeat 0 50%;
 }
 
+#legend nav.simpleList ul li:nth-child(6) span {
+    background: #fff url(../img/map/add-ons-zone.png) no-repeat 0 50%;
+}
+
 /* Enable 3d acceleration when operating on tiles, this is
    known to yield better performance on IOS Safari.
    http://osgeo-org.1803224.n2.nabble.com/Harware-accelerated-CSS3-animations-for-iOS-td6255560.html
@@ -376,12 +380,16 @@ img.userLocation {
 	}
 	
 	#legend nav.simpleList ul li:nth-child(1) span {
-		background: #fff url(../img/map/location-user-selected@2x.png) no-repeat 0 50%;
+		background-image: url(../img/map/location-user-selected@2x.png);
 	}
 	
 	#legend nav.simpleList ul li:nth-child(2) span {
-		background: #fff url(../img/map/location-car-selected@2x.png) no-repeat 0 50%;
+		background-image: url(../img/map/location-car-selected@2x.png);
 	}
+
+    #legend nav.simpleList ul li:nth-child(6) span {
+        background-image: url(../img/map/add-ons-zone@2x.png);
+    }
 	
 	#whiteBar.addressBar span {
     	background-image: url("../img/map/location-user-selected@2x.png");

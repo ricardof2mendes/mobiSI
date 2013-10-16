@@ -32,6 +32,15 @@
 							<span><fmt:message key="location.legend.park.zone"/></span>
 						</li>
 			    	</c:when>
+                    <c:when test="${param.zoneLocation == ''}">
+                        <li class="hidden"></li>
+                        <li class="hidden"></li>
+                        <li class="hidden"></li>
+                        <li class="hidden"></li>
+                        <li>
+                            <span><fmt:message key="location.legend.zone.zone"/></span>
+                        </li>
+                    </c:when>
 			    	<c:otherwise></c:otherwise>
 			    </c:choose>
 			</ul>

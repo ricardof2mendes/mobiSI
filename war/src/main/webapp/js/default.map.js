@@ -85,10 +85,13 @@ $(document).ready(function() {
 	} else if($('#paramLicensePlate').length > 0) {
 		configuration.type = 'mapACar';
 		configuration.licensePlate = $('#paramLicensePlate').html();
-	} else if($('#paramZone').length > 0) {
-		configuration.type = 'mapAZone';
-		configuration.licensePlate = $('#paramZone').html();
-	} else if($('#paramAddr').length > 0) {
+	} else if($('#paramPark').length > 0) {
+		configuration.type = 'mapAPark';
+		configuration.licensePlate = $('#paramPark').html();
+    } else if($('#paramZone').length > 0) {
+        configuration.type = 'mapAZone';
+        configuration.licensePlate = $('#paramZone').html();
+    } else if($('#paramAddr').length > 0) {
 		configuration.type = 'mapAStreet';
 		configuration.searchParams = {
 				distance : $('#paramDist').html(),

@@ -54,42 +54,46 @@
             </nav>
         </section>
 
-        <section>
-            <nav class="panel">
-                <ul>
-                    <li class="detail white">
-                        <stripes:link id="carDetails" beanclass="com.criticalsoftware.mobics.presentation.action.addons.AddOnsActionBean" event="main" addSourcePage="true" >
-                            <stripes:param name="code" value="${actionBean.trip.addonCode}"/>
-                            <span><fmt:message key="trip.detail.addon"/></span>
-                            <span>${actionBean.trip.addonName}</span>
-                        </stripes:link>
-                    </li>
-                    <li class="detail white">
-                        <span><fmt:message key="trip.detail.discount"/></span>
-						<span><mobi:formatMobics value="${actionBean.trip.discount}" type="currencySymbol" />&nbsp;(<mobi:formatMobics value="${actionBean.trip.percentageDiscount}" type="percentage" />)</span>
-                    </li>
-                </ul>
-            </nav>
-        </section>
+        <c:if test="${!empty actionBean.trip.addonCode}">
+            <section>
+                <nav class="panel">
+                    <ul>
+                        <li class="detail white">
+                            <stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.addons.AddOnsActionBean" event="main" addSourcePage="true" >
+                                <stripes:param name="code" value="${actionBean.trip.addonCode}"/>
+                                <span><fmt:message key="trip.detail.addon"/></span>
+                                <span>${actionBean.trip.addonName}</span>
+                            </stripes:link>
+                        </li>
+                        <li class="detail white">
+                            <span><fmt:message key="trip.detail.discount"/></span>
+                            <span><mobi:formatMobics value="${actionBean.trip.discount}" type="currencySymbol" />&nbsp;(<mobi:formatMobics value="${actionBean.trip.percentageDiscount}" type="percentage" />)</span>
+                        </li>
+                    </ul>
+                </nav>
+            </section>
+        </c:if>
 
-        <section>
-            <nav class="panel">
-                <ul>
-                    <li class="detail white">
-                        <stripes:link id="carDetails" beanclass="com.criticalsoftware.mobics.presentation.action.promotions.PromotionsActionBean" event="main" addSourcePage="true" >
-                            <stripes:param name="code" value="${actionBean.trip.promotionCode}"/>
-                            <span><fmt:message key="trip.detail.promotion"/></span>
-                            <span>${actionBean.trip.promotionName}</span>
-                        </stripes:link>
-                    </li>
-                    <li class="detail white">
-                        <span><fmt:message key="trip.detail.bonus"/></span>
-                        <span><mobi:formatMobics value="${actionBean.trip.promotionBonus}" type="currencySymbol" /></span>
-                    </li>
-                </ul>
-            </nav>
-        </section>
-		
+        <c:if test="${!empty actionBean.trip.promotionCode}">
+            <section>
+                <nav class="panel">
+                    <ul>
+                        <li class="detail white">
+                            <stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.promotions.PromotionsActionBean" event="detail" addSourcePage="true" >
+                                <stripes:param name="code" value="${actionBean.trip.promotionCode}"/>
+                                <span><fmt:message key="trip.detail.promotion"/></span>
+                                <span>${actionBean.trip.promotionName}</span>
+                            </stripes:link>
+                        </li>
+                        <li class="detail white">
+                            <span><fmt:message key="trip.detail.bonus"/></span>
+                            <span><mobi:formatMobics value="${actionBean.trip.promotionBonus}" type="currencySymbol" /></span>
+                        </li>
+                    </ul>
+                </nav>
+            </section>
+        </c:if>
+
 		<section>
 			<nav class="panel">
 				<ul>

@@ -111,7 +111,7 @@
                                 <c:forEach items="${actionBean.detailedList}" var="detail">
                                     <li class="transactions">
                                         <stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.recent.RecentActivitiesActionBean" event="tripDetails" addSourcePage="true">
-                                        <stripes:param name="activityCode" value="${pageScope.detail.originNumber}"/>
+                                            <stripes:param name="activityCode" value="${pageScope.detail.originNumber}"/>
                                             <div>
                                                 <fmt:message key="bonus.account.transaction.${pageScope.detail.type}"/>
                                             </div>

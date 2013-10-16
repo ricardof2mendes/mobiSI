@@ -147,7 +147,6 @@ public class AdvanceBookingActionBean extends BookingActionBean {
      * 
      * @return the page resolution
      * @throws RemoteException
-     * @throws CarValidationExceptionException
      * @throws com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException
      */
     public Resolution licensePlateBookAdvance() throws RemoteException,
@@ -222,7 +221,7 @@ public class AdvanceBookingActionBean extends BookingActionBean {
      * @return the map page
      */
     public Resolution parkLocation() {
-        return new ForwardResolution("/WEB-INF/map/mapFullWidth.jsp").addParameter("zone", licensePlate);
+        return new ForwardResolution("/WEB-INF/map/mapFullWidth.jsp").addParameter("licensePlate", licensePlate);
     }
 
     /**

@@ -18,6 +18,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.criticalsoftware.mobics.booking.*;
+import com.criticalsoftware.mobics.proxy.booking.*;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.DontValidate;
 import net.sourceforge.stripes.action.ForwardResolution;
@@ -31,10 +33,6 @@ import net.sourceforge.stripes.validation.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.criticalsoftware.mobics.booking.BookingInterestDTO;
-import com.criticalsoftware.mobics.booking.CustomerActivityEnum;
-import com.criticalsoftware.mobics.booking.CustomerActivityListDTO;
-import com.criticalsoftware.mobics.booking.TripDetailsDTO;
 import com.criticalsoftware.mobics.presentation.action.BaseActionBean;
 import com.criticalsoftware.mobics.presentation.action.trip.TripActionBean;
 import com.criticalsoftware.mobics.presentation.security.AuthenticationUtil;
@@ -42,12 +40,6 @@ import com.criticalsoftware.mobics.presentation.security.MobiCSSecure;
 import com.criticalsoftware.mobics.presentation.util.BookingState;
 import com.criticalsoftware.mobics.presentation.util.Configuration;
 import com.criticalsoftware.mobics.presentation.util.GeolocationUtil;
-import com.criticalsoftware.mobics.proxy.booking.BookingInterestNotFoundExceptionException;
-import com.criticalsoftware.mobics.proxy.booking.BookingNotFoundExceptionException;
-import com.criticalsoftware.mobics.proxy.booking.BookingWrongStateExceptionException;
-import com.criticalsoftware.mobics.proxy.booking.BookingWSServiceStub;
-import com.criticalsoftware.mobics.proxy.booking.CustomerNotFoundExceptionException;
-import com.criticalsoftware.mobics.proxy.booking.UnauthorizedCustomerExceptionException;
 
 /**
  * Recent activities action bean
@@ -66,9 +58,11 @@ public class RecentActivitiesActionBean extends BaseActionBean {
 
     private BookingInterestDTO booking;
 
+    private IncidentForCustomerDTO incident;
+
     @Validate(
             required = true,
-            on = { "tripDetails", "bookingDetails", "advanceBookingDetails", "cancelAdvanceBooking" })
+            on = { "tripDetails", "bookingDetails", "advanceBookingDetails", "cancelAdvanceBooking", "incidentDetails" })
     private String activityCode;
 
     @Validate
@@ -241,6 +235,42 @@ public class RecentActivitiesActionBean extends BaseActionBean {
     }
 
     /**
+     * Booking incident details
+     *
+     * @return streaming resolution
+     */
+    public Resolution incidentDetails() throws RemoteException, UnsupportedEncodingException,
+            EventNotFoundExceptionException {
+        BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
+                Configuration.INSTANCE.getBookingEndpoint());
+        bookingWSServiceStub._getServiceClient().addHeader(
+                AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
+                        .getPassword()));
+        incident = bookingWSServiceStub.getIncidentDetailsForCustomer(
+                activityCode, getContext().getUser().getCustomerPreferencesDTO().getLanguage());
+
+        return  new ForwardResolution("/WEB-INF/recent/incidentDetails.jsp");
+    }
+
+    /**
+     * Booking event details
+     *
+     * @return streaming resolution
+     */
+    public Resolution eventDetails() throws RemoteException, UnsupportedEncodingException,
+            EventNotFoundExceptionException {
+        BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
+                Configuration.INSTANCE.getBookingEndpoint());
+        bookingWSServiceStub._getServiceClient().addHeader(
+                AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
+                        .getPassword()));
+        incident = bookingWSServiceStub.getIncidentDetailsForCustomer(
+                activityCode, getContext().getUser().getCustomerPreferencesDTO().getLanguage());
+
+        return  new ForwardResolution("/WEB-INF/recent/eventDetails.jsp");
+    }
+
+    /**
      * Booking interest details
      * 
      * @return
@@ -364,4 +394,7 @@ public class RecentActivitiesActionBean extends BaseActionBean {
         this.extended = extended;
     }
 
+    public IncidentForCustomerDTO getIncident() {
+        return incident;
+    }
 }

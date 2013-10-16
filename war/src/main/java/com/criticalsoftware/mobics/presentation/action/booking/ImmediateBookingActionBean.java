@@ -153,9 +153,13 @@ public class ImmediateBookingActionBean extends BookingActionBean {
                     AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext()
                             .getUser().getPassword()));
 
-            cars = fleetWSServiceStub.getCarsByLicensePlate(licensePlate, CarTypeEnum.NORMAL.getValue(),
-                    latitude != null ? new BigDecimal(latitude) : null, longitude != null ? new BigDecimal(longitude)
-                            : null);
+            try {
+                cars = fleetWSServiceStub.getCarsByLicensePlate(licensePlate, CarTypeEnum.NORMAL.getValue(),
+                        latitude != null ? new BigDecimal(latitude) : null, longitude != null ? new BigDecimal(longitude)
+                                : null);
+            } catch(CarLicensePlateNotFoundExceptionException e) {
+
+            }
         }
         getContext().getResponse().setHeader("Stripes-Success", "OK");
         return new ForwardResolution("/WEB-INF/book/carListImmediate.jsp");

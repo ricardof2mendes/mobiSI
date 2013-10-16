@@ -756,10 +756,10 @@ nav.threeColumnList  ul li a > div:nth-child(2) > div:nth-child(2) > span:nth-ch
     background-position: 50% 50%;
 }
 
-nav.threeColumnList span.showAddOn {
+span.showAddOn {
     background-image: url(../img/links/ios-webapp-add-on-list.png);
 }
-nav.threeColumnList span.showPromotion {
+span.showPromotion {
     background-image: url(../img/links/ios-webapp-promotion-list.png);
 }
 
@@ -783,11 +783,11 @@ nav.twoColumnList ul li a {
 }
 
 nav.twoColumnList  ul li a > div:nth-child(1) {
-    width: 60%;
+    width: 45%;
     float: left;
 }
-
-nav.twoColumnList  ul li a > div:nth-child(1) > span {
+nav.twoColumnList  ul li a > div:nth-child(1) > span,
+nav.twoColumnList  ul li a > div:nth-child(2) > span {
     font-size: 100%;
     float: left;
     width: 100%;
@@ -802,7 +802,7 @@ nav.twoColumnList  ul li a > div:nth-child(1) > span:nth-child(2) {
 }
 
 nav.twoColumnList  ul li a > div:nth-child(2) {
-    width: 40%;
+    width: 45%;
     float: right;
     padding-right: 25px;
     text-align: right;
@@ -810,6 +810,13 @@ nav.twoColumnList  ul li a > div:nth-child(2) {
 
 nav.twoColumnList ul li a > div:nth-child(2) > span{
     color: #999;
+}
+
+nav.twoColumnList ul li a > div:nth-child(2) > span:nth-child(2) span{
+    padding: 10px 10px;
+    background-size: 20px 20px;
+    background-repeat: no-repeat;
+    background-position: 50% 50%;
 }
 
 nav.twoColumnList ul li.transactions {
@@ -860,7 +867,7 @@ nav.panel ul {
 }
 
 nav.panel ul li a {
-	color: #000;
+	color: #333;
 	display: block;
 	background: url(../img/seta.png) no-repeat 100% 50%;
 }
@@ -883,6 +890,17 @@ nav.panel ul li.link span:nth-child(1) {
     width: 38%;
 	display: inline-block;
 	color:#333;
+}
+
+nav.panel ul li.link div {
+    color:#333;
+    text-align: left;
+    display: inline-block;
+    word-wrap: break-word;
+    padding-right: 15px;
+    font-weight: bold;
+    padding-left: 10px;
+    vertical-align: top;
 }
 
 nav.panel ul li.link span:nth-child(2) {
@@ -985,6 +1003,17 @@ nav.panel ul li.detail span:nth-child(2) {
 	width: 60%;
 	vertical-align: top;
 }
+nav.panel ul li.detail div {
+    padding-left: 10px;
+    font-weight: bold;
+    vertical-align: top;
+}
+
+nav.panel ul li.detail div:nth-child(2) {
+    color: #666;
+    font-size: 80%;
+    font-weight: normal;
+}
 
 nav.panel ul li:last-child{
 	border-bottom: 0;
@@ -1039,19 +1068,26 @@ nav.panel  ul li.image a > div:nth-child(2){
 	margin-right: 25px;
 }
 
+nav.panel  ul li.addonHeader > div{
+    height: 60px;
+    margin: 10px 10px;
+}
+
+nav.panel  ul li.addonHeader > div > div:nth-child(1) > span,
 nav.panel ul li.imageNoLink > div:nth-child(2) > div:nth-child(1) > span,
 nav.panel ul li.image a > div:nth-child(2) > div:nth-child(1) > span {
 	font-size: 100%;
 	float: left;
 	width: 100%;
 }
-
+nav.panel  ul li.addonHeader > div > div:nth-child(1) > span:nth-child(1),
 nav.panel ul li.imageNoLink > div:nth-child(2) > div:nth-child(1) > span:nth-child(1),
 nav.panel ul li.image a > div:nth-child(2) > div:nth-child(1) > span:nth-child(1) {
 	font-weight: bold;
 	color: #333;
 }
 
+nav.panel  ul li.addonHeader > div > div:nth-child(1) > span:nth-child(2),
 nav.panel  ul li.imageNoLink > div:nth-child(2) > div:nth-child(1) > span:nth-child(2),
 nav.panel  ul li.image a > div:nth-child(2) > div:nth-child(1) > span:nth-child(2) {
 	color: #333;
@@ -1061,6 +1097,7 @@ nav.panel  ul li.image a > div:nth-child(2) > div:nth-child(1) > span:nth-child(
     white-space: nowrap;
 }
 
+nav.panel  ul li.addonHeader > div > div:nth-child(1) > span:nth-child(3),
 nav.panel  ul li.imageNoLink > div:nth-child(2) > div:nth-child(1) > span:nth-child(3),
 nav.panel  ul li.image a > div:nth-child(2) > div:nth-child(1) > span:nth-child(3) {
 	color: #999;
@@ -1162,9 +1199,8 @@ section#noresultsdamage {
 }
 
 section#noresultsrestrictions {
-    margin: 10px auto auto;
+    margin: 10px auto 10px auto;
     text-align: center;
-    height: 30px;
     font-weight: bold;
 }
 
@@ -1767,7 +1803,11 @@ body.confirmation .confirm2 {
 }
 
 .correctMargin {
-    margin-top: -10px;
+    margin-top: -10px !important;
+}
+
+.correctPadding {
+    padding: 3px 0 !important;
 }
 
 #nopromotions {
@@ -1893,10 +1933,10 @@ section#promotionsDiscount label:nth-child(1) {
 		background-image: url(../img/links/new-message-icon@2x.png);
 	}
 
-    nav.threeColumnList span.showAddOn {
+    span.showAddOn {
         background-image: url(../img/links/ios-webapp-add-on-list@2x.png);
     }
-    nav.threeColumnList span.showPromotion {
+    span.showPromotion {
         background-image: url(../img/links/ios-webapp-promotion-list@2x.png);
     }
 	
