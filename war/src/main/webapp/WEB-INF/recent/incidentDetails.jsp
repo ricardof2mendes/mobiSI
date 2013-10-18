@@ -1,13 +1,13 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@include file="/WEB-INF/common/taglibs.jsp"%>
-<c:set var="title" scope="page"><fmt:message key='incident.title' /></c:set>
+<c:set var="title" scope="page"><fmt:message key="incident.title.${actionBean.activityType}" /></c:set>
 
 <t:main title="${title}">
 	<jsp:include page="/WEB-INF/common/message_error.jsp"/>
 	
 	<article>
 		<section>
-            <h2><fmt:message key='incident.title' /></h2>
+            <h2><fmt:message key="incident.title.${actionBean.activityType}" /></h2>
 			<nav class="panel">
 				<ul>
 					<li class="detail white">

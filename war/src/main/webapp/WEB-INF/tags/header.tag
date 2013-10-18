@@ -9,59 +9,59 @@
 
 <nav id="menu" class="hidden">
 	<ul>
-		<li class="booking ${actionBean.activeMenu == 'booking' ? 'bookingActive' : ''}">
+		<li class="${actionBean.activeMenu == 'booking' ? 'bookingActive' : 'booking'}">
 			<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.HomeActionBean">
 				<fmt:message key="home.title"/>
 			</stripes:link>
 		</li>
-		<li class="trip ${actionBean.activeMenu == 'trip' ? 'tripActive' : ''}">
+		<li class="${actionBean.activeMenu == 'trip' ? 'tripActive' : 'trip'}">
 			<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean">
 				<fmt:message key="current.trip.title"/>
 			</stripes:link>
 		</li>
-		<li class="recent ${actionBean.activeMenu == 'recent' ? 'recentActive' : ''}">
+		<li class="${actionBean.activeMenu == 'recent' ? 'recentActive' : 'recent'}">
 			<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.recent.RecentActivitiesActionBean">
 				<fmt:message key="recent.title"/>
 			</stripes:link>
 		</li>
 		
-		<li class="messages ${actionBean.activeMenu == 'messages' ? 'messagesActive' : ''}">
+		<li class="${actionBean.activeMenu == 'messages' ? 'messagesActive' : 'messages '}">
 			<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.messages.MessagesActionBean">
 				<fmt:message key="messages.title"/>
 			</stripes:link>
 		</li>
 
-        <li class="bonus ${actionBean.activeMenu == 'bonus' ? 'bonusActive' : ''}">
+        <li class="${actionBean.activeMenu == 'bonus' ? 'bonusActive' : 'bonus'}">
             <stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.bonus.BonusAccountActionBean">
                 <fmt:message key="bonus.account.title"/>
             </stripes:link>
         </li>
 
-        <!--li class="addons ${actionBean.activeMenu == 'addons' ? 'addonsActive' : ''}">
+        <!--li class="${actionBean.activeMenu == 'addons' ? 'addonsActive' : 'addons'}">
             <stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.addons.AddOnsActionBean">
                 <fmt:message key="add.ons.title"/>
             </stripes:link>
         </li-->
 
-        <li class="promotions ${actionBean.activeMenu == 'promotions' ? 'promotionsActive' : ''}">
+        <li class="${actionBean.activeMenu == 'promotions' ? 'promotionsActive' : 'promotions'}">
             <stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.promotions.PromotionsActionBean">
                 <fmt:message key="promotions.title"/>
             </stripes:link>
         </li>
 
-		<li class="contacts ${actionBean.activeMenu == 'contacts' ? 'contactsActive' : ''}">
+		<li class="${actionBean.activeMenu == 'contacts' ? 'contactsActive' : 'contacts'}">
 			<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.contacts.ContactsAndDamageReportActionBean">
 				<fmt:message key="contacts.title"/>
 			</stripes:link>
 		</li>
 
-        <li class="preferences ${actionBean.activeMenu == 'preferences' ? 'preferencesActive' : ''}">
+        <li class="${actionBean.activeMenu == 'preferences' ? 'preferencesActive' : 'preferences'}">
 			<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.preferences.EditPreferencesActionBean">
 				<fmt:message key="preferences.title"/>
 			</stripes:link>
 		</li>
 
-		<li class="account ${actionBean.activeMenu == 'account' ? 'accountActive' : ''}">
+		<li class="${actionBean.activeMenu == 'account' ? 'accountActive' : 'account'}">
 			<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.account.AccountActionBean">
 				<fmt:message key="account.title"/>
 			</stripes:link>

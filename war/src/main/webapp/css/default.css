@@ -235,7 +235,7 @@ nav#menu ul li.account {
 }
 
 nav#menu ul li.accountActive {
-	background-size: 40px 30px, 1px 45px;
+	background-size: 40px 30px, 1px 20px, 1px 45px;
 	background-image: url(../img/menu/account-active.png), url(../img/menu/sombra_menu_20px_flipped.png), url(../img/bt_down_45px.png);
 	background-repeat: no-repeat, repeat-x, repeat-x;
 	background-position: 10px 50%, bottom left, top left;
@@ -1971,6 +1971,22 @@ section#promotionsDiscount label:nth-child(1) {
 	nav#menu ul li.messagesActive {
 		background-image: url(../img/menu/messages-active@2x.png), url(../img/bt_down_90px.png);
 	}
+
+    nav#menu ul li.bonus {
+        background-image: url(../img/menu/bonus-account-inactive@2x.png);
+    }
+
+    nav#menu ul li.bonusActive {
+        background-image: url(../img/menu/bonus-account-active@2x.png)), url(../img/bt_down_90px.png);
+    }
+
+    nav#menu ul li.promotions {
+        background-image: url(../img/menu/promotions-inactive@2x.png);
+    }
+
+    nav#menu ul li.promotionsActive {
+        background-image: url(../img/menu/promotions-active@2x.png), url(../img/bt_down_90px.png);
+    }
 	
 	nav#menu ul li.contacts {
 		background-image: url(../img/menu/contacts-inactive@2x.png);
@@ -1995,22 +2011,6 @@ section#promotionsDiscount label:nth-child(1) {
 	nav#menu ul li.accountActive {
 		background-image: url(../img/menu/account-active@2x.png), url(../img/menu/sombra_menu_20px_flipped.png), url(../img/bt_down_90px.png);
 	}
-
-    nav#menu ul li.bonus {
-        background-image: url(../img/menu/bonus-account-inactive@2x.png), url(../img/menu/sombra_menu_20px_flipped.png);
-    }
-
-    nav#menu ul li.bonusActive {
-        background-image: url(../img/menu/bonus-account-active@2x.png), url(../img/menu/sombra_menu_20px_flipped.png), url(../img/bt_down_90px.png);
-    }
-
-    nav#menu ul li.promotions {
-        background-image: url(../img/menu/promotions-inactive@2x.png), url(../img/menu/sombra_menu_20px_flipped.png);
-    }
-
-    nav#menu ul li.promotionsActive {
-        background-image: url(../img/menu/promotions-active@2x.png), url(../img/menu/sombra_menu_20px_flipped.png), url(../img/bt_down_90px.png);
-    }
 	
 	.alertBtn,
 	.linkBtn,

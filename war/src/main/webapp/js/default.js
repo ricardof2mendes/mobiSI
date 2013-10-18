@@ -551,21 +551,20 @@ $(document).ready(function() {
 				e.preventDefault();
 			});
  		} else {
- 			// show message
- 			$('#locking').show();
- 			var url = {
- 					timeout : LOCK_TIMEOUT_INTERVAL,
- 	 				lockunlock: $(this).prop('href'), 
- 	 				pooling :  CONTEXT_PATH + '/trip/Trip.action?getCurrentTrip=', 
- 	 				redirect: CONTEXT_PATH + '/trip/Trip.action?finish=&successOp='
- 	 			};
- 			lockUnlockAndWait(url);
+             $('#justConfirmLockEndTrip').show();
+             $('body').addClass('confirmation');
+             $('body').on('touchmove', 'body', function(e){
+                 e.preventDefault();
+             });
  		} 		
  	});
 
  	// End trip
  	$('#lockEndTrip').on('click', function(e) {
  		e.preventDefault();
+        $('div.confirm2 > article section').each(function(){
+            $(this).hide();
+        });
 		$('#locking').show();
 		var url = {
 				timeout : LOCK_TIMEOUT_INTERVAL,

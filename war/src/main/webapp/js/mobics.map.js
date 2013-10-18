@@ -34,7 +34,9 @@ Map.prototype = {
 			if(this.type === 'mapACar') {
 				this.fetchCarData();
 			} else if(this.type === 'mapAPark') {
-				this.fetchParkData();
+				// MOBICS-1581 removed
+				// this.fetchParkData();
+                this.fetchCarData();
 			} else if(this.type === 'mapAZone') {
 				this.fetchZoneData();
 			} else if(this.type === 'mapASearch') {
@@ -175,7 +177,7 @@ Map.prototype = {
 		 */
 		fetchCarData : function() {
 			var that = this;
-			$.get(CONTEXT_PATH + '/booking/ImmediateBooking.action?carData=&licensePlate=' + this.licensePlate, 
+			$.get(CONTEXT_PATH + '/booking/ImmediateBooking.action?carData=&licensePlate=' + this.licensePlate,
 					function(data, textStatus, jqXHR){
 						if (jqXHR.getResponseHeader('Stripes-Success') === 'OK') {
 							var evaluated = eval(data);
@@ -196,7 +198,7 @@ Map.prototype = {
 		 */
 		fetchParkData : function() {
 			var that = this;
-			$.get(CONTEXT_PATH + '/booking/AdvanceBooking.action?parkData=&licensePlate=' + this.licensePlate, 
+			$.get(CONTEXT_PATH + '/booking/AdvanceBooking.action?carData=&licensePlate=' + this.licensePlate,
 					function(data, textStatus, jqXHR){
 						if (jqXHR.getResponseHeader('Stripes-Success') === 'OK') {
 							var evaluated = eval(data);

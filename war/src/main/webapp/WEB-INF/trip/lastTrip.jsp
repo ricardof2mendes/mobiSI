@@ -30,7 +30,7 @@
 				</section>
 				
 				<section>
-					<h2><fmt:message key="trip.detail.details"/></h2>
+					<h2><fmt:message key="trip.detail.cost"/></h2>
 					<nav class="panel">
 						<ul>
 							<li class="detail white">
@@ -39,11 +39,18 @@
 									<mobi:formatMobics value="${actionBean.last.totalCost}" type="currencySymbol" />
 								</span>
 							</li>
+                            <li class="detail white">
+								<span><fmt:message key="trip.detail.trip.cost"/></span>
+								<span>
+									<mobi:formatMobics value="${actionBean.last.tripCost}" type="currencySymbol" />
+								</span>
+							</li>
 						</ul>
 					</nav>
 				</section>
 				
 				<section>
+                    <h2><fmt:message key="trip.detail.details"/></h2>
 					<nav class="panel">
 						<ul>
 							<li class="detail white">

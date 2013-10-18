@@ -104,7 +104,7 @@ public class TripActionBean extends BaseActionBean {
             try {
                 last = bookingWSServiceStub.getLastTripDetails();
             } catch (BookingNotFoundExceptionException e) {
-                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                //Do nothing
             }
             resolution = new ForwardResolution("/WEB-INF/trip/lastTrip.jsp");
         }

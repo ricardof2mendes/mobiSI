@@ -116,6 +116,7 @@
 		</c:if>
 		
 		<section>
+            <h2><fmt:message key="current.trip.details"/></h2>
 			<nav class="panel">
 				<ul>
 					<li class="detail white">
@@ -134,7 +135,6 @@
 							<mobi:formatMobics value="${actionBean.current.lockedPrice}" type="currencyHour" />
 						</span>
 					</li>
-					
 					<li class="detail white">
 						<span>
 							<fmt:message key="current.trip.price.included"/>
@@ -151,9 +151,6 @@
 							<mobi:formatMobics value="${actionBean.current.costPerExtraKm}" type="currencySymbol" />
 						</span>
 					</li>
-					
-					
-					
 					<li class="detail white">
 						<span>
 							<fmt:message key="current.trip.duration"/>
@@ -218,6 +215,17 @@
 	<!-- Modal window for confirmation -->
 	<div class="confirm2">
 		<article>
+            <section id="justConfirmLockEndTrip" class="hidden">
+                <h2><fmt:message key="current.trip.end.trip.just.confirm.h2"/></h2>
+                <h3><fmt:message key="current.trip.end.message"/></h3>
+                <stripes:link id="lockEndTrip" beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="alertBtn orangered" event="lockEndTrip" addSourcePage="true">
+                    <stripes:param name="licensePlate">${actionBean.current.licensePlate}</stripes:param>
+                    <fmt:message key="current.trip.button.lock.car.end.trip"/>
+                </stripes:link>
+                <stripes:link id="closeConfirm" href="#" class="alertBtn gray" >
+                    <fmt:message key="current.trip.extend.cancel"/>
+                </stripes:link>
+            </section>
 			<section id="stateError" class="hidden">
 				<h2><fmt:message key="current.trip.booking.cancelled"/></h2>
 				<h3 id="title1"><fmt:message key="current.trip.booking.cancelled.text"/></h3>
@@ -237,11 +245,11 @@
 				</stripes:link>
 			</section>
 			<section id="forbiddenZoneError" class="hidden">
-			  <h2><fmt:message key="current.trip.end.trip.error.forbidden.h2"/></h2>
-        <h3><fmt:message key="current.trip.end.trip.error.forbidden.h3"/></h3>
-        <stripes:link id="closeConfirm" href="#" class="alertBtn gray" >
-          <fmt:message key="current.trip.end.trip.error.forbidden.close"/>
-        </stripes:link>
+                <h2><fmt:message key="current.trip.end.trip.error.forbidden.h2"/></h2>
+                <h3><fmt:message key="current.trip.end.trip.error.forbidden.h3"/></h3>
+                <stripes:link id="closeConfirm" href="#" class="alertBtn gray" >
+                  <fmt:message key="current.trip.end.trip.error.forbidden.close"/>
+                </stripes:link>
 			</section>
 			<section id="unlocking" class="hidden">
 				<h2><fmt:message key="current.trip.unlocking.car"/>&nbsp;&nbsp;&nbsp;<img src="${contextPath}/img/indicator.gif"/></h2>

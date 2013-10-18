@@ -27,10 +27,7 @@
 											<c:set var="display" value="display:none"/>
                                             <c:set var="color" value="color:red"/>
 										</c:when>
-                                        <c:when test="${recent.activityType == 'EVENT'}">
-                                            <c:set var="eventName" value="eventDetails"/>
-                                        </c:when>
-                                        <c:when test="${recent.activityType == 'INCIDENT'}">
+                                        <c:when test="${recent.activityType == 'INCIDENT' || recent.activityType == 'EVENT'}">
                                             <c:set var="eventName" value="incidentDetails"/>
                                         </c:when>
                                         <c:otherwise>
@@ -42,6 +39,8 @@
 									
 									<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.recent.RecentActivitiesActionBean" event="${eventName}" addSourcePage="true">	
 										<stripes:param name="activityCode" value="${recent.activityCode }"/>
+                                        <stripes:param name="activityType" value="${recent.activityType}"/>
+
 										<div>
 											<span style="${color}"><fmt:message key="CustomerActivityEnum.${recent.activityType}"/></span>
 											<span style="${display}">

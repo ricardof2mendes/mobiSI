@@ -65,6 +65,9 @@ public class RecentActivitiesActionBean extends BaseActionBean {
             on = { "tripDetails", "bookingDetails", "advanceBookingDetails", "cancelAdvanceBooking", "incidentDetails" })
     private String activityCode;
 
+    @Validate(required = true, on = "incidentDetails")
+    private String activityType;
+
     @Validate
     private String extended;
 
@@ -253,24 +256,6 @@ public class RecentActivitiesActionBean extends BaseActionBean {
     }
 
     /**
-     * Booking event details
-     *
-     * @return streaming resolution
-     */
-    public Resolution eventDetails() throws RemoteException, UnsupportedEncodingException,
-            EventNotFoundExceptionException {
-        BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
-                Configuration.INSTANCE.getBookingEndpoint());
-        bookingWSServiceStub._getServiceClient().addHeader(
-                AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
-                        .getPassword()));
-        incident = bookingWSServiceStub.getIncidentDetailsForCustomer(
-                activityCode, getContext().getUser().getCustomerPreferencesDTO().getLanguage());
-
-        return  new ForwardResolution("/WEB-INF/recent/eventDetails.jsp");
-    }
-
-    /**
      * Booking interest details
      * 
      * @return
@@ -396,5 +381,13 @@ public class RecentActivitiesActionBean extends BaseActionBean {
 
     public IncidentForCustomerDTO getIncident() {
         return incident;
+    }
+
+    public String getActivityType() {
+        return activityType;
+    }
+
+    public void setActivityType(String activityType) {
+        this.activityType = activityType;
     }
 }

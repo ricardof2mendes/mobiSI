@@ -15,12 +15,11 @@ package com.criticalsoftware.mobics.presentation.action.addons;
 import com.criticalsoftware.mobics.carclub.AddOnsListDetailsDTO;
 import com.criticalsoftware.mobics.carclub.CalendarRestrictionsDTO;
 import com.criticalsoftware.mobics.carclub.DayRestrictionsDTO;
-import com.criticalsoftware.mobics.fleet.ZoneWithPolygonDTO;
+import com.criticalsoftware.mobics.carclub.ZoneWithPolygonDTO;
 import com.criticalsoftware.mobics.presentation.action.BaseActionBean;
 import com.criticalsoftware.mobics.presentation.security.AuthenticationUtil;
 import com.criticalsoftware.mobics.presentation.security.MobiCSSecure;
 import com.criticalsoftware.mobics.presentation.util.Configuration;
-import com.criticalsoftware.mobics.presentation.util.CoordinateZonesDTO;
 import com.criticalsoftware.mobics.presentation.util.DayRestrictionDTO;
 import com.criticalsoftware.mobics.proxy.carclub.CarClubWSServiceStub;
 import net.sourceforge.stripes.action.DefaultHandler;
@@ -40,7 +39,7 @@ import java.util.Map;
 
 /**
  * Account action bean
- * 
+ *
  * @author ltiago
  * @version $Revision$
  */
@@ -82,13 +81,18 @@ public class AddOnsActionBean extends BaseActionBean {
      * @throws RemoteException a jax-b webservice exception
      */
     public Resolution zoneData() throws RemoteException, UnsupportedEncodingException {
-        // Get the first car
         CarClubWSServiceStub stub = new CarClubWSServiceStub(Configuration.INSTANCE.getCarClubEndpoint());
         stub._getServiceClient().addHeader(
                 AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
                         .getPassword()));
-        getContext().getResponse().setHeader("Stripes-Success", "OK");
-        return new JavaScriptResolution(stub.getZoneWithPolygonsByCode(code));
+        ZoneWithPolygonDTO zone = null;
+        try {
+            zone = stub.getZoneWithPolygonsByCode(code);
+            getContext().getResponse().setHeader("Stripes-Success", "OK");
+        } catch (Exception e) {
+            LOGGER.error("Zone not found", e);
+        }
+        return new JavaScriptResolution(zone);
     }
 
     /**
@@ -101,7 +105,7 @@ public class AddOnsActionBean extends BaseActionBean {
         for (CalendarRestrictionsDTO dto : addon.getRestrictions()) {
             if (dto.getDayRestrictions() != null) {
                 List<DayRestrictionDTO> restrictions = new ArrayList<DayRestrictionDTO>();
-                for (DayRestrictionsDTO dr: dto.getDayRestrictions()) {
+                for (DayRestrictionsDTO dr : dto.getDayRestrictions()) {
                     restrictions.add(
                             new DayRestrictionDTO(dto.getType().getValue(), dr.getStartTime(), dr.getEndTime()));
                 }
