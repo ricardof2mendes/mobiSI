@@ -109,11 +109,26 @@
                         <nav class="twoColumnList">
                             <ul>
                                 <c:forEach items="${actionBean.detailedList}" var="detail">
+                                    <c:set var="bean" value="com.criticalsoftware.mobics.presentation.action.recent.RecentActivitiesActionBean"/>
+                                    <c:set var="target" value="_self"/>
+                                    <c:choose>
+                                        <c:when test="${pageScope.detail.origin == 'BOOKING'}">
+                                            <c:set var="event" value="tripDetails"/>
+                                        </c:when>
+                                        <c:when test="${pageScope.detail.origin == 'INVOICE'}">
+                                            <c:set var="bean" value="com.criticalsoftware.mobics.presentation.action.bonus.BonusAccountActionBean"/>
+                                            <c:set var="event" value="invoiceDetails"/>
+                                            <c:set var="target" value="_blank"/>
+                                        </c:when>
+                                        <c:when test="${pageScope.detail.origin == 'INCIDENT'}">
+                                            <c:set var="event" value="incidentDetails"/>
+                                        </c:when>
+                                    </c:choose>
                                     <li class="transactions">
-                                        <stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.recent.RecentActivitiesActionBean" event="tripDetails" addSourcePage="true">
+                                        <stripes:link target="${pageScope.target}" beanclass="${pageScope.bean}" event="${pageScope.event}" addSourcePage="true">
                                             <stripes:param name="activityCode" value="${pageScope.detail.originNumber}"/>
                                             <div>
-                                                <fmt:message key="bonus.account.transaction.${pageScope.detail.type}"/>
+                                                <fmt:message key="bonus.account.transaction.${pageScope.detail.origin}"/>
                                             </div>
                                             <div>
                                                 <mobi:formatMobics value="${pageScope.detail.amount}" type="currencySymbol"/>

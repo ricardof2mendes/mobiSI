@@ -22,10 +22,13 @@ import com.criticalsoftware.mobics.presentation.util.Configuration;
 import com.criticalsoftware.mobics.presentation.util.OrderBy;
 import com.criticalsoftware.mobics.proxy.billing.BillingWSServiceStub;
 import com.criticalsoftware.mobics.proxy.billing.CustomerNotFoundExceptionException;
-import net.sourceforge.stripes.action.DefaultHandler;
-import net.sourceforge.stripes.action.DontValidate;
-import net.sourceforge.stripes.action.ForwardResolution;
-import net.sourceforge.stripes.action.Resolution;
+import com.criticalsoftware.mobics.proxy.billing.InvoiceNotFoundExceptionException;
+import com.criticalsoftware.mobics.proxy.billing.InvoicePdfNotFoundExceptionException;
+import com.criticalsoftware.www.mobios.services.accounting.dto.FileAttachmentDTO;
+import net.sourceforge.stripes.action.*;
+import net.sourceforge.stripes.validation.Validate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.UnsupportedEncodingException;
 import java.rmi.RemoteException;
@@ -41,11 +44,16 @@ import java.util.Date;
 @MobiCSSecure
 public class BonusAccountActionBean extends BaseActionBean {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(BonusAccountActionBean.class);
+
     private String orderBy;
 
     private BonusAccountBalanceListDTO balanceList;
 
     private BonusAccountStatementListDTO[] detailedList;
+
+    @Validate(required = true, on = "invoiceDetails")
+    private String activityCode;
 
     /**
      * Account page
@@ -78,6 +86,23 @@ public class BonusAccountActionBean extends BaseActionBean {
         return new ForwardResolution("/WEB-INF/bonus/bonusAccount.jsp");
     }
 
+    @DontValidate
+    public Resolution invoiceDetails() {
+        StreamingResolution resolution = null;
+
+        try {
+            BillingWSServiceStub stub = new BillingWSServiceStub(Configuration.INSTANCE.getBillingEndpoint());
+            stub._getServiceClient().addHeader(
+                    AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser().getPassword()));
+            FileAttachmentDTO file = stub.getDetailedBillingDocument(activityCode);
+            resolution = new StreamingResolution(file.getMimeType(), file.getFileContents().getInputStream());
+        } catch (Exception e) {
+            LOGGER.error("Error getting invoice details", e);
+        }
+
+        return resolution;
+    }
+
     public String getOrderBy() {
         return orderBy;
     }
@@ -92,5 +117,9 @@ public class BonusAccountActionBean extends BaseActionBean {
 
     public Date getToday(){
         return new Date();
+    }
+
+    public void setActivityCode(String activityCode) {
+        this.activityCode = activityCode;
     }
 }
