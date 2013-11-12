@@ -30,6 +30,7 @@
         <property name="mobics.config.endpoint.carclub" value="http://mobics02.critical.pt:8080/mobics-webservices/CarClub"/>
 		<property name="mobics.config.endpoint.car" value="http://mobics02.critical.pt:8080/mobics-webservices/Car"/>
         <property name="mobics.config.endpoint.customer" value="http://mobics02.critical.pt:8080/mobics-webservices/Customer"/>
+		<property name="mobics.config.endpoint.billing" value="http://mobics02.critical.pt:8080/mobics-webservices/Billing"/>
 		<!--Geolocation server-->
         <property name="mobics.config.geolocation.server" value="nominatim.openstreetmap.org"/>
 		<property name="mobics.config.geolocation.server.allowed.countries" value="pt"/>
@@ -39,7 +40,6 @@
 		<property name="mobics.config.default.theme.warm.word" value="warm"/>		
 		<!--Search result numbers-->
         <property name="mobics.config.max.results" value="99"/>
-		<property name="mobics.config.recents.filter.month.gap" value="6"/>
 		<property name="mobics.config.radius.any.distance" value="9999999"/>
 		<!--Pooling interval -->
 		<property name="mobics.config.polling.interval.milliseconds" value="15000"/>
