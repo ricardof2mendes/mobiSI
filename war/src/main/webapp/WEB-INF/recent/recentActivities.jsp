@@ -48,7 +48,7 @@
                                                     <c:when test="${recent.isDebit}">-</c:when>
                                                     <c:otherwise>+</c:otherwise>
                                                 </c:choose>
-												<mobi:formatMobics value="${recent.cost}" type="currencySymbol" />
+												<mobi:formatMobics value="${recent.costWithTax}" type="currencySymbol" />
 											</span>
 										</div>
 										<div>

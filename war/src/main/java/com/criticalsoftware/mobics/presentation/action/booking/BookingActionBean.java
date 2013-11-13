@@ -12,11 +12,6 @@
  */
 package com.criticalsoftware.mobics.presentation.action.booking;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.math.BigDecimal;
-import java.rmi.RemoteException;
-
 import javax.activation.DataHandler;
 
 import net.sourceforge.stripes.action.Resolution;
@@ -38,6 +33,10 @@ import com.criticalsoftware.mobics.presentation.security.AuthenticationUtil;
 import com.criticalsoftware.mobics.presentation.util.Configuration;
 import com.criticalsoftware.mobics.proxy.fleet.FleetWSServiceStub;
 import com.criticalsoftware.mobics.proxy.fleet.IOExceptionException;
+
+import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
 
 /**
  * @author ltiago
@@ -123,7 +122,6 @@ public abstract class BookingActionBean extends BaseActionBean {
      * 
      * @return the image stream resolution
      * @throws RemoteException a jax-b webservice exception
-     * @throws IOException a exception with car validation
      * @throws IOExceptionException a exception with car validation
      */
     public Resolution getCarImage() {

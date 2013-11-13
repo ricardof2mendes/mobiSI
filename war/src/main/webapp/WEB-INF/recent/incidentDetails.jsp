@@ -48,7 +48,7 @@
 							${pageScope.subtitle}
 						</span>
 						<span>
-							<mobi:formatMobics value="${actionBean.incident.totalCost}" type="currencySymbol"/>
+							<mobi:formatMobics value="${actionBean.incident.totalCostWithTax}" type="currencySymbol"/>
 						</span>
                     </li>
                 </ul>

@@ -34,7 +34,7 @@
 					<li class="detail white">
 						<span><fmt:message key="trip.detail.total.cost"/></span>
 						<span>
-							<mobi:formatMobics value="${actionBean.trip.totalCost}" type="currencySymbol" />
+							<mobi:formatMobics value="${actionBean.trip.totalCostWithTax}" type="currencySymbol" />
 						</span>
 					</li>
 				</ul>

@@ -12,11 +12,6 @@
  */
 package com.criticalsoftware.mobics.presentation.action.messages;
 
-import java.io.UnsupportedEncodingException;
-import java.rmi.RemoteException;
-import java.util.HashMap;
-import java.util.Map;
-
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.DontValidate;
 import net.sourceforge.stripes.action.ForwardResolution;
@@ -40,6 +35,11 @@ import com.criticalsoftware.mobics.proxy.booking.BookingWSServiceStub;
 import com.criticalsoftware.mobics.proxy.booking.CustomerNotFoundExceptionException;
 import com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException;
 import com.criticalsoftware.mobics.proxy.fleet.FleetWSServiceStub;
+
+import java.io.UnsupportedEncodingException;
+import java.rmi.RemoteException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Messages action bean

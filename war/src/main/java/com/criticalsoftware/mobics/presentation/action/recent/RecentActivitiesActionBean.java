@@ -12,27 +12,12 @@
  */
 package com.criticalsoftware.mobics.presentation.action.recent;
 
-import java.io.UnsupportedEncodingException;
-import java.rmi.RemoteException;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
 
-import com.criticalsoftware.mobics.booking.*;
-import com.criticalsoftware.mobics.proxy.booking.*;
-import net.sourceforge.stripes.action.DefaultHandler;
-import net.sourceforge.stripes.action.DontValidate;
-import net.sourceforge.stripes.action.ForwardResolution;
-import net.sourceforge.stripes.action.LocalizableMessage;
-import net.sourceforge.stripes.action.RedirectResolution;
-import net.sourceforge.stripes.action.Resolution;
-import net.sourceforge.stripes.ajax.JavaScriptResolution;
-import net.sourceforge.stripes.validation.LocalizableError;
-import net.sourceforge.stripes.validation.Validate;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import com.criticalsoftware.mobics.booking.BookingInterestDTO;
+import com.criticalsoftware.mobics.booking.TripDetailsDTO;
+import com.criticalsoftware.mobics.customer.CustomerActivityEnum;
+import com.criticalsoftware.mobics.customer.CustomerActivityListDTO;
+import com.criticalsoftware.mobics.customer.IncidentForCustomerDTO;
 import com.criticalsoftware.mobics.presentation.action.BaseActionBean;
 import com.criticalsoftware.mobics.presentation.action.trip.TripActionBean;
 import com.criticalsoftware.mobics.presentation.security.AuthenticationUtil;
@@ -40,6 +25,21 @@ import com.criticalsoftware.mobics.presentation.security.MobiCSSecure;
 import com.criticalsoftware.mobics.presentation.util.BookingState;
 import com.criticalsoftware.mobics.presentation.util.Configuration;
 import com.criticalsoftware.mobics.presentation.util.GeolocationUtil;
+import com.criticalsoftware.mobics.proxy.booking.*;
+import com.criticalsoftware.mobics.proxy.booking.CustomerNotFoundExceptionException;
+import com.criticalsoftware.mobics.proxy.booking.EventNotFoundExceptionException;
+import com.criticalsoftware.mobics.proxy.customer.*;
+import net.sourceforge.stripes.action.*;
+import net.sourceforge.stripes.ajax.JavaScriptResolution;
+import net.sourceforge.stripes.validation.LocalizableError;
+import net.sourceforge.stripes.validation.Validate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.UnsupportedEncodingException;
+import java.rmi.RemoteException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Recent activities action bean
@@ -81,15 +81,16 @@ public class RecentActivitiesActionBean extends BaseActionBean {
      */
     @DefaultHandler
     @DontValidate
-    public Resolution main() throws RemoteException, UnsupportedEncodingException, CustomerNotFoundExceptionException {
+    public Resolution main() throws RemoteException, UnsupportedEncodingException,
+            com.criticalsoftware.mobics.proxy.customer.CustomerNotFoundExceptionException {
 
-        BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
-                Configuration.INSTANCE.getBookingEndpoint());
-        bookingWSServiceStub._getServiceClient().addHeader(
+        CustomerWSServiceStub customerWSServiceStub = new CustomerWSServiceStub(
+                Configuration.INSTANCE.getCustomerEndpoint());
+        customerWSServiceStub._getServiceClient().addHeader(
                 AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
                         .getPassword()));
 
-        recents = bookingWSServiceStub.getRecentActivities(null, null, CustomerActivityEnum.ALL.getValue());
+        recents = customerWSServiceStub.getRecentActivities(null, null, CustomerActivityEnum.ALL.getValue());
 
         return new ForwardResolution("/WEB-INF/recent/recentActivities.jsp");
     }
@@ -171,7 +172,7 @@ public class RecentActivitiesActionBean extends BaseActionBean {
      */
     public Resolution cancelAdvanceBooking() throws RemoteException, UnsupportedEncodingException,
             BookingNotFoundExceptionException, CustomerNotFoundExceptionException,
-            UnauthorizedCustomerExceptionException {
+            UnauthorizedCustomerExceptionException, com.criticalsoftware.mobics.proxy.booking.CustomerNotFoundExceptionException {
         Class<? extends BaseActionBean> clazz = this.getClass();
         BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
                 Configuration.INSTANCE.getBookingEndpoint());
@@ -243,13 +244,13 @@ public class RecentActivitiesActionBean extends BaseActionBean {
      * @return streaming resolution
      */
     public Resolution incidentDetails() throws RemoteException, UnsupportedEncodingException,
-            EventNotFoundExceptionException {
-        BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
-                Configuration.INSTANCE.getBookingEndpoint());
-        bookingWSServiceStub._getServiceClient().addHeader(
+            EventNotFoundExceptionException, com.criticalsoftware.mobics.proxy.customer.EventNotFoundExceptionException {
+        CustomerWSServiceStub customerWSServiceStub = new CustomerWSServiceStub(
+                Configuration.INSTANCE.getCustomerEndpoint());
+        customerWSServiceStub._getServiceClient().addHeader(
                 AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
                         .getPassword()));
-        incident = bookingWSServiceStub.getIncidentDetailsForCustomer(
+        incident = customerWSServiceStub.getIncidentDetailsForCustomer(
                 activityCode, getContext().getUser().getCustomerPreferencesDTO().getLanguage());
 
         return  new ForwardResolution("/WEB-INF/recent/incidentDetails.jsp");
