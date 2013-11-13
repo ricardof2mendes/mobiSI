@@ -54,12 +54,10 @@
 									<span>${actionBean.trip.car.licensePlate} </span>
 									<span>${actionBean.trip.car.carBrandName}&nbsp;${actionBean.trip.car.carModelName}</span>
 									<span><fmt:message key="FuelType.${actionBean.trip.car.fuelType.name}"/>&nbsp;
-									<!-- RANGE removed
 										<c:choose>
-											<c:when test="${actionBean.trip.car.range != null}">(${actionBean.trip.car.range})</c:when>
+											<c:when test="${actionBean.trip.car.fuelLevel != null}">(${actionBean.trip.car.fuelLevel}%)</c:when>
 											<c:otherwise>(<fmt:message key="application.value.not.available"/>)</c:otherwise>
 										</c:choose>
-										 -->
 									</span>
 								</div>
 							</div>

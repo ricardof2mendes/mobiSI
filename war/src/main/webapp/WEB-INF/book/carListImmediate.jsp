@@ -22,11 +22,10 @@
 												<span>${car.licensePlate}</span>
 												<span>${car.carBrandName}&nbsp;${car.carModelName}</span>
 												<span><fmt:message key="FuelType.${car.fuelType.name}"/>&nbsp;
-													<!-- RANGE removed
 													<c:choose>
-														<c:when test="${car.range != null}">(${car.range})</c:when>
+														<c:when test="${car.fuelLevel != null}">(${car.fuelLevel}%)</c:when>
 														<c:otherwise>(<fmt:message key="application.value.not.available"/>)</c:otherwise>
-													</c:choose>-->
+													</c:choose>
 												</span>
 											</div>
 											<div>
@@ -64,11 +63,10 @@
 												<span>${car.licensePlate}</span>
 												<span>${car.carBrandName}&nbsp;${car.carModelName}</span>
 												<span><fmt:message key="FuelType.${car.fuelType.name}"/>&nbsp;
-													<!-- RANGE removed
 													<c:choose>
-														<c:when test="${actionBean.car.range != null}">(${actionBean.car.range})</c:when>
+														<c:when test="${actionBean.car.fuelLevel != null}">(${actionBean.car.fuelLevel}%)</c:when>
 														<c:otherwise>(<fmt:message key="application.value.not.available"/>)</c:otherwise>
-													</c:choose>-->
+													</c:choose>
 												</span>
 											</div>
 											<div>

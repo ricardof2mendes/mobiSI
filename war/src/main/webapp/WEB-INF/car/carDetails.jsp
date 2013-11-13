@@ -18,11 +18,11 @@
 							<div>
 								<span>${actionBean.car.licensePlate}</span>
 								<span>${actionBean.car.carBrandName}&nbsp;${actionBean.car.carModelName}</span>
-								<span><fmt:message key="FuelType.${actionBean.car.fuelType.name}"/>&nbsp;<!-- RANGE removed
+								<span><fmt:message key="FuelType.${actionBean.car.fuelType.name}"/>&nbsp;
 									<c:choose>
-										<c:when test="${actionBean.car.range != null}">(${actionBean.car.range})</c:when>
+										<c:when test="${actionBean.car.fuelLevel != null}">(${actionBean.car.fuelLevel}%)</c:when>
 										<c:otherwise>(<fmt:message key="application.value.not.available"/>)</c:otherwise>
-									</c:choose>-->
+									</c:choose>
 								</span>
 							</div>
 						</div>
@@ -81,18 +81,17 @@
 							<fmt:message key="FuelType.${actionBean.car.fuelType.name}"/>
 						</span>
 					</li>
-					<!-- RANGE removed
 					<li class="detail">
 						<span>
-							<fmt:message key="car.details.range"/>
+							<fmt:message key="car.details.fuelLevel"/>
 						</span>
 						<span>
 							<c:choose>
-								<c:when test="${actionBean.car.range != null}">(${actionBean.car.range})</c:when>
-								<c:otherwise>(<fmt:message key="application.value.not.available"/>)</c:otherwise>
+								<c:when test="${actionBean.car.fuelLevel != null}">${actionBean.car.fuelLevel}%</c:when>
+								<c:otherwise><fmt:message key="application.value.not.available"/></c:otherwise>
 							</c:choose>
 						</span>
-					</li>-->
+					</li>
 				</ul>			 
 			</nav>
 		</section>

@@ -21,11 +21,11 @@
 									<span>${actionBean.car.licensePlate} </span>
 									<span>${actionBean.car.carBrandName}&nbsp;${actionBean.car.carModelName}</span>
 									<span><fmt:message key="FuelType.${actionBean.car.fuelType.name}"/>&nbsp;
-									<!-- RANGE removed
-										<c:choose>
-											<c:when test="${actionBean.car.range != null}">(${actionBean.car.range})</c:when>
-											<c:otherwise>(<fmt:message key="application.value.not.available"/>)</c:otherwise>
-										</c:choose> -->
+
+                                    <c:choose>
+                                        <c:when test="${actionBean.car.fuelLevel != null}">(${actionBean.car.fuelLevel}%)</c:when>
+                                        <c:otherwise>(<fmt:message key="application.value.not.available"/>)</c:otherwise>
+                                    </c:choose>
 									</span>
 								</div>
 							</div>

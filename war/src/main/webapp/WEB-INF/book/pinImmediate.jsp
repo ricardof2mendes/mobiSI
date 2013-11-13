@@ -13,7 +13,7 @@
 		<stripes:hidden name="car.carModelName"/>
 		<stripes:hidden name="car.carBrandName"/>
 		<stripes:hidden name="car.fuelType.name"/>
-		<!-- RANGE removed <stripes:hidden name="car.range"/> -->
+		<stripes:hidden name="car.fuelLevel"/>
 		
 		<article class="pin">
 			<section>
@@ -21,11 +21,11 @@
 					<label>${actionBean.car.licensePlate}</label>
 					<label>${actionBean.car.carBrandName}&nbsp;${actionBean.car.carModelName}</label>
 					<label><fmt:message key="FuelType.${actionBean.car.fuelType.name}"/>&nbsp;
-						<!-- RANGE removed
+
 						<c:choose>
-							<c:when test="${actionBean.car.range != null}">(${actionBean.car.range})</c:when>
+							<c:when test="${actionBean.car.fuelLevel != null}">(${actionBean.car.fuelLevel}%)</c:when>
 							<c:otherwise>(<fmt:message key="application.value.not.available"/>)</c:otherwise>
-						</c:choose>-->
+						</c:choose>
 					</label>					
 				</div>
 				<div>
