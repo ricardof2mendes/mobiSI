@@ -87,7 +87,7 @@
 						</span>
 						<span>
 							<c:choose>
-								<c:when test="${actionBean.car.fuelLevel != null}">${actionBean.car.fuelLevel}%</c:when>
+								<c:when test="${actionBean.car.fuelLevel != null}">${actionBean.car.fuelLevel} %</c:when>
 								<c:otherwise><fmt:message key="application.value.not.available"/></c:otherwise>
 							</c:choose>
 						</span>
