@@ -7,7 +7,7 @@ var Map = function(configuration) {
 
 Map.prototype = {
 		/**
-		 * Image editor constructor.
+		 * Map constructor.
 		 */
 		construct : function(configuration) {
 			
