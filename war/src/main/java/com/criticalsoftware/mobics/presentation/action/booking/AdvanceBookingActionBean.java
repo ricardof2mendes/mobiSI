@@ -14,8 +14,7 @@ package com.criticalsoftware.mobics.presentation.action.booking;
 
 import java.io.UnsupportedEncodingException;
 import java.rmi.RemoteException;
-import java.util.Calendar;
-import java.util.Date;
+import java.util.*;
 
 import com.criticalsoftware.mobics.proxy.booking.*;
 import com.criticalsoftware.mobics.proxy.fleet.*;
@@ -259,8 +258,17 @@ public class AdvanceBookingActionBean extends BookingActionBean {
      * @throws RemoteException
      */
     public LocationDTO[] getLocations() throws RemoteException {
-        return new CarClubWSServiceStub(Configuration.INSTANCE.getCarClubEndpoint())
+        Map<String, LocationDTO> mapLocations = new HashMap<String, LocationDTO>();
+        LocationDTO[] locations = new CarClubWSServiceStub(Configuration.INSTANCE.getCarClubEndpoint())
                 .getLocationsByCarClubCode(getContext().getUser().getCarClub().getCarClubCode());
+
+        for(LocationDTO l : locations) {
+            if(!mapLocations.containsKey(l.getCode())){
+                mapLocations.put(l.getCode(), l);
+            }
+        }
+
+        return (LocationDTO[]) mapLocations.values().toArray();
     }
 
     /**
