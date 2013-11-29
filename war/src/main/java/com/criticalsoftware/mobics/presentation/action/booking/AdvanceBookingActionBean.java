@@ -17,6 +17,12 @@ import java.rmi.RemoteException;
 import java.util.Calendar;
 import java.util.Date;
 
+import com.criticalsoftware.mobics.proxy.booking.*;
+import com.criticalsoftware.mobics.proxy.fleet.*;
+import com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException;
+import com.criticalsoftware.mobics.proxy.fleet.CarNotFoundExceptionException;
+import com.criticalsoftware.mobics.proxy.fleet.CustomerNotFoundExceptionException;
+import com.criticalsoftware.mobics.proxy.fleet.IllegalDateExceptionException;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.DontValidate;
 import net.sourceforge.stripes.action.ForwardResolution;
@@ -33,7 +39,7 @@ import net.sourceforge.stripes.validation.ValidationState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.criticalsoftware.mobics.booking.CarDTO;
+import com.criticalsoftware.mobics.fleet.CarDTO;
 import com.criticalsoftware.mobics.carclub.LocationDTO;
 import com.criticalsoftware.mobics.carclub.ZoneDTO;
 import com.criticalsoftware.mobics.fleet.CarTypeEnum;
@@ -44,22 +50,8 @@ import com.criticalsoftware.mobics.presentation.security.AuthenticationUtil;
 import com.criticalsoftware.mobics.presentation.security.MobiCSSecure;
 import com.criticalsoftware.mobics.presentation.util.Configuration;
 import com.criticalsoftware.mobics.presentation.util.CoordinateZonesDTO;
-import com.criticalsoftware.mobics.proxy.booking.BookingWSServiceStub;
-import com.criticalsoftware.mobics.proxy.booking.CarClubCodeNotFoundExceptionException;
-import com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException;
-import com.criticalsoftware.mobics.proxy.booking.CarNotAvailableForBookingExceptionException;
-import com.criticalsoftware.mobics.proxy.booking.CarNotFoundExceptionException;
-import com.criticalsoftware.mobics.proxy.booking.CustomerNotFoundExceptionException;
-import com.criticalsoftware.mobics.proxy.booking.ForbiddenZoneExceptionException;
-import com.criticalsoftware.mobics.proxy.booking.IllegalDateExceptionException;
-import com.criticalsoftware.mobics.proxy.booking.InvalidCarBookingExceptionException;
-import com.criticalsoftware.mobics.proxy.booking.InvalidCustomerPinExceptionException;
-import com.criticalsoftware.mobics.proxy.booking.OverlappedCarBookingExceptionException;
-import com.criticalsoftware.mobics.proxy.booking.OverlappedCustomerBookingExceptionException;
-import com.criticalsoftware.mobics.proxy.booking.UnauthorizedCustomerExceptionException;
 import com.criticalsoftware.mobics.proxy.carclub.CarClubWSServiceStub;
 import com.criticalsoftware.mobics.proxy.carclub.LocationCodeNotFoundExceptionException;
-import com.criticalsoftware.mobics.proxy.fleet.FleetWSServiceStub;
 
 /**
  * Booking action bean
@@ -126,13 +118,13 @@ public class AdvanceBookingActionBean extends BookingActionBean {
      * @throws CarClubCodeNotFoundExceptionException
      */
     public Resolution searchCarsAdvance() throws RemoteException, CustomerNotFoundExceptionException,
-            IllegalDateExceptionException, CarLicensePlateNotFoundExceptionException,
+                                                 IllegalDateExceptionException, CarLicensePlateNotFoundExceptionException,
             CarClubCodeNotFoundExceptionException, UnsupportedEncodingException {
 
         Calendar start = Calendar.getInstance(), end = Calendar.getInstance();
         start.setTime(startDate);
         end.setTime(endDate);
-        BookingWSServiceStub stub = new BookingWSServiceStub(Configuration.INSTANCE.getBookingEndpoint());
+        FleetWSServiceStub stub = new FleetWSServiceStub (Configuration.INSTANCE.getFleetEndpoint());
         stub._getServiceClient().addHeader(
                 AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext()
                         .getUser().getPassword()));
@@ -183,10 +175,11 @@ public class AdvanceBookingActionBean extends BookingActionBean {
      * @throws InvalidCarBookingExceptionException 
      */
     public Resolution book() throws RemoteException, UnsupportedEncodingException,
-            InvalidCustomerPinExceptionException, CarNotFoundExceptionException,
-            CarNotAvailableForBookingExceptionException, ForbiddenZoneExceptionException,
-            IllegalDateExceptionException, UnauthorizedCustomerExceptionException,
-            CarLicensePlateNotFoundExceptionException, OverlappedCarBookingExceptionException,
+                                    InvalidCustomerPinExceptionException, com.criticalsoftware.mobics.proxy.booking.CarNotFoundExceptionException,
+                                    CarNotAvailableForBookingExceptionException, ForbiddenZoneExceptionException,
+                                    com.criticalsoftware.mobics.proxy.booking.IllegalDateExceptionException,
+                                    UnauthorizedCustomerExceptionException,
+            com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException, OverlappedCarBookingExceptionException,
             OverlappedCustomerBookingExceptionException, InvalidCarBookingExceptionException {
         Calendar start = Calendar.getInstance(), end = Calendar.getInstance();
         start.setTimeInMillis(startDate.getTime());

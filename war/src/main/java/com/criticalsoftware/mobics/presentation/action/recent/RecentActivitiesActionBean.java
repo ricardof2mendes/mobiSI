@@ -27,7 +27,6 @@ import com.criticalsoftware.mobics.presentation.util.Configuration;
 import com.criticalsoftware.mobics.presentation.util.GeolocationUtil;
 import com.criticalsoftware.mobics.proxy.booking.*;
 import com.criticalsoftware.mobics.proxy.booking.CustomerNotFoundExceptionException;
-import com.criticalsoftware.mobics.proxy.booking.EventNotFoundExceptionException;
 import com.criticalsoftware.mobics.proxy.customer.*;
 import net.sourceforge.stripes.action.*;
 import net.sourceforge.stripes.ajax.JavaScriptResolution;
