@@ -81,7 +81,13 @@ public class BonusAccountActionBean extends BaseActionBean {
         stub._getServiceClient().addHeader(
                 AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser().getPassword()));
 
-        detailedList = stub.getClientBonusAccountStatement(null, Calendar.getInstance());
+        // TODO add to configuration
+        Calendar thisYear = Calendar.getInstance();
+        Calendar lastYear = Calendar.getInstance();
+        lastYear.add(Calendar.YEAR, -1);
+
+        detailedList = stub.getClientBonusAccountStatement(lastYear.getTimeInMillis(), thisYear.getTimeInMillis(),
+                                                           0, Integer.MAX_VALUE);
 
         return new ForwardResolution("/WEB-INF/bonus/bonusAccount.jsp");
     }

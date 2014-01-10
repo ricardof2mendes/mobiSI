@@ -11,6 +11,7 @@ import java.rmi.RemoteException;
 
 import javax.activation.DataHandler;
 
+import com.criticalsoftware.mobics.proxy.fleet.FleetWSServiceStub;
 import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.action.ActionBeanContext;
 import net.sourceforge.stripes.action.Resolution;
@@ -22,7 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.criticalsoftware.mobics.carclub.CarClubSimpleDTO;
-import com.criticalsoftware.mobics.miscellaneous.CarClassDTO;
+import com.criticalsoftware.mobics.fleet.CarClassDTO;
 import com.criticalsoftware.mobics.presentation.extension.MobiCSActionBeanContext;
 import com.criticalsoftware.mobics.presentation.security.CarClubSimple;
 import com.criticalsoftware.mobics.presentation.util.Configuration;
@@ -30,7 +31,6 @@ import com.criticalsoftware.mobics.proxy.carclub.CarClubCodeNotFoundExceptionExc
 import com.criticalsoftware.mobics.proxy.carclub.CarClubWSService;
 import com.criticalsoftware.mobics.proxy.carclub.CarClubWSServiceStub;
 import com.criticalsoftware.mobics.proxy.carclub.CarClubWebSiteURLNotFoundExceptionException;
-import com.criticalsoftware.mobics.proxy.miscellaneous.MiscellaneousWSServiceStub;
 
 /**
  * Base ActionBean class.
@@ -169,8 +169,8 @@ public abstract class BaseActionBean implements ActionBean {
      * @return the carClasses
      */
     public CarClassDTO[] getCarClasses() throws RemoteException {
-        return new MiscellaneousWSServiceStub(Configuration.INSTANCE.getMiscellaneousEnpoint())
-                .getAllCarClasses(getContext().getLocale().getCountry());
+        return new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint())
+                .getCarClasses(getContext().getUser().getCustomerPreferencesDTO().getLanguage());
     }
 
     /**

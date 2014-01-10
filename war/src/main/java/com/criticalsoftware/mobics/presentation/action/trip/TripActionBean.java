@@ -261,8 +261,9 @@ public class TripActionBean extends BaseActionBean {
             bookingCode = current.getBookingCode();
             endDate = current.getEndDate().getTime();
 
-            Calendar c = bookingWSServiceStub.getNextAdvanceBooking(bookingCode);
-            extendBookingDate = c == null ? null : c.getTime();
+            Calendar c = Calendar.getInstance();
+            c.setTimeInMillis(bookingWSServiceStub.getNextAdvanceBooking(bookingCode));
+            extendBookingDate = (c == null ? null : c.getTime());
         } else {
             resolution = new ForwardResolution(this.getClass());
         }
@@ -283,7 +284,7 @@ public class TripActionBean extends BaseActionBean {
         Calendar aux = Calendar.getInstance();
         aux.setTime(endDate);
 
-        bookingWSServiceStub.extendAdvanceBooking(bookingCode, aux);
+        bookingWSServiceStub.extendAdvanceBooking(bookingCode, aux.getTimeInMillis());
 
         getContext().getMessages().add(new LocalizableMessage("current.trip.extend.trip.message"));
         return new RedirectResolution(this.getClass());

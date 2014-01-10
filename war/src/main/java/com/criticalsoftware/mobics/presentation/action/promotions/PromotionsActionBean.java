@@ -26,7 +26,6 @@ import com.criticalsoftware.mobics.proxy.carclub.CarClubWSServiceStub;
 import com.criticalsoftware.mobics.proxy.carclub.PromotionCodeNotFoundExceptionException;
 import com.criticalsoftware.mobics.proxy.customer.CustomerNotFoundExceptionException;
 import com.criticalsoftware.mobics.proxy.customer.CustomerWSServiceStub;
-import com.criticalsoftware.mobics.proxy.fleet.FleetWSServiceStub;
 import net.sourceforge.stripes.action.*;
 import net.sourceforge.stripes.validation.Validate;
 import org.slf4j.Logger;
@@ -72,10 +71,13 @@ public class PromotionsActionBean extends BaseActionBean {
         CustomerWSServiceStub stub = new CustomerWSServiceStub(Configuration.INSTANCE.getCustomerEndpoint());
         stub._getServiceClient().addHeader(
                 AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser().getPassword()));
-        // FIXME nao posso enviar data
-        Calendar a = Calendar.getInstance();
-        a.add(Calendar.MONTH, 1);
-        promotions = stub.getAvailablePromotionsForCustomer(Calendar.getInstance(), a, "", false);
+
+        // TODO add to configuration
+        Calendar thisMonth = Calendar.getInstance();
+        Calendar nextMonth = Calendar.getInstance();
+        nextMonth.add(Calendar.MONTH, 1);
+        promotions = stub.getAvailablePromotionsForCustomer(thisMonth.getTimeInMillis(), nextMonth.getTimeInMillis(),
+                                               getContext().getUser().getCustomerPreferencesDTO().getLanguage(), false);
 
         return new ForwardResolution("/WEB-INF/promotions/promotions.jsp");
     }

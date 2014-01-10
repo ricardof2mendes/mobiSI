@@ -128,7 +128,7 @@ public class AdvanceBookingActionBean extends BookingActionBean {
                 AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext()
                         .getUser().getPassword()));
         cars = stub.getCarsForAdvanceBooking(
-                getContext().getUser().getCarClub().getCarClubCode(), zone, location, start, end);
+                getContext().getUser().getCarClub().getCarClubCode(), zone, location, start.getTimeInMillis(), end.getTimeInMillis());
 
         return new ForwardResolution("/WEB-INF/book/carListAdvance.jsp");
     }
@@ -189,7 +189,8 @@ public class AdvanceBookingActionBean extends BookingActionBean {
         bookingWSServiceStub._getServiceClient().addHeader(
                 AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
                         .getPassword()));
-        bookingWSServiceStub.createAdvanceBookingWithCustomerPin(licensePlate, String.valueOf(pin), start, end);
+        bookingWSServiceStub.createAdvanceBookingWithCustomerPin(licensePlate, String.valueOf(pin),
+                                                                 start.getTimeInMillis(), end.getTimeInMillis());
 
         getContext().getMessages().add(new LocalizableMessage("car.details.advance.book.done"));
         return new RedirectResolution(RecentActivitiesActionBean.class).flash(this);
@@ -257,7 +258,7 @@ public class AdvanceBookingActionBean extends BookingActionBean {
      * @return location array
      * @throws RemoteException
      */
-    public LocationDTO[] getLocations() throws RemoteException {
+    public Collection<LocationDTO> getLocations() throws RemoteException {
         Map<String, LocationDTO> mapLocations = new HashMap<String, LocationDTO>();
         LocationDTO[] locations = new CarClubWSServiceStub(Configuration.INSTANCE.getCarClubEndpoint())
                 .getLocationsByCarClubCode(getContext().getUser().getCarClub().getCarClubCode());
@@ -268,7 +269,7 @@ public class AdvanceBookingActionBean extends BookingActionBean {
             }
         }
 
-        return (LocationDTO[]) mapLocations.values().toArray();
+        return mapLocations.values();
     }
 
     /**
@@ -279,17 +280,25 @@ public class AdvanceBookingActionBean extends BookingActionBean {
      */
     public Resolution getZones() throws RemoteException {
         ZoneDTO[] zones = null;
+        Set<String> fileredZones = new HashSet<String>();
         try {
             zones = new CarClubWSServiceStub(Configuration.INSTANCE.getCarClubEndpoint())
                     .getParksByCarClubCodeAndLocationCode(getContext().getUser().getCarClub().getCarClubCode(),
                             location);
+
+            for(ZoneDTO zone : zones) {
+                if(!fileredZones.contains(zone.getZone())){
+                    fileredZones.add(zone.getZone());
+                }
+            }
+
         } catch (LocationCodeNotFoundExceptionException e) {
             LOGGER.warn("Zones not found due to location code.", e.getLocalizedMessage());
         } catch (com.criticalsoftware.mobics.proxy.carclub.CarClubCodeNotFoundExceptionException e) {
             LOGGER.warn("Zones not found due to car clube code.", e.getLocalizedMessage());
         }
         getContext().getResponse().setHeader("Stripes-Success", "OK");
-        return new JavaScriptResolution(zones);
+        return new JavaScriptResolution(fileredZones);
     }
 
     /**

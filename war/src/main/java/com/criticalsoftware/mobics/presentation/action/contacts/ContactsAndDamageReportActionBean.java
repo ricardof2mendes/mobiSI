@@ -196,7 +196,7 @@ public class ContactsAndDamageReportActionBean extends BaseActionBean {
         carWSServiceStub._getServiceClient().addHeader(
                 AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
                         .getPassword()));
-        carWSServiceStub.reportNewIncident(aux, car.getLicensePlate(), assume, type, description);
+        carWSServiceStub.reportNewIncident(aux.getTimeInMillis(), car.getLicensePlate(), assume, type, description);
 
         getContext().getMessages().add(new LocalizableMessage("damage.report.save.success"));
         return new RedirectResolution(this.getClass()).flash(this);

@@ -71,8 +71,9 @@ public class EditAvanceBookingActionBean extends AdvanceBookingActionBean {
                         .getPassword()));
         trip = bookingWSServiceStub.getTripDetails(activityCode);
 
-        Calendar c = bookingWSServiceStub.getNextAdvanceBooking(activityCode);
-        extendBookingDate = c == null ? null : c.getTime();
+        Calendar c = Calendar.getInstance();
+        c.setTimeInMillis(bookingWSServiceStub.getNextAdvanceBooking(activityCode));
+        extendBookingDate = (c == null ? null : c.getTime());
 
         return new ForwardResolution("/WEB-INF/recent/editAdvanceBookingDetails.jsp");
     }
@@ -98,7 +99,7 @@ public class EditAvanceBookingActionBean extends AdvanceBookingActionBean {
                         .getPassword()));
         Calendar c = Calendar.getInstance();
         c.setTime(endDate);
-        bookingWSServiceStub.extendAdvanceBooking(activityCode, c);
+        bookingWSServiceStub.extendAdvanceBooking(activityCode, c.getTimeInMillis());
 
         Map<String, String> parameters = new HashMap<String, String>();
         parameters.put("activityCode", activityCode);

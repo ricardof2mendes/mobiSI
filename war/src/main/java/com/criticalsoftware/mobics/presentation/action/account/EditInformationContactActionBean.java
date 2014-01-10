@@ -113,7 +113,7 @@ public class EditInformationContactActionBean extends AskPinActionBean {
             locality = customer.getLocality();
             phoneNumber = customer.getPhoneNumber();
             taxNumber = customer.getTaxNumber();
-            zipCode1 = customer.getZipCode1().concat("-").concat(customer.getZipCode2());
+            zipCode1 = customer.getZipCode();
         }
 
         return new ForwardResolution("/WEB-INF/account/editInformationContact.jsp");
@@ -129,11 +129,7 @@ public class EditInformationContactActionBean extends AskPinActionBean {
                 AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
                         .getPassword()));
 
-        String zip = zipCode1.substring(0, zipCode1.indexOf('-'));
-        String code = zipCode1.substring(zipCode1.indexOf('-') + 1, zipCode1.length());
-
-        // TODO ver isto
-        customerWSServiceStub.updateCustomerDetails(address, locality, zip, code, phoneNumber, countryCode, fullName,
+        customerWSServiceStub.updateCustomerDetails(address, locality, zipCode1, phoneNumber, countryCode, fullName,
                 taxNumber, null, null);
 
         getContext().getMessages().add(new LocalizableMessage("account.information.edit.success"));
