@@ -685,14 +685,14 @@ function autocompleteZones() {
 	$.get(url, function(data, textStatus, jqXHR){
 		if (jqXHR.getResponseHeader('Stripes-Success') === 'OK') {
             	data = eval(data);
-            	if (data == null || data.length != 1) {
-            		$('#zone').html('');
+                $('#zone').html('');
+                if (data == null || data.length != 1) {
                     $('#zone').append('<option value="">' + ZONE_ALL_LABEL + '</option>');
                 }
                 if (data != null) {
                     $(data).each(function(e) {
-                        if (this.zone != null)
-                            $('#zone').append('<option value="' + this.code + '">' + this.zone + '</option>');
+                        if (this != null)
+                            $('#zone').append('<option value="' + this + '">' + this + '</option>');
                     });
                 }
         } else {
