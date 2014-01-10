@@ -70,32 +70,34 @@ Map.prototype = {
 			this.ganGanStyle.strokeColor = '#008be8';
 			this.ganGanStyle.fillOpacity = 0;
 			
-			var locationDefautlStyle = OpenLayers.Util.extend({}, OpenLayers.Feature.Vector.style['default']);
-			locationDefautlStyle.graphicOpacity = 1; 
-			locationDefautlStyle.graphicHeight = 20;
-			locationDefautlStyle.graphicWidth = 14;
+			this.locationDefautlStyle = OpenLayers.Util.extend({}, OpenLayers.Feature.Vector.style['default']);
+            this.locationDefautlStyle.graphicOpacity = 1;
+            this.locationDefautlStyle.graphicHeight = 20;
+            this.locationDefautlStyle.graphicWidth = 14;
+            this.locationDefautlStyle.graphicZIndex = 2;
 			
-			this.locationSelectStyle = OpenLayers.Util.extend({}, locationDefautlStyle);
+			this.locationSelectStyle = OpenLayers.Util.extend({}, this.locationDefautlStyle);
 			this.locationSelectStyle.graphicHeight = 30;
 			this.locationSelectStyle.graphicWidth = 22;
+            this.locationSelectStyle.graphicZIndex = 1;
 			
-			var carDefaultStyle = OpenLayers.Util.extend({}, locationDefautlStyle);
+			this.carDefaultStyle = OpenLayers.Util.extend({}, this.locationDefautlStyle);
 			this.carSelectStyle = OpenLayers.Util.extend({}, this.locationSelectStyle);
 			
 			if(this.retina) {
-				locationDefautlStyle.externalGraphic = '../img/map/location-user-unselected@2x.png';
-				carDefaultStyle.externalGraphic = '../img/map/location-car-unselected@2x.png';
+				this.locationDefautlStyle.externalGraphic = '../img/map/location-user-unselected@2x.png';
+                this.carDefaultStyle.externalGraphic = '../img/map/location-car-unselected@2x.png';
 				this.locationSelectStyle.externalGraphic = '../img/map/location-user-selected@2x.png';
 				this.carSelectStyle.externalGraphic = '../img/map/location-car-selected@2x.png';
 			} else {
-				locationDefautlStyle.externalGraphic = '../img/map/location-user-unselected.png';
-				carDefaultStyle.externalGraphic = '../img/map/location-car-unselected.png';
+				this.locationDefautlStyle.externalGraphic = '../img/map/location-user-unselected.png';
+				this.carDefaultStyle.externalGraphic = '../img/map/location-car-unselected.png';
 				this.locationSelectStyle.externalGraphic = '../img/map/location-user-selected.png';
 				this.carSelectStyle.externalGraphic = '../img/map/location-car-selected.png';
 			}
 			
-			this.carStyleMap = new OpenLayers.StyleMap({'default': carDefaultStyle, 'select': this.carSelectStyle});
-			this.locationStyleMap = new OpenLayers.StyleMap({'default': locationDefautlStyle, 'select': this.locationSelectStyle});
+			this.carStyleMap = new OpenLayers.StyleMap({'default':this.carDefaultStyle, 'select': this.carSelectStyle});
+			this.locationStyleMap = new OpenLayers.StyleMap({'default': this.locationDefautlStyle, 'select': this.locationSelectStyle});
 			
 		},
 		
@@ -370,7 +372,7 @@ Map.prototype = {
 			if(returnData.coordinate) {
 				// create the car vector
 				
-				var objectVector = new OpenLayers.Layer.Vector('objects', { style: this.carSelectStyle });
+				var objectVector = new OpenLayers.Layer.Vector('objects', { style: this.carSelectStyle, rendererOptions: {zIndexing: true} });
 				
 				// create point
 				var point = 
@@ -390,24 +392,24 @@ Map.prototype = {
 		processCars : function(returnData) {
 			if(returnData) {
 				
-				// create the car vector
-				var objectVector = new OpenLayers.Layer.Vector('objects', { styleMap: this.carStyleMap });
+				// init vars
+                var firstCar = null,
+                    that = this,
+				    objectVector = new OpenLayers.Layer.Vector('objects', { styleMap: this.carStyleMap, rendererOptions: {zIndexing: true} });
 				this.map.addLayer(objectVector);
 
-				var firstCar = null,
-					that = this;
-					$(returnData).each(function(){
-						var point = 
-							new OpenLayers.Geometry.Point(this.longitude, this.latitude).transform(that.mapDisplayProjection, that.map.getProjectionObject());
-						that.points.push(point);
-						// add feature
-						var feature = new OpenLayers.Feature.Vector(point, {car : this}, null);
-						objectVector.addFeatures(feature);
-						
-						if(firstCar === null) {
-							firstCar = feature;
-						}
-					});
+                $(returnData).each(function(){
+                    var point =
+                        new OpenLayers.Geometry.Point(this.longitude, this.latitude).transform(that.mapDisplayProjection, that.map.getProjectionObject());
+                    that.points.push(point);
+                    // add feature
+                    var feature = new OpenLayers.Feature.Vector(point, {car : this}, null);
+                    objectVector.addFeatures(feature);
+
+                    if(firstCar === null) {
+                        firstCar = feature;
+                    }
+                });
 
 		        var selectCtrl = new OpenLayers.Control.SelectFeature(objectVector, {
 		        	clickout : false,
@@ -446,7 +448,7 @@ Map.prototype = {
 				this.map.removeLayer(aux[0]);
 			}
 			// create the objects layer
-			var objectVector = new OpenLayers.Layer.Vector('objects', { styleMap: this.locationStyleMap});
+			var objectVector = new OpenLayers.Layer.Vector('objects', { styleMap: this.locationStyleMap, rendererOptions: {zIndexing: true}});
 			// add the new layer
 			this.map.addLayer(objectVector);
 			
