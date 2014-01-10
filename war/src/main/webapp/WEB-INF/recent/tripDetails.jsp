@@ -87,7 +87,7 @@
                         </li>
                         <li class="detail white">
                             <span><fmt:message key="trip.detail.bonus"/></span>
-                            <span><mobi:formatMobics value="${actionBean.trip.promotionBonus}" type="currencySymbol" /></span>
+                            <span><mobi:formatMobics value="${actionBean.trip.promotionBonusGeneratedWithTax}" type="currencySymbol" /></span>
                         </li>
                     </ul>
                 </nav>
