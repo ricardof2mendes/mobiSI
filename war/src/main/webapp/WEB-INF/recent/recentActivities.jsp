@@ -30,6 +30,9 @@
                                         <c:when test="${recent.activityType == 'INCIDENT' || recent.activityType == 'EVENT'}">
                                             <c:set var="eventName" value="incidentDetails"/>
                                         </c:when>
+                                        <c:when test="${recent.activityType == 'CREDIT'}">
+                                            <c:set var="eventName" value="creditDetails"/>
+                                        </c:when>
                                         <c:otherwise>
                                             <c:set var="eventName" value="interestDetails"/>
                                             <c:set var="display" value="display:none"/>

@@ -776,6 +776,10 @@ nav.twoColumnList ul li {
     border-bottom: 1px solid #E5E5E5;
 }
 
+nav.twoColumnList ul li.noLink {
+    background: #FFF !important;
+}
+
 nav.twoColumnList ul li a {
     display: block;
     padding: 5px 0 0 10px;
@@ -823,22 +827,32 @@ nav.twoColumnList ul li.transactions {
 
 }
 
-nav.twoColumnList ul li.transactions div {
+nav.twoColumnList ul li.transactions > div{
+    width: 100%;
+    padding-left: 10px;
+}
+
+nav.twoColumnList ul li.transactions div div,
+nav.twoColumnList ul li.transactions a div {
     float: left;
     width: 50%;
     font-weight: bold;
     color: #333;
 }
 
-nav.twoColumnList ul li.transactions div:nth-child(4),
-nav.twoColumnList ul li.transactions div:nth-child(5) {
+nav.twoColumnList ul li.transactions div div:nth-child(4),
+nav.twoColumnList ul li.transactions div div:nth-child(5),
+nav.twoColumnList ul li.transactions a div:nth-child(4),
+nav.twoColumnList ul li.transactions a div:nth-child(5) {
     font-weight: normal;
     color: #999;
     font-size: 80%;
 }
 
-nav.twoColumnList ul li.transactions div:nth-child(2),
-nav.twoColumnList ul li.transactions div:nth-child(5){
+nav.twoColumnList ul li.transactions div div:nth-child(2),
+nav.twoColumnList ul li.transactions div div:nth-child(5),
+nav.twoColumnList ul li.transactions a div:nth-child(2),
+nav.twoColumnList ul li.transactions a div:nth-child(5){
     text-align: right;
     padding-right: 25px;
 }

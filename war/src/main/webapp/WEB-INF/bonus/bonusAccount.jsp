@@ -110,38 +110,70 @@
                             <ul>
                                 <c:forEach items="${actionBean.detailedList}" var="detail">
                                     <c:set var="bean" value="com.criticalsoftware.mobics.presentation.action.recent.RecentActivitiesActionBean"/>
+                                    <c:set var="activityCode" value="${pageScope.detail.originNumber}"/>
                                     <c:set var="target" value="_self"/>
+
                                     <c:choose>
                                         <c:when test="${pageScope.detail.origin == 'BOOKING'}">
                                             <c:set var="event" value="tripDetails"/>
                                         </c:when>
-                                        <c:when test="${pageScope.detail.origin == 'INVOICE'}">
+                                        <c:when test="${pageScope.detail.origin == 'CREDIT'}">
                                             <c:set var="bean" value="com.criticalsoftware.mobics.presentation.action.bonus.BonusAccountActionBean"/>
-                                            <c:set var="event" value="invoiceDetails"/>
-                                            <c:set var="target" value="_blank"/>
+                                            <c:set var="event" value="creditDetails"/>
                                         </c:when>
                                         <c:when test="${pageScope.detail.origin == 'INCIDENT'}">
                                             <c:set var="event" value="incidentDetails"/>
                                         </c:when>
+                                        <c:when test="${pageScope.detail.origin == 'ADDITIONAL_SERVICE'}">
+                                            <c:set var="event" value="noEvent"/>
+                                        </c:when>
                                     </c:choose>
-                                    <li class="transactions">
-                                        <stripes:link target="${pageScope.target}" beanclass="${pageScope.bean}" event="${pageScope.event}" addSourcePage="true">
-                                            <stripes:param name="activityCode" value="${pageScope.detail.originNumber}"/>
-                                            <div>
-                                                <fmt:message key="bonus.account.transaction.${pageScope.detail.origin}"/>
-                                            </div>
-                                            <div>
-                                                <mobi:formatMobics value="${pageScope.detail.amount}" type="currencySymbol"/>
-                                            </div>
-                                            <div class="clear"></div>
-                                            <div>
-                                                <mobi:formatMobics value="${pageScope.detail.date}" type="timeWeek"/>
-                                            </div>
-                                            <div>
-                                                <mobi:formatMobics value="${pageScope.detail.balance}" type="currencySymbol"/>
-                                            </div>
-                                            <div class="clear"></div>
-                                        </stripes:link>
+
+
+                                        <c:choose>
+                                            <c:when test="${pageScope.event == 'noEvent'}">
+                                                <li class="transactions noLink">
+                                                    <div style="display: inline-block;">
+                                                        <div>
+                                                            <fmt:message key="bonus.account.transaction.${pageScope.detail.origin}"/>
+                                                        </div>
+                                                        <div>
+                                                            <mobi:formatMobics value="${pageScope.detail.amount}" type="currencySymbol"/>
+                                                        </div>
+                                                        <div class="clear"></div>
+                                                        <div>
+                                                            <mobi:formatMobics value="${pageScope.detail.date}" type="timeWeek"/>
+                                                        </div>
+                                                        <div>
+                                                            <mobi:formatMobics value="${pageScope.detail.balance}" type="currencySymbol"/>
+                                                        </div>
+                                                        <div class="clear"></div>
+                                                    </div>
+                                                    <div class="clear"></div>
+                                                </li>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <li class="transactions">
+                                                    <stripes:link target="${pageScope.target}" beanclass="${pageScope.bean}" event="${pageScope.event}" addSourcePage="true" data="${pageScope.detail.origin}">
+                                                        <stripes:param name="activityCode" value="${pageScope.activityCode}"/>
+                                                        <div>
+                                                            <fmt:message key="bonus.account.transaction.${pageScope.detail.origin}"/>
+                                                        </div>
+                                                        <div>
+                                                            <mobi:formatMobics value="${pageScope.detail.amount}" type="currencySymbol"/>
+                                                        </div>
+                                                        <div class="clear"></div>
+                                                        <div>
+                                                            <mobi:formatMobics value="${pageScope.detail.date}" type="timeWeek"/>
+                                                        </div>
+                                                        <div>
+                                                            <mobi:formatMobics value="${pageScope.detail.balance}" type="currencySymbol"/>
+                                                        </div>
+                                                        <div class="clear"></div>
+                                                    </stripes:link>
+                                                </li>
+                                            </c:otherwise>
+                                        </c:choose>
                                     </li>
                                 </c:forEach>
                             </ul>

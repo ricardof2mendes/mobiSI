@@ -15,6 +15,7 @@ package com.criticalsoftware.mobics.presentation.action.recent;
 
 import com.criticalsoftware.mobics.booking.BookingInterestDTO;
 import com.criticalsoftware.mobics.booking.TripDetailsDTO;
+import com.criticalsoftware.mobics.customer.CreditPurchaseDetailsDTO;
 import com.criticalsoftware.mobics.customer.CustomerActivityEnum;
 import com.criticalsoftware.mobics.customer.CustomerActivityListDTO;
 import com.criticalsoftware.mobics.customer.IncidentForCustomerDTO;
@@ -26,6 +27,7 @@ import com.criticalsoftware.mobics.presentation.util.BookingState;
 import com.criticalsoftware.mobics.presentation.util.Configuration;
 import com.criticalsoftware.mobics.presentation.util.GeolocationUtil;
 import com.criticalsoftware.mobics.proxy.booking.*;
+import com.criticalsoftware.mobics.proxy.customer.CreditPurchaseExceptionException;
 import com.criticalsoftware.mobics.proxy.customer.CustomerWSServiceStub;
 import com.criticalsoftware.mobics.proxy.customer.EventNotFoundExceptionException;
 import net.sourceforge.stripes.action.*;
@@ -59,6 +61,8 @@ public class RecentActivitiesActionBean extends BaseActionBean {
     private BookingInterestDTO booking;
 
     private IncidentForCustomerDTO incident;
+
+    private CreditPurchaseDetailsDTO credit;
 
     @Validate(
             required = true,
@@ -296,6 +300,29 @@ public class RecentActivitiesActionBean extends BaseActionBean {
     }
 
     /**
+     * Credit details
+     *
+     * @return
+     * @throws RemoteException
+     * @throws UnsupportedEncodingException
+     * @throws com.criticalsoftware.mobics.proxy.customer.CustomerNotFoundExceptionException
+     * @throws CreditPurchaseExceptionException
+     */
+    public Resolution creditDetails() throws RemoteException, UnsupportedEncodingException,
+                                             com.criticalsoftware.mobics.proxy.customer.CustomerNotFoundExceptionException,
+                                             CreditPurchaseExceptionException {
+        CustomerWSServiceStub customerWSServiceStub = new CustomerWSServiceStub(
+                Configuration.INSTANCE.getCustomerEndpoint());
+        customerWSServiceStub._getServiceClient().addHeader(
+                AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
+                        .getPassword()));
+
+       credit = customerWSServiceStub.getCreditDetailsByOrderReference(activityCode);
+
+        return new ForwardResolution("/WEB-INF/recent/creditDetails.jsp");
+    }
+
+    /**
      * Cancel booking interest
      *
      * @return a page resolution
@@ -411,5 +438,9 @@ public class RecentActivitiesActionBean extends BaseActionBean {
 
     public void setActivityType(String activityType) {
         this.activityType = activityType;
+    }
+
+    public CreditPurchaseDetailsDTO getCredit() {
+        return credit;
     }
 }

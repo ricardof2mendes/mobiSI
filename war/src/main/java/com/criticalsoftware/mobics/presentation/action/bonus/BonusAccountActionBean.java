@@ -15,6 +15,7 @@ package com.criticalsoftware.mobics.presentation.action.bonus;
 import com.criticalsoftware.mobics.billing.BillingDetailedListDTO;
 import com.criticalsoftware.mobics.billing.BonusAccountBalanceListDTO;
 import com.criticalsoftware.mobics.billing.BonusAccountStatementListDTO;
+import com.criticalsoftware.mobics.customer.CreditPurchaseDetailsDTO;
 import com.criticalsoftware.mobics.presentation.action.BaseActionBean;
 import com.criticalsoftware.mobics.presentation.security.AuthenticationUtil;
 import com.criticalsoftware.mobics.presentation.security.MobiCSSecure;
@@ -24,9 +25,12 @@ import com.criticalsoftware.mobics.proxy.billing.BillingWSServiceStub;
 import com.criticalsoftware.mobics.proxy.billing.CustomerNotFoundExceptionException;
 import com.criticalsoftware.mobics.proxy.billing.InvoiceNotFoundExceptionException;
 import com.criticalsoftware.mobics.proxy.billing.InvoicePdfNotFoundExceptionException;
+import com.criticalsoftware.mobics.proxy.customer.CreditPurchaseExceptionException;
+import com.criticalsoftware.mobics.proxy.customer.CustomerWSServiceStub;
 import com.criticalsoftware.www.mobios.services.accounting.dto.FileAttachmentDTO;
 import net.sourceforge.stripes.action.*;
 import net.sourceforge.stripes.validation.Validate;
+import org.apache.axis2.AxisFault;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,6 +58,8 @@ public class BonusAccountActionBean extends BaseActionBean {
 
     @Validate(required = true, on = "invoiceDetails")
     private String activityCode;
+
+    private CreditPurchaseDetailsDTO credit;
 
     /**
      * Account page
@@ -93,20 +99,18 @@ public class BonusAccountActionBean extends BaseActionBean {
     }
 
     @DontValidate
-    public Resolution invoiceDetails() {
-        StreamingResolution resolution = null;
+    public Resolution creditDetails()
+    throws RemoteException, UnsupportedEncodingException, CreditPurchaseExceptionException,
+    com.criticalsoftware.mobics.proxy.customer.CustomerNotFoundExceptionException {
+        CustomerWSServiceStub customerWSServiceStub = new CustomerWSServiceStub(
+                Configuration.INSTANCE.getCustomerEndpoint());
+        customerWSServiceStub._getServiceClient().addHeader(
+                AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
+                        .getPassword()));
 
-        try {
-            BillingWSServiceStub stub = new BillingWSServiceStub(Configuration.INSTANCE.getBillingEndpoint());
-            stub._getServiceClient().addHeader(
-                    AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser().getPassword()));
-            FileAttachmentDTO file = stub.getDetailedBillingDocument(activityCode);
-            resolution = new StreamingResolution(file.getMimeType(), file.getFileContents().getInputStream());
-        } catch (Exception e) {
-            LOGGER.error("Error getting invoice details", e);
-        }
+        credit = customerWSServiceStub.getCreditDetailsByCdrCode(activityCode);
 
-        return resolution;
+        return new ForwardResolution("/WEB-INF/recent/creditDetails.jsp");
     }
 
     public String getOrderBy() {
@@ -127,5 +131,9 @@ public class BonusAccountActionBean extends BaseActionBean {
 
     public void setActivityCode(String activityCode) {
         this.activityCode = activityCode;
+    }
+
+    public CreditPurchaseDetailsDTO getCredit() {
+        return credit;
     }
 }
