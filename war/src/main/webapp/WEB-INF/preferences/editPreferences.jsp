@@ -49,7 +49,9 @@
 							</span>
 							<span class="customComboBox">
 								<stripes:select id="sort0" name="columnNames[0]">
-									<stripes:options-enumeration enum="com.criticalsoftware.mobics.presentation.util.OrderBy" />
+                                    <stripes:option value="CAR_DISTANCE"><fmt:message key="OrderBy.CAR_DISTANCE"/></stripes:option>
+                                    <stripes:option value="CAR_FARE"><fmt:message key="OrderBy.CAR_FARE"/></stripes:option>
+                                    <stripes:option value="CAR_CATEGORY"><fmt:message key="OrderBy.CAR_CATEGORY"/></stripes:option>
 								</stripes:select>
 							</span>
 						</li>
@@ -59,7 +61,9 @@
 							</span>
 							<span class="customComboBox">
 								<stripes:select id="sort1" name="columnNames[1]">
-									<stripes:options-enumeration enum="com.criticalsoftware.mobics.presentation.util.OrderBy" />
+                                    <stripes:option value="CAR_DISTANCE"><fmt:message key="OrderBy.CAR_DISTANCE"/></stripes:option>
+                                    <stripes:option value="CAR_FARE"><fmt:message key="OrderBy.CAR_FARE"/></stripes:option>
+                                    <stripes:option value="CAR_CATEGORY"><fmt:message key="OrderBy.CAR_CATEGORY"/></stripes:option>
 								</stripes:select>
 							</span>
 						</li>
@@ -69,7 +73,9 @@
 							</span>
 							<span class="customComboBox">
 								<stripes:select id="sort2" name="columnNames[2]">
-									<stripes:options-enumeration enum="com.criticalsoftware.mobics.presentation.util.OrderBy"/>
+                                    <stripes:option value="CAR_DISTANCE"><fmt:message key="OrderBy.CAR_DISTANCE"/></stripes:option>
+                                    <stripes:option value="CAR_FARE"><fmt:message key="OrderBy.CAR_FARE"/></stripes:option>
+                                    <stripes:option value="CAR_CATEGORY"><fmt:message key="OrderBy.CAR_CATEGORY"/></stripes:option>
 								</stripes:select>	
 							</span>
 						</li>
