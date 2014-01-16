@@ -7,7 +7,7 @@
 	<jsp:include page="/WEB-INF/common/message_error.jsp"/>
 
 	<stripes:form beanclass="com.criticalsoftware.mobics.presentation.action.booking.AdvanceBookingActionBean" method="get">
-		<article>
+		<article id="advanceSearch">
 			<section>
 				<h2><fmt:message key="book.advance.search"/></h2>
 				<nav class="simpleList">
@@ -56,6 +56,9 @@
 				</stripes:submit>
 			</section>
 		</article>
-	</stripes:form>  
+    </stripes:form>
+    
+    <jsp:include page="/WEB-INF/common/nextAvailableCarAlert.jsp"/>
+
 </t:main>
 

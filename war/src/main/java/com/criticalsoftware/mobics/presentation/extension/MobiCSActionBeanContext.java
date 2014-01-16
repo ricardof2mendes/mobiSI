@@ -8,7 +8,7 @@ package com.criticalsoftware.mobics.presentation.extension;
 
 import net.sourceforge.stripes.action.ActionBeanContext;
 
-import com.criticalsoftware.mobics.presentation.security.CarClubSimple;
+import com.criticalsoftware.mobics.presentation.util.CarClubSimple;
 import com.criticalsoftware.mobics.presentation.security.User;
 
 /**

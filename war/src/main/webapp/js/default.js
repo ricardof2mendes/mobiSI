@@ -349,6 +349,18 @@ $(document).ready(function() {
  		$('body').removeClass('confirmation');
  		$('body').off('scroll');
  	});
+
+    if($('#advanceSearch').length > 0) {
+        var showNext = location.search.split('searchCarsAdvance=')[1]
+        if(showNext !== undefined) {
+            $('body').addClass('confirmation');
+
+            $('body').on('touchmove', 'body', function(e){
+                e.preventDefault();
+            });
+        }
+    }
+
  	
  	/* Damage Report problem license plate search */
  	$('#licenseReport').on('blur', function(){

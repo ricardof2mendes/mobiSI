@@ -10,7 +10,7 @@
  * Last changed on: $Date: 2011/01/24 14:32:30 $
  * Last changed by: $Author: pssilva $
  */
-package com.criticalsoftware.mobics.presentation.security;
+package com.criticalsoftware.mobics.presentation.util;
 
 /**
  * @author : hm-ferreira

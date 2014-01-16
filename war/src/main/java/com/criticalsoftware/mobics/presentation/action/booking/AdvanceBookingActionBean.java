@@ -16,6 +16,7 @@ import java.io.UnsupportedEncodingException;
 import java.rmi.RemoteException;
 import java.util.*;
 
+import com.criticalsoftware.mobics.fleet.NextAvailableCarDTO;
 import com.criticalsoftware.mobics.proxy.booking.*;
 import com.criticalsoftware.mobics.proxy.fleet.*;
 import com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException;
@@ -54,7 +55,7 @@ import com.criticalsoftware.mobics.proxy.carclub.LocationCodeNotFoundExceptionEx
 
 /**
  * Booking action bean
- * 
+ *
  * @author ltiago
  * @version $Revision: $
  */
@@ -83,9 +84,11 @@ public class AdvanceBookingActionBean extends BookingActionBean {
 
     private CarDTO[] cars;
 
+    private NextAvailableCarDTO next;
+
     /**
      * Show the advance book search screen
-     * 
+     *
      * @return resolution
      */
     @DontValidate
@@ -108,7 +111,7 @@ public class AdvanceBookingActionBean extends BookingActionBean {
     // --------------------------------------------------
     /**
      * Search cars for advance booking
-     * 
+     *
      * @return the car list page
      * @throws RemoteException
      * @throws CustomerNotFoundExceptionException
@@ -117,9 +120,11 @@ public class AdvanceBookingActionBean extends BookingActionBean {
      * @throws CarClubCodeNotFoundExceptionException
      */
     public Resolution searchCarsAdvance() throws RemoteException, CustomerNotFoundExceptionException,
-                                                 IllegalDateExceptionException, CarLicensePlateNotFoundExceptionException,
-            CarClubCodeNotFoundExceptionException, UnsupportedEncodingException {
-
+                                                 IllegalDateExceptionException,
+                                                 CarLicensePlateNotFoundExceptionException,
+                                                 CarClubCodeNotFoundExceptionException, UnsupportedEncodingException,
+                                                 com.criticalsoftware.mobics.proxy.fleet.LocationCodeNotFoundExceptionException {
+        ForwardResolution resolution = new ForwardResolution("/WEB-INF/book/carListAdvance.jsp");
         Calendar start = Calendar.getInstance(), end = Calendar.getInstance();
         start.setTime(startDate);
         end.setTime(endDate);
@@ -130,12 +135,42 @@ public class AdvanceBookingActionBean extends BookingActionBean {
         cars = stub.getCarsForAdvanceBooking(
                 getContext().getUser().getCarClub().getCarClubCode(), zone, location, start.getTimeInMillis(), end.getTimeInMillis());
 
-        return new ForwardResolution("/WEB-INF/book/carListAdvance.jsp");
+        if(cars == null || cars.length == 0) {
+            next = stub.getNextAvailableCarForAdvanceBooking(
+                    getContext().getUser().getCarClub().getCarClubCode(), location, start.getTimeInMillis(),
+                    end.getTimeInMillis());
+            if(next != null) {
+                resolution = new ForwardResolution("/WEB-INF/book/searchAdvance.jsp").addParameter("next", true);
+            }
+        }
+
+        return resolution;
     }
+
+    public Resolution nextAvailableCar() throws RemoteException, UnsupportedEncodingException,
+                                            IllegalDateExceptionException,
+                                        com.criticalsoftware.mobics.proxy.fleet.LocationCodeNotFoundExceptionException,
+                                            CarLicensePlateNotFoundExceptionException,
+                                            CarClubCodeNotFoundExceptionException, CustomerNotFoundExceptionException {
+
+        Calendar start = Calendar.getInstance(), end = Calendar.getInstance();
+        start.setTime(startDate);
+        end.setTime(endDate);
+        FleetWSServiceStub stub = new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint());
+        stub._getServiceClient().addHeader(
+                AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext()
+                        .getUser().getPassword()));
+        next = stub.getNextAvailableCarForAdvanceBooking(
+                getContext().getUser().getCarClub().getCarClubCode(), location, start.getTimeInMillis(),
+                end.getTimeInMillis());
+
+        return new ForwardResolution("/WEB-INF/book/nextAvailableCar.jsp");
+    }
+
 
     /**
      * Search Result List
-     * 
+     *
      * @return the page resolution
      * @throws RemoteException
      * @throws com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException
@@ -151,7 +186,7 @@ public class AdvanceBookingActionBean extends BookingActionBean {
 
     /**
      * Show PIN resolution
-     * 
+     *
      * @return the pin page resolution
      */
     public Resolution showPin() {
@@ -160,7 +195,7 @@ public class AdvanceBookingActionBean extends BookingActionBean {
 
     /**
      * Booking
-     * 
+     *
      * @return
      * @throws RemoteException
      * @throws UnsupportedEncodingException
@@ -171,7 +206,7 @@ public class AdvanceBookingActionBean extends BookingActionBean {
      * @throws IllegalDateExceptionException
      * @throws UnauthorizedCustomerExceptionException
      * @throws CarLicensePlateNotFoundExceptionException
-     * @throws InvalidCarBookingExceptionException 
+     * @throws InvalidCarBookingExceptionException
      */
     public Resolution book() throws RemoteException, UnsupportedEncodingException,
                                     InvalidCustomerPinExceptionException, com.criticalsoftware.mobics.proxy.booking.CarNotFoundExceptionException,
@@ -201,7 +236,7 @@ public class AdvanceBookingActionBean extends BookingActionBean {
     // --------------------------------------------------
     /**
      * Car details
-     * 
+     *
      * @return the car detail page
      */
     public Resolution carDetails() {
@@ -210,7 +245,7 @@ public class AdvanceBookingActionBean extends BookingActionBean {
 
     /**
      * Park location
-     * 
+     *
      * @return the map page
      */
     public Resolution parkLocation() {
@@ -219,7 +254,7 @@ public class AdvanceBookingActionBean extends BookingActionBean {
 
     /**
      * Data for build maps
-     * 
+     *
      * @return a json object containing car data for display in map
      * @throws RemoteException a jax-b webservice exception
      */
@@ -254,7 +289,7 @@ public class AdvanceBookingActionBean extends BookingActionBean {
 
     /**
      * Get locations
-     * 
+     *
      * @return location array
      * @throws RemoteException
      */
@@ -274,7 +309,7 @@ public class AdvanceBookingActionBean extends BookingActionBean {
 
     /**
      * Get zones by location code
-     * 
+     *
      * @return
      * @throws RemoteException
      */
@@ -371,4 +406,11 @@ public class AdvanceBookingActionBean extends BookingActionBean {
         this.cars = cars;
     }
 
+    /**
+     * Next available car
+     * @return next car
+     */
+    public NextAvailableCarDTO getNext() {
+        return next;
+    }
 }

@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
 import com.criticalsoftware.mobics.carclub.CarClubSimpleDTO;
 import com.criticalsoftware.mobics.fleet.CarClassDTO;
 import com.criticalsoftware.mobics.presentation.extension.MobiCSActionBeanContext;
-import com.criticalsoftware.mobics.presentation.security.CarClubSimple;
+import com.criticalsoftware.mobics.presentation.util.CarClubSimple;
 import com.criticalsoftware.mobics.presentation.util.Configuration;
 import com.criticalsoftware.mobics.proxy.carclub.CarClubCodeNotFoundExceptionException;
 import com.criticalsoftware.mobics.proxy.carclub.CarClubWSService;
