@@ -1017,6 +1017,7 @@ nav.panel ul li.detail span:nth-child(2) {
 	width: 60%;
 	vertical-align: top;
 }
+
 nav.panel ul li.detail div {
     padding-left: 10px;
     font-weight: bold;
@@ -1390,6 +1391,10 @@ input.autocomplete {
 	padding: 0 10px;
 	text-shadow: 0 1px 1px white;
 	font-size: 90%;
+}
+
+.noMarginBottom {
+    margin: 0px !important;
 }
 
 /* Errors */

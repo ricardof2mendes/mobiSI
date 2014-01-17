@@ -26,33 +26,52 @@
 				</ul>
 			</nav>
 		</section>
-		
-		<section>
-			<h2><fmt:message key="trip.detail.details"/></h2>
-			<nav class="panel">
-				<ul>
-					<li class="detail white">
-						<span><fmt:message key="trip.detail.total.cost"/></span>
-						<span>
-							<mobi:formatMobics value="${actionBean.trip.totalCostWithTax}" type="currencySymbol" />
-						</span>
-					</li>
-				</ul>
-			</nav>
-		</section>
 
-        <section>
-            <nav class="panel">
-                <ul>
-                    <li class="detail white">
-                        <span><fmt:message key="trip.detail.trip.cost"/></span>
-						<span>
-							<mobi:formatMobics value="${actionBean.trip.tripCostWithTax}" type="currencySymbol" />
-						</span>
-                    </li>
-                </ul>
-            </nav>
-        </section>
+        <c:choose>
+            <c:when test="${actionBean.trip.costCalculationSuccess}">
+                <section>
+                    <h2><fmt:message key="trip.detail.details"/></h2>
+                    <nav class="panel">
+                        <ul>
+                            <li class="detail white">
+                                <span><fmt:message key="trip.detail.total.cost"/></span>
+                                <span>
+                                    <mobi:formatMobics value="${actionBean.trip.totalCostWithTax}" type="currencySymbol" />
+                                    <c:if test="${actionBean.trip.paidWithBonus}"><sup>*</sup></c:if>
+                                </span>
+                            </li>
+                        </ul>
+                    </nav>
+                    <c:if test="${actionBean.trip.paidWithBonus}">
+                        <div class="warningMessage">
+                            <fmt:message key="trip.detail.payed.with.bonus"/>
+                        </div>
+                    </c:if>
+                </section>
+
+                <section>
+                    <nav class="panel">
+                        <ul>
+                            <li class="detail white">
+                                <span><fmt:message key="trip.detail.trip.cost"/></span>
+                                <span>
+                                    <mobi:formatMobics value="${actionBean.trip.tripCostWithTax}" type="currencySymbol" />
+                                </span>
+                            </li>
+                        </ul>
+                    </nav>
+                </section>
+            </c:when>
+            <c:otherwise>
+                <section>
+                    <h2><fmt:message key="trip.detail.details"/></h2>
+                    <div class="warningMessage">
+                        <fmt:message key="trip.detail.cost.calculation.unsuccess"/>
+                    </div>
+                </section>
+            </c:otherwise>
+        </c:choose>
+
 
         <c:if test="${!empty actionBean.trip.addonCode}">
             <section>
@@ -198,9 +217,7 @@
                           <stripes:param name="licensePlate" value="${actionBean.trip.carLicensePlate}"/>
 
                           <span><fmt:message key="trip.detail.license.plate"/></span>
-                          <span>
-                            ${actionBean.trip.carLicensePlate}
-                          </span>
+                          <span>${actionBean.trip.carLicensePlate}</span>
                         </stripes:link>
 					</li>
 				</ul>

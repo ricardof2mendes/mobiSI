@@ -28,27 +28,43 @@
 						</ul>
 					</nav>
 				</section>
-				
-				<section>
-					<h2><fmt:message key="trip.detail.cost"/></h2>
-					<nav class="panel">
-						<ul>
-							<li class="detail white">
-								<span><fmt:message key="trip.detail.total.cost"/></span>
-								<span>
-									<mobi:formatMobics value="${actionBean.last.totalCostWithTax}" type="currencySymbol" />
-								</span>
-							</li>
-                            <li class="detail white">
-								<span><fmt:message key="trip.detail.trip.cost"/></span>
-								<span>
-									<mobi:formatMobics value="${actionBean.last.tripCostWithTax}" type="currencySymbol" />
-								</span>
-							</li>
-						</ul>
-					</nav>
-				</section>
-				
+
+                <section>
+                    <h2><fmt:message key="trip.detail.cost"/></h2>
+                    <c:choose>
+                        <c:when test="${actionBean.last.costCalculationSuccess}">
+                                <nav class="panel">
+                                    <ul>
+                                        <li class="detail white">
+                                            <span><fmt:message key="trip.detail.total.cost"/></span>
+                                    <span>
+                                        <mobi:formatMobics value="${actionBean.last.totalCostWithTax}" type="currencySymbol" />
+                                        <c:if test="${actionBean.last.paidWithBonus}"><sup>*</sup></c:if>
+                                    </span>
+
+                                        </li>
+                                        <li class="detail white">
+                                            <span><fmt:message key="trip.detail.trip.cost"/></span>
+                                    <span>
+                                        <mobi:formatMobics value="${actionBean.last.tripCostWithTax}" type="currencySymbol" />
+                                    </span>
+                                        </li>
+                                    </ul>
+                                </nav>
+                                <c:if test="${actionBean.last.paidWithBonus}">
+                                    <div class="warningMessage noMarginBottom">
+                                        <fmt:message key="trip.detail.payed.with.bonus"/>
+                                    </div>
+                                </c:if>
+                        </c:when>
+                        <c:otherwise>
+                            <div class="warningMessage">
+                                <fmt:message key="trip.detail.cost.calculation.unsuccess"/>
+                            </div>
+                        </c:otherwise>
+                    </c:choose>
+                </section>
+
 				<section>
                     <h2><fmt:message key="trip.detail.details"/></h2>
 					<nav class="panel">
