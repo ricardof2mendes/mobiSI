@@ -33,8 +33,8 @@
 		</section>
 	</c:when>
 	<c:otherwise>
-		<section id="noresultsdamage">
-			<label><fmt:message key="damage.report.no.results.found"/></label>
+		<section>
+            <div class="warningMessage"><fmt:message key="damage.report.no.results.found"/></div>
 		</section>
 	</c:otherwise>
 </c:choose>
