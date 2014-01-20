@@ -124,7 +124,7 @@
                                         <c:when test="${pageScope.detail.origin == 'INCIDENT'}">
                                             <c:set var="event" value="incidentDetails"/>
                                         </c:when>
-                                        <c:when test="${pageScope.detail.origin == 'ADDITIONAL_SERVICE'}">
+                                        <c:when test="${pageScope.detail.origin == 'ADDITIONAL_SERVICE' || pageScope.detail.origin == 'CANCELLED' || pageScope.detail.origin == 'EXPIRED' || pageScope.detail.origin == 'BONUS_ADJUST'}">
                                             <c:set var="event" value="noEvent"/>
                                         </c:when>
                                     </c:choose>
