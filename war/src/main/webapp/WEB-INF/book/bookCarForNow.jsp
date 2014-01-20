@@ -50,7 +50,9 @@
 									<c:forEach begin="5" end="25" var="index">
 										<stripes:option value="${index}" >
 											<fmt:message key="book.now.search.price.label">
-												<fmt:param value="${index}"/>
+												<fmt:param>
+                                                    <mobi:formatMobics value="${index}" type="currencyHour"/>
+                                                </fmt:param>
 											</fmt:message>
 										</stripes:option>
 									</c:forEach>
@@ -65,16 +67,16 @@
 										<fmt:message key="book.now.search.distance.any"/>
 									</stripes:option>
 									<stripes:option value="500" >
-										<fmt:message key="book.now.search.distance.label.meters"><fmt:param value="500"/></fmt:message>
+										<fmt:message key="book.now.search.distance.label"><fmt:param><mobi:formatMobics value="500" type="distance"/></fmt:param></fmt:message>
 									</stripes:option>
 									<stripes:option value="1000" >
-										<fmt:message key="book.now.search.distance.label"><fmt:param value="1"/></fmt:message>
+										<fmt:message key="book.now.search.distance.label"><fmt:param><mobi:formatMobics value="1000" type="distance"/></fmt:param></fmt:message>
 									</stripes:option>
 									<stripes:option value="2000" >
-										<fmt:message key="book.now.search.distance.label"><fmt:param value="2"/></fmt:message>
+										<fmt:message key="book.now.search.distance.label"><fmt:param><mobi:formatMobics value="2000" type="distance"/></fmt:param></fmt:message>
 									</stripes:option>
 									<stripes:option value="3000" >
-										<fmt:message key="book.now.search.distance.label"><fmt:param value="3"/></fmt:message>
+										<fmt:message key="book.now.search.distance.label"><fmt:param><mobi:formatMobics value="3000" type="distance"/></fmt:param></fmt:message>
 									</stripes:option>
 								</stripes:select>
 							</span>

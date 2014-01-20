@@ -10,6 +10,7 @@ import java.io.UnsupportedEncodingException;
 import java.rmi.RemoteException;
 
 import com.criticalsoftware.mobics.presentation.util.CarClubSimple;
+import com.criticalsoftware.www.mobios.country.configuration.Patterns_type0;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.DontValidate;
 import net.sourceforge.stripes.action.ForwardResolution;
@@ -82,6 +83,14 @@ public class LoginActionBean extends BaseActionBean {
                         carClubDTO.getCarClubContactPhone(), carClubDTO.getCarClubContactEmail()));
                 this.getContext().setUser(
                         new User(username, password, carClubDTO, customerWSServiceStub.getCustomerPreferences()));
+
+                Patterns_type0 patterns = carClubWSServiceStub.getCountryConfigurationByCarClubCode(
+                        carClubDTO.getCarClubCode()).getPatterns();
+
+                Configuration config = (Configuration) this.getContext().getServletContext().getAttribute("configuration");
+                config.setCarClubConfiguration(patterns);
+                this.getContext().getServletContext().setAttribute("carClubConfiguration", config.getCarClubConfiguration());
+
                 this.getContext().setRetina(retina);
             } else {
                 this.getContext().getValidationErrors().addGlobalError(new LocalizableError("login.carclub.error"));

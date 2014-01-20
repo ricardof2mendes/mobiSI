@@ -15,6 +15,7 @@ package com.criticalsoftware.mobics.format;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspTagException;
@@ -50,9 +51,10 @@ public class FormatMobics extends BodyTagSupport {
     }
 
     public int doEndTag() throws JspException {
-        String formatted = null;
-
-        if (value == null || value.equals("") || type == null || type.equals("")) {
+        String formatted;
+        Map<String, String> patterns = (Map<String, String>) pageContext.getServletContext().getAttribute(
+                "carClubConfiguration");
+        if (value == null || value.equals("") || type == null || type.equals("") || patterns == null) {
             LOGGER.warn("One or more required fields are not present");
             return EVAL_PAGE;
         }
@@ -83,7 +85,7 @@ public class FormatMobics extends BodyTagSupport {
         }
 
         if (locale != null) {
-            formatted = FormatUtils.format(type, value, locale);
+            formatted = FormatUtils.format(type, value, locale, patterns);
             if(formatted == null) {
                 return EVAL_PAGE;
             }            

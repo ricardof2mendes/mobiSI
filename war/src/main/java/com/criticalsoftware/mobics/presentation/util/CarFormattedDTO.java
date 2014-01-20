@@ -50,9 +50,9 @@ public class CarFormattedDTO extends CarDTO {
         super.setPromotions(carDTO.getPromotions());
 
         this.formattedPrice = carDTO.getPriceInUse() != null ? FormatUtils.format(FormatUtils.CURRENCY_HOUR,
-                carDTO.getPriceInUse(), locale) : "";
+                carDTO.getPriceInUse(), locale, Configuration.INSTANCE.getCarClubConfiguration()) : "";
         this.formattedDistance = carDTO.getDistance() != null ? FormatUtils.format(FormatUtils.DISTANCE, carDTO
-                .getDistance(), locale) : "";
+                .getDistance(), locale, Configuration.INSTANCE.getCarClubConfiguration()) : "";
         this.formattedFuel = ResourceBundle.getBundle("StripesResources", locale).getString(
                 "FuelType." + carDTO.getFuelType().getName());
     }

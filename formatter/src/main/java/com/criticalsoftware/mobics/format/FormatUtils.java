@@ -21,6 +21,7 @@ import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import org.slf4j.Logger;
@@ -48,7 +49,7 @@ public class FormatUtils {
 
     public static final String PERCENTAGE = "percentage";
 
-    public static String format(String type, Object value, Locale locale) {
+    public static String format(String type, Object value, Locale locale, Map<String, String> patterns) {
         String formatted = null;
         // Create formatter
         ResourceBundle resources = ResourceBundle.getBundle("Resources", locale);
@@ -68,9 +69,9 @@ public class FormatUtils {
 
             // if today
             if (today.get(Calendar.DAY_OF_WEEK) == c.get(Calendar.DAY_OF_WEEK)) {
-                formatPattern = System.getProperty("mobics.config.time.pattern");
+                formatPattern = patterns.get("mobics.config.time.pattern");
                 if (formatPattern == null) {
-                    LOGGER.warn("System property «mobics.config.time.pattern» is missing!");
+                    LOGGER.warn("Pattern «mobics.config.time.pattern» is missing!");
                     return null;
                 }
                 dateFormatter = new SimpleDateFormat(formatPattern, locale);
@@ -82,18 +83,18 @@ public class FormatUtils {
             } else
             // this week
             if (yesterday.get(Calendar.WEEK_OF_YEAR) == c.get(Calendar.WEEK_OF_YEAR)) {
-                formatPattern = System.getProperty("mobics.config.week.pattern");
+                formatPattern = patterns.get("mobics.config.week.pattern");
                 if (formatPattern == null) {
-                    LOGGER.warn("System property «mobics.config.week.pattern» is missing!");
+                    LOGGER.warn("Pattern «mobics.config.week.pattern» is missing!");
                     return null;
                 }
                 dateFormatter = new SimpleDateFormat(formatPattern, locale);
                 formatted = dateFormatter.format(c.getTime());
             } else {
                 // otherwise
-                formatPattern = System.getProperty("mobics.config.date.pattern");
+                formatPattern = patterns.get("mobics.config.date.pattern");
                 if (formatPattern == null) {
-                    LOGGER.warn("System property «mobics.config.date.pattern» is missing!");
+                    LOGGER.warn("Pattern «mobics.config.date.pattern» is missing!");
                     return null;
                 }
                 dateFormatter = new SimpleDateFormat(formatPattern, locale);
@@ -105,9 +106,9 @@ public class FormatUtils {
         /* --------------------- Format distance ------------------- */
         if (DISTANCE.equals(type)) {
             key = "distance.meter";
-            formatPattern = System.getProperty("mobics.config.meter.pattern");
+            formatPattern = patterns.get("mobics.config.meter.string.pattern");
             if (formatPattern == null) {
-                LOGGER.warn("System property «mobics.config.meter.pattern» is missing!");
+                LOGGER.warn("Pattern «mobics.config.meter.pattern» is missing!");
                 return null;
             }
             formatter = new DecimalFormat(formatPattern, symbols);
@@ -115,9 +116,9 @@ public class FormatUtils {
             if (((BigDecimal) value).compareTo(new BigDecimal(0)) == 0
                     || ((BigDecimal) value).compareTo(new BigDecimal(1000)) >= 0) {
                 key = "distance.kilometer";
-                formatPattern = System.getProperty("mobics.config.kilometer.pattern");
+                formatPattern = patterns.get("mobics.config.kilometer.string.pattern");
                 if (formatPattern == null) {
-                    LOGGER.warn("System property «mobics.config.kilometer.pattern» is missing!");
+                    LOGGER.warn("Pattern «mobics.config.kilometer.pattern» is missing!");
                     return null;
                 }
                 formatter = new DecimalFormat(formatPattern, symbols);
@@ -146,27 +147,27 @@ public class FormatUtils {
         /* --------------------- Format currency ------------------- */
         if (CURRENCY_SYMBOL.equals(type)) {
             key = "price.currency";
-
-            formatPattern = System.getProperty("mobics.config.currency.pattern");
+            String currencySymbol = patterns.get("mobics.config.currency.symbol");
+            formatPattern = patterns.get("mobics.config.currency.pattern");
             if (formatPattern == null) {
-                LOGGER.warn("System property «mobics.config.currency.pattern» is missing!");
+                LOGGER.warn("Pattern «mobics.config.currency.pattern» is missing!");
                 return null;
             }
             formatter = new DecimalFormat(formatPattern, symbols);
-            formatted = MessageFormat.format(resources.getString(key), formatter.format(value));
+            formatted = MessageFormat.format(resources.getString(key), formatter.format(value), currencySymbol);
         } else
 
         /* --------------------- Format currency per hour ------------------- */
         if (CURRENCY_HOUR.equals(type)) {
             key = "price.hour";
-
-            formatPattern = System.getProperty("mobics.config.currency.pattern");
+            String currencySymbol = patterns.get("mobics.config.currency.symbol");
+            formatPattern = patterns.get("mobics.config.currency.pattern");
             if (formatPattern == null) {
-                LOGGER.warn("System property «mobics.config.currency.pattern» is missing!");
+                LOGGER.warn("Pattern «mobics.config.currency.pattern» is missing!");
                 return null;
             }
             formatter = new DecimalFormat(formatPattern, symbols);
-            formatted = MessageFormat.format(resources.getString(key), formatter.format(value));
+            formatted = MessageFormat.format(resources.getString(key), formatter.format(value), currencySymbol);
         } else 
         /* ----------------- Format miliseconds to seconds or minutes -------------------*/
         if (MILLISECONDS.equals(type)){
@@ -187,7 +188,8 @@ public class FormatUtils {
             
         } else
         if(PERCENTAGE.equals(type)) {
-            formatted = MessageFormat.format(resources.getString("value.percentage"), ((BigDecimal) value).doubleValue() * 100);
+            formatted = MessageFormat.format(resources.getString("value.percentage"),
+                                             ((BigDecimal) value).doubleValue() * 100);
         }
 
         return formatted;

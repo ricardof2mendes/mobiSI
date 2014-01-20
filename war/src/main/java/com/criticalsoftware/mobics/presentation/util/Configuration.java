@@ -13,8 +13,10 @@
 package com.criticalsoftware.mobics.presentation.util;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
-import org.apache.axis2.context.ConfigurationContext;
+import com.criticalsoftware.www.mobios.country.configuration.Patterns_type0;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -76,6 +78,8 @@ public class Configuration implements Serializable{
     /** Javascript time pattern **/
     private final String jsTimePattern = "HH:ii";
 
+    private final String weekPattern = "E";
+
     /** Authentication failure string return by webservices on Axis fault **/
     private final String authenticationFailureString = "Failed Authentication";
 
@@ -132,7 +136,34 @@ public class Configuration implements Serializable{
     
     /** State polling timeout in milliseconds **/
     private final int lockEndPollingTimeoutMilliseconds = 60000;
-    
+
+    private Map<String, String> carClubConfiguration = new HashMap<String, String>();
+
+    public void setCarClubConfiguration(Patterns_type0 carClubConfiguration){
+        this.carClubConfiguration.put("mobics.config.meter.pattern", carClubConfiguration.getShortDistancePattern());
+        this.carClubConfiguration.put("mobics.config.meter.string.pattern",
+                                      carClubConfiguration.getShortDistanceConversionPattern());
+
+        this.carClubConfiguration.put("mobics.config.kilometer.pattern", carClubConfiguration.getDistancePattern());
+        this.carClubConfiguration.put("mobics.config.kilometer.string.pattern",
+                                      carClubConfiguration.getDistanceConversionPattern());
+
+        this.carClubConfiguration.put("mobics.config.currency.pattern", carClubConfiguration.getCurrencyPattern());
+        this.carClubConfiguration.put("mobics.config.currency.symbol", carClubConfiguration.getCurrencySymbol());
+
+        this.carClubConfiguration.put("mobics.config.date.pattern", carClubConfiguration.getDatePattern());
+        this.carClubConfiguration.put("mobics.config.datetime.pattern", carClubConfiguration.getTimestampPattern());
+        this.carClubConfiguration.put("mobics.config.time.pattern", carClubConfiguration.getHoursMinutesPattern());
+        this.carClubConfiguration.put("mobics.config.week.pattern", carClubConfiguration.getWeekPattern());
+
+        this.carClubConfiguration.put("mobics.config.js.date.pattern", carClubConfiguration.getJsDatePattern());
+        this.carClubConfiguration.put("mobics.config.js.date.time.pattern", carClubConfiguration.getJsDateTimePattern());
+        this.carClubConfiguration.put("mobics.config.js.time.pattern", carClubConfiguration.getJsTimePattern());
+    }
+
+    public Map<String, String> getCarClubConfiguration(){
+        return this.carClubConfiguration;
+    }
 
     /**
      * @return the uriEnconding
@@ -152,21 +183,29 @@ public class Configuration implements Serializable{
      * @return the meterPattern
      */
     public String getMeterPattern() {
-        return getValue("mobics.config.meter.pattern", meterPattern);
+        return getPattern("mobics.config.meter.pattern", meterPattern);
+    }
+
+    /**
+     * Get the week pattern
+     * @return
+     */
+    public String getWeekPattern() {
+        return getPattern("mobics.config.week.pattern", weekPattern);
     }
 
     /**
      * @return the kilometerPattern
      */
     public String getKilometerPattern() {
-        return getValue("mobics.config.kilometer.pattern", kilometerPattern);
+        return getPattern("mobics.config.kilometer.pattern", kilometerPattern);
     }
 
     /**
      * @return the currencyPattern
      */
     public String getCurrencyPattern() {
-        return getValue("mobics.config.currency.pattern", currencyPattern);
+        return getPattern("mobics.config.currency.pattern", currencyPattern);
     }
 
     /**
@@ -243,35 +282,35 @@ public class Configuration implements Serializable{
      * @return the datePattern
      */
     public String getJsDatePattern() {
-        return getValue("mobics.config.js.date.pattern", jsDatePattern);
+        return getPattern("mobics.config.js.date.pattern", jsDatePattern);
     }
     
     /**
      * @return the dateTimePattern
      */
     public String getJsDateTimePattern() {
-        return getValue("mobics.config.js.date.time.pattern", jsDateTimePattern);
+        return getPattern("mobics.config.js.date.time.pattern", jsDateTimePattern);
     }
 
     /**
      * @return the timePattern
      */
     public String getJsTimePattern() {
-        return getValue("mobics.config.js.time.pattern", jsTimePattern);
+        return getPattern("mobics.config.js.time.pattern", jsTimePattern);
     }
 
     /**
      * @return the dateTimePattern
      */
     public String getDateTimePattern() {
-        return getValue("mobics.config.datetime.pattern", dateTimePattern);
+        return getPattern("mobics.config.datetime.pattern", dateTimePattern);
     }
 
     /**
      * @return the datePattern
      */
     public String getDatePattern() {
-        return getValue("mobics.config.date.pattern", datePattern);
+        return getPattern("mobics.config.date.pattern", datePattern);
     }
     
     /**
@@ -310,7 +349,7 @@ public class Configuration implements Serializable{
      * @return the timePattern
      */
     public String getTimePattern() {
-        return getValue("mobics.config.time.pattern", timePattern);
+        return getPattern("mobics.config.time.pattern", timePattern);
     }
 
     /**
@@ -358,6 +397,18 @@ public class Configuration implements Serializable{
             LOGGER.warn("System property '{}' does not exist or is empty.", key);
         } else {
             value = System.getProperty(key);
+        }
+
+        return value;
+    }
+
+    private String getPattern(String key, Object defaultValue) {
+        String value = String.valueOf(defaultValue);
+
+        if (carClubConfiguration == null || carClubConfiguration.get(key) == null) {
+            LOGGER.warn("Car Club Pattern '{}' does not exist or is empty.", key);
+        } else {
+            value = carClubConfiguration.get(key);
         }
 
         return value;
