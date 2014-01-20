@@ -47,11 +47,14 @@
 										<div>
 											<span style="${color}"><fmt:message key="CustomerActivityEnum.${recent.activityType}"/></span>
 											<span style="${display}">
-                                                <c:choose>
-                                                    <c:when test="${recent.isDebit}">-</c:when>
-                                                    <c:otherwise>+</c:otherwise>
-                                                </c:choose>
-												<mobi:formatMobics value="${recent.costWithTax}" type="currencySymbol" />
+                                                <c:set var="flag">
+                                                    <c:choose>
+                                                        <c:when test="${recent.costWithTax.unscaledValue() == 0}"></c:when>
+                                                        <c:when test="${recent.isDebit}">-</c:when>
+                                                        <c:otherwise>+</c:otherwise>
+                                                    </c:choose>
+                                                </c:set>
+                                                ${pageScope.flag}<mobi:formatMobics value="${recent.costWithTax}" type="currencySymbol" />
 											</span>
 										</div>
 										<div>
