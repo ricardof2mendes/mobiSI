@@ -16,9 +16,10 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.criticalsoftware.www.mobios.country.configuration.Patterns_type0;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.criticalsoftware.www.mobios.country.configuration.CountryConfiguration;
 
 /**
  * @author ltiago
@@ -139,26 +140,26 @@ public class Configuration implements Serializable{
 
     private Map<String, String> carClubConfiguration = new HashMap<String, String>();
 
-    public void setCarClubConfiguration(Patterns_type0 carClubConfiguration){
-        this.carClubConfiguration.put("mobics.config.meter.pattern", carClubConfiguration.getShortDistancePattern());
+    public void setCarClubConfiguration(CountryConfiguration carClubConfiguration){
+        this.carClubConfiguration.put("mobics.config.meter.pattern", carClubConfiguration.getPatterns().getShortDistancePattern());
         this.carClubConfiguration.put("mobics.config.meter.string.pattern",
-                                      carClubConfiguration.getShortDistanceConversionPattern());
+                                      carClubConfiguration.getPatterns().getShortDistanceConversionPattern());
 
-        this.carClubConfiguration.put("mobics.config.kilometer.pattern", carClubConfiguration.getDistancePattern());
+        this.carClubConfiguration.put("mobics.config.kilometer.pattern", carClubConfiguration.getPatterns().getDistancePattern());
         this.carClubConfiguration.put("mobics.config.kilometer.string.pattern",
-                                      carClubConfiguration.getDistanceConversionPattern());
+                                      carClubConfiguration.getPatterns().getDistanceConversionPattern());
 
-        this.carClubConfiguration.put("mobics.config.currency.pattern", carClubConfiguration.getCurrencyPattern());
+        this.carClubConfiguration.put("mobics.config.currency.pattern", carClubConfiguration.getPatterns().getCurrencyPattern());
         this.carClubConfiguration.put("mobics.config.currency.symbol", carClubConfiguration.getCurrencySymbol());
 
-        this.carClubConfiguration.put("mobics.config.date.pattern", carClubConfiguration.getDatePattern());
-        this.carClubConfiguration.put("mobics.config.datetime.pattern", carClubConfiguration.getTimestampPattern());
-        this.carClubConfiguration.put("mobics.config.time.pattern", carClubConfiguration.getHoursMinutesPattern());
-        this.carClubConfiguration.put("mobics.config.week.pattern", carClubConfiguration.getWeekPattern());
+        this.carClubConfiguration.put("mobics.config.date.pattern", carClubConfiguration.getPatterns().getDatePattern());
+        this.carClubConfiguration.put("mobics.config.datetime.pattern", carClubConfiguration.getPatterns().getTimestampPattern());
+        this.carClubConfiguration.put("mobics.config.time.pattern", carClubConfiguration.getPatterns().getHoursMinutesPattern());
+        this.carClubConfiguration.put("mobics.config.week.pattern", carClubConfiguration.getPatterns().getWeekPattern());
 
-        this.carClubConfiguration.put("mobics.config.js.date.pattern", carClubConfiguration.getJsDatePattern());
-        this.carClubConfiguration.put("mobics.config.js.date.time.pattern", carClubConfiguration.getJsDateTimePattern());
-        this.carClubConfiguration.put("mobics.config.js.time.pattern", carClubConfiguration.getJsTimePattern());
+        this.carClubConfiguration.put("mobics.config.js.date.pattern", carClubConfiguration.getPatterns().getJsDatePattern());
+        this.carClubConfiguration.put("mobics.config.js.date.time.pattern", carClubConfiguration.getPatterns().getJsDateTimePattern());
+        this.carClubConfiguration.put("mobics.config.js.time.pattern", carClubConfiguration.getPatterns().getJsTimePattern());
     }
 
     public Map<String, String> getCarClubConfiguration(){
