@@ -9,8 +9,6 @@ package com.criticalsoftware.mobics.presentation.action;
 import java.io.UnsupportedEncodingException;
 import java.rmi.RemoteException;
 
-import com.criticalsoftware.mobics.presentation.util.CarClubSimple;
-import com.criticalsoftware.www.mobios.country.configuration.Patterns_type0;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.DontValidate;
 import net.sourceforge.stripes.action.ForwardResolution;
@@ -26,10 +24,12 @@ import org.apache.axis2.AxisFault;
 import com.criticalsoftware.mobics.carclub.CarClubSimpleDTO;
 import com.criticalsoftware.mobics.presentation.security.AuthenticationUtil;
 import com.criticalsoftware.mobics.presentation.security.User;
+import com.criticalsoftware.mobics.presentation.util.CarClubSimple;
 import com.criticalsoftware.mobics.presentation.util.Configuration;
 import com.criticalsoftware.mobics.proxy.carclub.CarClubWSServiceStub;
 import com.criticalsoftware.mobics.proxy.customer.CustomerNotFoundExceptionException;
 import com.criticalsoftware.mobics.proxy.customer.CustomerWSServiceStub;
+import com.criticalsoftware.www.mobios.country.configuration.CountryConfiguration;
 
 /**
  * Sign-in action bean.
@@ -84,8 +84,8 @@ public class LoginActionBean extends BaseActionBean {
                 this.getContext().setUser(
                         new User(username, password, carClubDTO, customerWSServiceStub.getCustomerPreferences()));
 
-                Patterns_type0 patterns = carClubWSServiceStub.getCountryConfigurationByCarClubCode(
-                        carClubDTO.getCarClubCode()).getPatterns();
+                CountryConfiguration patterns = carClubWSServiceStub.getCountryConfigurationByCarClubCode(
+                        carClubDTO.getCarClubCode());
 
                 Configuration config = (Configuration) this.getContext().getServletContext().getAttribute("configuration");
                 config.setCarClubConfiguration(patterns);
