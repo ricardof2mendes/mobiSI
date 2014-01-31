@@ -43,7 +43,7 @@
 													</c:choose>
 												</span>
                                                 <span>
-                                                    <span class="${!empty car.addOns ? 'showAddOn' : ''}"></span>
+                                                    <span class="showAddOn"></span>
                                                     <span class="${!empty car.promotions ? 'showPromotion' : ''}"></span>
                                                 </span>
 											</div>
