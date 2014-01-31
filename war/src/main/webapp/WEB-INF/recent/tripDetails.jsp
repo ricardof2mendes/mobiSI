@@ -86,7 +86,7 @@
                         </li>
                         <li class="detail white">
                             <span><fmt:message key="trip.detail.discount"/></span>
-                            <span><mobi:formatMobics value="${actionBean.trip.discount}" type="currencySymbol" />&nbsp;(<mobi:formatMobics value="${actionBean.trip.percentageDiscount}" type="percentage" />)</span>
+                            <span><mobi:formatMobics value="${actionBean.trip.addOnDiscountGeneratedWithTax}" type="currencySymbol" />&nbsp;(<mobi:formatMobics value="${actionBean.trip.percentageDiscount}" type="percentage" />)</span>
                         </li>
                     </ul>
                 </nav>

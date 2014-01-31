@@ -982,6 +982,8 @@ nav.panel ul li.promoRest:last-child {
 
 nav.panel ul li.promoRest span {
     display: inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 nav.panel ul li.promoRest span:nth-child(1) {
@@ -996,8 +998,6 @@ nav.panel ul li.promoRest span:nth-child(2) {
     width: 60%;
     vertical-align: top;
 }
-
-
 
 nav.panel ul li.detail {
 	padding: 10px 0;
