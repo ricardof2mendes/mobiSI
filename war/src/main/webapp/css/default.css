@@ -735,6 +735,8 @@ nav.threeColumnList  ul li a > div:nth-child(2) > div:nth-child(2) > span {
     float: right;
     text-align: right;
     width: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 nav.threeColumnList  ul li a > div:nth-child(2) > div:nth-child(2) > span:nth-child(1) {
