@@ -161,7 +161,7 @@
 	<div class="confirm">
 		<article>
 			<section>
-				<h2><fmt:message key="trip.detail.advance.booking.cancel.header"/></h2>
+				<h2 class="redText increaseText"><fmt:message key="trip.detail.advance.booking.cancel.header"/></h2>
 				<h3 id="haveFee" class="hidden">
 					<fmt:message key="trip.detail.advance.booking.cancel.cost">
 						<fmt:param><mobi:formatMobics value="${actionBean.trip.cancelTime}" type="time"/></fmt:param>
