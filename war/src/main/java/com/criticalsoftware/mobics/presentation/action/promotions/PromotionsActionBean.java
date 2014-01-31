@@ -125,7 +125,7 @@ public class PromotionsActionBean extends BaseActionBean {
         if (promotions != null) {
             for (int i = 0; i < promotions.length; i++) {
                 PromotionWebServiceListDTO promo = promotions[i];
-                if (PromotionStatusEnum.ENABLED.equals(promo.getStatus())) {
+                if (PromotionStatusEnum.PENDING.equals(promo.getStatus())) {
                     if (future == null)
                         future = new ArrayList<PromotionWebServiceListDTO>();
                     future.add(promo);
