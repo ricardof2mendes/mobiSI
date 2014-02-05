@@ -25,7 +25,9 @@ public class LogoutActionBean extends BaseActionBean {
      */
     @DefaultHandler
     public Resolution logout() {
+        String carClubCode = getContext().getCarClub().getCode();
+        
         getContext().logout();
-        return new RedirectResolution(LoginActionBean.class);
+        return new RedirectResolution(LoginActionBean.class).addParameter("CC", carClubCode);
     }
 }
