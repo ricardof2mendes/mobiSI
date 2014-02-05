@@ -16,7 +16,7 @@
                                 <stripes:link class="high" beanclass="com.criticalsoftware.mobics.presentation.action.promotions.PromotionsActionBean" event="detail">
                                     <stripes:param name="code" value="${promo.code}"/>
                                     <div>
-                                        <img class="carImage" src="${contextPath}/promotions/Promotions.action?getPromotionImage=&code=${promo.code}&width=58&height=58" />
+                                        <img class="promotionImage" src="${contextPath}/promotions/Promotions.action?getPromotionImage=&code=${promo.code}&width=58&height=58" />
                                     </div>
                                     <div>
                                         <div>

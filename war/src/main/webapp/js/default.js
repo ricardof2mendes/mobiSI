@@ -22,6 +22,13 @@ $(document).ready(function() {
 			$(this).attr('src', CONTEXT_PATH + '/img/' + noPhoto);
 		});
 	});
+	
+	$('.promotionImage').each(function(){
+		$(this).on('error', function() {
+			var noPhoto = window.devicePixelRatio > 1 ? 'ios-webapp-no-photo-promo@2x.png' : 'ios-webapp-no-photo-promo.png';
+			$(this).attr('src', CONTEXT_PATH + '/img/' + noPhoto);
+		});
+	});
 
 	/** 
 	 * Menu open/close 
