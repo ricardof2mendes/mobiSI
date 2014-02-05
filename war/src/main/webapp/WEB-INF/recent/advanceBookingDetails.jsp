@@ -150,7 +150,7 @@
 				</div>
 			</c:if>
 			<c:if test="${actionBean.trip.state == 'CANCELED'}">
-			  <div class="warningMessage">
+			  <div class="warningMessageRed">
 			    <fmt:message key="trip.detail.advance.booking.cancel.already"/>
 			  </div>
 			</c:if>

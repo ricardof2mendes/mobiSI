@@ -1397,6 +1397,15 @@ input.autocomplete {
 	font-size: 90%;
 }
 
+.warningMessageRed {
+	margin-bottom: 10px;
+	text-align: center;
+	color: #ff0000;
+	padding: 0 10px;
+	text-shadow: 0 1px 1px white;
+	font-size: 90%;
+}
+
 .noMarginBottom {
     margin: 0px !important;
 }
