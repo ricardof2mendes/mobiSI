@@ -42,8 +42,8 @@ import com.criticalsoftware.www.mobios.services.accounting.dto.CountryDTO;
 public class EditPreferencesActionBean extends BaseActionBean {
 
     private static final String EMAIL = "EMAIL";
-
-    private static final String SMS = "SMS";
+    
+    private static final String IPHONE = "IPHONE";
 
     /**
      * Sorting columns
@@ -103,10 +103,8 @@ public class EditPreferencesActionBean extends BaseActionBean {
             for (String commChannel : comms) {
                 if (EMAIL.equals(commChannel)) {
                     communicationChannels[0] = commChannel;
-                } else if (SMS.equals(commChannel)) {
+                } else if (IPHONE.equals(commChannel)) {
                     communicationChannels[1] = commChannel;
-                } else {
-                    communicationChannels[2] = commChannel;
                 }
             }
 

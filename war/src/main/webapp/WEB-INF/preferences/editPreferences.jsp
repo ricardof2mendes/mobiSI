@@ -117,15 +117,8 @@
 						<li id="appFilter" class="filter">
 							<span></span>
 							<span class="customComboBox">
-								<stripes:checkbox id="app" name="communicationChannels[2]" value="IPHONE"/>
+								<stripes:checkbox id="app" name="communicationChannels[1]" value="IPHONE"/>
 								<fmt:message key="preferences.active.channels.iphone"/>
-							</span>
-						</li>
-						<li id="smsFilter" class="filter">
-							<span></span>
-							<span class="customComboBox">
-								<stripes:checkbox id="sms" name="communicationChannels[1]" value="SMS"/>
-								<fmt:message key="preferences.active.channels.sms"/>
 							</span>
 						</li>
 						<li class="filter white">
@@ -137,9 +130,6 @@
 									<stripes:option id="emailOption" value="EMAIL"><fmt:message key="preferences.active.channels.email"/></stripes:option>
 									<stripes:option id="appOption" value="IPHONE">
 										<fmt:message key="preferences.active.channels.iphone"/>
-									</stripes:option>
-									<stripes:option id="smsOption" value="SMS">
-										<fmt:message key="preferences.active.channels.sms"/>
 									</stripes:option>
 								</stripes:select>
 							</span>
