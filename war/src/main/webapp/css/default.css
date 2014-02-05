@@ -360,6 +360,7 @@ form.loginForm > div > input  {
 	background-size: 1px 45px;
 	background-repeat: repeat-x;
 	background-position: top left;
+	white-space: nowrap;
 }
 
 .linkBtn {
