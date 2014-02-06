@@ -33,6 +33,9 @@
                                         <c:when test="${recent.activityType == 'CREDIT'}">
                                             <c:set var="eventName" value="creditDetails"/>
                                         </c:when>
+                                        <c:when test="${recent.activityType == 'PROMOTION_CODE'}">
+                                            <c:set var="eventName" value="bonusDetails"/>
+                                        </c:when>                                        
                                         <c:otherwise>
                                             <c:set var="eventName" value="interestDetails"/>
                                             <c:set var="display" value="display:none"/>

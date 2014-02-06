@@ -13,8 +13,28 @@
 package com.criticalsoftware.mobics.presentation.action.recent;
 
 
+import java.io.UnsupportedEncodingException;
+import java.rmi.RemoteException;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
+
+import net.sourceforge.stripes.action.DefaultHandler;
+import net.sourceforge.stripes.action.DontValidate;
+import net.sourceforge.stripes.action.ForwardResolution;
+import net.sourceforge.stripes.action.LocalizableMessage;
+import net.sourceforge.stripes.action.RedirectResolution;
+import net.sourceforge.stripes.action.Resolution;
+import net.sourceforge.stripes.ajax.JavaScriptResolution;
+import net.sourceforge.stripes.validation.LocalizableError;
+import net.sourceforge.stripes.validation.Validate;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.criticalsoftware.mobics.booking.BookingInterestDTO;
 import com.criticalsoftware.mobics.booking.TripDetailsDTO;
+import com.criticalsoftware.mobics.customer.BonusDetailsDTO;
 import com.criticalsoftware.mobics.customer.CreditPurchaseDetailsDTO;
 import com.criticalsoftware.mobics.customer.CustomerActivityEnum;
 import com.criticalsoftware.mobics.customer.CustomerActivityListDTO;
@@ -26,22 +46,18 @@ import com.criticalsoftware.mobics.presentation.security.MobiCSSecure;
 import com.criticalsoftware.mobics.presentation.util.BookingState;
 import com.criticalsoftware.mobics.presentation.util.Configuration;
 import com.criticalsoftware.mobics.presentation.util.GeolocationUtil;
-import com.criticalsoftware.mobics.proxy.booking.*;
+import com.criticalsoftware.mobics.proxy.booking.BookingInterestNotFoundExceptionException;
+import com.criticalsoftware.mobics.proxy.booking.BookingNotFoundExceptionException;
+import com.criticalsoftware.mobics.proxy.booking.BookingWSServiceStub;
+import com.criticalsoftware.mobics.proxy.booking.BookingWrongStateExceptionException;
+import com.criticalsoftware.mobics.proxy.booking.CustomerNotFoundExceptionException;
+import com.criticalsoftware.mobics.proxy.booking.UnauthorizedCustomerExceptionException;
+import com.criticalsoftware.mobics.proxy.carclub.PromotionCodeNotFoundExceptionException;
 import com.criticalsoftware.mobics.proxy.customer.CreditPurchaseExceptionException;
 import com.criticalsoftware.mobics.proxy.customer.CustomerWSServiceStub;
 import com.criticalsoftware.mobics.proxy.customer.EventNotFoundExceptionException;
-import net.sourceforge.stripes.action.*;
-import net.sourceforge.stripes.ajax.JavaScriptResolution;
-import net.sourceforge.stripes.validation.LocalizableError;
-import net.sourceforge.stripes.validation.Validate;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.UnsupportedEncodingException;
-import java.rmi.RemoteException;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
+import com.criticalsoftware.mobics.proxy.customer.PromotionalCodeCodeInvalidExceptionException;
+import com.criticalsoftware.mobics.proxy.customer.PromotionalCodeCodeNotFoundExceptionException;
 
 /**
  * Recent activities action bean
@@ -63,6 +79,8 @@ public class RecentActivitiesActionBean extends BaseActionBean {
     private IncidentForCustomerDTO incident;
 
     private CreditPurchaseDetailsDTO credit;
+    
+    private BonusDetailsDTO bonus;
 
     @Validate(
             required = true,
@@ -317,9 +335,34 @@ public class RecentActivitiesActionBean extends BaseActionBean {
                 AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
                         .getPassword()));
 
-       credit = customerWSServiceStub.getCreditDetailsByOrderReference(activityCode);
+        credit = customerWSServiceStub.getCreditDetailsByOrderReference(activityCode);
 
         return new ForwardResolution("/WEB-INF/recent/creditDetails.jsp");
+    }
+    
+    /**
+     * Credit details
+     *
+     * @return
+     * @throws RemoteException
+     * @throws UnsupportedEncodingException
+     * @throws com.criticalsoftware.mobics.proxy.customer.CustomerNotFoundExceptionException
+     * @throws PromotionCodeNotFoundExceptionException 
+     * @throws PromotionalCodeCodeNotFoundExceptionException 
+     * @throws PromotionalCodeCodeInvalidExceptionException 
+     */
+    public Resolution bonusDetails() throws RemoteException, UnsupportedEncodingException,
+                                             com.criticalsoftware.mobics.proxy.customer.CustomerNotFoundExceptionException,
+                                             PromotionalCodeCodeInvalidExceptionException, PromotionalCodeCodeNotFoundExceptionException {
+        CustomerWSServiceStub customerWSServiceStub = new CustomerWSServiceStub(
+                Configuration.INSTANCE.getCustomerEndpoint());
+        customerWSServiceStub._getServiceClient().addHeader(
+                AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
+                        .getPassword()));
+
+        bonus = customerWSServiceStub.getBonusDetail(activityCode);
+        
+        return new ForwardResolution("/WEB-INF/recent/bonusDetails.jsp");
     }
 
     /**
@@ -443,4 +486,9 @@ public class RecentActivitiesActionBean extends BaseActionBean {
     public CreditPurchaseDetailsDTO getCredit() {
         return credit;
     }
+
+    public BonusDetailsDTO getBonus() {
+        return bonus;
+    }
+
 }
