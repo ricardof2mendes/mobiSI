@@ -7,7 +7,7 @@
 <t:login title="${title}">
 	<section id="logo">
 		<div>
-			<img src="${contextPath}/Login.action?getSplashScreenImage=" />
+			<img class="splashImage" src="${contextPath}/Login.action?getSplashScreenImage=&CC=${param.CC}" />
 		</div>
 	</section>
 	<section id="loginErrors">

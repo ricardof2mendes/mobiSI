@@ -863,6 +863,10 @@ nav.twoColumnList ul li.transactions a div:nth-child(5){
 }
 
 /****************************** Panel detail **/
+img.splashImage {
+
+}
+
 img.carImage {
 	max-width: 58px;
 	max-height: 58px;

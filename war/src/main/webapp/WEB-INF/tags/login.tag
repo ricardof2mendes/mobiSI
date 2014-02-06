@@ -46,6 +46,8 @@
         		<link rel="stylesheet" href="${contextPath}/css/default.css" />        			
        		</c:otherwise>
        	</c:choose>
+       	
+       	<script type="text/javascript" src="${contextPath}/js/zepto.js"></script>
     </head>
     <body class="${actionBean.splashScreenStyle}" onload="onLoad();">
         <jsp:doBody/>    
@@ -53,6 +55,19 @@
 	        function onLoad() {
 	            document.getElementById('retina').value = window.devicePixelRatio > 1;
 	        }	
+	        	        
+	        $(document).ready(function() {
+	        	'use strict';
+	        	
+	        	/**
+	        	 * Captures all image errors and replace image wdth no photo
+	        	 */
+	        	$('.splashImage').each(function(){
+	        		$(this).on('error', function() {
+	        			$(this).attr('src', '${pageContext.request.contextPath}/img/theme/background_login.png');
+	        		});
+	        	});
+	        });
         </script>         
     </body>
     

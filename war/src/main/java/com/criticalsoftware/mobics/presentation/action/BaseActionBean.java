@@ -147,7 +147,18 @@ public abstract class BaseActionBean implements ActionBean {
                 : NONSECURE_PROTOCOL).append(getContext().getRequest().getServerName()).append(":")
                 .append(getContext().getRequest().getServerPort()).append(getContext().getRequest().getContextPath());
 
-        if (getContext().getCarClub() == null) {
+        String carClubCode = getContext().getRequest().getParameter("CC");
+
+        if (carClubCode != null && !carClubCode.isEmpty()) {
+            try {
+                CarClubWSService carClubService = new CarClubWSServiceStub(Configuration.INSTANCE.getCarClubEndpoint());
+                handler = carClubService.getCarClubThumbnailByCarClubCode(carClubCode,
+                        LOGO_DIMENSIONS[0], LOGO_DIMENSIONS[1]);
+                resolution = new StreamingResolution(handler.getContentType(), handler.getInputStream());
+            } catch (Exception e) {
+                LOG.warn("Could not obtain car club image for car club: {}", carClubCode);
+            }            
+        } else {
             try {
                 CarClubWSService carClubService = new CarClubWSServiceStub(Configuration.INSTANCE.getCarClubEndpoint());
                 carClubSimpleDTO = carClubService.getCarClubSimpleByURL(builder.toString());
@@ -164,15 +175,6 @@ public abstract class BaseActionBean implements ActionBean {
                 resolution = new StreamingResolution(handler.getContentType(), handler.getInputStream());
             } catch (Exception e) {
                 LOG.warn("Could not obtain car club image based on supplied url: {}", builder.toString());
-            }
-        } else {
-            try {
-                CarClubWSService carClubService = new CarClubWSServiceStub(Configuration.INSTANCE.getCarClubEndpoint());
-                handler = carClubService.getCarClubThumbnailByCarClubCode(getContext().getCarClub().getCode(),
-                        LOGO_DIMENSIONS[0], LOGO_DIMENSIONS[1]);
-                resolution = new StreamingResolution(handler.getContentType(), handler.getInputStream());
-            } catch (Exception e) {
-                LOG.warn("Could not obtain car club image for car club: {}", getContext().getCarClub().getCode());
             }
         }
 
