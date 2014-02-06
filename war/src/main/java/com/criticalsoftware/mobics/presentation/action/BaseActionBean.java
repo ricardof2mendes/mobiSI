@@ -6,7 +6,6 @@
  */
 package com.criticalsoftware.mobics.presentation.action;
 
-import java.io.IOException;
 import java.rmi.RemoteException;
 
 import javax.activation.DataHandler;
@@ -101,9 +100,9 @@ public abstract class BaseActionBean implements ActionBean {
 
         String carClubCode = getContext().getRequest().getParameter("CC");
 
-        if (carClubCode != null) {
+        if (carClubCode != null && !carClubCode.isEmpty()) {
             carClubSimpleDTO = new CarClubWSServiceStub(Configuration.INSTANCE.getCarClubEndpoint())
-                    .getCarClubByCarClubCode(carClubCode);
+                    .getCarClubByCarClubCode(carClubCode.toUpperCase());
 
             if (getContext().getCarClub() == null) {
                 getContext().setCarClub(
@@ -139,7 +138,7 @@ public abstract class BaseActionBean implements ActionBean {
         return style.toLowerCase();
     }
 
-    public final Resolution getSplashScreenImage() throws IOException {
+    public final Resolution getSplashScreenImage() {
         CarClubSimpleDTO carClubSimpleDTO = null;
         DataHandler handler = null;
         Resolution resolution = null;
