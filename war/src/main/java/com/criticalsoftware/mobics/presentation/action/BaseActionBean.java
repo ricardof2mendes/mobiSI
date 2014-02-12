@@ -152,7 +152,7 @@ public abstract class BaseActionBean implements ActionBean {
         if (carClubCode != null && !carClubCode.isEmpty()) {
             try {
                 CarClubWSService carClubService = new CarClubWSServiceStub(Configuration.INSTANCE.getCarClubEndpoint());
-                handler = carClubService.getCarClubThumbnailByCarClubCode(carClubCode,
+                handler = carClubService.getCarClubThumbnailByCarClubCode(carClubCode.toUpperCase(),
                         LOGO_DIMENSIONS[0], LOGO_DIMENSIONS[1]);
                 resolution = new StreamingResolution(handler.getContentType(), handler.getInputStream());
             } catch (Exception e) {
