@@ -55,7 +55,7 @@ public class EditInformationContactActionBean extends AskPinActionBean {
     @Validate(required = true, on = "saveData")
     private String locality;
 
-    @Validate(required = true, on = "saveData", mask = "^[0-9]{4}-[0-9]{3}$")
+    @Validate(required = true, on = "saveData")
     private String zipCode1;
 
     @Validate(required = true, on = "saveData", minlength = 9, maxlength = 9)
@@ -140,6 +140,9 @@ public class EditInformationContactActionBean extends AskPinActionBean {
     public void validate(final ValidationErrors errors) {
         if (!isValidNIF(taxNumber)) {
             errors.add("taxNumber", new LocalizableError("account.information.taxNumber.invalid"));
+        }
+        if (!zipCode1.matches(Configuration.INSTANCE.getZipCodePattern())) {
+            errors.add("zipCode1", new LocalizableError("account.information.taxNumber.invalid"));
         }
     }
 

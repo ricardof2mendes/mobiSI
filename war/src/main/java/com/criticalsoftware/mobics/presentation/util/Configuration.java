@@ -52,6 +52,9 @@ public class Configuration implements Serializable{
     /** Application Encoding **/
     private final String uriEnconding = "UTF-8";
     
+    /** Zip Code Pattern **/
+    private final String zipCodePattern = "^[0-9]{4}-[0-9]{3}$";
+    
     /** Meter Pattern **/
     private final String meterPattern = "#";
 
@@ -141,6 +144,8 @@ public class Configuration implements Serializable{
     private Map<String, String> carClubConfiguration = new HashMap<String, String>();
 
     public void setCarClubConfiguration(CountryConfiguration carClubConfiguration){
+        this.carClubConfiguration.put("mobics.config.zipcode.pattern", carClubConfiguration.getPatterns().getPostalCodeValidatorPattern());
+        
         this.carClubConfiguration.put("mobics.config.meter.pattern", carClubConfiguration.getPatterns().getShortDistancePattern());
         this.carClubConfiguration.put("mobics.config.meter.string.pattern",
                                       carClubConfiguration.getPatterns().getShortDistanceConversionPattern());
@@ -180,6 +185,13 @@ public class Configuration implements Serializable{
         return ApplicationState.valueOf(getValue("mobics.config.application.state", applicationState.name()));
     }
 
+    /**
+     * @return the zipCodePattern
+     */
+    public String getZipCodePattern() {
+        return getPattern("mobics.config.zipcode.pattern", zipCodePattern);
+    }
+    
     /**
      * @return the meterPattern
      */
