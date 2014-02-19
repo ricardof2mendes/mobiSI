@@ -123,6 +123,7 @@
                                         </c:when>
                                         <c:when test="${pageScope.detail.origin == 'INCIDENT'}">
                                             <c:set var="event" value="incidentDetails"/>
+                                            <c:set var="activityType" value="INCIDENT"/>
                                         </c:when>
                                         <c:when test="${pageScope.detail.origin == 'ADDITIONAL_SERVICE' || pageScope.detail.origin == 'CANCELLED' || pageScope.detail.origin == 'EXPIRED' || pageScope.detail.origin == 'BONUS_ADJUST'}">
                                             <c:set var="event" value="noEvent"/>
@@ -156,6 +157,7 @@
                                                 <li class="transactions">
                                                     <stripes:link target="${pageScope.target}" beanclass="${pageScope.bean}" event="${pageScope.event}" addSourcePage="true" data="${pageScope.detail.origin}">
                                                         <stripes:param name="activityCode" value="${pageScope.activityCode}"/>
+                                                        <stripes:param name="activityType" value="${pageScope.activityType}"/>
                                                         <div>
                                                             <fmt:message key="bonus.account.transaction.${pageScope.detail.origin}"/>
                                                         </div>
