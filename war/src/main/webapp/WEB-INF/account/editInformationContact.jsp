@@ -85,7 +85,7 @@
 						<li class="detail white">
 							<span><fmt:message key="account.information.taxNumber"/></span>
 							<span class="customComboBox">
-								<stripes:text name="taxNumber" class="editable"
+								<stripes:text name="taxNumber" readonly="true" class="editable"
 									   placeholder="${placeholder}" 
 									   value="${actionBean.taxNumber }"/>
 							</span>
