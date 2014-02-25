@@ -25,6 +25,7 @@ import net.sourceforge.stripes.validation.Validate;
 
 import com.criticalsoftware.mobics.customer.CustomerColumnPreferenceDTO;
 import com.criticalsoftware.mobics.customer.CustomerPreferencesDTO;
+import com.criticalsoftware.mobics.miscellaneous.LanguageDTO;
 import com.criticalsoftware.mobics.presentation.action.BaseActionBean;
 import com.criticalsoftware.mobics.presentation.security.AuthenticationUtil;
 import com.criticalsoftware.mobics.presentation.security.MobiCSSecure;
@@ -32,7 +33,6 @@ import com.criticalsoftware.mobics.presentation.util.Configuration;
 import com.criticalsoftware.mobics.proxy.customer.CustomerNotFoundExceptionException;
 import com.criticalsoftware.mobics.proxy.customer.CustomerWSServiceStub;
 import com.criticalsoftware.mobics.proxy.miscellaneous.MiscellaneousWSServiceStub;
-import com.criticalsoftware.www.mobios.services.accounting.dto.CountryDTO;
 
 /**
  * @author ltiago
@@ -152,9 +152,9 @@ public class EditPreferencesActionBean extends BaseActionBean {
      * @return the columnNames
      * @throws RemoteException
      */
-    public CountryDTO[] getLanguages() throws RemoteException {
+    public LanguageDTO[] getLanguages() throws RemoteException {
         return new MiscellaneousWSServiceStub(Configuration.INSTANCE.getMiscellaneousEnpoint())
-                .getAllCountries(getContext().getUser().getCustomerPreferencesDTO().getLanguage());
+                .getAvailableLanguages(getContext().getUser().getCustomerPreferencesDTO().getLanguage());
     }
 
     /**
