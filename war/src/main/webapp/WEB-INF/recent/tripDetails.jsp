@@ -227,31 +227,15 @@
 		<section>
 			<nav class="panel">
 				<ul>
-					<li class="detail white">
+					<li class="detail">
 						<span>
-							<fmt:message key="trip.detail.price.in.use"/>
+							<fmt:message key="trip.detail.price.booked.per.minute"/>
 						</span>
 						<span>
-							<mobi:formatMobics value="${actionBean.trip.car.priceInUse}" type="currencyHour" />
-						</span>
-					</li>
-					<li class="detail white">
-						<span>
-							<fmt:message key="trip.detail.price.locked"/>
-						</span>
-						<span>
-							<mobi:formatMobics value="${actionBean.trip.car.priceReserved}" type="currencyHour" />
+							<mobi:formatMobics value="${actionBean.trip.car.priceBookedPerMinute}" type="currencySymbol" />
 						</span>
 					</li>
-					<li class="detail white">
-						<span>
-							<fmt:message key="trip.detail.included.distance"/>
-						</span>
-						<span>
-							<mobi:formatMobics value="${actionBean.trip.car.distanceThreshold}" type="distance" />
-						</span>
-					</li>
-					<li class="detail white">
+					<li class="detail">
 						<span>
 							<fmt:message key="trip.detail.cost.per.extra"/>
 						</span>
@@ -259,6 +243,31 @@
 							<mobi:formatMobics value="${actionBean.trip.car.costPerExtraKm}" type="currencySymbol" />
 						</span>
 					</li>
+                    <li class="detail">
+                        <div class="left">
+                            <span>
+                                <fmt:message key="trip.detail.max.cost"/>
+                            </span>
+                        </div>
+						<div class="right">
+                            <span>
+                                <fmt:message key="trip.detail.max.cost.one.hour"/> -
+                                <mobi:formatMobics value="${actionBean.trip.car.maxCostPerHour}" type="currencySymbol" /> -
+                                <mobi:formatMobics value="${actionBean.trip.car.distanceThreshold}" type="distance" />
+                            </span>
+							<span>
+							    ${actionBean.trip.car.configurableTime}h -
+                                <mobi:formatMobics value="${actionBean.trip.car.maxCostPerConfigurableHour}" type="currencySymbol" /> -
+                                <mobi:formatMobics value="${actionBean.trip.car.includedDistancePerConfigurableHour}" type="distance" />
+                            </span>
+							<span>
+                                <fmt:message key="trip.detail.max.cost.max.hour"/> -
+                                <mobi:formatMobics value="${actionBean.trip.car.maxCostPerDay}" type="currencySymbol" /> -
+                                <mobi:formatMobics value="${actionBean.trip.car.includedDistancePerDay}" type="distance" />
+                            </span>
+						</div>
+                        <div class="clear"></div>
+                    </li>
 				</ul>
 			</nav>
 		</section>

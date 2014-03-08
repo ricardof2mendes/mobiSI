@@ -1888,6 +1888,34 @@ section#promotionsDiscount label:nth-child(1) {
     font-weight: normal;
 }
 
+div.left {
+    width: 38%;
+    float: left;
+    text-align: right;
+}
+
+div.left span {
+    display: inline !important;
+}
+
+div.right {
+    width: 60%;
+    float: left;
+    text-align: left;
+}
+
+div.right span {
+    text-align: left !important;
+    display: list-item !important;
+    padding: 3px 0 0 2px !important;
+    font-size: 120% !important;
+    width: 100% !important;
+}
+
+div.clear {
+    clear: both;
+}
+
 /********************************************************************* Media Queries */
 
 @media screen and (-webkit-min-device-pixel-ratio: 1.5),

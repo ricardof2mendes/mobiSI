@@ -19,6 +19,7 @@ import net.sourceforge.stripes.validation.Validate;
 import net.sourceforge.stripes.validation.ValidationErrors;
 import net.sourceforge.stripes.validation.ValidationMethod;
 
+import org.apache.axiom.om.OMElement;
 import org.apache.axis2.AxisFault;
 
 import com.criticalsoftware.mobics.carclub.CarClubSimpleDTO;
@@ -65,10 +66,11 @@ public class LoginActionBean extends BaseActionBean {
             CustomerNotFoundExceptionException {
         Resolution resolution = new RedirectResolution(HomeActionBean.class);
 
+        OMElement authHeader = AuthenticationUtil.getAuthenticationHeader(username, password);
+
         CarClubWSServiceStub carClubWSServiceStub = new CarClubWSServiceStub(
                 Configuration.INSTANCE.getCarClubEndpoint());
-        carClubWSServiceStub._getServiceClient().addHeader(
-                AuthenticationUtil.getAuthenticationHeader(username, password));
+        carClubWSServiceStub._getServiceClient().addHeader(authHeader);
 
         try {
             CarClubSimpleDTO carClubDTO = carClubWSServiceStub.getCustomerCarClub();
@@ -76,8 +78,7 @@ public class LoginActionBean extends BaseActionBean {
 
                 CustomerWSServiceStub customerWSServiceStub = new CustomerWSServiceStub(
                         Configuration.INSTANCE.getCustomerEndpoint());
-                customerWSServiceStub._getServiceClient().addHeader(
-                        AuthenticationUtil.getAuthenticationHeader(username, password));
+                customerWSServiceStub._getServiceClient().addHeader(authHeader);
 
                 this.getContext().setCarClub(new CarClubSimple(carClubDTO.getCarClubName(), carClubDTO.getCarClubCode(),
                         carClubDTO.getCarClubContactPhone(), carClubDTO.getCarClubContactEmail()));
