@@ -102,7 +102,7 @@
 		</section>
         <div class="warningMessage">
             <fmt:message key="car.details.price.message"/>
-            <stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.booking.AdvanceBookingActionBean" event="price">
+            <stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.booking.AdvanceBookingActionBean" event="basePrice">
                 <strong><fmt:message key="car.details.price.link.message"/></strong>
             </stripes:link>
         </div>

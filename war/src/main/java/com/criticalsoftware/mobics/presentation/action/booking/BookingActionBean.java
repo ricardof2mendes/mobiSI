@@ -145,8 +145,8 @@ public abstract class BookingActionBean extends BaseActionBean {
         return resolution;
     }
 
-    public Resolution price(){
-        return new ForwardResolution("/WEB-INF/price.jsp");
+    public Resolution basePrice(){
+        return new ForwardResolution("/WEB-INF/basePrice.jsp");
     }
 
     /**
