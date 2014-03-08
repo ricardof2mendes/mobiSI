@@ -1410,6 +1410,16 @@ input.autocomplete {
 	font-size: 90%;
 }
 
+.warningMessage a {
+    text-decoration: underline;
+    color: #666;
+}
+
+.price p{
+    padding: 0 10px 0 10px;
+    text-align: justify
+}
+
 .warningMessageRed {
 	margin-bottom: 10px;
 	text-align: center;

@@ -100,6 +100,12 @@
 				</ul>			 
 			</nav>
 		</section>
+        <div class="warningMessage">
+            <fmt:message key="car.details.price.message"/>
+            <stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.booking.AdvanceBookingActionBean" event="price">
+                <strong><fmt:message key="car.details.price.link.message"/></strong>
+            </stripes:link>
+        </div>
 		<section>
 			<nav class="panel">
 				<ul>

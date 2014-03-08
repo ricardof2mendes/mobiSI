@@ -143,7 +143,14 @@
                 </ul>
 			</nav>
 		</section>
-		
+
+        <div class="warningMessage">
+            <fmt:message key="car.details.price.message"/>
+            <stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.booking.ImmediateBookingActionBean" event="price">
+                <strong><fmt:message key="car.details.price.link.message"/></strong>
+            </stripes:link>
+        </div>
+
 		<c:if test="${actionBean.car.state == 'AVAILABLE' }">
 			<section>
 				<nav class="panel">

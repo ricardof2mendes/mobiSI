@@ -14,8 +14,13 @@ package com.criticalsoftware.mobics.presentation.action.booking;
 
 import javax.activation.DataHandler;
 
+import com.criticalsoftware.mobics.miscellaneous.ChargingStationSimpleDTO;
+import com.criticalsoftware.mobics.proxy.miscellaneous.MiscellaneousWSService;
+import com.criticalsoftware.mobics.proxy.miscellaneous.MiscellaneousWSServiceStub;
+import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.StreamingResolution;
+import net.sourceforge.stripes.ajax.JavaScriptResolution;
 import net.sourceforge.stripes.validation.LocalizableError;
 import net.sourceforge.stripes.validation.Validate;
 import net.sourceforge.stripes.validation.ValidateNestedProperties;
@@ -23,6 +28,7 @@ import net.sourceforge.stripes.validation.ValidationErrors;
 import net.sourceforge.stripes.validation.ValidationMethod;
 import net.sourceforge.stripes.validation.ValidationState;
 
+import org.apache.axis2.AxisFault;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -137,6 +143,26 @@ public abstract class BookingActionBean extends BaseActionBean {
             LOG.warn("Could not load image", e.getMessage());
         }
         return resolution;
+    }
+
+    public Resolution price(){
+        return new ForwardResolution("/WEB-INF/price.jsp");
+    }
+
+    /**
+     * Data for build maps
+     *
+     * @return a json object containing charging stations for display in map
+     * @throws RemoteException a jax-b webservice exception
+     */
+    public Resolution chargingStationsData() throws RemoteException {
+
+        MiscellaneousWSService mix = new MiscellaneousWSServiceStub(Configuration.INSTANCE.getMiscellaneousEnpoint());
+
+        ChargingStationSimpleDTO[] stations = mix.getMobiEChargingStations();
+        getContext().getResponse().setHeader("Stripes-Success", "OK");
+
+        return new JavaScriptResolution(stations);
     }
 
     /**
