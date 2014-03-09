@@ -14,6 +14,7 @@ package com.criticalsoftware.mobics.presentation.action.booking;
 
 import javax.activation.DataHandler;
 
+import com.criticalsoftware.mobics.miscellaneous.ChargingStationDTO;
 import com.criticalsoftware.mobics.miscellaneous.ChargingStationSimpleDTO;
 import com.criticalsoftware.mobics.proxy.miscellaneous.MiscellaneousWSService;
 import com.criticalsoftware.mobics.proxy.miscellaneous.MiscellaneousWSServiceStub;
@@ -61,20 +62,25 @@ public abstract class BookingActionBean extends BaseActionBean {
             "showPin", "book", "licensePlateBookAdvance", "parkLocation", "carData", "parkData", "carDetails" })
     protected String licensePlate;
 
-    @Validate(required = true, on = { "nearestCarBook" })
+    @Validate(required = true, on = "nearestCarBook")
     protected String latitude;
 
-    @Validate(required = true, on = { "nearestCarBook" })
+    @Validate(required = true, on = "nearestCarBook")
     protected String longitude;
 
     @Validate(required = true, on = "book", minlength = 4, maxlength = 4)
     protected Integer pin;
+
+    @Validate(required = true, on = "chargingStation")
+    protected Integer id;
     
     @Validate
     protected Integer width = 58;
      
     @Validate
     protected Integer height = 58;
+
+    protected ChargingStationDTO station;
 
     /**
      * Show pin to user
@@ -146,7 +152,13 @@ public abstract class BookingActionBean extends BaseActionBean {
     }
 
     public Resolution basePrice(){
-        return new ForwardResolution("/WEB-INF/basePrice.jsp");
+        return new ForwardResolution("/WEB-INF/common/price.jsp");
+    }
+
+    public Resolution chargingStation() throws RemoteException {
+        MiscellaneousWSService mix = new MiscellaneousWSServiceStub(Configuration.INSTANCE.getMiscellaneousEnpoint());
+        station = mix.getMobiEChargingStationDetails(id);
+        return new ForwardResolution("/WEB-INF/common/chargingStations.jsp");
     }
 
     /**
@@ -156,12 +168,9 @@ public abstract class BookingActionBean extends BaseActionBean {
      * @throws RemoteException a jax-b webservice exception
      */
     public Resolution chargingStationsData() throws RemoteException {
-
         MiscellaneousWSService mix = new MiscellaneousWSServiceStub(Configuration.INSTANCE.getMiscellaneousEnpoint());
-
         ChargingStationSimpleDTO[] stations = mix.getMobiEChargingStations();
         getContext().getResponse().setHeader("Stripes-Success", "OK");
-
         return new JavaScriptResolution(stations);
     }
 
@@ -262,5 +271,24 @@ public abstract class BookingActionBean extends BaseActionBean {
     public void setHeight(Integer height) {
         this.height = height;
     }
-    
+
+    /**
+     * Get the id
+     * @return   id
+     */
+    public Integer getId() {
+        return id;
+    }
+
+    /**
+     * Sets the id
+     * @param id
+     */
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public ChargingStationDTO getStation() {
+        return station;
+    }
 }

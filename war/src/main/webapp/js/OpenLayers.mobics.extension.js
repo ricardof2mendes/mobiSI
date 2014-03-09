@@ -223,3 +223,78 @@ OpenLayers.Control.MyLocation = OpenLayers.Class(OpenLayers.Control, {
     CLASS_NAME: "OpenLayers.Control.MyLocation"
 });
 
+
+/**
+ * Class: OpenLayers.Control.Gas
+ * The List control is a link for the Gas station list.
+ *
+ * Inherits from:
+ *  - <OpenLayers.Control>
+ */
+OpenLayers.Control.Stations = OpenLayers.Class(OpenLayers.Control, {
+
+    stationsText: "Stations",
+
+    stationsId: "olStationsLink",
+
+    /**
+     * Method: draw
+     *
+     * Returns:
+     * {DOMElement} A reference to the DOMElement containing the list link.
+     */
+    draw: function() {
+        var div = OpenLayers.Control.prototype.draw.apply(this),
+            stations = this.getOrCreateLinks(div),
+            eventsInstance = this.map.events;
+
+        eventsInstance.register("buttonclick", this, this.onStationsClick);
+
+        this.stationsLink = stations;
+        return div;
+    },
+
+    /**
+     * Method: getOrCreateLinks
+     *
+     * Parameters:
+     * el - {DOMElement}
+     *
+     * Return:
+     * {Object} Object with list properties referencing link.
+     */
+    getOrCreateLinks: function(el) {
+        var stations = document.getElementById(this.stationsId);
+        if (!stations) {
+            stations = document.createElement("a");
+            stations.href = "#stations";
+            stations.appendChild(document.createTextNode(this.stationsText));
+            stations.className = "olControlStations";
+            el.appendChild(stations);
+        }
+        OpenLayers.Element.addClass(stations, "olButton");
+        return {
+            stations: stations
+        };
+    },
+
+    /**
+     * Method: onStationsClick
+     * Called when list link is clicked.
+     */
+    onStationsClick: function() {alert('1');},
+
+    /**
+     * Method: destroy
+     * Clean up.
+     */
+    destroy: function() {
+        if (this.map) {
+            this.map.events.unregister("buttonclick", this, this.onListClick);
+        }
+        delete this.stationsLink;
+        OpenLayers.Control.prototype.destroy.apply(this);
+    },
+
+    CLASS_NAME: "OpenLayers.Control.Stations"
+});

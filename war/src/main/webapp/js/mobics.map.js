@@ -53,6 +53,7 @@ Map.prototype = {
 			this.greenStyle.fillOpacity = 0.3;
 			this.greenStyle.fillColor = '#ACE228';
 			this.greenStyle.strokeColor = '#94C222';
+            this.greenStyle.pointRadius = 9;
 
 			this.redStyle = OpenLayers.Util.extend({}, this.greenStyle);
 			this.redStyle.fillColor = '#FF0F0F';
@@ -83,7 +84,7 @@ Map.prototype = {
 			
 			this.carDefaultStyle = OpenLayers.Util.extend({}, this.locationDefautlStyle);
 			this.carSelectStyle = OpenLayers.Util.extend({}, this.locationSelectStyle);
-			
+
 			if(this.retina) {
 				this.locationDefautlStyle.externalGraphic = '../img/map/location-user-unselected@2x.png';
                 this.carDefaultStyle.externalGraphic = '../img/map/location-car-unselected@2x.png';
@@ -98,7 +99,7 @@ Map.prototype = {
 			
 			this.carStyleMap = new OpenLayers.StyleMap({'default':this.carDefaultStyle, 'select': this.carSelectStyle});
 			this.locationStyleMap = new OpenLayers.StyleMap({'default': this.locationDefautlStyle, 'select': this.locationSelectStyle});
-			
+
 		},
 		
 		/** 
@@ -144,17 +145,33 @@ Map.prototype = {
 				this.map.addControl(new OpenLayers.Control.List({
 					onListClick : function(evt) {
 						if(document.getElementById('submit')) {
-							document.getElementById('submit').focus(); 
-						} 
+							document.getElementById('submit').focus();
+						}
 						if (evt.buttonElement === this.listLink.list) {
-							window.location.href = CONTEXT_PATH +'/booking/ImmediateBooking.action?searchImmediateInList=&price=' + that.searchParams.price + 
-							'&distance=' + that.searchParams.distance + '&clazz=' + that.searchParams.clazz + '&fuel=' + that.searchParams.fuel + 
+							window.location.href = CONTEXT_PATH +'/booking/ImmediateBooking.action?searchImmediateInList=&price=' + that.searchParams.price +
+							'&distance=' + that.searchParams.distance + '&clazz=' + that.searchParams.clazz + '&fuel=' + that.searchParams.fuel +
 							'&orderBy=' + that.searchParams.order + '&latitude=' + that.searchParams.latitude + '&longitude=' + that.searchParams.longitude;
 						}
 					}
 				}));
 			}
-			
+
+            // add Stations link
+            this.map.addControl(new OpenLayers.Control.Stations({
+                onStationsClick : function(evt) {
+                    if(document.getElementById('submit')) {
+                        document.getElementById('submit').focus();
+                    }
+                    if (evt.buttonElement === this.stationsLink.stations) {
+                        if(that.stations) {
+                            that.toggleStations();
+                        } else {
+                            that.fetchStationsData();
+                        }
+                    }
+                }
+            }));
+
 			if(this.type === 'mapASearch' || this.type === 'mapAStreet' ) {
 				// add my location link
 				this.map.addControl(new OpenLayers.Control.MyLocation({
@@ -257,6 +274,21 @@ Map.prototype = {
 				            $('html').html(data);
 				        }
 				    });	
+		},
+        /**
+		 * Fetch data from server related to stations
+		 */
+		fetchStationsData : function() {
+			var that = this;
+			$.get(CONTEXT_PATH + '/booking/ImmediateBooking.action?chargingStationsData=',
+					function(data, textStatus, jqXHR){
+						if (jqXHR.getResponseHeader('Stripes-Success') === 'OK') {
+                            that.processStations(eval(data));
+				        } else {
+				            console.log('An error has occurred or the user\'s session has expired!');
+				            $('html').html(data);
+				        }
+				    });
 		},
 		
 		/**
@@ -604,6 +636,53 @@ Map.prototype = {
 			}
 			$('#results').html(html);
 		},
+
+        /**
+         * Process fetched location
+         */
+        processStations : function(returnData){
+            // init vars
+            this.blueStyle.fillOpacity = 0;
+            this.blueStyle.strokeOpacity = 0;
+            this.stations = new OpenLayers.Layer.Vector('stations', {style: this.blueStyle, rendererOptions: {zIndexing: true} });
+            this.map.addLayer(this.stations);
+
+            var that = this;
+            $(returnData).each(function(){
+                var point =
+                    new OpenLayers.Geometry.Point(this.coordinates.longitude, this.coordinates.latitude).transform(that.mapDisplayProjection, that.map.getProjectionObject());
+                // add feature
+                var feature = new OpenLayers.Feature.Vector(point, {station : this}, null);
+                that.stations.addFeatures(feature);
+
+            });
+
+            var selectCtrl = new OpenLayers.Control.SelectFeature(this.stations, {
+                clickout : false,
+                onSelect : function(e) {
+                    window.location.href = CONTEXT_PATH + '/booking/ImmediateBooking.action?chargingStation=&id='+ e.attributes.station.id;
+                }
+            });
+
+            this.map.addControl(selectCtrl);
+            selectCtrl.activate();
+            this.toggleStations();
+        },
+
+        toggleStations : function() {
+            var features = this.stations.features;
+            for (var i = 0; i < features.length; i++) {
+                var feature = features[i];
+                if (feature.style.fillOpacity !== undefined && feature.style.fillOpacity == 0) {
+                    feature.style.fillOpacity = 1;
+                    feature.style.strokeOpacity = 1;
+                } else {
+                    feature.style.fillOpacity = 0;
+                    feature.style.strokeOpacity = 0;
+                }
+            }
+            this.stations.redraw();
+        },
 		
 		/**
 		 * Draw radius

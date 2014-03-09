@@ -74,6 +74,7 @@ div.olControlAttribution {
 div.olControlZoom,
 div.olControlLegend,
 div.olControlList,
+div.olControlStations,
 div.olControlMyLocation {
 	background: none repeat scroll 0 0 rgba(0, 0, 0, 0.3);
 	border-radius: 4px;
@@ -92,6 +93,11 @@ div.olControlLegend {
 }
 
 div.olControlList {
+    top: 55px;
+    right: 10px;
+}
+
+div.olControlStations {
     top: 10px;
     right: 10px;
 }
@@ -104,6 +110,7 @@ div.olControlMyLocation {
 div.olControlZoom a,
 div.olControlLegend a,
 div.olControlList a,
+div.olControlStations a,
 div.olControlMyLocation a {
 	color: #333;
 	display: block;
@@ -130,6 +137,7 @@ div.olControlMyLocation a {
 	background: #FFF url(../img/map/map-icon-location.png) no-repeat 50% 50%;
 }
 
+div.olControlStations a,
 div.olControlList a {
 	font-size: 90%;
 	font-weight: bold;
@@ -137,6 +145,10 @@ div.olControlList a {
 	color: #333;
 	text-shadow: 0 1px -1px white;
 	width: 50px;
+}
+
+div.olControlStations a {
+    font-size: 70% !important;
 }
 
 a.olControlZoomIn {
@@ -149,6 +161,7 @@ a.olControlZoomOut {
 
 a.olControlLegend,
 a.olControlList,
+a.olControlStations,
 a.olControlMyLocation {
     border-radius: 4px;
 }
@@ -156,6 +169,7 @@ a.olControlMyLocation {
 div.olControlZoom a:hover,
 div.olControlLegend a:hover,
 div.olControlList a:hover,
+div.olControlStations a:hover,
 div.olControlMyLocation a:hover {
     background-color: #DCDCDC !important;
 }
