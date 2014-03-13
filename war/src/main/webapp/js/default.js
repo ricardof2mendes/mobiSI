@@ -631,7 +631,7 @@ function lockUnlockAndWait(url) {
 											if (jqXHR.getResponseHeader('Stripes-Success') === 'OK') {
 												var evaluated = eval(data);
 												
-												if(evaluated.licensePlate === null || (url.state && url.state === evaluated.carState)) {
+												if(evaluated == null || (url.state && url.state === evaluated.carState)) {
 													clearInterval(that); 
 													window.location.href = url.redirect + 'true';										 			
 										 		} 
