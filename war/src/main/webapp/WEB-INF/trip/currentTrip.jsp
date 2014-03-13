@@ -121,38 +121,6 @@
 				<ul>
 					<li class="detail white">
 						<span>
-							<fmt:message key="current.trip.price.use"/>
-						</span>
-						<span>
-							<mobi:formatMobics value="${actionBean.current.basePrice}" type="currencyHour" />
-						</span>
-					</li>
-					<li class="detail white">
-						<span>
-							<fmt:message key="current.trip.price.locked"/>
-						</span>
-						<span>
-							<mobi:formatMobics value="${actionBean.current.lockedPrice}" type="currencyHour" />
-						</span>
-					</li>
-					<li class="detail white">
-						<span>
-							<fmt:message key="current.trip.price.included"/>
-						</span>
-						<span>
-							<mobi:formatMobics value="${actionBean.current.distanceThreshold}" type="distance"/>
-						</span>
-					</li>
-					<li class="detail white">
-						<span>
-							<fmt:message key="current.trip.price.extra"/>
-						</span>
-						<span>
-							<mobi:formatMobics value="${actionBean.current.costPerExtraKm}" type="currencySymbol" />
-						</span>
-					</li>
-					<li class="detail white">
-						<span>
 							<fmt:message key="current.trip.duration"/>
 						</span>
 						<span>
@@ -182,9 +150,60 @@
 							</li>
 						</c:otherwise>
 					</c:choose>
-				</ul>
-			</nav>
-		</section>
+
+
+                    <li class="detail white">
+						<span>
+							<fmt:message key="trip.detail.price.booked.per.minute"/>
+						</span>
+						<span>
+							<mobi:formatMobics value="${actionBean.current.priceBookedPerMinute}" type="currencySymbol" />
+						</span>
+                    </li>
+                    <li class="detail white">
+						<span>
+							<fmt:message key="trip.detail.cost.per.extra"/>
+						</span>
+						<span>
+							<mobi:formatMobics value="${actionBean.current.costPerExtraKm}" type="currencySymbol" />
+						</span>
+                    </li>
+                    <li class="detail white">
+                        <div class="left">
+                            <span>
+                                <fmt:message key="trip.detail.max.cost"/>
+                            </span>
+                        </div>
+                        <div class="right">
+                            <span>
+                                <fmt:message key="trip.detail.max.cost.one.hour"/> -
+                                <mobi:formatMobics value="${actionBean.current.maxCostPerHour}" type="currencySymbol" /> -
+                                <mobi:formatMobics value="${actionBean.current.distanceThreshold}" type="distance" />
+                            </span>
+							<span>
+							    ${actionBean.current.configurableTime}h -
+                                <mobi:formatMobics value="${actionBean.current.maxCostPerConfigurableHour}" type="currencySymbol" /> -
+                                <mobi:formatMobics value="${actionBean.current.includedDistancePerConfigurableHour}" type="distance" />
+                            </span>
+							<span>
+                                <fmt:message key="trip.detail.max.cost.max.hour"/> -
+                                <mobi:formatMobics value="${actionBean.current.maxCostPerDay}" type="currencySymbol" /> -
+                                <mobi:formatMobics value="${actionBean.current.includedDistancePerDay}" type="distance" />
+                            </span>
+                        </div>
+                        <div class="clear"></div>
+                    </li>
+                </ul>
+            </nav>
+        </section>
+
+        <div class="warningMessage">
+            <fmt:message key="car.details.price.message"/>
+            <stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.booking.ImmediateBookingActionBean" event="basePrice">
+                <strong><fmt:message key="car.details.price.link.message"/></strong>
+            </stripes:link>
+        </div>
+
 
 		<c:if test="${actionBean.current.state != 'WAIT_OBS_IMMEDIATE'}">	
 			<section>

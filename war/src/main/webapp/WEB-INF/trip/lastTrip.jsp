@@ -173,42 +173,58 @@
 				<section>
 					<nav class="panel">
 						<ul>
-							<li class="detail white">
-								<span>
-									<fmt:message key="trip.detail.price.in.use"/>
-								</span>
-								<span>
-									<mobi:formatMobics value="${actionBean.last.car.priceInUse}" type="currencyHour" />
-								</span>
-							</li>
-							<li class="detail white">
-								<span>
-									<fmt:message key="trip.detail.price.locked"/>
-								</span>
-								<span>
-									<mobi:formatMobics value="${actionBean.last.car.priceReserved}" type="currencyHour" />
-								</span>
-							</li>
-							<li class="detail white">
-								<span>
-									<fmt:message key="trip.detail.included.distance"/>
-								</span>
-								<span>
-									<mobi:formatMobics value="${actionBean.last.car.distanceThreshold}" type="distance" />
-								</span>
-							</li>
-							<li class="detail white">
-								<span>
-									<fmt:message key="trip.detail.cost.per.extra"/>
-								</span>
-								<span>
-									<mobi:formatMobics value="${actionBean.last.car.costPerExtraKm}" type="currencySymbol" />
-								</span>
-							</li>
-							
+                            <li class="detail white">
+						<span>
+							<fmt:message key="trip.detail.price.booked.per.minute"/>
+						</span>
+						<span>
+							<mobi:formatMobics value="${actionBean.last.car.priceBookedPerMinute}" type="currencySymbol" />
+						</span>
+                            </li>
+                            <li class="detail white">
+						<span>
+							<fmt:message key="trip.detail.cost.per.extra"/>
+						</span>
+						<span>
+							<mobi:formatMobics value="${actionBean.last.car.costPerExtraKm}" type="currencySymbol" />
+						</span>
+                            </li>
+                            <li class="detail white">
+                                <div class="left">
+                                    <span>
+                                        <fmt:message key="trip.detail.max.cost"/>
+                                    </span>
+                                </div>
+                                <div class="right">
+                                    <span>
+                                        <fmt:message key="trip.detail.max.cost.one.hour"/> -
+                                        <mobi:formatMobics value="${actionBean.last.car.maxCostPerHour}" type="currencySymbol" /> -
+                                        <mobi:formatMobics value="${actionBean.last.car.distanceThreshold}" type="distance" />
+                                    </span>
+                                    <span>
+                                        ${actionBean.last.car.configurableTime}h -
+                                        <mobi:formatMobics value="${actionBean.last.car.maxCostPerConfigurableHour}" type="currencySymbol" /> -
+                                        <mobi:formatMobics value="${actionBean.last.car.includedDistancePerConfigurableHour}" type="distance" />
+                                    </span>
+                                    <span>
+                                        <fmt:message key="trip.detail.max.cost.max.hour"/> -
+                                        <mobi:formatMobics value="${actionBean.last.car.maxCostPerDay}" type="currencySymbol" /> -
+                                        <mobi:formatMobics value="${actionBean.last.car.includedDistancePerDay}" type="distance" />
+                                    </span>
+                                </div>
+                                <div class="clear"></div>
+                            </li>
 						</ul>
 					</nav>
 				</section>
+
+                <div class="warningMessage">
+                    <fmt:message key="car.details.price.message"/>
+                    <stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.booking.ImmediateBookingActionBean" event="basePrice">
+                        <strong><fmt:message key="car.details.price.link.message"/></strong>
+                    </stripes:link>
+                </div>
+
 			</c:when>
 			<c:otherwise>
 				<section id="noresults">
