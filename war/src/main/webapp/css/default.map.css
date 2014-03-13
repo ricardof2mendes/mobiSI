@@ -137,7 +137,11 @@ div.olControlMyLocation a {
 	background: #FFF url(../img/map/map-icon-location.png) no-repeat 50% 50%;
 }
 
-div.olControlStations a,
+div.olControlStations a {
+    background-size: 30px 30px;
+    background: #FFF url(../img/map/mobie-icon.png) no-repeat 50% 50%;
+}
+
 div.olControlList a {
 	font-size: 90%;
 	font-weight: bold;
@@ -145,10 +149,6 @@ div.olControlList a {
 	color: #333;
 	text-shadow: 0 1px -1px white;
 	width: 50px;
-}
-
-div.olControlStations a {
-    font-size: 70% !important;
 }
 
 a.olControlZoomIn {
@@ -244,7 +244,7 @@ div.olControlMyLocation a:hover {
 	line-height: 24px;
 	height: 24px;
 	border: 0;
-	font-size: normal;
+	font-size: medium;
 	color: #333;
 	width: 100%;
 }
@@ -314,7 +314,7 @@ nav.oneColumnList  ul li a > div:nth-child(2) {
 	color: #333;
 	padding-right: 25px;
 	text-align: left;
-	vertical-align: center;
+	vertical-align: middle;
 	height: 60px;
 	line-height: 60px;
 }
@@ -392,6 +392,10 @@ img.userLocation {
 	div.olControlMyLocation a {
 		background-image: url(../img/map/map-icon-location@2x.png);
 	}
+
+    div.olControlStations a {
+        background-image: url(../img/map/location-station@2x.png);
+    }
 	
 	#legend nav.simpleList ul li:nth-child(1) span {
 		background-image: url(../img/map/location-user-selected@2x.png);

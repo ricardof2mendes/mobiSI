@@ -40,15 +40,15 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
 				<configuration> 
-          <webResources>
-             <resource>
-              <filtering>true</filtering>
-              <directory>src/main/webapp</directory>
-              <includes>
-                <include>**/main.tag</include>
-              </includes>
-            </resource>
-          </webResources>         
+                    <webResources>
+                        <resource>
+                            <filtering>true</filtering>
+                            <directory>src/main/webapp</directory>
+                            <includes>
+                                <include>**/main.tag</include>
+                            </includes>
+                        </resource>
+                    </webResources>
 					<!--warSourceExcludes>
 					**/normalize.css,**/default.css,**/default.map.css,**/mobiscroll.custom.css,
 					**/default.js,**/default.map.js,**/mobics.map.js,

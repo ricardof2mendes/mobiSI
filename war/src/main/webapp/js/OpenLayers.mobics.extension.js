@@ -11,8 +11,7 @@
  *  - <OpenLayers.Control>
  */
 OpenLayers.Control.Legend = OpenLayers.Class(OpenLayers.Control, {
-    
-    
+
     legendId: "olLegendLink",
 
     /**
@@ -233,8 +232,6 @@ OpenLayers.Control.MyLocation = OpenLayers.Class(OpenLayers.Control, {
  */
 OpenLayers.Control.Stations = OpenLayers.Class(OpenLayers.Control, {
 
-    stationsText: "Stations",
-
     stationsId: "olStationsLink",
 
     /**
@@ -268,7 +265,6 @@ OpenLayers.Control.Stations = OpenLayers.Class(OpenLayers.Control, {
         if (!stations) {
             stations = document.createElement("a");
             stations.href = "#stations";
-            stations.appendChild(document.createTextNode(this.stationsText));
             stations.className = "olControlStations";
             el.appendChild(stations);
         }

@@ -85,16 +85,23 @@ Map.prototype = {
 			this.carDefaultStyle = OpenLayers.Util.extend({}, this.locationDefautlStyle);
 			this.carSelectStyle = OpenLayers.Util.extend({}, this.locationSelectStyle);
 
+            this.chargingStationStyle = OpenLayers.Util.extend({}, this.locationDefautlStyle);
+            this.chargingStationStyle.graphicHeight = 22;
+            this.chargingStationStyle.graphicWidth = 22;
+            this.chargingStationStyle.display = 'none';
+
 			if(this.retina) {
 				this.locationDefautlStyle.externalGraphic = '../img/map/location-user-unselected@2x.png';
                 this.carDefaultStyle.externalGraphic = '../img/map/location-car-unselected@2x.png';
 				this.locationSelectStyle.externalGraphic = '../img/map/location-user-selected@2x.png';
 				this.carSelectStyle.externalGraphic = '../img/map/location-car-selected@2x.png';
+                this.chargingStationStyle.externalGraphic = '../img/map/location-station@2x.png';
 			} else {
 				this.locationDefautlStyle.externalGraphic = '../img/map/location-user-unselected.png';
 				this.carDefaultStyle.externalGraphic = '../img/map/location-car-unselected.png';
 				this.locationSelectStyle.externalGraphic = '../img/map/location-user-selected.png';
 				this.carSelectStyle.externalGraphic = '../img/map/location-car-selected.png';
+                this.chargingStationStyle.externalGraphic = '../img/map/location-station.png';
 			}
 			
 			this.carStyleMap = new OpenLayers.StyleMap({'default':this.carDefaultStyle, 'select': this.carSelectStyle});
@@ -513,11 +520,11 @@ Map.prototype = {
 			// process the return data with streets
 			if(returnData.results === true) {
 				$(returnData.data).each(function(){
-					var point = 
-						new OpenLayers.Geometry.Point(this.longitude, this.latitude).transform(that.mapDisplayProjection, that.map.getProjectionObject());
-					that.points.push(point);
-					// add feature
-					var feature = new OpenLayers.Feature.Vector(
+					var point =
+                        new OpenLayers.Geometry.Point(this.longitude, this.latitude).transform(that.mapDisplayProjection, that.map.getProjectionObject());
+                    that.points.push(point);
+                    // add feature
+                    var feature = new OpenLayers.Feature.Vector(
 									point, {
 										location : false,
 										street : this
@@ -642,9 +649,7 @@ Map.prototype = {
          */
         processStations : function(returnData){
             // init vars
-            this.blueStyle.fillOpacity = 0;
-            this.blueStyle.strokeOpacity = 0;
-            this.stations = new OpenLayers.Layer.Vector('stations', {style: this.blueStyle, rendererOptions: {zIndexing: true} });
+            this.stations = new OpenLayers.Layer.Vector('stations', {style: this.chargingStationStyle, rendererOptions: {zIndexing: true} });
             this.map.addLayer(this.stations);
 
             var that = this;
@@ -673,12 +678,10 @@ Map.prototype = {
             var features = this.stations.features;
             for (var i = 0; i < features.length; i++) {
                 var feature = features[i];
-                if (feature.style.fillOpacity !== undefined && feature.style.fillOpacity == 0) {
-                    feature.style.fillOpacity = 1;
-                    feature.style.strokeOpacity = 1;
+                if (feature.style.display === 'none') {
+                    feature.style.display = '';
                 } else {
-                    feature.style.fillOpacity = 0;
-                    feature.style.strokeOpacity = 0;
+                    feature.style.display = 'none';
                 }
             }
             this.stations.redraw();
