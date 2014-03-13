@@ -5,11 +5,11 @@
 
 	<groupId>com.criticalsoftware.mobics</groupId>
 	<artifactId>mobics</artifactId>
-	<version>1.0.0</version>
+	<version>2.0.0</version>
 	<packaging>pom</packaging>
 
 	<name>Mobi Car Sharing</name>
-	<description>Desenvolvimento de sistema de informação para gerir a operação de clubes de car sharing (Car Clubs), tanto de pequena como de grande dimensão (de frota ou em número de colaboradores).</description>
+	<description></description>
 	<url>http://redmine.cadsh.com/projects/mobics</url>
 	<organization>
 		<name>Critical Software</name>
@@ -337,7 +337,7 @@
 			<dependency>
 				<groupId>com.criticalsoftware.mobics</groupId>
 				<artifactId>mobics-formatter</artifactId>
-				<version>${project.version}</version>
+				<version>2.0.0</version>
 			</dependency>			
 		</dependencies>
 	</dependencyManagement>
