@@ -273,15 +273,21 @@ $(document).ready(function() {
  	if($('#limited').length > 0){
  		var begin = $('#limited').attr('data-begin').split(' ');
     	var begindate = begin[0].split('/');
+        if(begindate[1] === undefined) {
+            begindate = begin[0].split('-');
+        }
     	var begintime = begin[1].split(':');
-    	
     	var limited = $('#limited').attr('data-limit');
- 		
-    	if(limited.length > 0) {
-    		var limit = limited.split(' ');
- 			var limitdate = limit[0].split('/');
+
+         if(limited.length > 0) {
+            var limit = limited.split(' ');
+            var limitdate = limit[0].split('/');
+            if(limitdate[1] === undefined) {
+                limitdate = limit[0].split('-');
+            }
+
  			var limittime = limit[1].split(':');
- 			
+
  			$('#limited').mobiscroll().datetime({
  				setText: OK_LABEL,
  				minuteText: MINUTES_LABEL,
