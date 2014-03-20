@@ -142,7 +142,7 @@ public class EditInformationContactActionBean extends AskPinActionBean {
             errors.add("taxNumber", new LocalizableError("account.information.taxNumber.invalid"));
         }
         if (!zipCode1.matches(Configuration.INSTANCE.getZipCodePattern())) {
-            errors.add("zipCode1", new LocalizableError("account.information.taxNumber.invalid"));
+            errors.add("zipCode1", new LocalizableError("account.information.zipCode.invalid"));
         }
     }
 
