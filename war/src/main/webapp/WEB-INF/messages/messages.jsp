@@ -27,7 +27,7 @@
 											<div>
 												<span><fmt:message key="messages.car.available"/></span>
 												<span>${msg.carName},&nbsp;<fmt:message key="FuelType.${msg.fuelType.name}"/></span>
-												<span><mobi:formatMobics type="currencySymbol" value="${msg.priceInUse}"/></span>
+												<span><mobi:formatMobics type="currencySymbol" value="${msg.pricePerMinute}"/></span>
 											</div>
 											<div>
 												<span>
