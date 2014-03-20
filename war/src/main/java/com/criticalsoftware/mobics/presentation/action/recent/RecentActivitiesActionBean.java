@@ -115,7 +115,7 @@ public class RecentActivitiesActionBean extends BaseActionBean {
 
         // TODO add to configuration
         Calendar thisMonth = Calendar.getInstance();
-        Calendar lastMonth = thisMonth;
+        Calendar lastMonth = Calendar.getInstance();
         lastMonth.add(Calendar.MONTH, -1);
 
         recents = customerWSServiceStub.getRecentActivities(lastMonth.getTimeInMillis(), thisMonth.getTimeInMillis(),
