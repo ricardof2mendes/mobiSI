@@ -128,7 +128,7 @@
                                 <mobi:formatMobics value="${actionBean.car.distanceThreshold}" type="distance" />
                             </span>
 							<span>
-							    ${actionBean.trip.car.configurableTime}h -
+							    ${actionBean.car.configurableTime}h -
                                 <mobi:formatMobics value="${actionBean.car.maxCostPerConfigurableHour}" type="currencySymbol" /> -
                                 <mobi:formatMobics value="${actionBean.car.includedDistancePerConfigurableHour}" type="distance" />
                             </span>
