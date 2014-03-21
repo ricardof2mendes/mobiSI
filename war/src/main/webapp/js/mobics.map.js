@@ -51,9 +51,10 @@ Map.prototype = {
 			// Styling
 			this.greenStyle = OpenLayers.Util.extend({}, OpenLayers.Feature.Vector.style['default']);
 			this.greenStyle.fillOpacity = 0.3;
-			this.greenStyle.fillColor = '#ACE228';
-			this.greenStyle.strokeColor = '#94C222';
+			this.greenStyle.fillColor = '#00FF21';
+			this.greenStyle.strokeColor = '#00FF21';
             this.greenStyle.pointRadius = 9;
+            this.greenStyle.fillOpacity = 0.4;
 
 			this.redStyle = OpenLayers.Util.extend({}, this.greenStyle);
 			this.redStyle.fillColor = '#FF0F0F';
@@ -62,6 +63,7 @@ Map.prototype = {
 			this.yellowStyle = OpenLayers.Util.extend({}, this.greenStyle);
 			this.yellowStyle.fillColor = '#FFF000';
 			this.yellowStyle.strokeColor = '#B7AD00';
+			this.yellowStyle.fillOpacity = 0.4;
 
             this.blueStyle = OpenLayers.Util.extend({}, this.greenStyle);
             this.blueStyle.fillColor = '#4FD3FF';
@@ -376,7 +378,7 @@ Map.prototype = {
 					 var polygonFeature = new OpenLayers.Feature.Vector(
 							 new OpenLayers.Geometry.Polygon([linearRing]));
 					 zonesVector.addFeatures(polygonFeature);
-					 that.map.addLayer(zonesVector);
+					 that.map.addLayer(zonesVector); 
 				});		
 			}
 		},
