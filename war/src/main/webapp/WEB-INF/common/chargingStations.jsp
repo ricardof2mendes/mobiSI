@@ -12,7 +12,7 @@
                             <fmt:message key="charging.stations.address"/>
                         </span>
                         <span>
-                            ${actionBean.station.address.street}, ${actionBean.station.address.number}, ${actionBean.station.address.postalCode}, ${actionBean.station.address.city}, ${actionBean.station.address.countryCode}
+                            ${actionBean.stationAddress}
                         </span>
                     </li>
                     <li class="detail">
@@ -31,52 +31,28 @@
         <section>
             <nav class="panel">
                 <ul>
-                    <li class="detail">
+                	<li class="detail">
                         <span>
-                            <fmt:message key="charging.stations.available.sat"/>
+                            <fmt:message key="charging.stations.status"/>
                         </span>
                         <span>
-                                ${actionBean.station.availableSattelites}
-                        </span>
-                    </li>
-                    <li class="detail">
-                        <span>
-                            <fmt:message key="charging.stations.totalStat"/>
-                        </span>
-                        <span>
-                                ${actionBean.station.totalSattelites}
-                        </span>
-                    </li>
-                </ul>
-            </nav>
-        </section>
-    </article>
-    <article>
-        <section>
-            <nav class="panel">
-                <ul>
-                    <li class="detail">
-                        <span>
-                            <fmt:message key="charging.stations.code"/>
-                        </span>
-                        <span>
-                                ${actionBean.station.chargingStationCode}
+                                ${actionBean.station.status}
                         </span>
                     </li>
                     <li class="detail">
                         <span>
-                            <fmt:message key="charging.stations.manufactor"/>
+                            <fmt:message key="charging.stations.type"/>
                         </span>
                         <span>
-                                ${actionBean.station.manufacturer}
+                                ${actionBean.station.type}
                         </span>
                     </li>
                     <li class="detail">
                         <span>
-                            <fmt:message key="charging.stations.model"/>
+                            <fmt:message key="charging.stations.available_services"/>
                         </span>
                         <span>
-                                ${actionBean.station.model}
+                                <fmt:message key="charging.stations.charging"/>
                         </span>
                     </li>
                     <li class="detail">
@@ -89,26 +65,10 @@
                     </li>
                     <li class="detail">
                         <span>
-                            <fmt:message key="charging.stations.bookable"/>
+                            <fmt:message key="charging.stations.compatibility"/>
                         </span>
                         <span>
-                                ${actionBean.station.bookable}
-                        </span>
-                    </li>
-                    <li class="detail">
-                        <span>
-                            <fmt:message key="charging.stations.status"/>
-                        </span>
-                        <span>
-                                ${actionBean.station.status}
-                        </span>
-                    </li>
-                    <li class="detail">
-                        <span>
-                            <fmt:message key="charging.stations.standalone"/>
-                        </span>
-                        <span>
-                                ${actionBean.station.standalone}
+                                ${actionBean.station.type}
                         </span>
                     </li>
                 </ul>

@@ -81,6 +81,8 @@ public abstract class BookingActionBean extends BaseActionBean {
     protected Integer height = 58;
 
     protected ChargingStationDTO station;
+    
+    protected String stationAddress;
 
     /**
      * Show pin to user
@@ -154,10 +156,26 @@ public abstract class BookingActionBean extends BaseActionBean {
     public Resolution basePrice(){
         return new ForwardResolution("/WEB-INF/common/price.jsp");
     }
+    
+    private String getFullAdress(){
+        String streetNumber = "";
+        if(station.getAddress().getNumber() != null && station.getAddress().getNumber().equals("-") == false ){
+            streetNumber = station.getAddress().getNumber() + ", ";
+        }
+        
+        String postalCode = "";
+        if(station.getAddress().getPostalCode() != null && station.getAddress().getPostalCode().equals("0000-000") == false){
+            postalCode = station.getAddress().getPostalCode() + ", ";
+        }
+        
+        String fullAddress = station.getAddress().getStreet() + ", " + streetNumber + postalCode + station.getAddress().getCity();
+        return fullAddress;
+    }
 
     public Resolution chargingStation() throws RemoteException {
         MiscellaneousWSService mix = new MiscellaneousWSServiceStub(Configuration.INSTANCE.getMiscellaneousEnpoint());
         station = mix.getMobiEChargingStationDetails(id);
+        stationAddress = getFullAdress();
         return new ForwardResolution("/WEB-INF/common/chargingStations.jsp");
     }
 
@@ -291,4 +309,12 @@ public abstract class BookingActionBean extends BaseActionBean {
     public ChargingStationDTO getStation() {
         return station;
     }
+
+    public String getStationAddress() {
+        return stationAddress;
+    }
+
+    public void setStationAddress(String stationAddress) {
+        this.stationAddress = stationAddress;
+    }   
 }
