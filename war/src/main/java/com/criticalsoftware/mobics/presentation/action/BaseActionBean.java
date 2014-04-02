@@ -69,7 +69,7 @@ public abstract class BaseActionBean implements ActionBean {
      * @param context the context to set
      */
     @Override
-    public final void setContext(ActionBeanContext context) {
+    public final void setContext(final ActionBeanContext context) {
         this.context = (MobiCSActionBeanContext) context;
     }
 
@@ -102,7 +102,7 @@ public abstract class BaseActionBean implements ActionBean {
 
         if (carClubCode != null && !carClubCode.isEmpty()) {
             carClubSimpleDTO = new CarClubWSServiceStub(Configuration.INSTANCE.getCarClubEndpoint())
-                    .getCarClubByCarClubCode(carClubCode.toUpperCase());
+            .getCarClubByCarClubCode(carClubCode.toUpperCase());
 
             if (getContext().getCarClub() == null) {
                 getContext().setCarClub(
@@ -112,12 +112,15 @@ public abstract class BaseActionBean implements ActionBean {
         } else {
             try {
                 carClubSimpleDTO = new CarClubWSServiceStub(Configuration.INSTANCE.getCarClubEndpoint())
-                        .getCarClubSimpleByURL(builder.toString());
-                if (getContext().getCarClub() == null) {
-                    getContext().setCarClub(
-                            new CarClubSimple(carClubSimpleDTO.getCarClubName(), carClubSimpleDTO.getCarClubCode(),
-                                    carClubSimpleDTO.getCarClubContactPhone(), carClubSimpleDTO
-                                            .getCarClubContactEmail()));
+                .getCarClubSimpleByURL(builder.toString());
+
+                if (carClubSimpleDTO != null) {
+                    if (getContext().getCarClub() == null) {
+                        getContext().setCarClub(
+                                new CarClubSimple(carClubSimpleDTO.getCarClubName(), carClubSimpleDTO.getCarClubCode(),
+                                        carClubSimpleDTO.getCarClubContactPhone(), carClubSimpleDTO
+                                                .getCarClubContactEmail()));
+                    }
                 }
             } catch (Exception e) {
                 LOG.warn("Could not obtain car club theme style based on supplied url: {}", builder.toString());
@@ -127,9 +130,9 @@ public abstract class BaseActionBean implements ActionBean {
         // TODO parece que não está a devolver a cor correcta
         String style = new StringBuilder((carClubSimpleDTO != null ? carClubSimpleDTO.getCarClubColorScheme()
                 : Configuration.INSTANCE.getDefaultThemeStyle()).replaceAll("_", ""))
-                .append(" ")
-                .append((carClubSimpleDTO != null ? carClubSimpleDTO.getCarClubTheme() : Configuration.INSTANCE
-                        .getDefaultThemeColor()).replaceAll("_", "")).toString();
+        .append(" ")
+        .append((carClubSimpleDTO != null ? carClubSimpleDTO.getCarClubTheme() : Configuration.INSTANCE
+                .getDefaultThemeColor()).replaceAll("_", "")).toString();
 
         if (style.indexOf(Configuration.INSTANCE.getDefaultThemeWarmWord()) > 0) {
             style.replaceAll(" ", "");
@@ -157,22 +160,24 @@ public abstract class BaseActionBean implements ActionBean {
                 resolution = new StreamingResolution(handler.getContentType(), handler.getInputStream());
             } catch (Exception e) {
                 LOG.warn("Could not obtain car club image for car club: {}", carClubCode);
-            }            
+            }
         } else {
             try {
                 CarClubWSService carClubService = new CarClubWSServiceStub(Configuration.INSTANCE.getCarClubEndpoint());
                 carClubSimpleDTO = carClubService.getCarClubSimpleByURL(builder.toString());
 
-                if (getContext().getCarClub() == null) {
-                    getContext().setCarClub(
-                            new CarClubSimple(carClubSimpleDTO.getCarClubName(), carClubSimpleDTO.getCarClubCode(),
-                                    carClubSimpleDTO.getCarClubContactPhone(), carClubSimpleDTO
-                                            .getCarClubContactEmail()));
-                }
+                if (carClubSimpleDTO != null) {
+                    if (getContext().getCarClub() == null) {
+                        getContext().setCarClub(
+                                new CarClubSimple(carClubSimpleDTO.getCarClubName(), carClubSimpleDTO.getCarClubCode(),
+                                        carClubSimpleDTO.getCarClubContactPhone(), carClubSimpleDTO
+                                        .getCarClubContactEmail()));
+                    }
 
-                handler = carClubService.getCarClubThumbnailByCarClubCode(carClubSimpleDTO.getCarClubCode(),
-                        LOGO_DIMENSIONS[0], LOGO_DIMENSIONS[1]);
-                resolution = new StreamingResolution(handler.getContentType(), handler.getInputStream());
+                    handler = carClubService.getCarClubThumbnailByCarClubCode(carClubSimpleDTO.getCarClubCode(),
+                            LOGO_DIMENSIONS[0], LOGO_DIMENSIONS[1]);
+                    resolution = new StreamingResolution(handler.getContentType(), handler.getInputStream());
+                }
             } catch (Exception e) {
                 LOG.warn("Could not obtain car club image based on supplied url: {}", builder.toString());
             }
@@ -221,7 +226,7 @@ public abstract class BaseActionBean implements ActionBean {
      * @return
      */
     public final boolean getFieldErrors() {
-        return this.context.getValidationErrors().hasFieldErrors();
+        return context.getValidationErrors().hasFieldErrors();
     }
 
 }
