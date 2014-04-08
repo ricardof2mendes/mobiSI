@@ -1,0 +1,269 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="CarWSService" targetNamespace="http://mobics.criticalsoftware.com/car"
+  xmlns:ns1="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://mobics.criticalsoftware.com/car"
+  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+    <xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://mobics.criticalsoftware.com/car"
+      xmlns:tns="http://mobics.criticalsoftware.com/car" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="buzzCar" type="tns:buzzCar" />
+      <xs:element name="buzzCarResponse" type="tns:buzzCarResponse" />
+      <xs:element name="lockCar" type="tns:lockCar" />
+      <xs:element name="lockCarResponse" type="tns:lockCarResponse" />
+      <xs:element name="reportNewIncident" type="tns:reportNewIncident" />
+      <xs:element name="reportNewIncidentResponse" type="tns:reportNewIncidentResponse" />
+      <xs:element name="unlockCar" type="tns:unlockCar" />
+      <xs:element name="unlockCarResponse" type="tns:unlockCarResponse" />
+      <xs:complexType name="lockCar">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="licensePlate" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="lockCarResponse">
+        <xs:sequence>
+          <xs:element name="return" type="xs:boolean" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="unlockCar">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="licensePlate" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="unlockCarResponse">
+        <xs:sequence>
+          <xs:element name="return" type="xs:boolean" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="reportNewIncident">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="incidentDate" type="xs:long" />
+          <xs:element form="qualified" minOccurs="0" name="licensePlate" type="xs:string" />
+          <xs:element form="qualified" minOccurs="0" name="clientAssumesIncidentLiability" type="xs:boolean" />
+          <xs:element form="qualified" minOccurs="0" name="incidentCode" type="xs:string" />
+          <xs:element form="qualified" minOccurs="0" name="description" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="reportNewIncidentResponse">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="buzzCar">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="licensePlate" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="buzzCarResponse">
+        <xs:sequence>
+          <xs:element name="return" type="xs:boolean" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="CustomerNotFoundException" type="tns:CustomerNotFoundException" />
+      <xs:complexType name="CustomerNotFoundException">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:element name="CarLicensePlateNotFoundException" type="tns:CarLicensePlateNotFoundException" />
+      <xs:complexType name="CarLicensePlateNotFoundException">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:element name="EventValidationException" type="tns:EventValidationException" />
+      <xs:complexType name="EventValidationException">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:element name="BookingNotFoundForEventException" type="tns:BookingNotFoundForEventException" />
+      <xs:complexType name="BookingNotFoundForEventException">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:element name="EventInClosedStateException" type="tns:EventInClosedStateException" />
+      <xs:complexType name="EventInClosedStateException">
+        <xs:sequence />
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="CustomerNotFoundException">
+    <wsdl:part element="tns:CustomerNotFoundException" name="CustomerNotFoundException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="EventValidationException">
+    <wsdl:part element="tns:EventValidationException" name="EventValidationException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="buzzCarResponse">
+    <wsdl:part element="tns:buzzCarResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="reportNewIncidentResponse">
+    <wsdl:part element="tns:reportNewIncidentResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="EventInClosedStateException">
+    <wsdl:part element="tns:EventInClosedStateException" name="EventInClosedStateException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="unlockCar">
+    <wsdl:part element="tns:unlockCar" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="BookingNotFoundForEventException">
+    <wsdl:part element="tns:BookingNotFoundForEventException" name="BookingNotFoundForEventException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="buzzCar">
+    <wsdl:part element="tns:buzzCar" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="CarLicensePlateNotFoundException">
+    <wsdl:part element="tns:CarLicensePlateNotFoundException" name="CarLicensePlateNotFoundException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="unlockCarResponse">
+    <wsdl:part element="tns:unlockCarResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="lockCar">
+    <wsdl:part element="tns:lockCar" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="lockCarResponse">
+    <wsdl:part element="tns:lockCarResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="reportNewIncident">
+    <wsdl:part element="tns:reportNewIncident" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="Car">
+    <wsdl:operation name="lockCar">
+      <wsdl:input message="tns:lockCar" name="lockCar">
+      </wsdl:input>
+      <wsdl:output message="tns:lockCarResponse" name="lockCarResponse">
+      </wsdl:output>
+      <wsdl:fault message="tns:CustomerNotFoundException" name="CustomerNotFoundException">
+      </wsdl:fault>
+      <wsdl:fault message="tns:CarLicensePlateNotFoundException" name="CarLicensePlateNotFoundException">
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="unlockCar">
+      <wsdl:input message="tns:unlockCar" name="unlockCar">
+      </wsdl:input>
+      <wsdl:output message="tns:unlockCarResponse" name="unlockCarResponse">
+      </wsdl:output>
+      <wsdl:fault message="tns:CustomerNotFoundException" name="CustomerNotFoundException">
+      </wsdl:fault>
+      <wsdl:fault message="tns:CarLicensePlateNotFoundException" name="CarLicensePlateNotFoundException">
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="reportNewIncident">
+      <wsdl:input message="tns:reportNewIncident" name="reportNewIncident">
+      </wsdl:input>
+      <wsdl:output message="tns:reportNewIncidentResponse" name="reportNewIncidentResponse">
+      </wsdl:output>
+      <wsdl:fault message="tns:EventValidationException" name="EventValidationException">
+      </wsdl:fault>
+      <wsdl:fault message="tns:BookingNotFoundForEventException" name="BookingNotFoundForEventException">
+      </wsdl:fault>
+      <wsdl:fault message="tns:EventInClosedStateException" name="EventInClosedStateException">
+      </wsdl:fault>
+      <wsdl:fault message="tns:CustomerNotFoundException" name="CustomerNotFoundException">
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="buzzCar">
+      <wsdl:input message="tns:buzzCar" name="buzzCar">
+        <wsp:PolicyReference URI="#SecurityServiceUsernameHashPasswordPolicy" />
+      </wsdl:input>
+      <wsdl:output message="tns:buzzCarResponse" name="buzzCarResponse">
+      </wsdl:output>
+      <wsdl:fault message="tns:CustomerNotFoundException" name="CustomerNotFoundException">
+      </wsdl:fault>
+      <wsdl:fault message="tns:CarLicensePlateNotFoundException" name="CarLicensePlateNotFoundException">
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CarWSServiceSoapBinding" type="tns:Car">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="lockCar">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="lockCar">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="lockCarResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="CustomerNotFoundException">
+        <soap:fault name="CustomerNotFoundException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="CarLicensePlateNotFoundException">
+        <soap:fault name="CarLicensePlateNotFoundException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="unlockCar">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="unlockCar">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="unlockCarResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="CustomerNotFoundException">
+        <soap:fault name="CustomerNotFoundException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="CarLicensePlateNotFoundException">
+        <soap:fault name="CarLicensePlateNotFoundException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="reportNewIncident">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="reportNewIncident">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="reportNewIncidentResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="EventValidationException">
+        <soap:fault name="EventValidationException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="BookingNotFoundForEventException">
+        <soap:fault name="BookingNotFoundForEventException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="EventInClosedStateException">
+        <soap:fault name="EventInClosedStateException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="CustomerNotFoundException">
+        <soap:fault name="CustomerNotFoundException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="buzzCar">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="buzzCar">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="buzzCarResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="CustomerNotFoundException">
+        <soap:fault name="CustomerNotFoundException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="CarLicensePlateNotFoundException">
+        <soap:fault name="CarLicensePlateNotFoundException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CarWSService">
+    <wsdl:port binding="tns:CarWSServiceSoapBinding" name="CarPort">
+      <soap:address location="http://localhost:8080/mobics-webservices/Car" />
+    </wsdl:port>
+  </wsdl:service>
+  <wsp:Policy wsu:Id="SecurityServiceUsernameHashPasswordPolicy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+    xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SupportingTokens xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702">
+          <wsp:Policy>
+            <sp:UsernameToken sp:IncludeToken="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/AlwaysToRecipient">
+              <wsp:Policy>
+                <sp:HashPassword />
+              </wsp:Policy>
+            </sp:UsernameToken>
+          </wsp:Policy>
+        </sp:SupportingTokens>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+</wsdl:definitions>

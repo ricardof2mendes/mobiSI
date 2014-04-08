@@ -1,0 +1,440 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="MiscellaneousWSService" targetNamespace="http://mobics.criticalsoftware.com/miscellaneous"
+  xmlns:ns1="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://mobics.criticalsoftware.com/miscellaneous"
+  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://www.criticalsoftware.com/mobios/services/accounting/dto"
+      version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="car_tags">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" name="tag" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="client_tags">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" name="tag" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="credit_card_configuration">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="type" type="xs:string" />
+            <xs:element name="card_number" type="xs:string" />
+            <xs:element name="month" type="xs:string" />
+            <xs:element name="year" type="xs:string" />
+            <xs:element name="securityCode" type="xs:string" />
+            <xs:element name="wallet_id" type="xs:string" />
+            <xs:element name="first_name" type="xs:string" />
+            <xs:element name="last_name" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="customerChangeStateEventMessage">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="customerName" type="xs:string" />
+            <xs:element name="carClubCode" type="xs:string" />
+            <xs:element name="stateCode" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="events_calendar">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" name="event">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="name" type="xs:string" />
+                  <xs:element name="startDate" type="xs:string" />
+                  <xs:element name="endDate" type="xs:string" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="ps2_configuration">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="nib" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="sdd_configuration">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="nib" type="xs:string" />
+            <xs:element name="payer_account" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="weekly_restriction">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" name="timePeriod">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="dayOfWeek" type="xs:int" />
+                  <xs:element name="startHour" type="xs:string" />
+                  <xs:element name="endHour" type="xs:string" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="zone_restriction">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" name="zoneCode" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:complexType name="countryDTO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="code" type="xs:string" />
+          <xs:element minOccurs="0" name="id" type="xs:string" />
+          <xs:element minOccurs="0" name="name" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified"
+      targetNamespace="http://mobics.criticalsoftware.com/miscellaneous" xmlns:ns1="http://www.criticalsoftware.com/mobios/services/accounting/dto"
+      xmlns:tns="http://mobics.criticalsoftware.com/miscellaneous" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://www.criticalsoftware.com/mobios/services/accounting/dto" />
+      <xs:element name="getAllCountries" type="tns:getAllCountries" />
+      <xs:element name="getAllCountriesResponse" type="tns:getAllCountriesResponse" />
+      <xs:element name="getAllOccupations" type="tns:getAllOccupations" />
+      <xs:element name="getAllOccupationsResponse" type="tns:getAllOccupationsResponse" />
+      <xs:element name="getAvailableLanguages" type="tns:getAvailableLanguages" />
+      <xs:element name="getAvailableLanguagesResponse" type="tns:getAvailableLanguagesResponse" />
+      <xs:element name="getMobiEChargingStationDetails" type="tns:getMobiEChargingStationDetails" />
+      <xs:element name="getMobiEChargingStationDetailsResponse" type="tns:getMobiEChargingStationDetailsResponse" />
+      <xs:element name="getMobiEChargingStations" type="tns:getMobiEChargingStations" />
+      <xs:element name="getMobiEChargingStationsResponse" type="tns:getMobiEChargingStationsResponse" />
+      <xs:element name="getTaxCodes" type="tns:getTaxCodes" />
+      <xs:element name="getTaxCodesResponse" type="tns:getTaxCodesResponse" />
+      <xs:element name="getTransportationCompanies" type="tns:getTransportationCompanies" />
+      <xs:element name="getTransportationCompaniesResponse" type="tns:getTransportationCompaniesResponse" />
+      <xs:complexType name="getAvailableLanguages">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="languageCode" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getAvailableLanguagesResponse">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:languageDTO" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="languageDTO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="code" type="xs:string" />
+          <xs:element minOccurs="0" name="name" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getMobiEChargingStations">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="getMobiEChargingStationsResponse">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:chargingStationSimpleDTO" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="chargingStationSimpleDTO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="coordinates" type="tns:coordinateDTO" />
+          <xs:element minOccurs="0" name="id" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="coordinateDTO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="latitude" type="xs:decimal" />
+          <xs:element minOccurs="0" name="longitude" type="xs:decimal" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getTaxCodes">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="getTaxCodesResponse">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getTransportationCompanies">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="getTransportationCompaniesResponse">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:transportationCompanyDTO" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="transportationCompanyDTO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="code" type="xs:string" />
+          <xs:element minOccurs="0" name="name" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getMobiEChargingStationDetails">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getMobiEChargingStationDetailsResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:chargingStationDTO" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="chargingStationDTO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="address" type="tns:chargingStationAddressDTO" />
+          <xs:element minOccurs="0" name="availableSattelites" type="xs:int" />
+          <xs:element minOccurs="0" name="bookable" type="xs:boolean" />
+          <xs:element minOccurs="0" name="chargingStationCode" type="xs:string" />
+          <xs:element minOccurs="0" name="chargingStationId" type="xs:string" />
+          <xs:element minOccurs="0" name="coordinates" type="tns:coordinateDTO" />
+          <xs:element minOccurs="0" name="id" type="xs:int" />
+          <xs:element minOccurs="0" name="manufacturer" type="xs:string" />
+          <xs:element minOccurs="0" name="model" type="xs:string" />
+          <xs:element minOccurs="0" name="operator" type="xs:string" />
+          <xs:element minOccurs="0" name="standalone" type="xs:boolean" />
+          <xs:element minOccurs="0" name="status" type="tns:mobieStatusEnum" />
+          <xs:element minOccurs="0" name="statusString" type="xs:string" />
+          <xs:element minOccurs="0" name="totalSattelites" type="xs:int" />
+          <xs:element minOccurs="0" name="type" type="tns:mobieTypeEnum" />
+          <xs:element minOccurs="0" name="typeString" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="chargingStationAddressDTO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="city" type="xs:string" />
+          <xs:element minOccurs="0" name="countryCode" type="xs:string" />
+          <xs:element minOccurs="0" name="number" type="xs:string" />
+          <xs:element minOccurs="0" name="postalCode" type="xs:string" />
+          <xs:element minOccurs="0" name="street" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getAllCountries">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="languageCode" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getAllCountriesResponse">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="ns1:countryDTO" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getAllOccupations">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="languageCode" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getAllOccupationsResponse">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:occupationDTO" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="occupationDTO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="code" type="xs:string" />
+          <xs:element minOccurs="0" name="name" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:simpleType name="mobieStatusEnum">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="AVAILABLE" />
+          <xs:enumeration value="SUSPENDED" />
+          <xs:enumeration value="DISCONNECTED" />
+          <xs:enumeration value="TEMPORARY" />
+          <xs:enumeration value="INACTIVE" />
+          <xs:enumeration value="IN_USE" />
+          <xs:enumeration value="UNAVAILABLE" />
+          <xs:enumeration value="RESERVED_ACTIVE" />
+          <xs:enumeration value="PLANNED" />
+          <xs:enumeration value="RESERVED" />
+          <xs:enumeration value="IN_INSTALATION" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="mobieTypeEnum">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="NORMAL" />
+          <xs:enumeration value="FAST" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getMobiEChargingStationDetailsResponse">
+    <wsdl:part element="tns:getMobiEChargingStationDetailsResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getTaxCodesResponse">
+    <wsdl:part element="tns:getTaxCodesResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAllCountries">
+    <wsdl:part element="tns:getAllCountries" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAllCountriesResponse">
+    <wsdl:part element="tns:getAllCountriesResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAllOccupations">
+    <wsdl:part element="tns:getAllOccupations" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAvailableLanguages">
+    <wsdl:part element="tns:getAvailableLanguages" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getMobiEChargingStationDetails">
+    <wsdl:part element="tns:getMobiEChargingStationDetails" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getTransportationCompanies">
+    <wsdl:part element="tns:getTransportationCompanies" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getTaxCodes">
+    <wsdl:part element="tns:getTaxCodes" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAllOccupationsResponse">
+    <wsdl:part element="tns:getAllOccupationsResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getTransportationCompaniesResponse">
+    <wsdl:part element="tns:getTransportationCompaniesResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getMobiEChargingStationsResponse">
+    <wsdl:part element="tns:getMobiEChargingStationsResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getMobiEChargingStations">
+    <wsdl:part element="tns:getMobiEChargingStations" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAvailableLanguagesResponse">
+    <wsdl:part element="tns:getAvailableLanguagesResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="Miscellaneous">
+    <wsdl:operation name="getAvailableLanguages">
+      <wsdl:input message="tns:getAvailableLanguages" name="getAvailableLanguages">
+      </wsdl:input>
+      <wsdl:output message="tns:getAvailableLanguagesResponse" name="getAvailableLanguagesResponse">
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getMobiEChargingStations">
+      <wsdl:input message="tns:getMobiEChargingStations" name="getMobiEChargingStations">
+      </wsdl:input>
+      <wsdl:output message="tns:getMobiEChargingStationsResponse" name="getMobiEChargingStationsResponse">
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getTaxCodes">
+      <wsdl:input message="tns:getTaxCodes" name="getTaxCodes">
+      </wsdl:input>
+      <wsdl:output message="tns:getTaxCodesResponse" name="getTaxCodesResponse">
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getTransportationCompanies">
+      <wsdl:input message="tns:getTransportationCompanies" name="getTransportationCompanies">
+      </wsdl:input>
+      <wsdl:output message="tns:getTransportationCompaniesResponse" name="getTransportationCompaniesResponse">
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getMobiEChargingStationDetails">
+      <wsdl:input message="tns:getMobiEChargingStationDetails" name="getMobiEChargingStationDetails">
+      </wsdl:input>
+      <wsdl:output message="tns:getMobiEChargingStationDetailsResponse" name="getMobiEChargingStationDetailsResponse">
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAllCountries">
+      <wsdl:input message="tns:getAllCountries" name="getAllCountries">
+      </wsdl:input>
+      <wsdl:output message="tns:getAllCountriesResponse" name="getAllCountriesResponse">
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAllOccupations">
+      <wsdl:input message="tns:getAllOccupations" name="getAllOccupations">
+      </wsdl:input>
+      <wsdl:output message="tns:getAllOccupationsResponse" name="getAllOccupationsResponse">
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="MiscellaneousWSServiceSoapBinding" type="tns:Miscellaneous">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="getAvailableLanguages">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getAvailableLanguages">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getAvailableLanguagesResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getMobiEChargingStations">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getMobiEChargingStations">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getMobiEChargingStationsResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getTaxCodes">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getTaxCodes">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getTaxCodesResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getTransportationCompanies">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getTransportationCompanies">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getTransportationCompaniesResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAllCountries">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getAllCountries">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getAllCountriesResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getMobiEChargingStationDetails">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getMobiEChargingStationDetails">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getMobiEChargingStationDetailsResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAllOccupations">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getAllOccupations">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getAllOccupationsResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="MiscellaneousWSService">
+    <wsdl:port binding="tns:MiscellaneousWSServiceSoapBinding" name="MiscellaneousPort">
+      <soap:address location="http://localhost:8080/mobics-webservices/Miscellaneous" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

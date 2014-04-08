@@ -1,0 +1,2389 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<wsdl:definitions name="CustomerWSService" targetNamespace="http://mobics.criticalsoftware.com/customer"
+  xmlns:ns1="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://mobics.criticalsoftware.com/customer"
+  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+    <xs:schema elementFormDefault="qualified" targetNamespace="http://www.criticalsoftware.com/mobios/services/accounting/dto"
+      version="1.0" xmlns:tns="http://www.criticalsoftware.com/mobios/services/accounting/dto" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="car_tags">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" name="tag" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="client_tags">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" name="tag" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="credit_card_configuration">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="type" type="xs:string" />
+            <xs:element name="card_number" type="xs:string" />
+            <xs:element name="month" type="xs:string" />
+            <xs:element name="year" type="xs:string" />
+            <xs:element name="securityCode" type="xs:string" />
+            <xs:element name="wallet_id" type="xs:string" />
+            <xs:element name="first_name" type="xs:string" />
+            <xs:element name="last_name" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="customerChangeStateEventMessage">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="customerName" type="xs:string" />
+            <xs:element name="carClubCode" type="xs:string" />
+            <xs:element name="stateCode" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="events_calendar">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" name="event">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="name" type="xs:string" />
+                  <xs:element name="startDate" type="xs:string" />
+                  <xs:element name="endDate" type="xs:string" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="ps2_configuration">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="nib" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="sdd_configuration">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="nib" type="xs:string" />
+            <xs:element name="payer_account" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="weekly_restriction">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" name="timePeriod">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element name="dayOfWeek" type="xs:int" />
+                  <xs:element name="startHour" type="xs:string" />
+                  <xs:element name="endHour" type="xs:string" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="zone_restriction">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" name="zoneCode" type="xs:string" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:complexType name="countryDTO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="code" type="xs:string" />
+          <xs:element minOccurs="0" name="id" type="xs:string" />
+          <xs:element minOccurs="0" name="name" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="tagDTO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="active" type="xs:boolean" />
+          <xs:element minOccurs="0" name="dateModified" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="tagCode" type="xs:string" />
+          <xs:element minOccurs="0" name="tagName" type="xs:string" />
+          <xs:element minOccurs="0" name="tagType" type="tns:tagTypeEnum" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:simpleType name="tagTypeEnum">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="CLIENT" />
+          <xs:enumeration value="CAR" />
+          <xs:enumeration value="COMPANY" />
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:schema>
+    <xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified"
+      targetNamespace="http://mobics.criticalsoftware.com/customer" xmlns:ns1="http://www.criticalsoftware.com/mobios/services/accounting/dto"
+      xmlns:tns="http://mobics.criticalsoftware.com/customer" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://www.criticalsoftware.com/mobios/services/accounting/dto" />
+      <xs:element name="activateAutoTopUp" type="tns:activateAutoTopUp" />
+      <xs:element name="activateAutoTopUpResponse" type="tns:activateAutoTopUpResponse" />
+      <xs:element name="addTokenToCustomer" type="tns:addTokenToCustomer" />
+      <xs:element name="addTokenToCustomerResponse" type="tns:addTokenToCustomerResponse" />
+      <xs:element name="buyCredit" type="tns:buyCredit" />
+      <xs:element name="buyCreditResponse" type="tns:buyCreditResponse" />
+      <xs:element name="changePaymentMethod" type="tns:changePaymentMethod" />
+      <xs:element name="changePaymentMethodResponse" type="tns:changePaymentMethodResponse" />
+      <xs:element name="checkCustomerHasEmailToken" type="tns:checkCustomerHasEmailToken" />
+      <xs:element name="checkCustomerHasEmailTokenResponse" type="tns:checkCustomerHasEmailTokenResponse" />
+      <xs:element name="checkIfBonusCodeIsExpired" type="tns:checkIfBonusCodeIsExpired" />
+      <xs:element name="checkIfBonusCodeIsExpiredResponse" type="tns:checkIfBonusCodeIsExpiredResponse" />
+      <xs:element name="checkIfBonusCodeIsInvalid" type="tns:checkIfBonusCodeIsInvalid" />
+      <xs:element name="checkIfBonusCodeIsInvalidResponse" type="tns:checkIfBonusCodeIsInvalidResponse" />
+      <xs:element name="checkIfBonusCodeWasAlreadyUsed" type="tns:checkIfBonusCodeWasAlreadyUsed" />
+      <xs:element name="checkIfBonusCodeWasAlreadyUsedResponse" type="tns:checkIfBonusCodeWasAlreadyUsedResponse" />
+      <xs:element name="confirmCustomerEmail" type="tns:confirmCustomerEmail" />
+      <xs:element name="confirmCustomerEmailResponse" type="tns:confirmCustomerEmailResponse" />
+      <xs:element name="confirmPasswordReset" type="tns:confirmPasswordReset" />
+      <xs:element name="confirmPasswordResetResponse" type="tns:confirmPasswordResetResponse" />
+      <xs:element name="confirmUpdateCustomerEmail" type="tns:confirmUpdateCustomerEmail" />
+      <xs:element name="confirmUpdateCustomerEmailResponse" type="tns:confirmUpdateCustomerEmailResponse" />
+      <xs:element name="customerAlreadyHasPaymentMethod" type="tns:customerAlreadyHasPaymentMethod" />
+      <xs:element name="customerAlreadyHasPaymentMethodResponse" type="tns:customerAlreadyHasPaymentMethodResponse" />
+      <xs:element name="deactivateAutoTopUp" type="tns:deactivateAutoTopUp" />
+      <xs:element name="deactivateAutoTopUpResponse" type="tns:deactivateAutoTopUpResponse" />
+      <xs:element name="getAddonUnsubscriptionEndDate" type="tns:getAddonUnsubscriptionEndDate" />
+      <xs:element name="getAddonUnsubscriptionEndDateResponse" type="tns:getAddonUnsubscriptionEndDateResponse" />
+      <xs:element name="getAvailableCreditValues" type="tns:getAvailableCreditValues" />
+      <xs:element name="getAvailableCreditValuesResponse" type="tns:getAvailableCreditValuesResponse" />
+      <xs:element name="getAvailablePromotionsForCustomer" type="tns:getAvailablePromotionsForCustomer" />
+      <xs:element name="getAvailablePromotionsForCustomerResponse" type="tns:getAvailablePromotionsForCustomerResponse" />
+      <xs:element name="getBonusDetail" type="tns:getBonusDetail" />
+      <xs:element name="getBonusDetailResponse" type="tns:getBonusDetailResponse" />
+      <xs:element name="getCreditDetailsByCdrCode" type="tns:getCreditDetailsByCdrCode" />
+      <xs:element name="getCreditDetailsByCdrCodeResponse" type="tns:getCreditDetailsByCdrCodeResponse" />
+      <xs:element name="getCreditDetailsByOrderReference" type="tns:getCreditDetailsByOrderReference" />
+      <xs:element name="getCreditDetailsByOrderReferenceResponse" type="tns:getCreditDetailsByOrderReferenceResponse" />
+      <xs:element name="getCustomerDetails" type="tns:getCustomerDetails" />
+      <xs:element name="getCustomerDetailsResponse" type="tns:getCustomerDetailsResponse" />
+      <xs:element name="getCustomerPaymentMethods" type="tns:getCustomerPaymentMethods" />
+      <xs:element name="getCustomerPaymentMethodsResponse" type="tns:getCustomerPaymentMethodsResponse" />
+      <xs:element name="getCustomerPreferences" type="tns:getCustomerPreferences" />
+      <xs:element name="getCustomerPreferencesResponse" type="tns:getCustomerPreferencesResponse" />
+      <xs:element name="getIncidentDetailsForCustomer" type="tns:getIncidentDetailsForCustomer" />
+      <xs:element name="getIncidentDetailsForCustomerResponse" type="tns:getIncidentDetailsForCustomerResponse" />
+      <xs:element name="getMaxNumberOfPaymentMethods" type="tns:getMaxNumberOfPaymentMethods" />
+      <xs:element name="getMaxNumberOfPaymentMethodsResponse" type="tns:getMaxNumberOfPaymentMethodsResponse" />
+      <xs:element name="getPrePaidMinimumBonusAccountBalanceForAutoTopUp" type="tns:getPrePaidMinimumBonusAccountBalanceForAutoTopUp" />
+      <xs:element name="getPrePaidMinimumBonusAccountBalanceForAutoTopUpResponse" type="tns:getPrePaidMinimumBonusAccountBalanceForAutoTopUpResponse" />
+      <xs:element name="getRecentActivities" type="tns:getRecentActivities" />
+      <xs:element name="getRecentActivitiesResponse" type="tns:getRecentActivitiesResponse" />
+      <xs:element name="insertBonusCode" type="tns:insertBonusCode" />
+      <xs:element name="insertBonusCodeResponse" type="tns:insertBonusCodeResponse" />
+      <xs:element name="isValidCustomerPin" type="tns:isValidCustomerPin" />
+      <xs:element name="isValidCustomerPinResponse" type="tns:isValidCustomerPinResponse" />
+      <xs:element name="registerCustomer" type="tns:registerCustomer" />
+      <xs:element name="registerCustomerResponse" type="tns:registerCustomerResponse" />
+      <xs:element name="removeTokenFromCustomer" type="tns:removeTokenFromCustomer" />
+      <xs:element name="removeTokenFromCustomerResponse" type="tns:removeTokenFromCustomerResponse" />
+      <xs:element name="requestPasswordReset" type="tns:requestPasswordReset" />
+      <xs:element name="requestPasswordResetResponse" type="tns:requestPasswordResetResponse" />
+      <xs:element name="setCustomerPreferences" type="tns:setCustomerPreferences" />
+      <xs:element name="setCustomerPreferencesResponse" type="tns:setCustomerPreferencesResponse" />
+      <xs:element name="subscribeAddon" type="tns:subscribeAddon" />
+      <xs:element name="subscribeAddonResponse" type="tns:subscribeAddonResponse" />
+      <xs:element name="unsubscribeAddon" type="tns:unsubscribeAddon" />
+      <xs:element name="unsubscribeAddonResponse" type="tns:unsubscribeAddonResponse" />
+      <xs:element name="updateCustomerDetails" type="tns:updateCustomerDetails" />
+      <xs:element name="updateCustomerDetailsResponse" type="tns:updateCustomerDetailsResponse" />
+      <xs:element name="updateCustomerEmail" type="tns:updateCustomerEmail" />
+      <xs:element name="updateCustomerEmailResponse" type="tns:updateCustomerEmailResponse" />
+      <xs:element name="updateCustomerPassword" type="tns:updateCustomerPassword" />
+      <xs:element name="updateCustomerPasswordResponse" type="tns:updateCustomerPasswordResponse" />
+      <xs:element name="updateCustomerPin" type="tns:updateCustomerPin" />
+      <xs:element name="updateCustomerPinResponse" type="tns:updateCustomerPinResponse" />
+      <xs:element name="validateCustomer" type="tns:validateCustomer" />
+      <xs:element name="validateCustomerResponse" type="tns:validateCustomerResponse" />
+      <xs:element name="validateEmail" type="tns:validateEmail" />
+      <xs:element name="validateEmailResponse" type="tns:validateEmailResponse" />
+      <xs:complexType name="insertBonusCode">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="bonusCode" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="insertBonusCodeResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:decimal" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="requestPasswordReset">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="email" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="requestPasswordResetResponse">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="registerCustomer">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="newUser" type="tns:registerCustomerDTO" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="registerCustomerDTO">
+        <xs:sequence>
+          <xs:element name="accessCarByMobileApp" type="xs:boolean" />
+          <xs:element name="accessCarByPublicTransportationCard" type="xs:boolean" />
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="addons" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="address" type="xs:string" />
+          <xs:element minOccurs="0" name="associatedTransportationCompany" type="xs:string" />
+          <xs:element minOccurs="0" name="associatedTransportationCompanyCardNumber" type="xs:string" />
+          <xs:element minOccurs="0" name="carClubCode" type="xs:string" />
+          <xs:element minOccurs="0" name="companyCode" type="xs:string" />
+          <xs:element minOccurs="0" name="countryCode" type="xs:string" />
+          <xs:element minOccurs="0" name="dateOfBirth" type="xs:string" />
+          <xs:element name="defaultLocationForSearchingCars" type="xs:boolean" />
+          <xs:element minOccurs="0" name="driversLicenseCountryCode" type="xs:string" />
+          <xs:element minOccurs="0" name="driversLicenseExpirationDate" type="xs:string" />
+          <xs:element minOccurs="0" name="driversLicenseFile" type="xs:base64Binary" />
+          <xs:element minOccurs="0" name="driversLicenseMimeType" type="xs:string" />
+          <xs:element minOccurs="0" name="driversLicenseName" type="xs:string" />
+          <xs:element minOccurs="0" name="driversLicenseNumber" type="xs:string" />
+          <xs:element minOccurs="0" name="email" type="xs:string" />
+          <xs:element minOccurs="0" name="fullName" type="xs:string" />
+          <xs:element minOccurs="0" name="idCardFile" type="xs:base64Binary" />
+          <xs:element minOccurs="0" name="idCardFileMimeType" type="xs:string" />
+          <xs:element minOccurs="0" name="idCardFileName" type="xs:string" />
+          <xs:element minOccurs="0" name="idCardNumber" type="xs:string" />
+          <xs:element minOccurs="0" name="locality" type="xs:string" />
+          <xs:element minOccurs="0" name="occupationCode" type="xs:string" />
+          <xs:element minOccurs="0" name="password" type="xs:string" />
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="paymentMethods" nillable="true"
+            type="tns:paymentMethodDetailDTO" />
+          <xs:element minOccurs="0" name="paymentType" type="tns:paymentTypeEnum" />
+          <xs:element minOccurs="0" name="phoneNumber" type="xs:string" />
+          <xs:element minOccurs="0" name="pin" type="xs:string" />
+          <xs:element minOccurs="0" name="taxNumber" type="xs:string" />
+          <xs:element minOccurs="0" name="zipCode" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="paymentMethodDetailDTO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="creditCardExpirationDateMonth" type="xs:string" />
+          <xs:element minOccurs="0" name="creditCardExpirationDateYear" type="xs:string" />
+          <xs:element minOccurs="0" name="creditCardNumber" type="xs:string" />
+          <xs:element minOccurs="0" name="creditCardSecurityCode" type="xs:string" />
+          <xs:element minOccurs="0" name="creditCardType" type="tns:creditCardTypeEnum" />
+          <xs:element minOccurs="0" name="directDebitNib" type="xs:string" />
+          <xs:element name="expired" type="xs:boolean" />
+          <xs:element minOccurs="0" name="id" type="xs:string" />
+          <xs:element minOccurs="0" name="order" type="xs:int" />
+          <xs:element minOccurs="0" name="paymentMethodEnum" type="tns:paymentMethodEnum" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="registerCustomerResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:registeredCustomerDTO" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="registeredCustomerDTO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="carClubCode" type="xs:string" />
+          <xs:element minOccurs="0" name="customerExternalUuid" type="xs:string" />
+          <xs:element minOccurs="0" name="customerName" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getBonusDetail">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="bonusCode" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getBonusDetailResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:bonusDetailsDTO" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="bonusDetailsDTO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="bonusCode" type="xs:string" />
+          <xs:element minOccurs="0" name="bonusOrigin" type="tns:bonusAccountOriginEnum" />
+          <xs:element minOccurs="0" name="bonusType" type="tns:bonusAccountTypeEnum" />
+          <xs:element minOccurs="0" name="expirationDate" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="value" type="xs:decimal" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="changePaymentMethod">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="paymentType" type="tns:paymentTypeEnum" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="changePaymentMethodResponse">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="isValidCustomerPin">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="customerPin" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="isValidCustomerPinResponse">
+        <xs:sequence>
+          <xs:element name="return" type="xs:boolean" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getPrePaidMinimumBonusAccountBalanceForAutoTopUp">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="getPrePaidMinimumBonusAccountBalanceForAutoTopUpResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:decimal" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="addTokenToCustomer">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="tokenStr" type="xs:string" />
+          <xs:element form="qualified" minOccurs="0" name="deviceId" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="addTokenToCustomerResponse">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="confirmPasswordReset">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="uuid" type="xs:string" />
+          <xs:element form="qualified" minOccurs="0" name="token" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="confirmPasswordResetResponse">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="customerAlreadyHasPaymentMethod">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="paymentMethod" type="tns:paymentMethodEnum" />
+          <xs:element form="qualified" minOccurs="0" name="number" type="xs:string" />
+          <xs:element form="qualified" minOccurs="0" name="idToIgnore" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="customerAlreadyHasPaymentMethodResponse">
+        <xs:sequence>
+          <xs:element name="return" type="xs:boolean" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getCreditDetailsByOrderReference">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="orderReference" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getCreditDetailsByOrderReferenceResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:creditPurchaseDetailsDTO" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="creditPurchaseDetailsDTO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="amount" type="xs:decimal" />
+          <xs:element minOccurs="0" name="creditCardLastFourDigits" type="xs:string" />
+          <xs:element minOccurs="0" name="creditCardType" type="tns:creditCardTypeEnum" />
+          <xs:element minOccurs="0" name="multibancoEntity" type="xs:string" />
+          <xs:element minOccurs="0" name="multibancoReference" type="xs:string" />
+          <xs:element minOccurs="0" name="paymentMethod" type="tns:creditPurchasePaymentMethodEnum" />
+          <xs:element minOccurs="0" name="purchaseMode" type="tns:creditPurchaseModeEnum" />
+          <xs:element minOccurs="0" name="timeCreated" type="xs:dateTime" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="updateCustomerDetails">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="address" type="xs:string" />
+          <xs:element form="qualified" minOccurs="0" name="locality" type="xs:string" />
+          <xs:element form="qualified" minOccurs="0" name="zipCode" type="xs:string" />
+          <xs:element form="qualified" minOccurs="0" name="phoneNumber" type="xs:string" />
+          <xs:element form="qualified" minOccurs="0" name="countryCode" type="xs:string" />
+          <xs:element form="qualified" minOccurs="0" name="fullName" type="xs:string" />
+          <xs:element form="qualified" minOccurs="0" name="taxNumber" type="xs:string" />
+          <xs:element form="qualified" minOccurs="0" name="rfidCardNo" type="xs:string" />
+          <xs:element form="qualified" minOccurs="0" name="companyCode" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="updateCustomerDetailsResponse">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="checkIfBonusCodeIsExpired">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="bonusCode" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="checkIfBonusCodeIsExpiredResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:boolean" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="validateCustomer">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="validateCustomerResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:registeredCustomerDTO" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="buyCredit">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="promotionalCodeTypeCode" type="xs:string" />
+          <xs:element form="qualified" minOccurs="0" name="paymentMethod" type="tns:creditPurchasePaymentMethodEnum" />
+          <xs:element form="qualified" minOccurs="0" name="customerPaymentMethodId" type="xs:string" />
+          <xs:element form="qualified" minOccurs="0" name="autoTopUpFlag" type="xs:boolean" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="buyCreditResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:creditPurchasePaymentInfoDTO" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="creditPurchasePaymentInfoDTO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="amount" type="xs:decimal" />
+          <xs:element minOccurs="0" name="multibancoEntity" type="xs:string" />
+          <xs:element minOccurs="0" name="multibancoReference" type="xs:string" />
+          <xs:element minOccurs="0" name="paymentMethod" type="tns:creditPurchasePaymentMethodEnum" />
+          <xs:element minOccurs="0" name="purchaseMode" type="tns:creditPurchaseModeEnum" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="updateCustomerPin">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="login" type="xs:string" />
+          <xs:element form="qualified" minOccurs="0" name="passwordConfirmation" type="xs:string" />
+          <xs:element form="qualified" minOccurs="0" name="newPin" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="updateCustomerPinResponse">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="checkCustomerHasEmailToken">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="checkCustomerHasEmailTokenResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:boolean" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="updateCustomerEmail">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="login" type="xs:string" />
+          <xs:element form="qualified" minOccurs="0" name="passwordConfirmation" type="xs:string" />
+          <xs:element form="qualified" minOccurs="0" name="newEmail" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="updateCustomerEmailResponse">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="confirmUpdateCustomerEmail">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="userUuid" type="xs:string" />
+          <xs:element form="qualified" minOccurs="0" name="token" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="confirmUpdateCustomerEmailResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getCreditDetailsByCdrCode">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="cdrCode" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getCreditDetailsByCdrCodeResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:creditPurchaseDetailsDTO" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="unsubscribeAddon">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="addonCode" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="unsubscribeAddonResponse">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="checkIfBonusCodeIsInvalid">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="bonusCode" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="checkIfBonusCodeIsInvalidResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:boolean" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="setCustomerPreferences">
+        <xs:sequence>
+          <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="columnName" type="xs:string" />
+          <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="sortAsc" type="xs:boolean" />
+          <xs:element form="qualified" minOccurs="0" name="latitude" type="xs:string" />
+          <xs:element form="qualified" minOccurs="0" name="longitude" type="xs:string" />
+          <xs:element form="qualified" minOccurs="0" name="searchRadius" type="xs:int" />
+          <xs:element form="qualified" minOccurs="0" name="communicationChannel" type="xs:string" />
+          <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="communicationChannels" type="xs:string" />
+          <xs:element form="qualified" minOccurs="0" name="timeToStartSending" type="xs:int" />
+          <xs:element form="qualified" minOccurs="0" name="timeToStopSending" type="xs:int" />
+          <xs:element form="qualified" minOccurs="0" name="numberOfNotifications" type="xs:int" />
+          <xs:element form="qualified" minOccurs="0" name="language" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="setCustomerPreferencesResponse">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="checkIfBonusCodeWasAlreadyUsed">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="bonusCode" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="checkIfBonusCodeWasAlreadyUsedResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:boolean" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="activateAutoTopUp">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="promotionalCodeTypeCode" type="xs:string" />
+          <xs:element form="qualified" minOccurs="0" name="paymentMethodId" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="activateAutoTopUpResponse">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="getCustomerDetails">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="languageCode" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getCustomerDetailsResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:editCustomerDTO" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="editCustomerDTO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="address" type="xs:string" />
+          <xs:element minOccurs="0" name="autoTopUp" type="xs:boolean" />
+          <xs:element minOccurs="0" name="autoTopUpAmount" type="xs:decimal" />
+          <xs:element minOccurs="0" name="autoTopUpCreditCardLastFourDigits" type="xs:string" />
+          <xs:element minOccurs="0" name="autoTopUpCreditCardType" type="tns:creditCardTypeEnum" />
+          <xs:element minOccurs="0" name="companyCode" type="xs:string" />
+          <xs:element minOccurs="0" name="country" type="ns1:countryDTO" />
+          <xs:element minOccurs="0" name="defaultSearchLocation" type="xs:boolean" />
+          <xs:element minOccurs="0" name="fullName" type="xs:string" />
+          <xs:element minOccurs="0" name="locality" type="xs:string" />
+          <xs:element minOccurs="0" name="paymentType" type="tns:paymentTypeEnum" />
+          <xs:element minOccurs="0" name="phoneNumber" type="xs:string" />
+          <xs:element minOccurs="0" name="rfidCardNo" type="xs:string" />
+          <xs:element minOccurs="0" name="taxNumber" type="xs:string" />
+          <xs:element minOccurs="0" name="zipCode" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getCustomerPreferences">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="getCustomerPreferencesResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:customerPreferencesDTO" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="customerPreferencesDTO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="communicationChannel" type="xs:string" />
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="communicationChannels" nillable="true" type="xs:string" />
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="fleetOrder" nillable="true"
+            type="tns:customerColumnPreferenceDTO" />
+          <xs:element minOccurs="0" name="language" type="xs:string" />
+          <xs:element minOccurs="0" name="numberOfNotifications" type="xs:int" />
+          <xs:element minOccurs="0" name="searchPosition" type="tns:coordinateDTO" />
+          <xs:element minOccurs="0" name="searchRadius" type="xs:int" />
+          <xs:element minOccurs="0" name="timeToStartSending" type="xs:int" />
+          <xs:element minOccurs="0" name="timeToStopSending" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="customerColumnPreferenceDTO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="columnName" type="xs:string" />
+          <xs:element minOccurs="0" name="sortAsc" type="xs:boolean" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="coordinateDTO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="latitude" type="xs:decimal" />
+          <xs:element minOccurs="0" name="longitude" type="xs:decimal" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="deactivateAutoTopUp">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="deactivateAutoTopUpResponse">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="removeTokenFromCustomer">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="tokenStr" type="xs:string" />
+          <xs:element form="qualified" minOccurs="0" name="deviceId" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="removeTokenFromCustomerResponse">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="validateEmail">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="email" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="validateEmailResponse">
+        <xs:sequence>
+          <xs:element name="return" type="xs:boolean" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getAvailablePromotionsForCustomer">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="startDate" type="xs:long" />
+          <xs:element form="qualified" minOccurs="0" name="endDate" type="xs:long" />
+          <xs:element form="qualified" minOccurs="0" name="languageCode" type="xs:string" />
+          <xs:element form="qualified" minOccurs="0" name="showImage" type="xs:boolean" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getAvailablePromotionsForCustomerResponse">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:promotionWebServiceListDTO" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="promotionWebServiceListDTO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="code" type="xs:string" />
+          <xs:element minOccurs="0" name="description" type="xs:string" />
+          <xs:element minOccurs="0" name="discount" type="xs:decimal" />
+          <xs:element minOccurs="0" name="image" type="xs:base64Binary" />
+          <xs:element minOccurs="0" name="name" type="xs:string" />
+          <xs:element minOccurs="0" name="status" type="tns:promotionStatusEnum" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="updateCustomerPassword">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="login" type="xs:string" />
+          <xs:element form="qualified" minOccurs="0" name="passwordConfirmation" type="xs:string" />
+          <xs:element form="qualified" minOccurs="0" name="newPassword" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="updateCustomerPasswordResponse">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="confirmCustomerEmail">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="userUuid" type="xs:string" />
+          <xs:element form="qualified" minOccurs="0" name="token" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="confirmCustomerEmailResponse">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="subscribeAddon">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="addonCode" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="subscribeAddonResponse">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="getAddonUnsubscriptionEndDate">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="addonCode" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getAddonUnsubscriptionEndDateResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:dateTime" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getMaxNumberOfPaymentMethods">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="getMaxNumberOfPaymentMethodsResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getIncidentDetailsForCustomer">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="incidentNumber" type="xs:string" />
+          <xs:element form="qualified" minOccurs="0" name="languageCode" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getIncidentDetailsForCustomerResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="tns:incidentForCustomerDTO" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="incidentForCustomerDTO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="car" type="tns:carDTO" />
+          <xs:element minOccurs="0" name="dateOfEvent" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="description" type="xs:string" />
+          <xs:element minOccurs="0" name="isLiableParty" type="xs:boolean" />
+          <xs:element minOccurs="0" name="isNegativeEvent" type="xs:boolean" />
+          <xs:element minOccurs="0" name="liableParty" type="xs:boolean" />
+          <xs:element minOccurs="0" name="number" type="xs:string" />
+          <xs:element minOccurs="0" name="taxCode" type="xs:string" />
+          <xs:element minOccurs="0" name="totalCost" type="xs:decimal" />
+          <xs:element minOccurs="0" name="totalCostWithTax" type="xs:decimal" />
+          <xs:element minOccurs="0" name="type" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="carDTO">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="addOns" nillable="true" type="tns:addOnSimpleDTO" />
+          <xs:element minOccurs="0" name="carBrandName" type="xs:string" />
+          <xs:element minOccurs="0" name="carClubCode" type="xs:string" />
+          <xs:element minOccurs="0" name="carClubName" type="xs:string" />
+          <xs:element minOccurs="0" name="carFareType" type="tns:carFareTypeEnum" />
+          <xs:element minOccurs="0" name="carModelName" type="xs:string" />
+          <xs:element minOccurs="0" name="carName" type="xs:string" />
+          <xs:element minOccurs="0" name="carType" type="tns:carTypeEnum" />
+          <xs:element minOccurs="0" name="category" type="xs:string" />
+          <xs:element minOccurs="0" name="categoryDescription" type="xs:string" />
+          <xs:element minOccurs="0" name="configurableTime" type="xs:int" />
+          <xs:element minOccurs="0" name="costPerExtraKm" type="xs:decimal" />
+          <xs:element minOccurs="0" name="currentZone" type="tns:zoneDTO" />
+          <xs:element minOccurs="0" name="deviceId" type="xs:string" />
+          <xs:element minOccurs="0" name="distance" type="xs:decimal" />
+          <xs:element minOccurs="0" name="distanceThreshold" type="xs:decimal" />
+          <xs:element minOccurs="0" name="fuelLevel" type="xs:int" />
+          <xs:element minOccurs="0" name="fuelType" type="tns:fuelTypeDTO" />
+          <xs:element minOccurs="0" name="id" type="xs:int" />
+          <xs:element minOccurs="0" name="includedDistancePerConfigurableHour" type="xs:int" />
+          <xs:element minOccurs="0" name="includedDistancePerDay" type="xs:int" />
+          <xs:element minOccurs="0" name="latitude" type="xs:decimal" />
+          <xs:element minOccurs="0" name="licensePlate" type="xs:string" />
+          <xs:element minOccurs="0" name="longitude" type="xs:decimal" />
+          <xs:element minOccurs="0" name="maxCostPerConfigurableHour" type="xs:decimal" />
+          <xs:element minOccurs="0" name="maxCostPerDay" type="xs:decimal" />
+          <xs:element minOccurs="0" name="maxCostPerHour" type="xs:decimal" />
+          <xs:element minOccurs="0" name="obsConnectionStatus" type="tns:obsConnectionStatusEnum" />
+          <xs:element minOccurs="0" name="obsNumber" type="xs:string" />
+          <xs:element minOccurs="0" name="priceBookedPerMinute" type="xs:decimal" />
+          <xs:element minOccurs="0" name="priceInUse" type="xs:decimal" />
+          <xs:element minOccurs="0" name="priceReserved" type="xs:decimal" />
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="promotions" nillable="true" type="tns:promotionSimpleDTO" />
+          <xs:element minOccurs="0" name="simNumber" type="xs:string" />
+          <xs:element minOccurs="0" name="standalone" type="xs:boolean" />
+          <xs:element minOccurs="0" name="state" type="xs:string" />
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="tags" nillable="true" type="ns1:tagDTO" />
+          <xs:element minOccurs="0" name="taxCode" type="xs:string" />
+          <xs:element minOccurs="0" name="totalDistanceTravelled" type="xs:int" />
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="zones" nillable="true" type="tns:zoneDTO" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="addOnSimpleDTO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="code" type="xs:string" />
+          <xs:element minOccurs="0" name="discount" type="xs:decimal" />
+          <xs:element minOccurs="0" name="name" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="zoneDTO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="category" type="tns:zoneCategoryEnum" />
+          <xs:element minOccurs="0" name="code" type="xs:string" />
+          <xs:element minOccurs="0" name="location" type="xs:string" />
+          <xs:element minOccurs="0" name="parentZone" type="xs:string" />
+          <xs:element minOccurs="0" name="zone" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="fuelTypeDTO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="description" type="xs:string" />
+          <xs:element minOccurs="0" name="key" type="xs:string" />
+          <xs:element minOccurs="0" name="name" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="promotionSimpleDTO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="code" type="xs:string" />
+          <xs:element minOccurs="0" name="discount" type="xs:decimal" />
+          <xs:element minOccurs="0" name="name" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getRecentActivities">
+        <xs:sequence>
+          <xs:element form="qualified" minOccurs="0" name="startDate" type="xs:long" />
+          <xs:element form="qualified" minOccurs="0" name="endDate" type="xs:long" />
+          <xs:element form="qualified" minOccurs="0" name="type" type="xs:string" />
+          <xs:element form="qualified" minOccurs="0" name="firstResult" type="xs:int" />
+          <xs:element form="qualified" minOccurs="0" name="maxResults" type="xs:int" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getRecentActivitiesResponse">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:customerActivityListDTO" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="customerActivityListDTO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="active" type="xs:boolean" />
+          <xs:element minOccurs="0" name="activityCode" type="xs:string" />
+          <xs:element minOccurs="0" name="activityDate" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="activityType" type="tns:customerActivityEnum" />
+          <xs:element minOccurs="0" name="applicableAddon" type="xs:boolean" />
+          <xs:element minOccurs="0" name="applicablePromotion" type="xs:boolean" />
+          <xs:element minOccurs="0" name="cost" type="xs:decimal" />
+          <xs:element minOccurs="0" name="costWithTax" type="xs:decimal" />
+          <xs:element minOccurs="0" name="isDebit" type="xs:boolean" />
+          <xs:element minOccurs="0" name="state" type="xs:string" />
+          <xs:element minOccurs="0" name="taxCode" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getCustomerPaymentMethods">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="getCustomerPaymentMethodsResponse">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:paymentMethodListDTO" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="paymentMethodListDTO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="creditCardNumberLastFourDigits" type="xs:string" />
+          <xs:element minOccurs="0" name="creditCardType" type="tns:creditCardTypeEnum" />
+          <xs:element minOccurs="0" name="directDebitNib" type="xs:string" />
+          <xs:element name="expired" type="xs:boolean" />
+          <xs:element minOccurs="0" name="id" type="xs:string" />
+          <xs:element minOccurs="0" name="order" type="xs:int" />
+          <xs:element minOccurs="0" name="paymentMethodEnum" type="tns:paymentMethodEnum" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="getAvailableCreditValues">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="getAvailableCreditValuesResponse">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:promotionalCodeTypeDTO" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="promotionalCodeTypeDTO">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="active" type="xs:boolean" />
+          <xs:element minOccurs="0" name="code" type="xs:string" />
+          <xs:element minOccurs="0" name="isClient" type="xs:boolean" />
+          <xs:element minOccurs="0" name="isCorporate" type="xs:boolean" />
+          <xs:element minOccurs="0" name="modifiedBy" type="xs:string" />
+          <xs:element minOccurs="0" name="modifiedDate" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="status" type="tns:promotionalCodeStateEnum" />
+          <xs:element minOccurs="0" name="value" type="xs:decimal" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:simpleType name="creditCardTypeEnum">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="VISA" />
+          <xs:enumeration value="MASTERCARD" />
+          <xs:enumeration value="REDUNICRE" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="paymentMethodEnum">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="DIRECT_DEBIT" />
+          <xs:enumeration value="SUB_ACCOUNT" />
+          <xs:enumeration value="CREDIT_CARD" />
+          <xs:enumeration value="TEMPORARY_CREDIT_CARD" />
+          <xs:enumeration value="MANUAL" />
+          <xs:enumeration value="MULTIBANCO" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="paymentTypeEnum">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="PREPAID" />
+          <xs:enumeration value="POSTPAID" />
+          <xs:enumeration value="POSTPAID_PENDING" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="bonusAccountOriginEnum">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="INVOICE" />
+          <xs:enumeration value="INCIDENT" />
+          <xs:enumeration value="BOOKING" />
+          <xs:enumeration value="CREDIT" />
+          <xs:enumeration value="EXPIRED" />
+          <xs:enumeration value="CANCELLED" />
+          <xs:enumeration value="ACTIVE" />
+          <xs:enumeration value="NA" />
+          <xs:enumeration value="BONUS_ADJUST" />
+          <xs:enumeration value="PROMOTIONAL_CODE" />
+          <xs:enumeration value="ADDITIONAL_SERVICE" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="bonusAccountTypeEnum">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="IMMEDIATE" />
+          <xs:enumeration value="DEFERRED" />
+          <xs:enumeration value="NA" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="creditPurchasePaymentMethodEnum">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="CREDIT_CARD" />
+          <xs:enumeration value="MULTIBANCO" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="creditPurchaseModeEnum">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="MANUAL_PURCHASE" />
+          <xs:enumeration value="AUTO_TOP_UP" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="promotionStatusEnum">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="PENDING" />
+          <xs:enumeration value="ONGOING" />
+          <xs:enumeration value="ENDED" />
+          <xs:enumeration value="ENABLED" />
+          <xs:enumeration value="DISABLED" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="carFareTypeEnum">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="BASE" />
+          <xs:enumeration value="STEP" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="carTypeEnum">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="NORMAL" />
+          <xs:enumeration value="SCHEDULE_BOOKING" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="zoneCategoryEnum">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="NORMAL" />
+          <xs:enumeration value="SPECIAL" />
+          <xs:enumeration value="UNWANTED" />
+          <xs:enumeration value="PARKING" />
+          <xs:enumeration value="FORBIDDEN" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="obsConnectionStatusEnum">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="UNTESTED" />
+          <xs:enumeration value="WAITING" />
+          <xs:enumeration value="OPERATIONAL" />
+          <xs:enumeration value="NONOPERATIONAL" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="customerActivityEnum">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="TRIP" />
+          <xs:enumeration value="FIND_A_CAR_FOR_LATER" />
+          <xs:enumeration value="ADVANCE_BOOKING" />
+          <xs:enumeration value="INCIDENT" />
+          <xs:enumeration value="EVENT" />
+          <xs:enumeration value="ALL" />
+          <xs:enumeration value="PROMOTION_CODE" />
+          <xs:enumeration value="CREDIT" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:simpleType name="promotionalCodeStateEnum">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="ENABLED" />
+          <xs:enumeration value="DISABLED" />
+        </xs:restriction>
+      </xs:simpleType>
+      <xs:element name="PromotionalCodeCodeExpiredException" type="tns:PromotionalCodeCodeExpiredException" />
+      <xs:complexType name="PromotionalCodeCodeExpiredException">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:element name="PromotionalCodeCodeNotFoundException" type="tns:PromotionalCodeCodeNotFoundException" />
+      <xs:complexType name="PromotionalCodeCodeNotFoundException">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:element name="PromotionalCodeCodeInvalidException" type="tns:PromotionalCodeCodeInvalidException" />
+      <xs:complexType name="PromotionalCodeCodeInvalidException">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:element name="InvalidLoginException" type="tns:InvalidLoginException" />
+      <xs:complexType name="InvalidLoginException">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:element name="CustomerNotFoundException" type="tns:CustomerNotFoundException" />
+      <xs:complexType name="CustomerNotFoundException">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:element name="NotAvailablePaymentMethodException" type="tns:NotAvailablePaymentMethodException" />
+      <xs:complexType name="NotAvailablePaymentMethodException">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:element name="CustomerServiceException" type="tns:CustomerServiceException" />
+      <xs:complexType name="CustomerServiceException">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:element name="AlreadyExistentPaymentMethodException" type="tns:AlreadyExistentPaymentMethodException" />
+      <xs:complexType name="AlreadyExistentPaymentMethodException">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:element name="CustomerHasPaymentsInWaitingInfoException" type="tns:CustomerHasPaymentsInWaitingInfoException" />
+      <xs:complexType name="CustomerHasPaymentsInWaitingInfoException">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:element name="PushNotificationException" type="tns:PushNotificationException" />
+      <xs:complexType name="PushNotificationException">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:element name="InvalidPasswordTokenException" type="tns:InvalidPasswordTokenException" />
+      <xs:complexType name="InvalidPasswordTokenException">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:element name="CreditPurchaseException" type="tns:CreditPurchaseException" />
+      <xs:complexType name="CreditPurchaseException">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:element name="CustomerEditionException" type="tns:CustomerEditionException" />
+      <xs:complexType name="CustomerEditionException">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:element name="OrganizationNotFoundException" type="tns:OrganizationNotFoundException" />
+      <xs:complexType name="OrganizationNotFoundException">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:element name="PromotionalCodeTypeNotFoundException" type="tns:PromotionalCodeTypeNotFoundException" />
+      <xs:complexType name="PromotionalCodeTypeNotFoundException">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:element name="InvalidEmailTokenException" type="tns:InvalidEmailTokenException" />
+      <xs:complexType name="InvalidEmailTokenException">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:element name="AddOnNotSubscribedException" type="tns:AddOnNotSubscribedException" />
+      <xs:complexType name="AddOnNotSubscribedException">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:element name="UnsubscribedAddonException" type="tns:UnsubscribedAddonException" />
+      <xs:complexType name="UnsubscribedAddonException">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:element name="NotStartedAddOnException" type="tns:NotStartedAddOnException" />
+      <xs:complexType name="NotStartedAddOnException">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:element name="ExpiredAddonException" type="tns:ExpiredAddonException" />
+      <xs:complexType name="ExpiredAddonException">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:element name="AddOnNotFoundException" type="tns:AddOnNotFoundException" />
+      <xs:complexType name="AddOnNotFoundException">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:element name="AddOnAlreadySubscribedException" type="tns:AddOnAlreadySubscribedException" />
+      <xs:complexType name="AddOnAlreadySubscribedException">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:element name="EventNotFoundException" type="tns:EventNotFoundException" />
+      <xs:complexType name="EventNotFoundException">
+        <xs:sequence />
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getPrePaidMinimumBonusAccountBalanceForAutoTopUp">
+    <wsdl:part element="tns:getPrePaidMinimumBonusAccountBalanceForAutoTopUp" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateCustomerEmail">
+    <wsdl:part element="tns:updateCustomerEmail" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deactivateAutoTopUp">
+    <wsdl:part element="tns:deactivateAutoTopUp" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAddonUnsubscriptionEndDateResponse">
+    <wsdl:part element="tns:getAddonUnsubscriptionEndDateResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="AddOnAlreadySubscribedException">
+    <wsdl:part element="tns:AddOnAlreadySubscribedException" name="AddOnAlreadySubscribedException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="CustomerNotFoundException">
+    <wsdl:part element="tns:CustomerNotFoundException" name="CustomerNotFoundException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getBonusDetail">
+    <wsdl:part element="tns:getBonusDetail" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="validateCustomer">
+    <wsdl:part element="tns:validateCustomer" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="confirmPasswordReset">
+    <wsdl:part element="tns:confirmPasswordReset" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="isValidCustomerPin">
+    <wsdl:part element="tns:isValidCustomerPin" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="InvalidEmailTokenException">
+    <wsdl:part element="tns:InvalidEmailTokenException" name="InvalidEmailTokenException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="validateEmail">
+    <wsdl:part element="tns:validateEmail" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getPrePaidMinimumBonusAccountBalanceForAutoTopUpResponse">
+    <wsdl:part element="tns:getPrePaidMinimumBonusAccountBalanceForAutoTopUpResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="checkCustomerHasEmailTokenResponse">
+    <wsdl:part element="tns:checkCustomerHasEmailTokenResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="AddOnNotFoundException">
+    <wsdl:part element="tns:AddOnNotFoundException" name="AddOnNotFoundException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="InvalidLoginException">
+    <wsdl:part element="tns:InvalidLoginException" name="InvalidLoginException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getBonusDetailResponse">
+    <wsdl:part element="tns:getBonusDetailResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="confirmUpdateCustomerEmail">
+    <wsdl:part element="tns:confirmUpdateCustomerEmail" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getCustomerDetails">
+    <wsdl:part element="tns:getCustomerDetails" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="UnsubscribedAddonException">
+    <wsdl:part element="tns:UnsubscribedAddonException" name="UnsubscribedAddonException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="registerCustomer">
+    <wsdl:part element="tns:registerCustomer" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="confirmCustomerEmail">
+    <wsdl:part element="tns:confirmCustomerEmail" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="PromotionalCodeTypeNotFoundException">
+    <wsdl:part element="tns:PromotionalCodeTypeNotFoundException" name="PromotionalCodeTypeNotFoundException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="NotStartedAddOnException">
+    <wsdl:part element="tns:NotStartedAddOnException" name="NotStartedAddOnException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="confirmPasswordResetResponse">
+    <wsdl:part element="tns:confirmPasswordResetResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="PromotionalCodeCodeExpiredException">
+    <wsdl:part element="tns:PromotionalCodeCodeExpiredException" name="PromotionalCodeCodeExpiredException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="PromotionalCodeCodeNotFoundException">
+    <wsdl:part element="tns:PromotionalCodeCodeNotFoundException" name="PromotionalCodeCodeNotFoundException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="validateCustomerResponse">
+    <wsdl:part element="tns:validateCustomerResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="buyCreditResponse">
+    <wsdl:part element="tns:buyCreditResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="subscribeAddonResponse">
+    <wsdl:part element="tns:subscribeAddonResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="unsubscribeAddonResponse">
+    <wsdl:part element="tns:unsubscribeAddonResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getMaxNumberOfPaymentMethods">
+    <wsdl:part element="tns:getMaxNumberOfPaymentMethods" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getCreditDetailsByCdrCode">
+    <wsdl:part element="tns:getCreditDetailsByCdrCode" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAvailableCreditValuesResponse">
+    <wsdl:part element="tns:getAvailableCreditValuesResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="EventNotFoundException">
+    <wsdl:part element="tns:EventNotFoundException" name="EventNotFoundException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="OrganizationNotFoundException">
+    <wsdl:part element="tns:OrganizationNotFoundException" name="OrganizationNotFoundException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="subscribeAddon">
+    <wsdl:part element="tns:subscribeAddon" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="setCustomerPreferencesResponse">
+    <wsdl:part element="tns:setCustomerPreferencesResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="checkIfBonusCodeIsInvalidResponse">
+    <wsdl:part element="tns:checkIfBonusCodeIsInvalidResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="CreditPurchaseException">
+    <wsdl:part element="tns:CreditPurchaseException" name="CreditPurchaseException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAvailableCreditValues">
+    <wsdl:part element="tns:getAvailableCreditValues" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="checkIfBonusCodeWasAlreadyUsedResponse">
+    <wsdl:part element="tns:checkIfBonusCodeWasAlreadyUsedResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRecentActivities">
+    <wsdl:part element="tns:getRecentActivities" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="checkIfBonusCodeWasAlreadyUsed">
+    <wsdl:part element="tns:checkIfBonusCodeWasAlreadyUsed" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAvailablePromotionsForCustomerResponse">
+    <wsdl:part element="tns:getAvailablePromotionsForCustomerResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="changePaymentMethod">
+    <wsdl:part element="tns:changePaymentMethod" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="changePaymentMethodResponse">
+    <wsdl:part element="tns:changePaymentMethodResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getCreditDetailsByCdrCodeResponse">
+    <wsdl:part element="tns:getCreditDetailsByCdrCodeResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="removeTokenFromCustomer">
+    <wsdl:part element="tns:removeTokenFromCustomer" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="CustomerEditionException">
+    <wsdl:part element="tns:CustomerEditionException" name="CustomerEditionException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="confirmCustomerEmailResponse">
+    <wsdl:part element="tns:confirmCustomerEmailResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="InvalidPasswordTokenException">
+    <wsdl:part element="tns:InvalidPasswordTokenException" name="InvalidPasswordTokenException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="NotAvailablePaymentMethodException">
+    <wsdl:part element="tns:NotAvailablePaymentMethodException" name="NotAvailablePaymentMethodException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="validateEmailResponse">
+    <wsdl:part element="tns:validateEmailResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateCustomerDetails">
+    <wsdl:part element="tns:updateCustomerDetails" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getIncidentDetailsForCustomerResponse">
+    <wsdl:part element="tns:getIncidentDetailsForCustomerResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateCustomerDetailsResponse">
+    <wsdl:part element="tns:updateCustomerDetailsResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getCreditDetailsByOrderReference">
+    <wsdl:part element="tns:getCreditDetailsByOrderReference" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="requestPasswordReset">
+    <wsdl:part element="tns:requestPasswordReset" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="registerCustomerResponse">
+    <wsdl:part element="tns:registerCustomerResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="activateAutoTopUpResponse">
+    <wsdl:part element="tns:activateAutoTopUpResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getMaxNumberOfPaymentMethodsResponse">
+    <wsdl:part element="tns:getMaxNumberOfPaymentMethodsResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="AddOnNotSubscribedException">
+    <wsdl:part element="tns:AddOnNotSubscribedException" name="AddOnNotSubscribedException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="PushNotificationException">
+    <wsdl:part element="tns:PushNotificationException" name="PushNotificationException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="unsubscribeAddon">
+    <wsdl:part element="tns:unsubscribeAddon" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="insertBonusCodeResponse">
+    <wsdl:part element="tns:insertBonusCodeResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="insertBonusCode">
+    <wsdl:part element="tns:insertBonusCode" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="AlreadyExistentPaymentMethodException">
+    <wsdl:part element="tns:AlreadyExistentPaymentMethodException" name="AlreadyExistentPaymentMethodException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addTokenToCustomer">
+    <wsdl:part element="tns:addTokenToCustomer" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="customerAlreadyHasPaymentMethodResponse">
+    <wsdl:part element="tns:customerAlreadyHasPaymentMethodResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="requestPasswordResetResponse">
+    <wsdl:part element="tns:requestPasswordResetResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="checkIfBonusCodeIsExpiredResponse">
+    <wsdl:part element="tns:checkIfBonusCodeIsExpiredResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateCustomerPassword">
+    <wsdl:part element="tns:updateCustomerPassword" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="customerAlreadyHasPaymentMethod">
+    <wsdl:part element="tns:customerAlreadyHasPaymentMethod" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="confirmUpdateCustomerEmailResponse">
+    <wsdl:part element="tns:confirmUpdateCustomerEmailResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getIncidentDetailsForCustomer">
+    <wsdl:part element="tns:getIncidentDetailsForCustomer" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getCustomerPreferencesResponse">
+    <wsdl:part element="tns:getCustomerPreferencesResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="checkIfBonusCodeIsExpired">
+    <wsdl:part element="tns:checkIfBonusCodeIsExpired" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="removeTokenFromCustomerResponse">
+    <wsdl:part element="tns:removeTokenFromCustomerResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="isValidCustomerPinResponse">
+    <wsdl:part element="tns:isValidCustomerPinResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAvailablePromotionsForCustomer">
+    <wsdl:part element="tns:getAvailablePromotionsForCustomer" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getRecentActivitiesResponse">
+    <wsdl:part element="tns:getRecentActivitiesResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getCreditDetailsByOrderReferenceResponse">
+    <wsdl:part element="tns:getCreditDetailsByOrderReferenceResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deactivateAutoTopUpResponse">
+    <wsdl:part element="tns:deactivateAutoTopUpResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ExpiredAddonException">
+    <wsdl:part element="tns:ExpiredAddonException" name="ExpiredAddonException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="PromotionalCodeCodeInvalidException">
+    <wsdl:part element="tns:PromotionalCodeCodeInvalidException" name="PromotionalCodeCodeInvalidException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="buyCredit">
+    <wsdl:part element="tns:buyCredit" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="setCustomerPreferences">
+    <wsdl:part element="tns:setCustomerPreferences" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateCustomerPasswordResponse">
+    <wsdl:part element="tns:updateCustomerPasswordResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateCustomerPinResponse">
+    <wsdl:part element="tns:updateCustomerPinResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateCustomerPin">
+    <wsdl:part element="tns:updateCustomerPin" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getCustomerPreferences">
+    <wsdl:part element="tns:getCustomerPreferences" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateCustomerEmailResponse">
+    <wsdl:part element="tns:updateCustomerEmailResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getAddonUnsubscriptionEndDate">
+    <wsdl:part element="tns:getAddonUnsubscriptionEndDate" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="activateAutoTopUp">
+    <wsdl:part element="tns:activateAutoTopUp" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getCustomerDetailsResponse">
+    <wsdl:part element="tns:getCustomerDetailsResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getCustomerPaymentMethodsResponse">
+    <wsdl:part element="tns:getCustomerPaymentMethodsResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addTokenToCustomerResponse">
+    <wsdl:part element="tns:addTokenToCustomerResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="checkIfBonusCodeIsInvalid">
+    <wsdl:part element="tns:checkIfBonusCodeIsInvalid" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="CustomerServiceException">
+    <wsdl:part element="tns:CustomerServiceException" name="CustomerServiceException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="CustomerHasPaymentsInWaitingInfoException">
+    <wsdl:part element="tns:CustomerHasPaymentsInWaitingInfoException" name="CustomerHasPaymentsInWaitingInfoException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getCustomerPaymentMethods">
+    <wsdl:part element="tns:getCustomerPaymentMethods" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="checkCustomerHasEmailToken">
+    <wsdl:part element="tns:checkCustomerHasEmailToken" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="Customer">
+    <wsdl:operation name="insertBonusCode">
+      <wsdl:input message="tns:insertBonusCode" name="insertBonusCode">
+      </wsdl:input>
+      <wsdl:output message="tns:insertBonusCodeResponse" name="insertBonusCodeResponse">
+      </wsdl:output>
+      <wsdl:fault message="tns:PromotionalCodeCodeInvalidException" name="PromotionalCodeCodeInvalidException">
+      </wsdl:fault>
+      <wsdl:fault message="tns:PromotionalCodeCodeNotFoundException" name="PromotionalCodeCodeNotFoundException">
+      </wsdl:fault>
+      <wsdl:fault message="tns:PromotionalCodeCodeExpiredException" name="PromotionalCodeCodeExpiredException">
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="requestPasswordReset">
+      <wsdl:input message="tns:requestPasswordReset" name="requestPasswordReset">
+      </wsdl:input>
+      <wsdl:output message="tns:requestPasswordResetResponse" name="requestPasswordResetResponse">
+      </wsdl:output>
+      <wsdl:fault message="tns:CustomerNotFoundException" name="CustomerNotFoundException">
+      </wsdl:fault>
+      <wsdl:fault message="tns:InvalidLoginException" name="InvalidLoginException">
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="registerCustomer">
+      <wsdl:input message="tns:registerCustomer" name="registerCustomer">
+      </wsdl:input>
+      <wsdl:output message="tns:registerCustomerResponse" name="registerCustomerResponse">
+      </wsdl:output>
+      <wsdl:fault message="tns:NotAvailablePaymentMethodException" name="NotAvailablePaymentMethodException">
+      </wsdl:fault>
+      <wsdl:fault message="tns:AlreadyExistentPaymentMethodException" name="AlreadyExistentPaymentMethodException">
+      </wsdl:fault>
+      <wsdl:fault message="tns:CustomerServiceException" name="CustomerServiceException">
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getBonusDetail">
+      <wsdl:input message="tns:getBonusDetail" name="getBonusDetail">
+      </wsdl:input>
+      <wsdl:output message="tns:getBonusDetailResponse" name="getBonusDetailResponse">
+      </wsdl:output>
+      <wsdl:fault message="tns:PromotionalCodeCodeInvalidException" name="PromotionalCodeCodeInvalidException">
+      </wsdl:fault>
+      <wsdl:fault message="tns:PromotionalCodeCodeNotFoundException" name="PromotionalCodeCodeNotFoundException">
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="changePaymentMethod">
+      <wsdl:input message="tns:changePaymentMethod" name="changePaymentMethod">
+      </wsdl:input>
+      <wsdl:output message="tns:changePaymentMethodResponse" name="changePaymentMethodResponse">
+      </wsdl:output>
+      <wsdl:fault message="tns:CustomerNotFoundException" name="CustomerNotFoundException">
+      </wsdl:fault>
+      <wsdl:fault message="tns:CustomerHasPaymentsInWaitingInfoException" name="CustomerHasPaymentsInWaitingInfoException">
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="isValidCustomerPin">
+      <wsdl:input message="tns:isValidCustomerPin" name="isValidCustomerPin">
+      </wsdl:input>
+      <wsdl:output message="tns:isValidCustomerPinResponse" name="isValidCustomerPinResponse">
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getPrePaidMinimumBonusAccountBalanceForAutoTopUp">
+      <wsdl:input message="tns:getPrePaidMinimumBonusAccountBalanceForAutoTopUp" name="getPrePaidMinimumBonusAccountBalanceForAutoTopUp">
+      </wsdl:input>
+      <wsdl:output message="tns:getPrePaidMinimumBonusAccountBalanceForAutoTopUpResponse" name="getPrePaidMinimumBonusAccountBalanceForAutoTopUpResponse">
+      </wsdl:output>
+      <wsdl:fault message="tns:CustomerNotFoundException" name="CustomerNotFoundException">
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="addTokenToCustomer">
+      <wsdl:input message="tns:addTokenToCustomer" name="addTokenToCustomer">
+      </wsdl:input>
+      <wsdl:output message="tns:addTokenToCustomerResponse" name="addTokenToCustomerResponse">
+      </wsdl:output>
+      <wsdl:fault message="tns:PushNotificationException" name="PushNotificationException">
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="confirmPasswordReset">
+      <wsdl:input message="tns:confirmPasswordReset" name="confirmPasswordReset">
+      </wsdl:input>
+      <wsdl:output message="tns:confirmPasswordResetResponse" name="confirmPasswordResetResponse">
+      </wsdl:output>
+      <wsdl:fault message="tns:InvalidPasswordTokenException" name="InvalidPasswordTokenException">
+      </wsdl:fault>
+      <wsdl:fault message="tns:CustomerNotFoundException" name="CustomerNotFoundException">
+      </wsdl:fault>
+      <wsdl:fault message="tns:InvalidLoginException" name="InvalidLoginException">
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="customerAlreadyHasPaymentMethod">
+      <wsdl:input message="tns:customerAlreadyHasPaymentMethod" name="customerAlreadyHasPaymentMethod">
+      </wsdl:input>
+      <wsdl:output message="tns:customerAlreadyHasPaymentMethodResponse" name="customerAlreadyHasPaymentMethodResponse">
+      </wsdl:output>
+      <wsdl:fault message="tns:CustomerNotFoundException" name="CustomerNotFoundException">
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getCreditDetailsByOrderReference">
+      <wsdl:input message="tns:getCreditDetailsByOrderReference" name="getCreditDetailsByOrderReference">
+      </wsdl:input>
+      <wsdl:output message="tns:getCreditDetailsByOrderReferenceResponse" name="getCreditDetailsByOrderReferenceResponse">
+      </wsdl:output>
+      <wsdl:fault message="tns:CustomerNotFoundException" name="CustomerNotFoundException">
+      </wsdl:fault>
+      <wsdl:fault message="tns:CreditPurchaseException" name="CreditPurchaseException">
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="updateCustomerDetails">
+      <wsdl:input message="tns:updateCustomerDetails" name="updateCustomerDetails">
+      </wsdl:input>
+      <wsdl:output message="tns:updateCustomerDetailsResponse" name="updateCustomerDetailsResponse">
+      </wsdl:output>
+      <wsdl:fault message="tns:CustomerNotFoundException" name="CustomerNotFoundException">
+      </wsdl:fault>
+      <wsdl:fault message="tns:CustomerEditionException" name="CustomerEditionException">
+      </wsdl:fault>
+      <wsdl:fault message="tns:CustomerServiceException" name="CustomerServiceException">
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="checkIfBonusCodeIsExpired">
+      <wsdl:input message="tns:checkIfBonusCodeIsExpired" name="checkIfBonusCodeIsExpired">
+      </wsdl:input>
+      <wsdl:output message="tns:checkIfBonusCodeIsExpiredResponse" name="checkIfBonusCodeIsExpiredResponse">
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="validateCustomer">
+      <wsdl:input message="tns:validateCustomer" name="validateCustomer">
+      </wsdl:input>
+      <wsdl:output message="tns:validateCustomerResponse" name="validateCustomerResponse">
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="buyCredit">
+      <wsdl:input message="tns:buyCredit" name="buyCredit">
+      </wsdl:input>
+      <wsdl:output message="tns:buyCreditResponse" name="buyCreditResponse">
+      </wsdl:output>
+      <wsdl:fault message="tns:CustomerNotFoundException" name="CustomerNotFoundException">
+      </wsdl:fault>
+      <wsdl:fault message="tns:OrganizationNotFoundException" name="OrganizationNotFoundException">
+      </wsdl:fault>
+      <wsdl:fault message="tns:PromotionalCodeTypeNotFoundException" name="PromotionalCodeTypeNotFoundException">
+      </wsdl:fault>
+      <wsdl:fault message="tns:CreditPurchaseException" name="CreditPurchaseException">
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="updateCustomerPin">
+      <wsdl:input message="tns:updateCustomerPin" name="updateCustomerPin">
+      </wsdl:input>
+      <wsdl:output message="tns:updateCustomerPinResponse" name="updateCustomerPinResponse">
+      </wsdl:output>
+      <wsdl:fault message="tns:InvalidLoginException" name="InvalidLoginException">
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="checkCustomerHasEmailToken">
+      <wsdl:input message="tns:checkCustomerHasEmailToken" name="checkCustomerHasEmailToken">
+      </wsdl:input>
+      <wsdl:output message="tns:checkCustomerHasEmailTokenResponse" name="checkCustomerHasEmailTokenResponse">
+      </wsdl:output>
+      <wsdl:fault message="tns:InvalidEmailTokenException" name="InvalidEmailTokenException">
+      </wsdl:fault>
+      <wsdl:fault message="tns:CustomerNotFoundException" name="CustomerNotFoundException">
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="updateCustomerEmail">
+      <wsdl:input message="tns:updateCustomerEmail" name="updateCustomerEmail">
+      </wsdl:input>
+      <wsdl:output message="tns:updateCustomerEmailResponse" name="updateCustomerEmailResponse">
+      </wsdl:output>
+      <wsdl:fault message="tns:InvalidLoginException" name="InvalidLoginException">
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="confirmUpdateCustomerEmail">
+      <wsdl:input message="tns:confirmUpdateCustomerEmail" name="confirmUpdateCustomerEmail">
+      </wsdl:input>
+      <wsdl:output message="tns:confirmUpdateCustomerEmailResponse" name="confirmUpdateCustomerEmailResponse">
+      </wsdl:output>
+      <wsdl:fault message="tns:InvalidEmailTokenException" name="InvalidEmailTokenException">
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getCreditDetailsByCdrCode">
+      <wsdl:input message="tns:getCreditDetailsByCdrCode" name="getCreditDetailsByCdrCode">
+      </wsdl:input>
+      <wsdl:output message="tns:getCreditDetailsByCdrCodeResponse" name="getCreditDetailsByCdrCodeResponse">
+      </wsdl:output>
+      <wsdl:fault message="tns:CustomerNotFoundException" name="CustomerNotFoundException">
+      </wsdl:fault>
+      <wsdl:fault message="tns:CreditPurchaseException" name="CreditPurchaseException">
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="unsubscribeAddon">
+      <wsdl:input message="tns:unsubscribeAddon" name="unsubscribeAddon">
+      </wsdl:input>
+      <wsdl:output message="tns:unsubscribeAddonResponse" name="unsubscribeAddonResponse">
+      </wsdl:output>
+      <wsdl:fault message="tns:AddOnNotSubscribedException" name="AddOnNotSubscribedException">
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="checkIfBonusCodeIsInvalid">
+      <wsdl:input message="tns:checkIfBonusCodeIsInvalid" name="checkIfBonusCodeIsInvalid">
+      </wsdl:input>
+      <wsdl:output message="tns:checkIfBonusCodeIsInvalidResponse" name="checkIfBonusCodeIsInvalidResponse">
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setCustomerPreferences">
+      <wsdl:input message="tns:setCustomerPreferences" name="setCustomerPreferences">
+      </wsdl:input>
+      <wsdl:output message="tns:setCustomerPreferencesResponse" name="setCustomerPreferencesResponse">
+      </wsdl:output>
+      <wsdl:fault message="tns:CustomerNotFoundException" name="CustomerNotFoundException">
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="checkIfBonusCodeWasAlreadyUsed">
+      <wsdl:input message="tns:checkIfBonusCodeWasAlreadyUsed" name="checkIfBonusCodeWasAlreadyUsed">
+      </wsdl:input>
+      <wsdl:output message="tns:checkIfBonusCodeWasAlreadyUsedResponse" name="checkIfBonusCodeWasAlreadyUsedResponse">
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="activateAutoTopUp">
+      <wsdl:input message="tns:activateAutoTopUp" name="activateAutoTopUp">
+        <wsp:PolicyReference URI="#SecurityServiceUsernameHashPasswordPolicy" />
+      </wsdl:input>
+      <wsdl:output message="tns:activateAutoTopUpResponse" name="activateAutoTopUpResponse">
+      </wsdl:output>
+      <wsdl:fault message="tns:CustomerNotFoundException" name="CustomerNotFoundException">
+      </wsdl:fault>
+      <wsdl:fault message="tns:OrganizationNotFoundException" name="OrganizationNotFoundException">
+      </wsdl:fault>
+      <wsdl:fault message="tns:PromotionalCodeTypeNotFoundException" name="PromotionalCodeTypeNotFoundException">
+      </wsdl:fault>
+      <wsdl:fault message="tns:CreditPurchaseException" name="CreditPurchaseException">
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getCustomerDetails">
+      <wsdl:input message="tns:getCustomerDetails" name="getCustomerDetails">
+      </wsdl:input>
+      <wsdl:output message="tns:getCustomerDetailsResponse" name="getCustomerDetailsResponse">
+      </wsdl:output>
+      <wsdl:fault message="tns:CustomerNotFoundException" name="CustomerNotFoundException">
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getCustomerPreferences">
+      <wsdl:input message="tns:getCustomerPreferences" name="getCustomerPreferences">
+      </wsdl:input>
+      <wsdl:output message="tns:getCustomerPreferencesResponse" name="getCustomerPreferencesResponse">
+      </wsdl:output>
+      <wsdl:fault message="tns:CustomerNotFoundException" name="CustomerNotFoundException">
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="deactivateAutoTopUp">
+      <wsdl:input message="tns:deactivateAutoTopUp" name="deactivateAutoTopUp">
+      </wsdl:input>
+      <wsdl:output message="tns:deactivateAutoTopUpResponse" name="deactivateAutoTopUpResponse">
+      </wsdl:output>
+      <wsdl:fault message="tns:CustomerNotFoundException" name="CustomerNotFoundException">
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="removeTokenFromCustomer">
+      <wsdl:input message="tns:removeTokenFromCustomer" name="removeTokenFromCustomer">
+      </wsdl:input>
+      <wsdl:output message="tns:removeTokenFromCustomerResponse" name="removeTokenFromCustomerResponse">
+      </wsdl:output>
+      <wsdl:fault message="tns:PushNotificationException" name="PushNotificationException">
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="validateEmail">
+      <wsdl:input message="tns:validateEmail" name="validateEmail">
+      </wsdl:input>
+      <wsdl:output message="tns:validateEmailResponse" name="validateEmailResponse">
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAvailablePromotionsForCustomer">
+      <wsdl:input message="tns:getAvailablePromotionsForCustomer" name="getAvailablePromotionsForCustomer">
+      </wsdl:input>
+      <wsdl:output message="tns:getAvailablePromotionsForCustomerResponse" name="getAvailablePromotionsForCustomerResponse">
+      </wsdl:output>
+      <wsdl:fault message="tns:CustomerNotFoundException" name="CustomerNotFoundException">
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="updateCustomerPassword">
+      <wsdl:input message="tns:updateCustomerPassword" name="updateCustomerPassword">
+      </wsdl:input>
+      <wsdl:output message="tns:updateCustomerPasswordResponse" name="updateCustomerPasswordResponse">
+      </wsdl:output>
+      <wsdl:fault message="tns:InvalidLoginException" name="InvalidLoginException">
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="confirmCustomerEmail">
+      <wsdl:input message="tns:confirmCustomerEmail" name="confirmCustomerEmail">
+      </wsdl:input>
+      <wsdl:output message="tns:confirmCustomerEmailResponse" name="confirmCustomerEmailResponse">
+      </wsdl:output>
+      <wsdl:fault message="tns:InvalidEmailTokenException" name="InvalidEmailTokenException">
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="subscribeAddon">
+      <wsdl:input message="tns:subscribeAddon" name="subscribeAddon">
+      </wsdl:input>
+      <wsdl:output message="tns:subscribeAddonResponse" name="subscribeAddonResponse">
+      </wsdl:output>
+      <wsdl:fault message="tns:NotStartedAddOnException" name="NotStartedAddOnException">
+      </wsdl:fault>
+      <wsdl:fault message="tns:ExpiredAddonException" name="ExpiredAddonException">
+      </wsdl:fault>
+      <wsdl:fault message="tns:AddOnAlreadySubscribedException" name="AddOnAlreadySubscribedException">
+      </wsdl:fault>
+      <wsdl:fault message="tns:UnsubscribedAddonException" name="UnsubscribedAddonException">
+      </wsdl:fault>
+      <wsdl:fault message="tns:AddOnNotFoundException" name="AddOnNotFoundException">
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getAddonUnsubscriptionEndDate">
+      <wsdl:input message="tns:getAddonUnsubscriptionEndDate" name="getAddonUnsubscriptionEndDate">
+      </wsdl:input>
+      <wsdl:output message="tns:getAddonUnsubscriptionEndDateResponse" name="getAddonUnsubscriptionEndDateResponse">
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getMaxNumberOfPaymentMethods">
+      <wsdl:input message="tns:getMaxNumberOfPaymentMethods" name="getMaxNumberOfPaymentMethods">
+      </wsdl:input>
+      <wsdl:output message="tns:getMaxNumberOfPaymentMethodsResponse" name="getMaxNumberOfPaymentMethodsResponse">
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getIncidentDetailsForCustomer">
+      <wsdl:input message="tns:getIncidentDetailsForCustomer" name="getIncidentDetailsForCustomer">
+      </wsdl:input>
+      <wsdl:output message="tns:getIncidentDetailsForCustomerResponse" name="getIncidentDetailsForCustomerResponse">
+      </wsdl:output>
+      <wsdl:fault message="tns:EventNotFoundException" name="EventNotFoundException">
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getRecentActivities">
+      <wsdl:input message="tns:getRecentActivities" name="getRecentActivities">
+      </wsdl:input>
+      <wsdl:output message="tns:getRecentActivitiesResponse" name="getRecentActivitiesResponse">
+      </wsdl:output>
+      <wsdl:fault message="tns:CustomerNotFoundException" name="CustomerNotFoundException">
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getCustomerPaymentMethods">
+      <wsdl:input message="tns:getCustomerPaymentMethods" name="getCustomerPaymentMethods">
+      </wsdl:input>
+      <wsdl:output message="tns:getCustomerPaymentMethodsResponse" name="getCustomerPaymentMethodsResponse">
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAvailableCreditValues">
+      <wsdl:input message="tns:getAvailableCreditValues" name="getAvailableCreditValues">
+      </wsdl:input>
+      <wsdl:output message="tns:getAvailableCreditValuesResponse" name="getAvailableCreditValuesResponse">
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CustomerWSServiceSoapBinding" type="tns:Customer">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="insertBonusCode">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="insertBonusCode">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="insertBonusCodeResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="PromotionalCodeCodeInvalidException">
+        <soap:fault name="PromotionalCodeCodeInvalidException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="PromotionalCodeCodeNotFoundException">
+        <soap:fault name="PromotionalCodeCodeNotFoundException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="PromotionalCodeCodeExpiredException">
+        <soap:fault name="PromotionalCodeCodeExpiredException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="requestPasswordReset">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="requestPasswordReset">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="requestPasswordResetResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="CustomerNotFoundException">
+        <soap:fault name="CustomerNotFoundException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="InvalidLoginException">
+        <soap:fault name="InvalidLoginException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="registerCustomer">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="registerCustomer">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="registerCustomerResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="NotAvailablePaymentMethodException">
+        <soap:fault name="NotAvailablePaymentMethodException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="AlreadyExistentPaymentMethodException">
+        <soap:fault name="AlreadyExistentPaymentMethodException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="CustomerServiceException">
+        <soap:fault name="CustomerServiceException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="changePaymentMethod">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="changePaymentMethod">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="changePaymentMethodResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="CustomerNotFoundException">
+        <soap:fault name="CustomerNotFoundException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="CustomerHasPaymentsInWaitingInfoException">
+        <soap:fault name="CustomerHasPaymentsInWaitingInfoException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getBonusDetail">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getBonusDetail">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getBonusDetailResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="PromotionalCodeCodeInvalidException">
+        <soap:fault name="PromotionalCodeCodeInvalidException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="PromotionalCodeCodeNotFoundException">
+        <soap:fault name="PromotionalCodeCodeNotFoundException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getPrePaidMinimumBonusAccountBalanceForAutoTopUp">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getPrePaidMinimumBonusAccountBalanceForAutoTopUp">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getPrePaidMinimumBonusAccountBalanceForAutoTopUpResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="CustomerNotFoundException">
+        <soap:fault name="CustomerNotFoundException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="isValidCustomerPin">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="isValidCustomerPin">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="isValidCustomerPinResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addTokenToCustomer">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="addTokenToCustomer">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="addTokenToCustomerResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="PushNotificationException">
+        <soap:fault name="PushNotificationException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="confirmPasswordReset">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="confirmPasswordReset">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="confirmPasswordResetResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="InvalidPasswordTokenException">
+        <soap:fault name="InvalidPasswordTokenException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="CustomerNotFoundException">
+        <soap:fault name="CustomerNotFoundException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="InvalidLoginException">
+        <soap:fault name="InvalidLoginException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="customerAlreadyHasPaymentMethod">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="customerAlreadyHasPaymentMethod">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="customerAlreadyHasPaymentMethodResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="CustomerNotFoundException">
+        <soap:fault name="CustomerNotFoundException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getCreditDetailsByOrderReference">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getCreditDetailsByOrderReference">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getCreditDetailsByOrderReferenceResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="CustomerNotFoundException">
+        <soap:fault name="CustomerNotFoundException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="CreditPurchaseException">
+        <soap:fault name="CreditPurchaseException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="checkIfBonusCodeIsExpired">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="checkIfBonusCodeIsExpired">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="checkIfBonusCodeIsExpiredResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateCustomerDetails">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="updateCustomerDetails">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="updateCustomerDetailsResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="CustomerNotFoundException">
+        <soap:fault name="CustomerNotFoundException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="CustomerEditionException">
+        <soap:fault name="CustomerEditionException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="CustomerServiceException">
+        <soap:fault name="CustomerServiceException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="validateCustomer">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="validateCustomer">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="validateCustomerResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="buyCredit">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="buyCredit">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="buyCreditResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="CustomerNotFoundException">
+        <soap:fault name="CustomerNotFoundException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="OrganizationNotFoundException">
+        <soap:fault name="OrganizationNotFoundException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="PromotionalCodeTypeNotFoundException">
+        <soap:fault name="PromotionalCodeTypeNotFoundException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="CreditPurchaseException">
+        <soap:fault name="CreditPurchaseException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="updateCustomerPin">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="updateCustomerPin">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="updateCustomerPinResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="InvalidLoginException">
+        <soap:fault name="InvalidLoginException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="checkCustomerHasEmailToken">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="checkCustomerHasEmailToken">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="checkCustomerHasEmailTokenResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="InvalidEmailTokenException">
+        <soap:fault name="InvalidEmailTokenException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="CustomerNotFoundException">
+        <soap:fault name="CustomerNotFoundException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="updateCustomerEmail">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="updateCustomerEmail">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="updateCustomerEmailResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="InvalidLoginException">
+        <soap:fault name="InvalidLoginException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="confirmUpdateCustomerEmail">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="confirmUpdateCustomerEmail">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="confirmUpdateCustomerEmailResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="InvalidEmailTokenException">
+        <soap:fault name="InvalidEmailTokenException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getCreditDetailsByCdrCode">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getCreditDetailsByCdrCode">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getCreditDetailsByCdrCodeResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="CustomerNotFoundException">
+        <soap:fault name="CustomerNotFoundException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="CreditPurchaseException">
+        <soap:fault name="CreditPurchaseException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="checkIfBonusCodeIsInvalid">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="checkIfBonusCodeIsInvalid">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="checkIfBonusCodeIsInvalidResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="unsubscribeAddon">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="unsubscribeAddon">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="unsubscribeAddonResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="AddOnNotSubscribedException">
+        <soap:fault name="AddOnNotSubscribedException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="setCustomerPreferences">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="setCustomerPreferences">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="setCustomerPreferencesResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="CustomerNotFoundException">
+        <soap:fault name="CustomerNotFoundException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="activateAutoTopUp">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="activateAutoTopUp">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="activateAutoTopUpResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="CustomerNotFoundException">
+        <soap:fault name="CustomerNotFoundException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="OrganizationNotFoundException">
+        <soap:fault name="OrganizationNotFoundException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="PromotionalCodeTypeNotFoundException">
+        <soap:fault name="PromotionalCodeTypeNotFoundException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="CreditPurchaseException">
+        <soap:fault name="CreditPurchaseException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="checkIfBonusCodeWasAlreadyUsed">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="checkIfBonusCodeWasAlreadyUsed">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="checkIfBonusCodeWasAlreadyUsedResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCustomerDetails">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getCustomerDetails">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getCustomerDetailsResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="CustomerNotFoundException">
+        <soap:fault name="CustomerNotFoundException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getCustomerPreferences">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getCustomerPreferences">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getCustomerPreferencesResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="CustomerNotFoundException">
+        <soap:fault name="CustomerNotFoundException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="deactivateAutoTopUp">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="deactivateAutoTopUp">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="deactivateAutoTopUpResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="CustomerNotFoundException">
+        <soap:fault name="CustomerNotFoundException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="removeTokenFromCustomer">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="removeTokenFromCustomer">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="removeTokenFromCustomerResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="PushNotificationException">
+        <soap:fault name="PushNotificationException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="validateEmail">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="validateEmail">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="validateEmailResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAvailablePromotionsForCustomer">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getAvailablePromotionsForCustomer">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getAvailablePromotionsForCustomerResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="CustomerNotFoundException">
+        <soap:fault name="CustomerNotFoundException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="updateCustomerPassword">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="updateCustomerPassword">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="updateCustomerPasswordResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="InvalidLoginException">
+        <soap:fault name="InvalidLoginException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="confirmCustomerEmail">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="confirmCustomerEmail">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="confirmCustomerEmailResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="InvalidEmailTokenException">
+        <soap:fault name="InvalidEmailTokenException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getAddonUnsubscriptionEndDate">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getAddonUnsubscriptionEndDate">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getAddonUnsubscriptionEndDateResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="subscribeAddon">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="subscribeAddon">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="subscribeAddonResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="NotStartedAddOnException">
+        <soap:fault name="NotStartedAddOnException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="ExpiredAddonException">
+        <soap:fault name="ExpiredAddonException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="AddOnAlreadySubscribedException">
+        <soap:fault name="AddOnAlreadySubscribedException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="UnsubscribedAddonException">
+        <soap:fault name="UnsubscribedAddonException" use="literal" />
+      </wsdl:fault>
+      <wsdl:fault name="AddOnNotFoundException">
+        <soap:fault name="AddOnNotFoundException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getIncidentDetailsForCustomer">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getIncidentDetailsForCustomer">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getIncidentDetailsForCustomerResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="EventNotFoundException">
+        <soap:fault name="EventNotFoundException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getMaxNumberOfPaymentMethods">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getMaxNumberOfPaymentMethods">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getMaxNumberOfPaymentMethodsResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getRecentActivities">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getRecentActivities">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getRecentActivitiesResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="CustomerNotFoundException">
+        <soap:fault name="CustomerNotFoundException" use="literal" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getAvailableCreditValues">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getAvailableCreditValues">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getAvailableCreditValuesResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCustomerPaymentMethods">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="getCustomerPaymentMethods">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="getCustomerPaymentMethodsResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="CustomerWSService">
+    <wsdl:port binding="tns:CustomerWSServiceSoapBinding" name="CustomerPort">
+      <soap:address location="http://localhost:8080/mobics-webservices/Customer" />
+    </wsdl:port>
+  </wsdl:service>
+  <wsp:Policy wsu:Id="SecurityServiceUsernameHashPasswordPolicy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
+    xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <sp:SupportingTokens xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702">
+          <wsp:Policy>
+            <sp:UsernameToken sp:IncludeToken="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/AlwaysToRecipient">
+              <wsp:Policy>
+                <sp:HashPassword />
+              </wsp:Policy>
+            </sp:UsernameToken>
+          </wsp:Policy>
+        </sp:SupportingTokens>
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+</wsdl:definitions>
