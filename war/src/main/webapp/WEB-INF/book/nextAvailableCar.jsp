@@ -62,15 +62,7 @@
 							<fmt:message key="car.details.price.use"/>
 						</span>
 						<span>
-							<mobi:formatMobics value="${actionBean.next.car.priceInUse}" type="currencyHour" />
-						</span>
-                    </li>
-                    <li class="detail">
-						<span>
-							<fmt:message key="car.details.price.locked"/>
-						</span>
-						<span>
-							<mobi:formatMobics value="${actionBean.next.car.priceReserved}" type="currencyHour" />
+							<mobi:formatMobics value="${actionBean.next.car.priceBookedPerMinute}" type="currencyHour" />
 						</span>
                     </li>
                 </ul>

@@ -49,8 +49,8 @@ public class CarFormattedDTO extends CarDTO {
         super.setAddOns(carDTO.getAddOns());
         super.setPromotions(carDTO.getPromotions());
 
-        this.formattedPrice = carDTO.getPriceInUse() != null ? FormatUtils.format(FormatUtils.CURRENCY_HOUR,
-                carDTO.getPriceInUse(), locale, Configuration.INSTANCE.getCarClubConfiguration()) : "";
+        this.formattedPrice = carDTO.getPriceBookedPerMinute() != null ? FormatUtils.format(FormatUtils.CURRENCY_HOUR,
+                carDTO.getPriceBookedPerMinute(), locale, Configuration.INSTANCE.getCarClubConfiguration()) : "";
         this.formattedDistance = carDTO.getDistance() != null ? FormatUtils.format(FormatUtils.DISTANCE, carDTO
                 .getDistance(), locale, Configuration.INSTANCE.getCarClubConfiguration()) : "";
         this.formattedFuel = ResourceBundle.getBundle("StripesResources", locale).getString(

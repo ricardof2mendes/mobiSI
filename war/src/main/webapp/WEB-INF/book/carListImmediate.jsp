@@ -30,7 +30,7 @@
 											</div>
 											<div>
 												<span>
-													<mobi:formatMobics value="${car.priceInUse}" type="currencyHour" />
+													<mobi:formatMobics value="${car.priceBookedPerMinute}" type="currencyHour" />
 												</span>
 												<span>
 													<c:choose>
