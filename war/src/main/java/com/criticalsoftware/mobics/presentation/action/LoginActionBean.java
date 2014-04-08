@@ -45,7 +45,7 @@ public class LoginActionBean extends BaseActionBean {
 
     @Validate
     private String password;
-    
+
     @Validate
     private boolean retina;
 
@@ -63,7 +63,7 @@ public class LoginActionBean extends BaseActionBean {
     }
 
     public Resolution authenticate() throws UnsupportedEncodingException, RemoteException,
-            CustomerNotFoundExceptionException {
+    CustomerNotFoundExceptionException {
         Resolution resolution = new RedirectResolution(HomeActionBean.class);
 
         OMElement authHeader = AuthenticationUtil.getAuthenticationHeader(username, password);
@@ -91,6 +91,7 @@ public class LoginActionBean extends BaseActionBean {
                 Configuration config = (Configuration) this.getContext().getServletContext().getAttribute("configuration");
                 config.setCarClubConfiguration(patterns);
                 this.getContext().getServletContext().setAttribute("carClubConfiguration", config.getCarClubConfiguration());
+                this.getContext().getServletContext().setAttribute("carClubCode", carClubDTO.getCarClubCode());
 
                 this.getContext().setRetina(retina);
             } else {

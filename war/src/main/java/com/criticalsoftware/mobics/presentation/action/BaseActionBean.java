@@ -99,6 +99,7 @@ public abstract class BaseActionBean implements ActionBean {
                 .append(getContext().getRequest().getServerPort()).append(getContext().getRequest().getContextPath());
 
         String carClubCode = getContext().getRequest().getParameter("CC");
+        getContext().getServletContext().setAttribute("CC", carClubCode);
 
         if (carClubCode != null && !carClubCode.isEmpty()) {
             carClubSimpleDTO = new CarClubWSServiceStub(Configuration.INSTANCE.getCarClubEndpoint())
@@ -119,7 +120,7 @@ public abstract class BaseActionBean implements ActionBean {
                         getContext().setCarClub(
                                 new CarClubSimple(carClubSimpleDTO.getCarClubName(), carClubSimpleDTO.getCarClubCode(),
                                         carClubSimpleDTO.getCarClubContactPhone(), carClubSimpleDTO
-                                                .getCarClubContactEmail()));
+                                        .getCarClubContactEmail()));
                     }
                 }
             } catch (Exception e) {
@@ -151,6 +152,7 @@ public abstract class BaseActionBean implements ActionBean {
                 .append(getContext().getRequest().getServerPort()).append(getContext().getRequest().getContextPath());
 
         String carClubCode = getContext().getRequest().getParameter("CC");
+        getContext().getServletContext().setAttribute("CC", carClubCode);
 
         if (carClubCode != null && !carClubCode.isEmpty()) {
             try {
