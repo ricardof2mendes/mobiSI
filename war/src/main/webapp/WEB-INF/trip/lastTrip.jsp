@@ -84,15 +84,9 @@
 								</span>
 							</li>
 							<li class="detail white">
-								<span><fmt:message key="trip.detail.time.in.use"/></span>
+								<span><fmt:message key="trip.detail.duration"/></span>
 								<span>
-									<mobi:formatMobics value="${actionBean.last.timeInUse}" type="time"/>
-								</span>
-							</li>
-							<li class="detail white">
-								<span><fmt:message key="trip.detail.time.locked"/></span>
-								<span>
-									<mobi:formatMobics value="${actionBean.last.timeBooked}" type="time"/>
+									<mobi:formatMobics value="${actionBean.last.duration}" type="time"/>
 								</span>
 							</li>
 						</ul>
