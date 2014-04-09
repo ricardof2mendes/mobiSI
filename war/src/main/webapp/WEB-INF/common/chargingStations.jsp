@@ -15,7 +15,7 @@
                             ${actionBean.stationAddress}
                         </span>
                     </li>
-                    <li class="detail">
+                    <li class="detail" style="display: none">
                         <span>
                             <fmt:message key="charging.stations.coordinates"/>
                         </span>
