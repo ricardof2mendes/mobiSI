@@ -44,7 +44,7 @@
 					<c:choose>
 						<c:when test="${actionBean.current.bookingType == 'IMMEDIATE'}">
 							<li class="link white">
-								<stripes:link id="carDetails" beanclass="com.criticalsoftware.mobics.presentation.action.booking.ImmediateBookingActionBean" event="carDetails" addSourcePage="true" >
+								<stripes:link id="carDetails" beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" event="carDetails" addSourcePage="true" >
 									<stripes:param name="licensePlate" value="${actionBean.current.licensePlate}"/>
 			
 									<span><fmt:message key="current.trip.car"/></span>
