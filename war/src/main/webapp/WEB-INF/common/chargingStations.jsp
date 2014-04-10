@@ -36,7 +36,7 @@
                             <fmt:message key="charging.stations.status"/>
                         </span>
                         <span>
-                                ${actionBean.station.status}
+                        	<fmt:message key="MOBIE-${actionBean.station.status}"/>
                         </span>
                     </li>
                     <li class="detail">
@@ -44,7 +44,7 @@
                             <fmt:message key="charging.stations.type"/>
                         </span>
                         <span>
-                                ${actionBean.station.type}
+                             <fmt:message key="MOBIE-${actionBean.station.type}"/>
                         </span>
                     </li>
                     <li class="detail">
@@ -68,7 +68,7 @@
                             <fmt:message key="charging.stations.compatibility"/>
                         </span>
                         <span>
-                                ${actionBean.station.type}
+                        	<fmt:message key="MOBIE-${actionBean.station.type}"/>
                         </span>
                     </li>
                 </ul>
