@@ -1,0 +1,1883 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="BookingWSService" targetNamespace="http://mobics.criticalsoftware.com/booking" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://mobics.criticalsoftware.com/booking" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <wsdl:types>
+<xs:schema elementFormDefault="qualified" targetNamespace="http://www.criticalsoftware.com/mobios/services/accounting/dto" version="1.0" xmlns:tns="http://www.criticalsoftware.com/mobios/services/accounting/dto" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:element name="car_tags">
+<xs:complexType>
+<xs:sequence>
+<xs:element maxOccurs="unbounded" name="tag" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="client_tags">
+<xs:complexType>
+<xs:sequence>
+<xs:element maxOccurs="unbounded" name="tag" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="credit_card_configuration">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="type" type="xs:string"/>
+<xs:element name="card_number" type="xs:string"/>
+<xs:element name="month" type="xs:string"/>
+<xs:element name="year" type="xs:string"/>
+<xs:element name="securityCode" type="xs:string"/>
+<xs:element name="wallet_id" type="xs:string"/>
+<xs:element name="first_name" type="xs:string"/>
+<xs:element name="last_name" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="customerChangeStateEventMessage">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="customerName" type="xs:string"/>
+<xs:element name="carClubCode" type="xs:string"/>
+<xs:element name="stateCode" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="events_calendar">
+<xs:complexType>
+<xs:sequence>
+<xs:element maxOccurs="unbounded" name="event">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="name" type="xs:string"/>
+<xs:element name="startDate" type="xs:string"/>
+<xs:element name="endDate" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="ps2_configuration">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="nib" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="sdd_configuration">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="nib" type="xs:string"/>
+<xs:element name="payer_account" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="weekly_restriction">
+<xs:complexType>
+<xs:sequence>
+<xs:element maxOccurs="unbounded" name="timePeriod">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="dayOfWeek" type="xs:int"/>
+<xs:element name="startHour" type="xs:string"/>
+<xs:element name="endHour" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="zone_restriction">
+<xs:complexType>
+<xs:sequence>
+<xs:element maxOccurs="unbounded" name="zoneCode" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:complexType name="tagDTO">
+<xs:sequence>
+<xs:element minOccurs="0" name="active" type="xs:boolean"/>
+<xs:element minOccurs="0" name="dateModified" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="tagCode" type="xs:string"/>
+<xs:element minOccurs="0" name="tagName" type="xs:string"/>
+<xs:element minOccurs="0" name="tagType" type="tns:tagTypeEnum"/>
+</xs:sequence>
+</xs:complexType>
+<xs:simpleType name="tagTypeEnum">
+<xs:restriction base="xs:string">
+<xs:enumeration value="CLIENT"/>
+<xs:enumeration value="CAR"/>
+<xs:enumeration value="COMPANY"/>
+</xs:restriction>
+</xs:simpleType>
+</xs:schema>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://mobics.criticalsoftware.com/booking" xmlns:ns1="http://www.criticalsoftware.com/mobios/services/accounting/dto" xmlns:tns="http://mobics.criticalsoftware.com/booking" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:import namespace="http://www.criticalsoftware.com/mobios/services/accounting/dto"/>
+<xs:element name="cancelAdvanceBooking" type="tns:cancelAdvanceBooking"/>
+<xs:element name="cancelAdvanceBookingResponse" type="tns:cancelAdvanceBookingResponse"/>
+<xs:element name="checkIfAdvanceBookingIsPermitted" type="tns:checkIfAdvanceBookingIsPermitted"/>
+<xs:element name="checkIfAdvanceBookingIsPermittedResponse" type="tns:checkIfAdvanceBookingIsPermittedResponse"/>
+<xs:element name="checkOverlappedBookingForCustomer" type="tns:checkOverlappedBookingForCustomer"/>
+<xs:element name="checkOverlappedBookingForCustomerResponse" type="tns:checkOverlappedBookingForCustomerResponse"/>
+<xs:element name="checkOverlappedInterestNotification" type="tns:checkOverlappedInterestNotification"/>
+<xs:element name="checkOverlappedInterestNotificationResponse" type="tns:checkOverlappedInterestNotificationResponse"/>
+<xs:element name="closeActiveBooking" type="tns:closeActiveBooking"/>
+<xs:element name="closeActiveBookingResponse" type="tns:closeActiveBookingResponse"/>
+<xs:element name="createAdvanceBookingWithCustomerPin" type="tns:createAdvanceBookingWithCustomerPin"/>
+<xs:element name="createAdvanceBookingWithCustomerPinResponse" type="tns:createAdvanceBookingWithCustomerPinResponse"/>
+<xs:element name="createBookingInterest" type="tns:createBookingInterest"/>
+<xs:element name="createBookingInterestResponse" type="tns:createBookingInterestResponse"/>
+<xs:element name="createImmediateBookingWithCustomerPin" type="tns:createImmediateBookingWithCustomerPin"/>
+<xs:element name="createImmediateBookingWithCustomerPinResponse" type="tns:createImmediateBookingWithCustomerPinResponse"/>
+<xs:element name="createNegatedTrip" type="tns:createNegatedTrip"/>
+<xs:element name="createNegatedTripResponse" type="tns:createNegatedTripResponse"/>
+<xs:element name="extendAdvanceBooking" type="tns:extendAdvanceBooking"/>
+<xs:element name="extendAdvanceBookingResponse" type="tns:extendAdvanceBookingResponse"/>
+<xs:element name="getBookingCurrentCancelCost" type="tns:getBookingCurrentCancelCost"/>
+<xs:element name="getBookingCurrentCancelCostResponse" type="tns:getBookingCurrentCancelCostResponse"/>
+<xs:element name="getBookingInterest" type="tns:getBookingInterest"/>
+<xs:element name="getBookingInterestResponse" type="tns:getBookingInterestResponse"/>
+<xs:element name="getBookingMessages" type="tns:getBookingMessages"/>
+<xs:element name="getBookingMessagesResponse" type="tns:getBookingMessagesResponse"/>
+<xs:element name="getCurrentTripDetails" type="tns:getCurrentTripDetails"/>
+<xs:element name="getCurrentTripDetailsResponse" type="tns:getCurrentTripDetailsResponse"/>
+<xs:element name="getLastTripDetails" type="tns:getLastTripDetails"/>
+<xs:element name="getLastTripDetailsResponse" type="tns:getLastTripDetailsResponse"/>
+<xs:element name="getNextAdvanceBooking" type="tns:getNextAdvanceBooking"/>
+<xs:element name="getNextAdvanceBookingResponse" type="tns:getNextAdvanceBookingResponse"/>
+<xs:element name="getTripDetails" type="tns:getTripDetails"/>
+<xs:element name="getTripDetailsResponse" type="tns:getTripDetailsResponse"/>
+<xs:element name="getTripHistory" type="tns:getTripHistory"/>
+<xs:element name="getTripHistoryResponse" type="tns:getTripHistoryResponse"/>
+<xs:element name="isCarAvailableForImmediateBooking" type="tns:isCarAvailableForImmediateBooking"/>
+<xs:element name="isCarAvailableForImmediateBookingResponse" type="tns:isCarAvailableForImmediateBookingResponse"/>
+<xs:element name="isCarInForbiddenZone" type="tns:isCarInForbiddenZone"/>
+<xs:element name="isCarInForbiddenZoneResponse" type="tns:isCarInForbiddenZoneResponse"/>
+<xs:element name="isCarInUndesirableZone" type="tns:isCarInUndesirableZone"/>
+<xs:element name="isCarInUndesirableZoneResponse" type="tns:isCarInUndesirableZoneResponse"/>
+<xs:element name="isCustomerAuthorizedToBook" type="tns:isCustomerAuthorizedToBook"/>
+<xs:element name="isCustomerAuthorizedToBookResponse" type="tns:isCustomerAuthorizedToBookResponse"/>
+<xs:element name="isCustomerInOngoingTrip" type="tns:isCustomerInOngoingTrip"/>
+<xs:element name="isCustomerInOngoingTripResponse" type="tns:isCustomerInOngoingTripResponse"/>
+<xs:element name="removeBookingInterest" type="tns:removeBookingInterest"/>
+<xs:element name="removeBookingInterestResponse" type="tns:removeBookingInterestResponse"/>
+<xs:element name="setBookingMessageAsDeleted" type="tns:setBookingMessageAsDeleted"/>
+<xs:element name="setBookingMessageAsDeletedResponse" type="tns:setBookingMessageAsDeletedResponse"/>
+<xs:element name="setBookingMessageAsRead" type="tns:setBookingMessageAsRead"/>
+<xs:element name="setBookingMessageAsReadResponse" type="tns:setBookingMessageAsReadResponse"/>
+<xs:element name="updateAdvanceBooking" type="tns:updateAdvanceBooking"/>
+<xs:element name="updateAdvanceBookingResponse" type="tns:updateAdvanceBookingResponse"/>
+<xs:element name="updateBookingInterest" type="tns:updateBookingInterest"/>
+<xs:element name="updateBookingInterestResponse" type="tns:updateBookingInterestResponse"/>
+<xs:complexType name="isCarInForbiddenZone">
+<xs:sequence/>
+</xs:complexType>
+<xs:complexType name="isCarInForbiddenZoneResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="closeActiveBooking">
+<xs:sequence/>
+</xs:complexType>
+<xs:complexType name="closeActiveBookingResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return" type="tns:closedBookingDTO"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="closedBookingDTO">
+<xs:sequence>
+<xs:element minOccurs="0" name="bookingCost" type="xs:decimal"/>
+<xs:element minOccurs="0" name="bookingCostWithTax" type="xs:decimal"/>
+<xs:element minOccurs="0" name="bookingDuration" type="xs:long"/>
+<xs:element minOccurs="0" name="bookingTaxCode" type="xs:string"/>
+<xs:element minOccurs="0" name="costCalculationSuccess" type="xs:boolean"/>
+<xs:element minOccurs="0" name="zoneCategory" type="tns:zoneCategoryEnum"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="isCustomerAuthorizedToBook">
+<xs:sequence/>
+</xs:complexType>
+<xs:complexType name="isCustomerAuthorizedToBookResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getBookingMessages">
+<xs:sequence/>
+</xs:complexType>
+<xs:complexType name="getBookingMessagesResponse">
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:bookingInterestMessageDTO"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="bookingInterestMessageDTO">
+<xs:sequence>
+<xs:element minOccurs="0" name="carDistance" type="xs:int"/>
+<xs:element minOccurs="0" name="carName" type="xs:string"/>
+<xs:element minOccurs="0" name="carPlate" type="xs:string"/>
+<xs:element minOccurs="0" name="carTaxCode" type="xs:string"/>
+<xs:element minOccurs="0" name="code" type="xs:string"/>
+<xs:element minOccurs="0" name="distanceThreshold" type="xs:int"/>
+<xs:element minOccurs="0" name="fuelType" type="tns:fuelTypeDTO"/>
+<xs:element minOccurs="0" name="isRead" type="xs:boolean"/>
+<xs:element minOccurs="0" name="pricePerMinute" type="xs:decimal"/>
+<xs:element minOccurs="0" name="subject" type="xs:string"/>
+<xs:element minOccurs="0" name="timestamp" type="xs:dateTime"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="fuelTypeDTO">
+<xs:sequence>
+<xs:element minOccurs="0" name="description" type="xs:string"/>
+<xs:element minOccurs="0" name="key" type="xs:string"/>
+<xs:element minOccurs="0" name="name" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getCurrentTripDetails">
+<xs:sequence/>
+</xs:complexType>
+<xs:complexType name="getCurrentTripDetailsResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return" type="tns:currentTripDTO"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="currentTripDTO">
+<xs:sequence>
+<xs:element minOccurs="0" name="additionalServiceTaxCode" type="xs:string"/>
+<xs:element minOccurs="0" name="basePrice" type="xs:decimal"/>
+<xs:element minOccurs="0" name="bookingCode" type="xs:string"/>
+<xs:element minOccurs="0" name="bookingDuration" type="xs:int"/>
+<xs:element minOccurs="0" name="bookingTaxCode" type="xs:string"/>
+<xs:element minOccurs="0" name="bookingType" type="tns:bookingTypeEnum"/>
+<xs:element minOccurs="0" name="cancelCost" type="xs:decimal"/>
+<xs:element minOccurs="0" name="cancelTime" type="xs:int"/>
+<xs:element minOccurs="0" name="carBrand" type="xs:string"/>
+<xs:element minOccurs="0" name="carDTO" type="tns:carDTO"/>
+<xs:element minOccurs="0" name="carModel" type="xs:string"/>
+<xs:element minOccurs="0" name="carState" type="xs:string"/>
+<xs:element minOccurs="0" name="carTaxCode" type="xs:string"/>
+<xs:element minOccurs="0" name="costPerExtraKm" type="xs:decimal"/>
+<xs:element minOccurs="0" name="currentCost" type="xs:decimal"/>
+<xs:element minOccurs="0" name="currentCostWithTax" type="xs:decimal"/>
+<xs:element minOccurs="0" name="currentDistance" type="xs:int"/>
+<xs:element minOccurs="0" name="currentZoneType" type="xs:string"/>
+<xs:element minOccurs="0" name="distanceThreshold" type="xs:decimal"/>
+<xs:element minOccurs="0" name="endDate" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="extendCost" type="xs:decimal"/>
+<xs:element minOccurs="0" name="latitude" type="xs:decimal"/>
+<xs:element minOccurs="0" name="licensePlate" type="xs:string"/>
+<xs:element minOccurs="0" name="lockedPrice" type="xs:decimal"/>
+<xs:element minOccurs="0" name="longitude" type="xs:decimal"/>
+<xs:element minOccurs="0" name="roamingCost" type="xs:decimal"/>
+<xs:element minOccurs="0" name="roamingCostWithTax" type="xs:decimal"/>
+<xs:element minOccurs="0" name="startDate" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="state" type="xs:string"/>
+<xs:element minOccurs="0" name="undesirableZoneCost" type="xs:decimal"/>
+<xs:element minOccurs="0" name="undesirableZoneCostTaxCode" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="carDTO">
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="addOns" nillable="true" type="tns:addOnSimpleDTO"/>
+<xs:element minOccurs="0" name="carBrandName" type="xs:string"/>
+<xs:element minOccurs="0" name="carClubCode" type="xs:string"/>
+<xs:element minOccurs="0" name="carClubName" type="xs:string"/>
+<xs:element minOccurs="0" name="carFareType" type="tns:carFareTypeEnum"/>
+<xs:element minOccurs="0" name="carModelName" type="xs:string"/>
+<xs:element minOccurs="0" name="carName" type="xs:string"/>
+<xs:element minOccurs="0" name="carType" type="tns:carTypeEnum"/>
+<xs:element minOccurs="0" name="category" type="xs:string"/>
+<xs:element minOccurs="0" name="categoryDescription" type="xs:string"/>
+<xs:element minOccurs="0" name="configurableTime" type="xs:int"/>
+<xs:element minOccurs="0" name="costPerExtraKm" type="xs:decimal"/>
+<xs:element minOccurs="0" name="currentZone" type="tns:zoneDTO"/>
+<xs:element minOccurs="0" name="deviceId" type="xs:string"/>
+<xs:element minOccurs="0" name="distance" type="xs:decimal"/>
+<xs:element minOccurs="0" name="distanceThreshold" type="xs:decimal"/>
+<xs:element minOccurs="0" name="fuelLevel" type="xs:int"/>
+<xs:element minOccurs="0" name="fuelType" type="tns:fuelTypeDTO"/>
+<xs:element minOccurs="0" name="id" type="xs:int"/>
+<xs:element minOccurs="0" name="includedDistancePerConfigurableHour" type="xs:int"/>
+<xs:element minOccurs="0" name="includedDistancePerDay" type="xs:int"/>
+<xs:element minOccurs="0" name="latitude" type="xs:decimal"/>
+<xs:element minOccurs="0" name="licensePlate" type="xs:string"/>
+<xs:element minOccurs="0" name="longitude" type="xs:decimal"/>
+<xs:element minOccurs="0" name="maxCostPerConfigurableHour" type="xs:decimal"/>
+<xs:element minOccurs="0" name="maxCostPerDay" type="xs:decimal"/>
+<xs:element minOccurs="0" name="maxCostPerHour" type="xs:decimal"/>
+<xs:element minOccurs="0" name="obsConnectionStatus" type="tns:obsConnectionStatusEnum"/>
+<xs:element minOccurs="0" name="obsNumber" type="xs:string"/>
+<xs:element minOccurs="0" name="priceBookedPerMinute" type="xs:decimal"/>
+<xs:element minOccurs="0" name="priceInUse" type="xs:decimal"/>
+<xs:element minOccurs="0" name="priceReserved" type="xs:decimal"/>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="promotions" nillable="true" type="tns:promotionSimpleDTO"/>
+<xs:element minOccurs="0" name="simNumber" type="xs:string"/>
+<xs:element minOccurs="0" name="standalone" type="xs:boolean"/>
+<xs:element minOccurs="0" name="state" type="xs:string"/>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="tags" nillable="true" type="ns1:tagDTO"/>
+<xs:element minOccurs="0" name="taxCode" type="xs:string"/>
+<xs:element minOccurs="0" name="totalDistanceTravelled" type="xs:int"/>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="zones" nillable="true" type="tns:zoneDTO"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="addOnSimpleDTO">
+<xs:sequence>
+<xs:element minOccurs="0" name="code" type="xs:string"/>
+<xs:element minOccurs="0" name="discount" type="xs:decimal"/>
+<xs:element minOccurs="0" name="name" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="zoneDTO">
+<xs:sequence>
+<xs:element minOccurs="0" name="category" type="tns:zoneCategoryEnum"/>
+<xs:element minOccurs="0" name="code" type="xs:string"/>
+<xs:element minOccurs="0" name="location" type="xs:string"/>
+<xs:element minOccurs="0" name="parentZone" type="xs:string"/>
+<xs:element minOccurs="0" name="zone" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="promotionSimpleDTO">
+<xs:sequence>
+<xs:element minOccurs="0" name="code" type="xs:string"/>
+<xs:element minOccurs="0" name="discount" type="xs:decimal"/>
+<xs:element minOccurs="0" name="name" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="checkOverlappedBookingForCustomer">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="beginBooking" type="xs:long"/>
+<xs:element form="qualified" minOccurs="0" name="endBooking" type="xs:long"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="checkOverlappedBookingForCustomerResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="checkOverlappedInterestNotification">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="pickupTime" type="xs:long"/>
+<xs:element form="qualified" minOccurs="0" name="startTime" type="xs:int"/>
+<xs:element form="qualified" minOccurs="0" name="endTime" type="xs:int"/>
+<xs:element form="qualified" minOccurs="0" name="bookingInterestConfigurationCode" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="checkOverlappedInterestNotificationResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getLastTripDetails">
+<xs:sequence/>
+</xs:complexType>
+<xs:complexType name="getLastTripDetailsResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return" type="tns:tripDetailsDTO"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="tripDetailsDTO">
+<xs:sequence>
+<xs:element minOccurs="0" name="addOnDiscountGeneratedWithTax" type="xs:decimal"/>
+<xs:element minOccurs="0" name="additionalServicesTaxCode" type="xs:string"/>
+<xs:element minOccurs="0" name="addonCode" type="xs:string"/>
+<xs:element minOccurs="0" name="addonName" type="xs:string"/>
+<xs:element minOccurs="0" name="bonusIsDeferred" type="xs:boolean"/>
+<xs:element minOccurs="0" name="bookingNumber" type="xs:string"/>
+<xs:element minOccurs="0" name="bookingTaxCode" type="xs:string"/>
+<xs:element minOccurs="0" name="bookingType" type="tns:bookingTypeEnum"/>
+<xs:element minOccurs="0" name="cancelCost" type="xs:decimal"/>
+<xs:element minOccurs="0" name="cancelTime" type="xs:int"/>
+<xs:element minOccurs="0" name="car" type="tns:carDTO"/>
+<xs:element minOccurs="0" name="carLicensePlate" type="xs:string"/>
+<xs:element minOccurs="0" name="carMake" type="xs:string"/>
+<xs:element minOccurs="0" name="carModel" type="xs:string"/>
+<xs:element minOccurs="0" name="costCalculationSuccess" type="xs:boolean"/>
+<xs:element minOccurs="0" name="currentZoneType" type="xs:string"/>
+<xs:element minOccurs="0" name="distance" type="xs:int"/>
+<xs:element minOccurs="0" name="duration" type="xs:int"/>
+<xs:element minOccurs="0" name="endDate" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="endLongitude" type="xs:decimal"/>
+<xs:element minOccurs="0" name="endPark" type="xs:string"/>
+<xs:element minOccurs="0" name="endtLatitude" type="xs:decimal"/>
+<xs:element minOccurs="0" name="extendCost" type="xs:decimal"/>
+<xs:element minOccurs="0" name="hasCancelCosts" type="xs:boolean"/>
+<xs:element minOccurs="0" name="isRelocation" type="xs:boolean"/>
+<xs:element minOccurs="0" name="paidWithBonus" type="xs:boolean"/>
+<xs:element minOccurs="0" name="percentageDiscount" type="xs:decimal"/>
+<xs:element minOccurs="0" name="promotionBonusGeneratedWithTax" type="xs:decimal"/>
+<xs:element minOccurs="0" name="promotionCode" type="xs:string"/>
+<xs:element minOccurs="0" name="promotionName" type="xs:string"/>
+<xs:element minOccurs="0" name="roamingCost" type="xs:decimal"/>
+<xs:element minOccurs="0" name="roamingCostWithTax" type="xs:decimal"/>
+<xs:element minOccurs="0" name="startDate" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="startLatitude" type="xs:decimal"/>
+<xs:element minOccurs="0" name="startLongitude" type="xs:decimal"/>
+<xs:element minOccurs="0" name="startPark" type="xs:string"/>
+<xs:element minOccurs="0" name="state" type="xs:string"/>
+<xs:element minOccurs="0" name="timeBooked" type="xs:int"/>
+<xs:element minOccurs="0" name="timeCreated" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="timeInUse" type="xs:int"/>
+<xs:element minOccurs="0" name="timeUpdated" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="totalCost" type="xs:decimal"/>
+<xs:element minOccurs="0" name="totalCostWithTax" type="xs:decimal"/>
+<xs:element minOccurs="0" name="tripCost" type="xs:decimal"/>
+<xs:element minOccurs="0" name="tripCostWithTax" type="xs:decimal"/>
+<xs:element minOccurs="0" name="usedBonus" type="xs:decimal"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getTripDetails">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="bookingNumber" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getTripDetailsResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return" type="tns:tripDetailsDTO"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getNextAdvanceBooking">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="bookingNumber" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getNextAdvanceBookingResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return" type="xs:long"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="updateAdvanceBooking">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="bookingCode" type="xs:string"/>
+<xs:element form="qualified" minOccurs="0" name="updatedDate" type="xs:long"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="updateAdvanceBookingResponse">
+<xs:sequence/>
+</xs:complexType>
+<xs:complexType name="extendAdvanceBooking">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="bookingCode" type="xs:string"/>
+<xs:element form="qualified" minOccurs="0" name="extendedDate" type="xs:long"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="extendAdvanceBookingResponse">
+<xs:sequence/>
+</xs:complexType>
+<xs:complexType name="createImmediateBookingWithCustomerPin">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="carLicensePlate" type="xs:string"/>
+<xs:element form="qualified" minOccurs="0" name="customerPin" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="createImmediateBookingWithCustomerPinResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return" type="tns:immediateBookingDTO"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="immediateBookingDTO">
+<xs:sequence>
+<xs:element minOccurs="0" name="startTime" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getTripHistory">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="startDate" type="xs:long"/>
+<xs:element form="qualified" minOccurs="0" name="endDate" type="xs:long"/>
+<xs:element form="qualified" minOccurs="0" name="bookingType" type="tns:bookingTypeEnum"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getTripHistoryResponse">
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:customerTripDTO"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="customerTripDTO">
+<xs:sequence>
+<xs:element minOccurs="0" name="applicableAddon" type="xs:boolean"/>
+<xs:element minOccurs="0" name="applicablePromotion" type="xs:boolean"/>
+<xs:element minOccurs="0" name="bookingNumber" type="xs:string"/>
+<xs:element minOccurs="0" name="bookingType" type="tns:bookingTypeEnum"/>
+<xs:element minOccurs="0" name="cost" type="xs:decimal"/>
+<xs:element minOccurs="0" name="costWithTax" type="xs:decimal"/>
+<xs:element minOccurs="0" name="endDateTime" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="location" type="xs:string"/>
+<xs:element minOccurs="0" name="startDateTime" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="taxCode" type="xs:string"/>
+<xs:element minOccurs="0" name="timeBooked" type="xs:int"/>
+<xs:element minOccurs="0" name="timeInUse" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getBookingInterest">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="bookingInterestCode" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getBookingInterestResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return" type="tns:bookingInterestDTO"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="bookingInterestDTO">
+<xs:sequence>
+<xs:element minOccurs="0" name="carClass" type="xs:string"/>
+<xs:element minOccurs="0" name="carClubCarsOnly" type="xs:boolean"/>
+<xs:element minOccurs="0" name="code" type="xs:string"/>
+<xs:element minOccurs="0" name="creationDate" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="isDeleteable" type="xs:boolean"/>
+<xs:element minOccurs="0" name="isEditable" type="xs:boolean"/>
+<xs:element minOccurs="0" name="location" type="tns:coordinateDTO"/>
+<xs:element minOccurs="0" name="locationName" type="xs:string"/>
+<xs:element minOccurs="0" name="notificationStartTime" type="xs:int"/>
+<xs:element minOccurs="0" name="notificationStopTime" type="xs:int"/>
+<xs:element minOccurs="0" name="numOfNotifications" type="xs:int"/>
+<xs:element minOccurs="0" name="pickupDate" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="radius" type="xs:int"/>
+<xs:element minOccurs="0" name="updateDate" type="xs:dateTime"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="coordinateDTO">
+<xs:sequence>
+<xs:element minOccurs="0" name="latitude" type="xs:decimal"/>
+<xs:element minOccurs="0" name="longitude" type="xs:decimal"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="setBookingMessageAsDeleted">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="bookingMessageCode" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="setBookingMessageAsDeletedResponse">
+<xs:sequence/>
+</xs:complexType>
+<xs:complexType name="setBookingMessageAsRead">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="bookingMessageCode" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="setBookingMessageAsReadResponse">
+<xs:sequence/>
+</xs:complexType>
+<xs:complexType name="isCarInUndesirableZone">
+<xs:sequence/>
+</xs:complexType>
+<xs:complexType name="isCarInUndesirableZoneResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="isCustomerInOngoingTrip">
+<xs:sequence/>
+</xs:complexType>
+<xs:complexType name="isCustomerInOngoingTripResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="cancelAdvanceBooking">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="bookingCode" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="cancelAdvanceBookingResponse">
+<xs:sequence/>
+</xs:complexType>
+<xs:complexType name="createBookingInterest">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="pickupDate" type="xs:long"/>
+<xs:element form="qualified" minOccurs="0" name="pickupLocation" type="xs:string"/>
+<xs:element form="qualified" minOccurs="0" name="carClass" type="xs:string"/>
+<xs:element form="qualified" minOccurs="0" name="carClubCarsOnly" type="xs:boolean"/>
+<xs:element form="qualified" minOccurs="0" name="longitude" type="xs:decimal"/>
+<xs:element form="qualified" minOccurs="0" name="latitude" type="xs:decimal"/>
+<xs:element form="qualified" minOccurs="0" name="radius" type="xs:int"/>
+<xs:element form="qualified" minOccurs="0" name="notificationStartTime" type="xs:int"/>
+<xs:element form="qualified" minOccurs="0" name="notificationStopTime" type="xs:int"/>
+<xs:element form="qualified" minOccurs="0" name="numOfNotifications" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="createBookingInterestResponse">
+<xs:sequence/>
+</xs:complexType>
+<xs:complexType name="removeBookingInterest">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="BookingInterestCode" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="removeBookingInterestResponse">
+<xs:sequence/>
+</xs:complexType>
+<xs:complexType name="isCarAvailableForImmediateBooking">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="carLicensePlate" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="isCarAvailableForImmediateBookingResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getBookingCurrentCancelCost">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="bookingNumber" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getBookingCurrentCancelCostResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return" type="xs:decimal"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="updateBookingInterest">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="bookingInterestCode" type="xs:string"/>
+<xs:element form="qualified" minOccurs="0" name="code" type="xs:string"/>
+<xs:element form="qualified" minOccurs="0" name="pickupDate" type="xs:long"/>
+<xs:element form="qualified" minOccurs="0" name="pickupLocation" type="xs:string"/>
+<xs:element form="qualified" minOccurs="0" name="carClass" type="xs:string"/>
+<xs:element form="qualified" minOccurs="0" name="carClubCarsOnly" type="xs:boolean"/>
+<xs:element form="qualified" minOccurs="0" name="longitude" type="xs:decimal"/>
+<xs:element form="qualified" minOccurs="0" name="latitude" type="xs:decimal"/>
+<xs:element form="qualified" minOccurs="0" name="radius" type="xs:int"/>
+<xs:element form="qualified" minOccurs="0" name="notificationStartTime" type="xs:int"/>
+<xs:element form="qualified" minOccurs="0" name="notificationStopTime" type="xs:int"/>
+<xs:element form="qualified" minOccurs="0" name="numOfNotifications" type="xs:int"/>
+<xs:element form="qualified" minOccurs="0" name="updateDate" type="xs:long"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="updateBookingInterestResponse">
+<xs:sequence/>
+</xs:complexType>
+<xs:complexType name="createNegatedTrip">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="latitude" type="xs:decimal"/>
+<xs:element form="qualified" minOccurs="0" name="longitude" type="xs:decimal"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="createNegatedTripResponse">
+<xs:sequence/>
+</xs:complexType>
+<xs:complexType name="createAdvanceBookingWithCustomerPin">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="carLicensePlate" type="xs:string"/>
+<xs:element form="qualified" minOccurs="0" name="customerPin" type="xs:string"/>
+<xs:element form="qualified" minOccurs="0" name="startTime" type="xs:long"/>
+<xs:element form="qualified" minOccurs="0" name="endTime" type="xs:long"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="createAdvanceBookingWithCustomerPinResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return" type="tns:advanceBookingDTO"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="advanceBookingDTO">
+<xs:sequence>
+<xs:element minOccurs="0" name="endTime" type="xs:string"/>
+<xs:element minOccurs="0" name="startTime" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="checkIfAdvanceBookingIsPermitted">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="licensePlate" type="xs:string"/>
+<xs:element form="qualified" minOccurs="0" name="beginBooking" type="xs:long"/>
+<xs:element form="qualified" minOccurs="0" name="endBooking" type="xs:long"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="checkIfAdvanceBookingIsPermittedResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+<xs:simpleType name="zoneCategoryEnum">
+<xs:restriction base="xs:string">
+<xs:enumeration value="NORMAL"/>
+<xs:enumeration value="SPECIAL"/>
+<xs:enumeration value="UNWANTED"/>
+<xs:enumeration value="PARKING"/>
+<xs:enumeration value="FORBIDDEN"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="bookingTypeEnum">
+<xs:restriction base="xs:string">
+<xs:enumeration value="IMMEDIATE"/>
+<xs:enumeration value="ADVANCE"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="carFareTypeEnum">
+<xs:restriction base="xs:string">
+<xs:enumeration value="BASE"/>
+<xs:enumeration value="STEP"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="carTypeEnum">
+<xs:restriction base="xs:string">
+<xs:enumeration value="NORMAL"/>
+<xs:enumeration value="SCHEDULE_BOOKING"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="obsConnectionStatusEnum">
+<xs:restriction base="xs:string">
+<xs:enumeration value="UNTESTED"/>
+<xs:enumeration value="WAITING"/>
+<xs:enumeration value="OPERATIONAL"/>
+<xs:enumeration value="NONOPERATIONAL"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:element name="BookingNotFoundException" type="tns:BookingNotFoundException"/>
+<xs:complexType name="BookingNotFoundException">
+<xs:sequence/>
+</xs:complexType>
+<xs:element name="CustomerNotFoundException" type="tns:CustomerNotFoundException"/>
+<xs:complexType name="CustomerNotFoundException">
+<xs:sequence/>
+</xs:complexType>
+<xs:element name="IllegalDateException" type="tns:IllegalDateException"/>
+<xs:complexType name="IllegalDateException">
+<xs:sequence/>
+</xs:complexType>
+<xs:element name="InvalidCustomerPinException" type="tns:InvalidCustomerPinException"/>
+<xs:complexType name="InvalidCustomerPinException">
+<xs:sequence/>
+</xs:complexType>
+<xs:element name="BookingValidationException" type="tns:BookingValidationException"/>
+<xs:complexType name="BookingValidationException">
+<xs:sequence/>
+</xs:complexType>
+<xs:element name="CarLicensePlateNotFoundException" type="tns:CarLicensePlateNotFoundException"/>
+<xs:complexType name="CarLicensePlateNotFoundException">
+<xs:sequence/>
+</xs:complexType>
+<xs:element name="InvalidCarBookingException" type="tns:InvalidCarBookingException"/>
+<xs:complexType name="InvalidCarBookingException">
+<xs:sequence/>
+</xs:complexType>
+<xs:element name="OverlappedCustomerTripException" type="tns:OverlappedCustomerTripException"/>
+<xs:complexType name="OverlappedCustomerTripException">
+<xs:sequence/>
+</xs:complexType>
+<xs:element name="ForbiddenZoneException" type="tns:ForbiddenZoneException"/>
+<xs:complexType name="ForbiddenZoneException">
+<xs:sequence/>
+</xs:complexType>
+<xs:element name="UnauthorizedCustomerException" type="tns:UnauthorizedCustomerException"/>
+<xs:complexType name="UnauthorizedCustomerException">
+<xs:sequence/>
+</xs:complexType>
+<xs:element name="CarNotAvailableForBookingException" type="tns:CarNotAvailableForBookingException"/>
+<xs:complexType name="CarNotAvailableForBookingException">
+<xs:sequence/>
+</xs:complexType>
+<xs:element name="CarNotFoundException" type="tns:CarNotFoundException"/>
+<xs:complexType name="CarNotFoundException">
+<xs:sequence/>
+</xs:complexType>
+<xs:element name="BookingInterestNotFoundException" type="tns:BookingInterestNotFoundException"/>
+<xs:complexType name="BookingInterestNotFoundException">
+<xs:sequence/>
+</xs:complexType>
+<xs:element name="BookingNotificationNotFoundException" type="tns:BookingNotificationNotFoundException"/>
+<xs:complexType name="BookingNotificationNotFoundException">
+<xs:sequence/>
+</xs:complexType>
+<xs:element name="BookingWrongStateException" type="tns:BookingWrongStateException"/>
+<xs:complexType name="BookingWrongStateException">
+<xs:sequence/>
+</xs:complexType>
+<xs:element name="OverlappedCarBookingException" type="tns:OverlappedCarBookingException"/>
+<xs:complexType name="OverlappedCarBookingException">
+<xs:sequence/>
+</xs:complexType>
+<xs:element name="ExpiredBookingInterestException" type="tns:ExpiredBookingInterestException"/>
+<xs:complexType name="ExpiredBookingInterestException">
+<xs:sequence/>
+</xs:complexType>
+<xs:element name="CarClassNotFoundException" type="tns:CarClassNotFoundException"/>
+<xs:complexType name="CarClassNotFoundException">
+<xs:sequence/>
+</xs:complexType>
+<xs:element name="InvalidBookingInterestUpdateException" type="tns:InvalidBookingInterestUpdateException"/>
+<xs:complexType name="InvalidBookingInterestUpdateException">
+<xs:sequence/>
+</xs:complexType>
+<xs:element name="OverlappedCustomerBookingException" type="tns:OverlappedCustomerBookingException"/>
+<xs:complexType name="OverlappedCustomerBookingException">
+<xs:sequence/>
+</xs:complexType>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="CustomerNotFoundException">
+    <wsdl:part element="tns:CustomerNotFoundException" name="CustomerNotFoundException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="isCarInUndesirableZone">
+    <wsdl:part element="tns:isCarInUndesirableZone" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="checkOverlappedInterestNotification">
+    <wsdl:part element="tns:checkOverlappedInterestNotification" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="isCarAvailableForImmediateBookingResponse">
+    <wsdl:part element="tns:isCarAvailableForImmediateBookingResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="closeActiveBookingResponse">
+    <wsdl:part element="tns:closeActiveBookingResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="extendAdvanceBookingResponse">
+    <wsdl:part element="tns:extendAdvanceBookingResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateBookingInterestResponse">
+    <wsdl:part element="tns:updateBookingInterestResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="IllegalDateException">
+    <wsdl:part element="tns:IllegalDateException" name="IllegalDateException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getNextAdvanceBookingResponse">
+    <wsdl:part element="tns:getNextAdvanceBookingResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createNegatedTripResponse">
+    <wsdl:part element="tns:createNegatedTripResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getTripHistory">
+    <wsdl:part element="tns:getTripHistory" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="setBookingMessageAsReadResponse">
+    <wsdl:part element="tns:setBookingMessageAsReadResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cancelAdvanceBooking">
+    <wsdl:part element="tns:cancelAdvanceBooking" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getNextAdvanceBooking">
+    <wsdl:part element="tns:getNextAdvanceBooking" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="OverlappedCarBookingException">
+    <wsdl:part element="tns:OverlappedCarBookingException" name="OverlappedCarBookingException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getBookingCurrentCancelCost">
+    <wsdl:part element="tns:getBookingCurrentCancelCost" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getLastTripDetails">
+    <wsdl:part element="tns:getLastTripDetails" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="isCustomerInOngoingTripResponse">
+    <wsdl:part element="tns:isCustomerInOngoingTripResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="CarLicensePlateNotFoundException">
+    <wsdl:part element="tns:CarLicensePlateNotFoundException" name="CarLicensePlateNotFoundException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ForbiddenZoneException">
+    <wsdl:part element="tns:ForbiddenZoneException" name="ForbiddenZoneException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="isCarAvailableForImmediateBooking">
+    <wsdl:part element="tns:isCarAvailableForImmediateBooking" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createNegatedTrip">
+    <wsdl:part element="tns:createNegatedTrip" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateAdvanceBookingResponse">
+    <wsdl:part element="tns:updateAdvanceBookingResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="closeActiveBooking">
+    <wsdl:part element="tns:closeActiveBooking" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="setBookingMessageAsDeletedResponse">
+    <wsdl:part element="tns:setBookingMessageAsDeletedResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="CarClassNotFoundException">
+    <wsdl:part element="tns:CarClassNotFoundException" name="CarClassNotFoundException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="checkIfAdvanceBookingIsPermittedResponse">
+    <wsdl:part element="tns:checkIfAdvanceBookingIsPermittedResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createAdvanceBookingWithCustomerPinResponse">
+    <wsdl:part element="tns:createAdvanceBookingWithCustomerPinResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getBookingCurrentCancelCostResponse">
+    <wsdl:part element="tns:getBookingCurrentCancelCostResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createBookingInterestResponse">
+    <wsdl:part element="tns:createBookingInterestResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="checkOverlappedBookingForCustomer">
+    <wsdl:part element="tns:checkOverlappedBookingForCustomer" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createImmediateBookingWithCustomerPin">
+    <wsdl:part element="tns:createImmediateBookingWithCustomerPin" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="BookingWrongStateException">
+    <wsdl:part element="tns:BookingWrongStateException" name="BookingWrongStateException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getLastTripDetailsResponse">
+    <wsdl:part element="tns:getLastTripDetailsResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="isCustomerAuthorizedToBook">
+    <wsdl:part element="tns:isCustomerAuthorizedToBook" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ExpiredBookingInterestException">
+    <wsdl:part element="tns:ExpiredBookingInterestException" name="ExpiredBookingInterestException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getTripHistoryResponse">
+    <wsdl:part element="tns:getTripHistoryResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="BookingNotFoundException">
+    <wsdl:part element="tns:BookingNotFoundException" name="BookingNotFoundException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="setBookingMessageAsDeleted">
+    <wsdl:part element="tns:setBookingMessageAsDeleted" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="isCarInForbiddenZone">
+    <wsdl:part element="tns:isCarInForbiddenZone" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getTripDetails">
+    <wsdl:part element="tns:getTripDetails" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="BookingValidationException">
+    <wsdl:part element="tns:BookingValidationException" name="BookingValidationException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getBookingMessages">
+    <wsdl:part element="tns:getBookingMessages" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="removeBookingInterestResponse">
+    <wsdl:part element="tns:removeBookingInterestResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="isCustomerAuthorizedToBookResponse">
+    <wsdl:part element="tns:isCustomerAuthorizedToBookResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getCurrentTripDetailsResponse">
+    <wsdl:part element="tns:getCurrentTripDetailsResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="OverlappedCustomerTripException">
+    <wsdl:part element="tns:OverlappedCustomerTripException" name="OverlappedCustomerTripException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="removeBookingInterest">
+    <wsdl:part element="tns:removeBookingInterest" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getBookingInterest">
+    <wsdl:part element="tns:getBookingInterest" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="BookingInterestNotFoundException">
+    <wsdl:part element="tns:BookingInterestNotFoundException" name="BookingInterestNotFoundException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="isCarInUndesirableZoneResponse">
+    <wsdl:part element="tns:isCarInUndesirableZoneResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="checkIfAdvanceBookingIsPermitted">
+    <wsdl:part element="tns:checkIfAdvanceBookingIsPermitted" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="isCarInForbiddenZoneResponse">
+    <wsdl:part element="tns:isCarInForbiddenZoneResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="UnauthorizedCustomerException">
+    <wsdl:part element="tns:UnauthorizedCustomerException" name="UnauthorizedCustomerException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="checkOverlappedBookingForCustomerResponse">
+    <wsdl:part element="tns:checkOverlappedBookingForCustomerResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createImmediateBookingWithCustomerPinResponse">
+    <wsdl:part element="tns:createImmediateBookingWithCustomerPinResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="InvalidBookingInterestUpdateException">
+    <wsdl:part element="tns:InvalidBookingInterestUpdateException" name="InvalidBookingInterestUpdateException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="cancelAdvanceBookingResponse">
+    <wsdl:part element="tns:cancelAdvanceBookingResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="extendAdvanceBooking">
+    <wsdl:part element="tns:extendAdvanceBooking" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getBookingInterestResponse">
+    <wsdl:part element="tns:getBookingInterestResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="InvalidCustomerPinException">
+    <wsdl:part element="tns:InvalidCustomerPinException" name="InvalidCustomerPinException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getTripDetailsResponse">
+    <wsdl:part element="tns:getTripDetailsResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateBookingInterest">
+    <wsdl:part element="tns:updateBookingInterest" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createAdvanceBookingWithCustomerPin">
+    <wsdl:part element="tns:createAdvanceBookingWithCustomerPin" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getBookingMessagesResponse">
+    <wsdl:part element="tns:getBookingMessagesResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateAdvanceBooking">
+    <wsdl:part element="tns:updateAdvanceBooking" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="setBookingMessageAsRead">
+    <wsdl:part element="tns:setBookingMessageAsRead" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getCurrentTripDetails">
+    <wsdl:part element="tns:getCurrentTripDetails" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createBookingInterest">
+    <wsdl:part element="tns:createBookingInterest" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="checkOverlappedInterestNotificationResponse">
+    <wsdl:part element="tns:checkOverlappedInterestNotificationResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="OverlappedCustomerBookingException">
+    <wsdl:part element="tns:OverlappedCustomerBookingException" name="OverlappedCustomerBookingException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="isCustomerInOngoingTrip">
+    <wsdl:part element="tns:isCustomerInOngoingTrip" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="CarNotAvailableForBookingException">
+    <wsdl:part element="tns:CarNotAvailableForBookingException" name="CarNotAvailableForBookingException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="CarNotFoundException">
+    <wsdl:part element="tns:CarNotFoundException" name="CarNotFoundException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="InvalidCarBookingException">
+    <wsdl:part element="tns:InvalidCarBookingException" name="InvalidCarBookingException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="BookingNotificationNotFoundException">
+    <wsdl:part element="tns:BookingNotificationNotFoundException" name="BookingNotificationNotFoundException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="Booking">
+    <wsdl:operation name="isCarInForbiddenZone">
+      <wsdl:input message="tns:isCarInForbiddenZone" name="isCarInForbiddenZone">
+    </wsdl:input>
+      <wsdl:output message="tns:isCarInForbiddenZoneResponse" name="isCarInForbiddenZoneResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="closeActiveBooking">
+      <wsdl:input message="tns:closeActiveBooking" name="closeActiveBooking">
+    </wsdl:input>
+      <wsdl:output message="tns:closeActiveBookingResponse" name="closeActiveBookingResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:BookingNotFoundException" name="BookingNotFoundException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="isCustomerAuthorizedToBook">
+      <wsdl:input message="tns:isCustomerAuthorizedToBook" name="isCustomerAuthorizedToBook">
+    </wsdl:input>
+      <wsdl:output message="tns:isCustomerAuthorizedToBookResponse" name="isCustomerAuthorizedToBookResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getBookingMessages">
+      <wsdl:input message="tns:getBookingMessages" name="getBookingMessages">
+    </wsdl:input>
+      <wsdl:output message="tns:getBookingMessagesResponse" name="getBookingMessagesResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:CustomerNotFoundException" name="CustomerNotFoundException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getCurrentTripDetails">
+      <wsdl:input message="tns:getCurrentTripDetails" name="getCurrentTripDetails">
+    </wsdl:input>
+      <wsdl:output message="tns:getCurrentTripDetailsResponse" name="getCurrentTripDetailsResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:CustomerNotFoundException" name="CustomerNotFoundException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="checkOverlappedBookingForCustomer">
+      <wsdl:input message="tns:checkOverlappedBookingForCustomer" name="checkOverlappedBookingForCustomer">
+    </wsdl:input>
+      <wsdl:output message="tns:checkOverlappedBookingForCustomerResponse" name="checkOverlappedBookingForCustomerResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:CustomerNotFoundException" name="CustomerNotFoundException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:IllegalDateException" name="IllegalDateException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="checkOverlappedInterestNotification">
+      <wsdl:input message="tns:checkOverlappedInterestNotification" name="checkOverlappedInterestNotification">
+    </wsdl:input>
+      <wsdl:output message="tns:checkOverlappedInterestNotificationResponse" name="checkOverlappedInterestNotificationResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:CustomerNotFoundException" name="CustomerNotFoundException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:IllegalDateException" name="IllegalDateException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getLastTripDetails">
+      <wsdl:input message="tns:getLastTripDetails" name="getLastTripDetails">
+    </wsdl:input>
+      <wsdl:output message="tns:getLastTripDetailsResponse" name="getLastTripDetailsResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:CustomerNotFoundException" name="CustomerNotFoundException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:BookingNotFoundException" name="BookingNotFoundException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getTripDetails">
+      <wsdl:input message="tns:getTripDetails" name="getTripDetails">
+    </wsdl:input>
+      <wsdl:output message="tns:getTripDetailsResponse" name="getTripDetailsResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:BookingNotFoundException" name="BookingNotFoundException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getNextAdvanceBooking">
+      <wsdl:input message="tns:getNextAdvanceBooking" name="getNextAdvanceBooking">
+    </wsdl:input>
+      <wsdl:output message="tns:getNextAdvanceBookingResponse" name="getNextAdvanceBookingResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:BookingNotFoundException" name="BookingNotFoundException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="updateAdvanceBooking">
+      <wsdl:input message="tns:updateAdvanceBooking" name="updateAdvanceBooking">
+    </wsdl:input>
+      <wsdl:output message="tns:updateAdvanceBookingResponse" name="updateAdvanceBookingResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:BookingValidationException" name="BookingValidationException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:InvalidCustomerPinException" name="InvalidCustomerPinException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:BookingNotFoundException" name="BookingNotFoundException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:CarLicensePlateNotFoundException" name="CarLicensePlateNotFoundException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="extendAdvanceBooking">
+      <wsdl:input message="tns:extendAdvanceBooking" name="extendAdvanceBooking">
+    </wsdl:input>
+      <wsdl:output message="tns:extendAdvanceBookingResponse" name="extendAdvanceBookingResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:BookingValidationException" name="BookingValidationException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:InvalidCustomerPinException" name="InvalidCustomerPinException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:BookingNotFoundException" name="BookingNotFoundException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:CarLicensePlateNotFoundException" name="CarLicensePlateNotFoundException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createImmediateBookingWithCustomerPin">
+      <wsdl:input message="tns:createImmediateBookingWithCustomerPin" name="createImmediateBookingWithCustomerPin">
+    </wsdl:input>
+      <wsdl:output message="tns:createImmediateBookingWithCustomerPinResponse" name="createImmediateBookingWithCustomerPinResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:OverlappedCustomerTripException" name="OverlappedCustomerTripException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:InvalidCustomerPinException" name="InvalidCustomerPinException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:InvalidCarBookingException" name="InvalidCarBookingException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:CarNotFoundException" name="CarNotFoundException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:CarNotAvailableForBookingException" name="CarNotAvailableForBookingException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:ForbiddenZoneException" name="ForbiddenZoneException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:CarLicensePlateNotFoundException" name="CarLicensePlateNotFoundException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:UnauthorizedCustomerException" name="UnauthorizedCustomerException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getTripHistory">
+      <wsdl:input message="tns:getTripHistory" name="getTripHistory">
+    </wsdl:input>
+      <wsdl:output message="tns:getTripHistoryResponse" name="getTripHistoryResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:CustomerNotFoundException" name="CustomerNotFoundException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getBookingInterest">
+      <wsdl:input message="tns:getBookingInterest" name="getBookingInterest">
+    </wsdl:input>
+      <wsdl:output message="tns:getBookingInterestResponse" name="getBookingInterestResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:BookingInterestNotFoundException" name="BookingInterestNotFoundException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="setBookingMessageAsDeleted">
+      <wsdl:input message="tns:setBookingMessageAsDeleted" name="setBookingMessageAsDeleted">
+    </wsdl:input>
+      <wsdl:output message="tns:setBookingMessageAsDeletedResponse" name="setBookingMessageAsDeletedResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:CustomerNotFoundException" name="CustomerNotFoundException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:BookingNotificationNotFoundException" name="BookingNotificationNotFoundException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="setBookingMessageAsRead">
+      <wsdl:input message="tns:setBookingMessageAsRead" name="setBookingMessageAsRead">
+    </wsdl:input>
+      <wsdl:output message="tns:setBookingMessageAsReadResponse" name="setBookingMessageAsReadResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:CustomerNotFoundException" name="CustomerNotFoundException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:BookingNotificationNotFoundException" name="BookingNotificationNotFoundException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="isCarInUndesirableZone">
+      <wsdl:input message="tns:isCarInUndesirableZone" name="isCarInUndesirableZone">
+    </wsdl:input>
+      <wsdl:output message="tns:isCarInUndesirableZoneResponse" name="isCarInUndesirableZoneResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="isCustomerInOngoingTrip">
+      <wsdl:input message="tns:isCustomerInOngoingTrip" name="isCustomerInOngoingTrip">
+    </wsdl:input>
+      <wsdl:output message="tns:isCustomerInOngoingTripResponse" name="isCustomerInOngoingTripResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cancelAdvanceBooking">
+      <wsdl:input message="tns:cancelAdvanceBooking" name="cancelAdvanceBooking">
+    <wsp:PolicyReference URI="#SecurityServiceUsernameHashPasswordPolicy"/>
+    </wsdl:input>
+      <wsdl:output message="tns:cancelAdvanceBookingResponse" name="cancelAdvanceBookingResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:CustomerNotFoundException" name="CustomerNotFoundException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:BookingWrongStateException" name="BookingWrongStateException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:BookingNotFoundException" name="BookingNotFoundException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:UnauthorizedCustomerException" name="UnauthorizedCustomerException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createBookingInterest">
+      <wsdl:input message="tns:createBookingInterest" name="createBookingInterest">
+    </wsdl:input>
+      <wsdl:output message="tns:createBookingInterestResponse" name="createBookingInterestResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:OverlappedCarBookingException" name="OverlappedCarBookingException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:CarClassNotFoundException" name="CarClassNotFoundException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:CustomerNotFoundException" name="CustomerNotFoundException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:BookingValidationException" name="BookingValidationException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:IllegalDateException" name="IllegalDateException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:ExpiredBookingInterestException" name="ExpiredBookingInterestException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="removeBookingInterest">
+      <wsdl:input message="tns:removeBookingInterest" name="removeBookingInterest">
+    </wsdl:input>
+      <wsdl:output message="tns:removeBookingInterestResponse" name="removeBookingInterestResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="isCarAvailableForImmediateBooking">
+      <wsdl:input message="tns:isCarAvailableForImmediateBooking" name="isCarAvailableForImmediateBooking">
+    </wsdl:input>
+      <wsdl:output message="tns:isCarAvailableForImmediateBookingResponse" name="isCarAvailableForImmediateBookingResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:CarLicensePlateNotFoundException" name="CarLicensePlateNotFoundException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getBookingCurrentCancelCost">
+      <wsdl:input message="tns:getBookingCurrentCancelCost" name="getBookingCurrentCancelCost">
+    </wsdl:input>
+      <wsdl:output message="tns:getBookingCurrentCancelCostResponse" name="getBookingCurrentCancelCostResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:BookingNotFoundException" name="BookingNotFoundException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="updateBookingInterest">
+      <wsdl:input message="tns:updateBookingInterest" name="updateBookingInterest">
+    </wsdl:input>
+      <wsdl:output message="tns:updateBookingInterestResponse" name="updateBookingInterestResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:BookingInterestNotFoundException" name="BookingInterestNotFoundException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:OverlappedCarBookingException" name="OverlappedCarBookingException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:CarClassNotFoundException" name="CarClassNotFoundException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:CustomerNotFoundException" name="CustomerNotFoundException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:BookingValidationException" name="BookingValidationException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:InvalidBookingInterestUpdateException" name="InvalidBookingInterestUpdateException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:IllegalDateException" name="IllegalDateException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:ExpiredBookingInterestException" name="ExpiredBookingInterestException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createNegatedTrip">
+      <wsdl:input message="tns:createNegatedTrip" name="createNegatedTrip">
+    </wsdl:input>
+      <wsdl:output message="tns:createNegatedTripResponse" name="createNegatedTripResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="createAdvanceBookingWithCustomerPin">
+      <wsdl:input message="tns:createAdvanceBookingWithCustomerPin" name="createAdvanceBookingWithCustomerPin">
+    </wsdl:input>
+      <wsdl:output message="tns:createAdvanceBookingWithCustomerPinResponse" name="createAdvanceBookingWithCustomerPinResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:OverlappedCarBookingException" name="OverlappedCarBookingException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:InvalidCustomerPinException" name="InvalidCustomerPinException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:InvalidCarBookingException" name="InvalidCarBookingException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:CarNotFoundException" name="CarNotFoundException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:CarNotAvailableForBookingException" name="CarNotAvailableForBookingException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:OverlappedCustomerBookingException" name="OverlappedCustomerBookingException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:IllegalDateException" name="IllegalDateException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:ForbiddenZoneException" name="ForbiddenZoneException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:CarLicensePlateNotFoundException" name="CarLicensePlateNotFoundException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:UnauthorizedCustomerException" name="UnauthorizedCustomerException">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="checkIfAdvanceBookingIsPermitted">
+      <wsdl:input message="tns:checkIfAdvanceBookingIsPermitted" name="checkIfAdvanceBookingIsPermitted">
+    </wsdl:input>
+      <wsdl:output message="tns:checkIfAdvanceBookingIsPermittedResponse" name="checkIfAdvanceBookingIsPermittedResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:CustomerNotFoundException" name="CustomerNotFoundException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:IllegalDateException" name="IllegalDateException">
+    </wsdl:fault>
+      <wsdl:fault message="tns:CarLicensePlateNotFoundException" name="CarLicensePlateNotFoundException">
+    </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BookingWSServiceSoapBinding" type="tns:Booking">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="isCarInForbiddenZone">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="isCarInForbiddenZone">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="isCarInForbiddenZoneResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="closeActiveBooking">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="closeActiveBooking">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="closeActiveBookingResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="BookingNotFoundException">
+        <soap:fault name="BookingNotFoundException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="isCustomerAuthorizedToBook">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="isCustomerAuthorizedToBook">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="isCustomerAuthorizedToBookResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getBookingMessages">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getBookingMessages">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getBookingMessagesResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="CustomerNotFoundException">
+        <soap:fault name="CustomerNotFoundException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getCurrentTripDetails">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getCurrentTripDetails">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getCurrentTripDetailsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="CustomerNotFoundException">
+        <soap:fault name="CustomerNotFoundException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="checkOverlappedBookingForCustomer">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="checkOverlappedBookingForCustomer">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="checkOverlappedBookingForCustomerResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="CustomerNotFoundException">
+        <soap:fault name="CustomerNotFoundException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="IllegalDateException">
+        <soap:fault name="IllegalDateException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="checkOverlappedInterestNotification">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="checkOverlappedInterestNotification">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="checkOverlappedInterestNotificationResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="CustomerNotFoundException">
+        <soap:fault name="CustomerNotFoundException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="IllegalDateException">
+        <soap:fault name="IllegalDateException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getLastTripDetails">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getLastTripDetails">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getLastTripDetailsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="CustomerNotFoundException">
+        <soap:fault name="CustomerNotFoundException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BookingNotFoundException">
+        <soap:fault name="BookingNotFoundException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getNextAdvanceBooking">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getNextAdvanceBooking">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getNextAdvanceBookingResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="BookingNotFoundException">
+        <soap:fault name="BookingNotFoundException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getTripDetails">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getTripDetails">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getTripDetailsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="BookingNotFoundException">
+        <soap:fault name="BookingNotFoundException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="updateAdvanceBooking">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="updateAdvanceBooking">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="updateAdvanceBookingResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="BookingValidationException">
+        <soap:fault name="BookingValidationException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="InvalidCustomerPinException">
+        <soap:fault name="InvalidCustomerPinException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BookingNotFoundException">
+        <soap:fault name="BookingNotFoundException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="CarLicensePlateNotFoundException">
+        <soap:fault name="CarLicensePlateNotFoundException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createImmediateBookingWithCustomerPin">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="createImmediateBookingWithCustomerPin">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="createImmediateBookingWithCustomerPinResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="OverlappedCustomerTripException">
+        <soap:fault name="OverlappedCustomerTripException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="InvalidCustomerPinException">
+        <soap:fault name="InvalidCustomerPinException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="InvalidCarBookingException">
+        <soap:fault name="InvalidCarBookingException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="CarNotFoundException">
+        <soap:fault name="CarNotFoundException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="CarNotAvailableForBookingException">
+        <soap:fault name="CarNotAvailableForBookingException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="ForbiddenZoneException">
+        <soap:fault name="ForbiddenZoneException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="CarLicensePlateNotFoundException">
+        <soap:fault name="CarLicensePlateNotFoundException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="UnauthorizedCustomerException">
+        <soap:fault name="UnauthorizedCustomerException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="extendAdvanceBooking">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="extendAdvanceBooking">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="extendAdvanceBookingResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="BookingValidationException">
+        <soap:fault name="BookingValidationException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="InvalidCustomerPinException">
+        <soap:fault name="InvalidCustomerPinException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BookingNotFoundException">
+        <soap:fault name="BookingNotFoundException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="CarLicensePlateNotFoundException">
+        <soap:fault name="CarLicensePlateNotFoundException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getTripHistory">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getTripHistory">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getTripHistoryResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="CustomerNotFoundException">
+        <soap:fault name="CustomerNotFoundException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getBookingInterest">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getBookingInterest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getBookingInterestResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="BookingInterestNotFoundException">
+        <soap:fault name="BookingInterestNotFoundException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="setBookingMessageAsDeleted">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="setBookingMessageAsDeleted">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="setBookingMessageAsDeletedResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="CustomerNotFoundException">
+        <soap:fault name="CustomerNotFoundException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BookingNotificationNotFoundException">
+        <soap:fault name="BookingNotificationNotFoundException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="setBookingMessageAsRead">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="setBookingMessageAsRead">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="setBookingMessageAsReadResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="CustomerNotFoundException">
+        <soap:fault name="CustomerNotFoundException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BookingNotificationNotFoundException">
+        <soap:fault name="BookingNotificationNotFoundException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="isCarInUndesirableZone">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="isCarInUndesirableZone">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="isCarInUndesirableZoneResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="isCustomerInOngoingTrip">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="isCustomerInOngoingTrip">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="isCustomerInOngoingTripResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cancelAdvanceBooking">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="cancelAdvanceBooking">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="cancelAdvanceBookingResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="CustomerNotFoundException">
+        <soap:fault name="CustomerNotFoundException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BookingWrongStateException">
+        <soap:fault name="BookingWrongStateException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BookingNotFoundException">
+        <soap:fault name="BookingNotFoundException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="UnauthorizedCustomerException">
+        <soap:fault name="UnauthorizedCustomerException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createBookingInterest">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="createBookingInterest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="createBookingInterestResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="OverlappedCarBookingException">
+        <soap:fault name="OverlappedCarBookingException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="CarClassNotFoundException">
+        <soap:fault name="CarClassNotFoundException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="CustomerNotFoundException">
+        <soap:fault name="CustomerNotFoundException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BookingValidationException">
+        <soap:fault name="BookingValidationException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="IllegalDateException">
+        <soap:fault name="IllegalDateException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="ExpiredBookingInterestException">
+        <soap:fault name="ExpiredBookingInterestException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="removeBookingInterest">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="removeBookingInterest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="removeBookingInterestResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="isCarAvailableForImmediateBooking">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="isCarAvailableForImmediateBooking">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="isCarAvailableForImmediateBookingResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="CarLicensePlateNotFoundException">
+        <soap:fault name="CarLicensePlateNotFoundException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getBookingCurrentCancelCost">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getBookingCurrentCancelCost">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getBookingCurrentCancelCostResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="BookingNotFoundException">
+        <soap:fault name="BookingNotFoundException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="updateBookingInterest">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="updateBookingInterest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="updateBookingInterestResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="BookingInterestNotFoundException">
+        <soap:fault name="BookingInterestNotFoundException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="OverlappedCarBookingException">
+        <soap:fault name="OverlappedCarBookingException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="CarClassNotFoundException">
+        <soap:fault name="CarClassNotFoundException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="CustomerNotFoundException">
+        <soap:fault name="CustomerNotFoundException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="BookingValidationException">
+        <soap:fault name="BookingValidationException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="InvalidBookingInterestUpdateException">
+        <soap:fault name="InvalidBookingInterestUpdateException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="IllegalDateException">
+        <soap:fault name="IllegalDateException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="ExpiredBookingInterestException">
+        <soap:fault name="ExpiredBookingInterestException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createNegatedTrip">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="createNegatedTrip">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="createNegatedTripResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="createAdvanceBookingWithCustomerPin">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="createAdvanceBookingWithCustomerPin">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="createAdvanceBookingWithCustomerPinResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="OverlappedCarBookingException">
+        <soap:fault name="OverlappedCarBookingException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="InvalidCustomerPinException">
+        <soap:fault name="InvalidCustomerPinException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="InvalidCarBookingException">
+        <soap:fault name="InvalidCarBookingException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="CarNotFoundException">
+        <soap:fault name="CarNotFoundException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="CarNotAvailableForBookingException">
+        <soap:fault name="CarNotAvailableForBookingException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="OverlappedCustomerBookingException">
+        <soap:fault name="OverlappedCustomerBookingException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="IllegalDateException">
+        <soap:fault name="IllegalDateException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="ForbiddenZoneException">
+        <soap:fault name="ForbiddenZoneException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="CarLicensePlateNotFoundException">
+        <soap:fault name="CarLicensePlateNotFoundException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="UnauthorizedCustomerException">
+        <soap:fault name="UnauthorizedCustomerException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="checkIfAdvanceBookingIsPermitted">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="checkIfAdvanceBookingIsPermitted">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="checkIfAdvanceBookingIsPermittedResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="CustomerNotFoundException">
+        <soap:fault name="CustomerNotFoundException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="IllegalDateException">
+        <soap:fault name="IllegalDateException" use="literal"/>
+      </wsdl:fault>
+      <wsdl:fault name="CarLicensePlateNotFoundException">
+        <soap:fault name="CarLicensePlateNotFoundException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="BookingWSService">
+    <wsdl:port binding="tns:BookingWSServiceSoapBinding" name="BookingPort">
+      <soap:address location="http://localhost:8080/mobics-webservices/Booking"/>
+    </wsdl:port>
+  </wsdl:service>
+    <wsp:Policy wsu:Id="SecurityServiceUsernameHashPasswordPolicy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+  <wsp:ExactlyOne>
+    <wsp:All>
+      <sp:SupportingTokens xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702">
+        <wsp:Policy>
+          <sp:UsernameToken sp:IncludeToken="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/AlwaysToRecipient">
+            <wsp:Policy>
+              <sp:HashPassword/>
+            </wsp:Policy>
+          </sp:UsernameToken>
+        </wsp:Policy>
+      </sp:SupportingTokens>
+    </wsp:All>
+  </wsp:ExactlyOne>
+</wsp:Policy>
+</wsdl:definitions>
