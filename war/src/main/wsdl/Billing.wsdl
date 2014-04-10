@@ -1,427 +1,421 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<wsdl:definitions name="BillingWSService" targetNamespace="http://mobics.criticalsoftware.com/billing"
-  xmlns:ns1="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://mobics.criticalsoftware.com/billing"
-  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="BillingWSService" targetNamespace="http://mobics.criticalsoftware.com/billing" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://mobics.criticalsoftware.com/billing" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <wsdl:types>
-    <xs:schema elementFormDefault="qualified" targetNamespace="http://www.criticalsoftware.com/mobios/services/accounting/dto"
-      version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-      <xs:element name="car_tags">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element maxOccurs="unbounded" name="tag" type="xs:string" />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="client_tags">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element maxOccurs="unbounded" name="tag" type="xs:string" />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="credit_card_configuration">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element name="type" type="xs:string" />
-            <xs:element name="card_number" type="xs:string" />
-            <xs:element name="month" type="xs:string" />
-            <xs:element name="year" type="xs:string" />
-            <xs:element name="securityCode" type="xs:string" />
-            <xs:element name="wallet_id" type="xs:string" />
-            <xs:element name="first_name" type="xs:string" />
-            <xs:element name="last_name" type="xs:string" />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="customerChangeStateEventMessage">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element name="customerName" type="xs:string" />
-            <xs:element name="carClubCode" type="xs:string" />
-            <xs:element name="stateCode" type="xs:string" />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="events_calendar">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element maxOccurs="unbounded" name="event">
-              <xs:complexType>
-                <xs:sequence>
-                  <xs:element name="name" type="xs:string" />
-                  <xs:element name="startDate" type="xs:string" />
-                  <xs:element name="endDate" type="xs:string" />
-                </xs:sequence>
-              </xs:complexType>
-            </xs:element>
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="ps2_configuration">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element name="nib" type="xs:string" />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="sdd_configuration">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element name="nib" type="xs:string" />
-            <xs:element name="payer_account" type="xs:string" />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="weekly_restriction">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element maxOccurs="unbounded" name="timePeriod">
-              <xs:complexType>
-                <xs:sequence>
-                  <xs:element name="dayOfWeek" type="xs:int" />
-                  <xs:element name="startHour" type="xs:string" />
-                  <xs:element name="endHour" type="xs:string" />
-                </xs:sequence>
-              </xs:complexType>
-            </xs:element>
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:element name="zone_restriction">
-        <xs:complexType>
-          <xs:sequence>
-            <xs:element maxOccurs="unbounded" name="zoneCode" type="xs:string" />
-          </xs:sequence>
-        </xs:complexType>
-      </xs:element>
-      <xs:complexType name="fileAttachmentDTO">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="fileContents" type="xs:base64Binary" />
-          <xs:element minOccurs="0" name="fileName" type="xs:string" />
-          <xs:element minOccurs="0" name="mimeType" type="xs:string" />
-        </xs:sequence>
-      </xs:complexType>
-    </xs:schema>
-    <xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified"
-      targetNamespace="http://mobics.criticalsoftware.com/billing" xmlns:ns1="http://www.criticalsoftware.com/mobios/services/accounting/dto"
-      xmlns:tns="http://mobics.criticalsoftware.com/billing" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-      <xs:import namespace="http://www.criticalsoftware.com/mobios/services/accounting/dto" />
-      <xs:element name="addCreditCard" type="tns:addCreditCard" />
-      <xs:element name="addCreditCardResponse" type="tns:addCreditCardResponse" />
-      <xs:element name="addDirectDebit" type="tns:addDirectDebit" />
-      <xs:element name="addDirectDebitResponse" type="tns:addDirectDebitResponse" />
-      <xs:element name="deletePaymentMethod" type="tns:deletePaymentMethod" />
-      <xs:element name="deletePaymentMethodResponse" type="tns:deletePaymentMethodResponse" />
-      <xs:element name="editCreditCard" type="tns:editCreditCard" />
-      <xs:element name="editCreditCardResponse" type="tns:editCreditCardResponse" />
-      <xs:element name="editDirectDebit" type="tns:editDirectDebit" />
-      <xs:element name="editDirectDebitResponse" type="tns:editDirectDebitResponse" />
-      <xs:element name="editPriority" type="tns:editPriority" />
-      <xs:element name="editPriorityResponse" type="tns:editPriorityResponse" />
-      <xs:element name="getAvailablePaymentMethods" type="tns:getAvailablePaymentMethods" />
-      <xs:element name="getAvailablePaymentMethodsByCarClubCode" type="tns:getAvailablePaymentMethodsByCarClubCode" />
-      <xs:element name="getAvailablePaymentMethodsByCarClubCodeResponse" type="tns:getAvailablePaymentMethodsByCarClubCodeResponse" />
-      <xs:element name="getAvailablePaymentMethodsResponse" type="tns:getAvailablePaymentMethodsResponse" />
-      <xs:element name="getBonusAccount" type="tns:getBonusAccount" />
-      <xs:element name="getBonusAccountResponse" type="tns:getBonusAccountResponse" />
-      <xs:element name="getClientBonusAccountStatement" type="tns:getClientBonusAccountStatement" />
-      <xs:element name="getClientBonusAccountStatementResponse" type="tns:getClientBonusAccountStatementResponse" />
-      <xs:element name="getCreditCardDetails" type="tns:getCreditCardDetails" />
-      <xs:element name="getCreditCardDetailsResponse" type="tns:getCreditCardDetailsResponse" />
-      <xs:element name="getDetailedBillingDocument" type="tns:getDetailedBillingDocument" />
-      <xs:element name="getDetailedBillingDocumentResponse" type="tns:getDetailedBillingDocumentResponse" />
-      <xs:element name="getDetailedBillingForCustomer" type="tns:getDetailedBillingForCustomer" />
-      <xs:element name="getDetailedBillingForCustomerResponse" type="tns:getDetailedBillingForCustomerResponse" />
-      <xs:complexType name="deletePaymentMethod">
-        <xs:sequence>
-          <xs:element form="qualified" minOccurs="0" name="paymentMethodId" type="xs:string" />
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="deletePaymentMethodResponse">
-        <xs:sequence />
-      </xs:complexType>
-      <xs:complexType name="addDirectDebit">
-        <xs:sequence>
-          <xs:element form="qualified" minOccurs="0" name="paymentMethodDetailDTO" type="tns:paymentMethodDetailDTO" />
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="paymentMethodDetailDTO">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="creditCardExpirationDateMonth" type="xs:string" />
-          <xs:element minOccurs="0" name="creditCardExpirationDateYear" type="xs:string" />
-          <xs:element minOccurs="0" name="creditCardNumber" type="xs:string" />
-          <xs:element minOccurs="0" name="creditCardSecurityCode" type="xs:string" />
-          <xs:element minOccurs="0" name="creditCardType" type="tns:creditCardTypeEnum" />
-          <xs:element minOccurs="0" name="directDebitNib" type="xs:string" />
-          <xs:element name="expired" type="xs:boolean" />
-          <xs:element minOccurs="0" name="id" type="xs:string" />
-          <xs:element minOccurs="0" name="order" type="xs:int" />
-          <xs:element minOccurs="0" name="paymentMethodEnum" type="tns:paymentMethodEnum" />
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="addDirectDebitResponse">
-        <xs:sequence />
-      </xs:complexType>
-      <xs:complexType name="editCreditCard">
-        <xs:sequence>
-          <xs:element form="qualified" minOccurs="0" name="paymentMethodDetailDTO" type="tns:paymentMethodDetailDTO" />
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="editCreditCardResponse">
-        <xs:sequence />
-      </xs:complexType>
-      <xs:complexType name="getDetailedBillingDocument">
-        <xs:sequence>
-          <xs:element form="qualified" minOccurs="0" name="invoiceId" type="xs:string" />
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="getDetailedBillingDocumentResponse">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="return" type="ns1:fileAttachmentDTO" />
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="getDetailedBillingForCustomer">
-        <xs:sequence>
-          <xs:element form="qualified" minOccurs="0" name="startDate" type="xs:long" />
-          <xs:element form="qualified" minOccurs="0" name="endDate" type="xs:long" />
-          <xs:element form="qualified" minOccurs="0" name="firstResult" type="xs:int" />
-          <xs:element form="qualified" minOccurs="0" name="maxResults" type="xs:int" />
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="getDetailedBillingForCustomerResponse">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:billingDetailedListDTO" />
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="billingDetailedListDTO">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="balance" type="xs:decimal" />
-          <xs:element minOccurs="0" name="code" type="xs:string" />
-          <xs:element minOccurs="0" name="date" type="xs:dateTime" />
-          <xs:element minOccurs="0" name="invoiceId" type="xs:string" />
-          <xs:element minOccurs="0" name="status" type="tns:billingStatusEnum" />
-          <xs:element minOccurs="0" name="type" type="tns:billingDetailTypeEnum" />
-          <xs:element minOccurs="0" name="value" type="xs:decimal" />
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="getClientBonusAccountStatement">
-        <xs:sequence>
-          <xs:element form="qualified" minOccurs="0" name="startDate" type="xs:long" />
-          <xs:element form="qualified" minOccurs="0" name="endDate" type="xs:long" />
-          <xs:element form="qualified" minOccurs="0" name="firstResult" type="xs:int" />
-          <xs:element form="qualified" minOccurs="0" name="maxResults" type="xs:int" />
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="getClientBonusAccountStatementResponse">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:bonusAccountStatementListDTO" />
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="bonusAccountStatementListDTO">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="amount" type="xs:decimal" />
-          <xs:element minOccurs="0" name="balance" type="xs:decimal" />
-          <xs:element minOccurs="0" name="condition" type="xs:string" />
-          <xs:element minOccurs="0" name="date" type="xs:dateTime" />
-          <xs:element minOccurs="0" name="origin" type="tns:bonusAccountOriginEnum" />
-          <xs:element minOccurs="0" name="originNumber" type="xs:string" />
-          <xs:element minOccurs="0" name="taxCode" type="xs:string" />
-          <xs:element minOccurs="0" name="type" type="tns:bonusAccountTypeEnum" />
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="addCreditCard">
-        <xs:sequence>
-          <xs:element form="qualified" minOccurs="0" name="paymentMethodDetailDTO" type="tns:paymentMethodDetailDTO" />
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="addCreditCardResponse">
-        <xs:sequence />
-      </xs:complexType>
-      <xs:complexType name="getAvailablePaymentMethodsByCarClubCode">
-        <xs:sequence>
-          <xs:element form="qualified" minOccurs="0" name="carClubCode" type="xs:string" />
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="getAvailablePaymentMethodsByCarClubCodeResponse">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:paymentMethodEnum" />
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="getAvailablePaymentMethods">
-        <xs:sequence />
-      </xs:complexType>
-      <xs:complexType name="getAvailablePaymentMethodsResponse">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:paymentMethodEnum" />
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="editPriority">
-        <xs:sequence>
-          <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="paymentMethodIds" type="xs:string" />
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="editPriorityResponse">
-        <xs:sequence />
-      </xs:complexType>
-      <xs:complexType name="getBonusAccount">
-        <xs:sequence />
-      </xs:complexType>
-      <xs:complexType name="getBonusAccountResponse">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="return" type="tns:bonusAccountBalanceListDTO" />
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="bonusAccountBalanceListDTO">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="availableNow" type="xs:decimal" />
-          <xs:element minOccurs="0" name="expiringDate" type="xs:dateTime" />
-          <xs:element minOccurs="0" name="expiringNext" type="xs:decimal" />
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="futureBonuses" nillable="true"
-            type="tns:bonusAccountFutureBonusesListDTO" />
-          <xs:element minOccurs="0" name="taxCode" type="xs:string" />
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="bonusAccountFutureBonusesListDTO">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="amount" type="xs:decimal" />
-          <xs:element minOccurs="0" name="endDate" type="xs:dateTime" />
-          <xs:element minOccurs="0" name="startDate" type="xs:dateTime" />
-          <xs:element minOccurs="0" name="taxCode" type="xs:string" />
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="getCreditCardDetails">
-        <xs:sequence>
-          <xs:element form="qualified" minOccurs="0" name="paymentMethodId" type="xs:string" />
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="getCreditCardDetailsResponse">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="return" type="tns:creditCardDTO" />
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="creditCardDTO">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="code" type="xs:string" />
-          <xs:element minOccurs="0" name="id" type="xs:string" />
-          <xs:element minOccurs="0" name="month" type="xs:string" />
-          <xs:element minOccurs="0" name="securityCode" type="xs:string" />
-          <xs:element minOccurs="0" name="type" type="tns:creditCardTypeEnum" />
-          <xs:element minOccurs="0" name="year" type="xs:string" />
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="editDirectDebit">
-        <xs:sequence>
-          <xs:element form="qualified" minOccurs="0" name="paymentMethodDetailDTO" type="tns:paymentMethodDetailDTO" />
-        </xs:sequence>
-      </xs:complexType>
-      <xs:complexType name="editDirectDebitResponse">
-        <xs:sequence />
-      </xs:complexType>
-      <xs:simpleType name="creditCardTypeEnum">
-        <xs:restriction base="xs:string">
-          <xs:enumeration value="VISA" />
-          <xs:enumeration value="MASTERCARD" />
-          <xs:enumeration value="REDUNICRE" />
-        </xs:restriction>
-      </xs:simpleType>
-      <xs:simpleType name="paymentMethodEnum">
-        <xs:restriction base="xs:string">
-          <xs:enumeration value="DIRECT_DEBIT" />
-          <xs:enumeration value="SUB_ACCOUNT" />
-          <xs:enumeration value="CREDIT_CARD" />
-          <xs:enumeration value="TEMPORARY_CREDIT_CARD" />
-          <xs:enumeration value="MANUAL" />
-          <xs:enumeration value="MULTIBANCO" />
-        </xs:restriction>
-      </xs:simpleType>
-      <xs:simpleType name="billingStatusEnum">
-        <xs:restriction base="xs:string">
-          <xs:enumeration value="TO_PAY" />
-          <xs:enumeration value="PAID" />
-          <xs:enumeration value="NOT_PAID" />
-          <xs:enumeration value="INVOICED" />
-          <xs:enumeration value="CHARGED" />
-          <xs:enumeration value="TO_INVOICE" />
-          <xs:enumeration value="DELETED" />
-          <xs:enumeration value="IN_REVIEW" />
-          <xs:enumeration value="UNCOLLECTABLE" />
-          <xs:enumeration value="ON_HOLD" />
-        </xs:restriction>
-      </xs:simpleType>
-      <xs:simpleType name="billingDetailTypeEnum">
-        <xs:restriction base="xs:string">
-          <xs:enumeration value="PAYMENT" />
-          <xs:enumeration value="CREDIT_NOTE" />
-          <xs:enumeration value="INVOICE" />
-        </xs:restriction>
-      </xs:simpleType>
-      <xs:simpleType name="bonusAccountOriginEnum">
-        <xs:restriction base="xs:string">
-          <xs:enumeration value="INVOICE" />
-          <xs:enumeration value="INCIDENT" />
-          <xs:enumeration value="BOOKING" />
-          <xs:enumeration value="CREDIT" />
-          <xs:enumeration value="EXPIRED" />
-          <xs:enumeration value="CANCELLED" />
-          <xs:enumeration value="ACTIVE" />
-          <xs:enumeration value="NA" />
-          <xs:enumeration value="BONUS_ADJUST" />
-          <xs:enumeration value="PROMOTIONAL_CODE" />
-          <xs:enumeration value="ADDITIONAL_SERVICE" />
-        </xs:restriction>
-      </xs:simpleType>
-      <xs:simpleType name="bonusAccountTypeEnum">
-        <xs:restriction base="xs:string">
-          <xs:enumeration value="IMMEDIATE" />
-          <xs:enumeration value="DEFERRED" />
-          <xs:enumeration value="NA" />
-        </xs:restriction>
-      </xs:simpleType>
-      <xs:element name="NotAssociatedPaymentMethodException" type="tns:NotAssociatedPaymentMethodException" />
-      <xs:complexType name="NotAssociatedPaymentMethodException">
-        <xs:sequence />
-      </xs:complexType>
-      <xs:element name="ZeroPaymentMethodsException" type="tns:ZeroPaymentMethodsException" />
-      <xs:complexType name="ZeroPaymentMethodsException">
-        <xs:sequence />
-      </xs:complexType>
-      <xs:element name="CustomerHasPaymentsInWaitingInfoException" type="tns:CustomerHasPaymentsInWaitingInfoException" />
-      <xs:complexType name="CustomerHasPaymentsInWaitingInfoException">
-        <xs:sequence />
-      </xs:complexType>
-      <xs:element name="AlreadyExistentPaymentMethodException" type="tns:AlreadyExistentPaymentMethodException" />
-      <xs:complexType name="AlreadyExistentPaymentMethodException">
-        <xs:sequence />
-      </xs:complexType>
-      <xs:element name="InvalidDirectDebitException" type="tns:InvalidDirectDebitException" />
-      <xs:complexType name="InvalidDirectDebitException">
-        <xs:sequence />
-      </xs:complexType>
-      <xs:element name="NotAvailablePaymentMethodException" type="tns:NotAvailablePaymentMethodException" />
-      <xs:complexType name="NotAvailablePaymentMethodException">
-        <xs:sequence />
-      </xs:complexType>
-      <xs:element name="MaxNumberOfPaymentMethodsReachedException" type="tns:MaxNumberOfPaymentMethodsReachedException" />
-      <xs:complexType name="MaxNumberOfPaymentMethodsReachedException">
-        <xs:sequence />
-      </xs:complexType>
-      <xs:element name="InvalidCreditCardException" type="tns:InvalidCreditCardException" />
-      <xs:complexType name="InvalidCreditCardException">
-        <xs:sequence />
-      </xs:complexType>
-      <xs:element name="CustomerNotFoundException" type="tns:CustomerNotFoundException" />
-      <xs:complexType name="CustomerNotFoundException">
-        <xs:sequence />
-      </xs:complexType>
-      <xs:element name="InvoiceNotFoundException" type="tns:InvoiceNotFoundException" />
-      <xs:complexType name="InvoiceNotFoundException">
-        <xs:sequence />
-      </xs:complexType>
-      <xs:element name="InvoicePdfNotFoundException" type="tns:InvoicePdfNotFoundException" />
-      <xs:complexType name="InvoicePdfNotFoundException">
-        <xs:sequence />
-      </xs:complexType>
-    </xs:schema>
+<xs:schema elementFormDefault="qualified" targetNamespace="http://www.criticalsoftware.com/mobios/services/accounting/dto" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:element name="car_tags">
+<xs:complexType>
+<xs:sequence>
+<xs:element maxOccurs="unbounded" name="tag" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="client_tags">
+<xs:complexType>
+<xs:sequence>
+<xs:element maxOccurs="unbounded" name="tag" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="credit_card_configuration">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="type" type="xs:string"/>
+<xs:element name="card_number" type="xs:string"/>
+<xs:element name="month" type="xs:string"/>
+<xs:element name="year" type="xs:string"/>
+<xs:element name="securityCode" type="xs:string"/>
+<xs:element name="wallet_id" type="xs:string"/>
+<xs:element name="first_name" type="xs:string"/>
+<xs:element name="last_name" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="customerChangeStateEventMessage">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="customerName" type="xs:string"/>
+<xs:element name="carClubCode" type="xs:string"/>
+<xs:element name="stateCode" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="events_calendar">
+<xs:complexType>
+<xs:sequence>
+<xs:element maxOccurs="unbounded" name="event">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="name" type="xs:string"/>
+<xs:element name="startDate" type="xs:string"/>
+<xs:element name="endDate" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="ps2_configuration">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="nib" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="sdd_configuration">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="nib" type="xs:string"/>
+<xs:element name="payer_account" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="weekly_restriction">
+<xs:complexType>
+<xs:sequence>
+<xs:element maxOccurs="unbounded" name="timePeriod">
+<xs:complexType>
+<xs:sequence>
+<xs:element name="dayOfWeek" type="xs:int"/>
+<xs:element name="startHour" type="xs:string"/>
+<xs:element name="endHour" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:element name="zone_restriction">
+<xs:complexType>
+<xs:sequence>
+<xs:element maxOccurs="unbounded" name="zoneCode" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:element>
+<xs:complexType name="fileAttachmentDTO">
+<xs:sequence>
+<xs:element minOccurs="0" name="fileContents" type="xs:base64Binary"/>
+<xs:element minOccurs="0" name="fileName" type="xs:string"/>
+<xs:element minOccurs="0" name="mimeType" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://mobics.criticalsoftware.com/billing" xmlns:ns1="http://www.criticalsoftware.com/mobios/services/accounting/dto" xmlns:tns="http://mobics.criticalsoftware.com/billing" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:import namespace="http://www.criticalsoftware.com/mobios/services/accounting/dto"/>
+<xs:element name="addCreditCard" type="tns:addCreditCard"/>
+<xs:element name="addCreditCardResponse" type="tns:addCreditCardResponse"/>
+<xs:element name="addDirectDebit" type="tns:addDirectDebit"/>
+<xs:element name="addDirectDebitResponse" type="tns:addDirectDebitResponse"/>
+<xs:element name="deletePaymentMethod" type="tns:deletePaymentMethod"/>
+<xs:element name="deletePaymentMethodResponse" type="tns:deletePaymentMethodResponse"/>
+<xs:element name="editCreditCard" type="tns:editCreditCard"/>
+<xs:element name="editCreditCardResponse" type="tns:editCreditCardResponse"/>
+<xs:element name="editDirectDebit" type="tns:editDirectDebit"/>
+<xs:element name="editDirectDebitResponse" type="tns:editDirectDebitResponse"/>
+<xs:element name="editPriority" type="tns:editPriority"/>
+<xs:element name="editPriorityResponse" type="tns:editPriorityResponse"/>
+<xs:element name="getAvailablePaymentMethods" type="tns:getAvailablePaymentMethods"/>
+<xs:element name="getAvailablePaymentMethodsByCarClubCode" type="tns:getAvailablePaymentMethodsByCarClubCode"/>
+<xs:element name="getAvailablePaymentMethodsByCarClubCodeResponse" type="tns:getAvailablePaymentMethodsByCarClubCodeResponse"/>
+<xs:element name="getAvailablePaymentMethodsResponse" type="tns:getAvailablePaymentMethodsResponse"/>
+<xs:element name="getBonusAccount" type="tns:getBonusAccount"/>
+<xs:element name="getBonusAccountResponse" type="tns:getBonusAccountResponse"/>
+<xs:element name="getClientBonusAccountStatement" type="tns:getClientBonusAccountStatement"/>
+<xs:element name="getClientBonusAccountStatementResponse" type="tns:getClientBonusAccountStatementResponse"/>
+<xs:element name="getCreditCardDetails" type="tns:getCreditCardDetails"/>
+<xs:element name="getCreditCardDetailsResponse" type="tns:getCreditCardDetailsResponse"/>
+<xs:element name="getDetailedBillingDocument" type="tns:getDetailedBillingDocument"/>
+<xs:element name="getDetailedBillingDocumentResponse" type="tns:getDetailedBillingDocumentResponse"/>
+<xs:element name="getDetailedBillingForCustomer" type="tns:getDetailedBillingForCustomer"/>
+<xs:element name="getDetailedBillingForCustomerResponse" type="tns:getDetailedBillingForCustomerResponse"/>
+<xs:complexType name="deletePaymentMethod">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="paymentMethodId" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="deletePaymentMethodResponse">
+<xs:sequence/>
+</xs:complexType>
+<xs:complexType name="addDirectDebit">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="paymentMethodDetailDTO" type="tns:paymentMethodDetailDTO"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="paymentMethodDetailDTO">
+<xs:sequence>
+<xs:element minOccurs="0" name="creditCardExpirationDateMonth" type="xs:string"/>
+<xs:element minOccurs="0" name="creditCardExpirationDateYear" type="xs:string"/>
+<xs:element minOccurs="0" name="creditCardNumber" type="xs:string"/>
+<xs:element minOccurs="0" name="creditCardSecurityCode" type="xs:string"/>
+<xs:element minOccurs="0" name="creditCardType" type="tns:creditCardTypeEnum"/>
+<xs:element minOccurs="0" name="directDebitNib" type="xs:string"/>
+<xs:element name="expired" type="xs:boolean"/>
+<xs:element minOccurs="0" name="id" type="xs:string"/>
+<xs:element minOccurs="0" name="order" type="xs:int"/>
+<xs:element minOccurs="0" name="paymentMethodEnum" type="tns:paymentMethodEnum"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="addDirectDebitResponse">
+<xs:sequence/>
+</xs:complexType>
+<xs:complexType name="editCreditCard">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="paymentMethodDetailDTO" type="tns:paymentMethodDetailDTO"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="editCreditCardResponse">
+<xs:sequence/>
+</xs:complexType>
+<xs:complexType name="getDetailedBillingDocument">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="invoiceId" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getDetailedBillingDocumentResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return" type="ns1:fileAttachmentDTO"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getDetailedBillingForCustomer">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="startDate" type="xs:long"/>
+<xs:element form="qualified" minOccurs="0" name="endDate" type="xs:long"/>
+<xs:element form="qualified" minOccurs="0" name="firstResult" type="xs:int"/>
+<xs:element form="qualified" minOccurs="0" name="maxResults" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getDetailedBillingForCustomerResponse">
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:billingDetailedListDTO"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="billingDetailedListDTO">
+<xs:sequence>
+<xs:element minOccurs="0" name="balance" type="xs:decimal"/>
+<xs:element minOccurs="0" name="code" type="xs:string"/>
+<xs:element minOccurs="0" name="date" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="invoiceId" type="xs:string"/>
+<xs:element minOccurs="0" name="status" type="tns:billingStatusEnum"/>
+<xs:element minOccurs="0" name="type" type="tns:billingDetailTypeEnum"/>
+<xs:element minOccurs="0" name="value" type="xs:decimal"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getClientBonusAccountStatement">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="startDate" type="xs:long"/>
+<xs:element form="qualified" minOccurs="0" name="endDate" type="xs:long"/>
+<xs:element form="qualified" minOccurs="0" name="firstResult" type="xs:int"/>
+<xs:element form="qualified" minOccurs="0" name="maxResults" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getClientBonusAccountStatementResponse">
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:bonusAccountStatementListDTO"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="bonusAccountStatementListDTO">
+<xs:sequence>
+<xs:element minOccurs="0" name="amount" type="xs:decimal"/>
+<xs:element minOccurs="0" name="balance" type="xs:decimal"/>
+<xs:element minOccurs="0" name="condition" type="xs:string"/>
+<xs:element minOccurs="0" name="date" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="origin" type="tns:bonusAccountOriginEnum"/>
+<xs:element minOccurs="0" name="originNumber" type="xs:string"/>
+<xs:element minOccurs="0" name="taxCode" type="xs:string"/>
+<xs:element minOccurs="0" name="type" type="tns:bonusAccountTypeEnum"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="addCreditCard">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="paymentMethodDetailDTO" type="tns:paymentMethodDetailDTO"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="addCreditCardResponse">
+<xs:sequence/>
+</xs:complexType>
+<xs:complexType name="getAvailablePaymentMethodsByCarClubCode">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="carClubCode" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getAvailablePaymentMethodsByCarClubCodeResponse">
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:paymentMethodEnum"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getAvailablePaymentMethods">
+<xs:sequence/>
+</xs:complexType>
+<xs:complexType name="getAvailablePaymentMethodsResponse">
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:paymentMethodEnum"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="editPriority">
+<xs:sequence>
+<xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="paymentMethodIds" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="editPriorityResponse">
+<xs:sequence/>
+</xs:complexType>
+<xs:complexType name="getBonusAccount">
+<xs:sequence/>
+</xs:complexType>
+<xs:complexType name="getBonusAccountResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return" type="tns:bonusAccountBalanceListDTO"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="bonusAccountBalanceListDTO">
+<xs:sequence>
+<xs:element minOccurs="0" name="availableNow" type="xs:decimal"/>
+<xs:element minOccurs="0" name="expiringDate" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="expiringNext" type="xs:decimal"/>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="futureBonuses" nillable="true" type="tns:bonusAccountFutureBonusesListDTO"/>
+<xs:element minOccurs="0" name="taxCode" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="bonusAccountFutureBonusesListDTO">
+<xs:sequence>
+<xs:element minOccurs="0" name="amount" type="xs:decimal"/>
+<xs:element minOccurs="0" name="endDate" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="startDate" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="taxCode" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getCreditCardDetails">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="paymentMethodId" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getCreditCardDetailsResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return" type="tns:creditCardDTO"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="creditCardDTO">
+<xs:sequence>
+<xs:element minOccurs="0" name="code" type="xs:string"/>
+<xs:element minOccurs="0" name="id" type="xs:string"/>
+<xs:element minOccurs="0" name="month" type="xs:string"/>
+<xs:element minOccurs="0" name="securityCode" type="xs:string"/>
+<xs:element minOccurs="0" name="type" type="tns:creditCardTypeEnum"/>
+<xs:element minOccurs="0" name="year" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="editDirectDebit">
+<xs:sequence>
+<xs:element form="qualified" minOccurs="0" name="paymentMethodDetailDTO" type="tns:paymentMethodDetailDTO"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="editDirectDebitResponse">
+<xs:sequence/>
+</xs:complexType>
+<xs:simpleType name="creditCardTypeEnum">
+<xs:restriction base="xs:string">
+<xs:enumeration value="VISA"/>
+<xs:enumeration value="MASTERCARD"/>
+<xs:enumeration value="REDUNICRE"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="paymentMethodEnum">
+<xs:restriction base="xs:string">
+<xs:enumeration value="DIRECT_DEBIT"/>
+<xs:enumeration value="SUB_ACCOUNT"/>
+<xs:enumeration value="CREDIT_CARD"/>
+<xs:enumeration value="TEMPORARY_CREDIT_CARD"/>
+<xs:enumeration value="MANUAL"/>
+<xs:enumeration value="MULTIBANCO"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="billingStatusEnum">
+<xs:restriction base="xs:string">
+<xs:enumeration value="TO_PAY"/>
+<xs:enumeration value="PAID"/>
+<xs:enumeration value="NOT_PAID"/>
+<xs:enumeration value="INVOICED"/>
+<xs:enumeration value="CHARGED"/>
+<xs:enumeration value="TO_INVOICE"/>
+<xs:enumeration value="DELETED"/>
+<xs:enumeration value="IN_REVIEW"/>
+<xs:enumeration value="UNCOLLECTABLE"/>
+<xs:enumeration value="ON_HOLD"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="billingDetailTypeEnum">
+<xs:restriction base="xs:string">
+<xs:enumeration value="PAYMENT"/>
+<xs:enumeration value="CREDIT_NOTE"/>
+<xs:enumeration value="INVOICE"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="bonusAccountOriginEnum">
+<xs:restriction base="xs:string">
+<xs:enumeration value="INVOICE"/>
+<xs:enumeration value="INCIDENT"/>
+<xs:enumeration value="BOOKING"/>
+<xs:enumeration value="CREDIT"/>
+<xs:enumeration value="EXPIRED"/>
+<xs:enumeration value="CANCELLED"/>
+<xs:enumeration value="ACTIVE"/>
+<xs:enumeration value="NA"/>
+<xs:enumeration value="BONUS_ADJUST"/>
+<xs:enumeration value="PROMOTIONAL_CODE"/>
+<xs:enumeration value="ADDITIONAL_SERVICE"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="bonusAccountTypeEnum">
+<xs:restriction base="xs:string">
+<xs:enumeration value="IMMEDIATE"/>
+<xs:enumeration value="DEFERRED"/>
+<xs:enumeration value="NA"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:element name="NotAssociatedPaymentMethodException" type="tns:NotAssociatedPaymentMethodException"/>
+<xs:complexType name="NotAssociatedPaymentMethodException">
+<xs:sequence/>
+</xs:complexType>
+<xs:element name="ZeroPaymentMethodsException" type="tns:ZeroPaymentMethodsException"/>
+<xs:complexType name="ZeroPaymentMethodsException">
+<xs:sequence/>
+</xs:complexType>
+<xs:element name="CustomerHasPaymentsInWaitingInfoException" type="tns:CustomerHasPaymentsInWaitingInfoException"/>
+<xs:complexType name="CustomerHasPaymentsInWaitingInfoException">
+<xs:sequence/>
+</xs:complexType>
+<xs:element name="AlreadyExistentPaymentMethodException" type="tns:AlreadyExistentPaymentMethodException"/>
+<xs:complexType name="AlreadyExistentPaymentMethodException">
+<xs:sequence/>
+</xs:complexType>
+<xs:element name="InvalidDirectDebitException" type="tns:InvalidDirectDebitException"/>
+<xs:complexType name="InvalidDirectDebitException">
+<xs:sequence/>
+</xs:complexType>
+<xs:element name="NotAvailablePaymentMethodException" type="tns:NotAvailablePaymentMethodException"/>
+<xs:complexType name="NotAvailablePaymentMethodException">
+<xs:sequence/>
+</xs:complexType>
+<xs:element name="MaxNumberOfPaymentMethodsReachedException" type="tns:MaxNumberOfPaymentMethodsReachedException"/>
+<xs:complexType name="MaxNumberOfPaymentMethodsReachedException">
+<xs:sequence/>
+</xs:complexType>
+<xs:element name="InvalidCreditCardException" type="tns:InvalidCreditCardException"/>
+<xs:complexType name="InvalidCreditCardException">
+<xs:sequence/>
+</xs:complexType>
+<xs:element name="CustomerNotFoundException" type="tns:CustomerNotFoundException"/>
+<xs:complexType name="CustomerNotFoundException">
+<xs:sequence/>
+</xs:complexType>
+<xs:element name="InvoiceNotFoundException" type="tns:InvoiceNotFoundException"/>
+<xs:complexType name="InvoiceNotFoundException">
+<xs:sequence/>
+</xs:complexType>
+<xs:element name="InvoicePdfNotFoundException" type="tns:InvoicePdfNotFoundException"/>
+<xs:complexType name="InvoicePdfNotFoundException">
+<xs:sequence/>
+</xs:complexType>
+</xs:schema>
   </wsdl:types>
   <wsdl:message name="getAvailablePaymentMethodsByCarClubCode">
     <wsdl:part element="tns:getAvailablePaymentMethodsByCarClubCode" name="parameters">
@@ -574,363 +568,362 @@
   <wsdl:portType name="Billing">
     <wsdl:operation name="deletePaymentMethod">
       <wsdl:input message="tns:deletePaymentMethod" name="deletePaymentMethod">
-      </wsdl:input>
+    </wsdl:input>
       <wsdl:output message="tns:deletePaymentMethodResponse" name="deletePaymentMethodResponse">
-      </wsdl:output>
+    </wsdl:output>
       <wsdl:fault message="tns:NotAssociatedPaymentMethodException" name="NotAssociatedPaymentMethodException">
-      </wsdl:fault>
+    </wsdl:fault>
       <wsdl:fault message="tns:CustomerHasPaymentsInWaitingInfoException" name="CustomerHasPaymentsInWaitingInfoException">
-      </wsdl:fault>
+    </wsdl:fault>
       <wsdl:fault message="tns:ZeroPaymentMethodsException" name="ZeroPaymentMethodsException">
-      </wsdl:fault>
+    </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="addDirectDebit">
       <wsdl:input message="tns:addDirectDebit" name="addDirectDebit">
-      </wsdl:input>
+    </wsdl:input>
       <wsdl:output message="tns:addDirectDebitResponse" name="addDirectDebitResponse">
-      </wsdl:output>
+    </wsdl:output>
       <wsdl:fault message="tns:NotAvailablePaymentMethodException" name="NotAvailablePaymentMethodException">
-      </wsdl:fault>
+    </wsdl:fault>
       <wsdl:fault message="tns:AlreadyExistentPaymentMethodException" name="AlreadyExistentPaymentMethodException">
-      </wsdl:fault>
+    </wsdl:fault>
       <wsdl:fault message="tns:MaxNumberOfPaymentMethodsReachedException" name="MaxNumberOfPaymentMethodsReachedException">
-      </wsdl:fault>
+    </wsdl:fault>
       <wsdl:fault message="tns:InvalidDirectDebitException" name="InvalidDirectDebitException">
-      </wsdl:fault>
+    </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="editCreditCard">
       <wsdl:input message="tns:editCreditCard" name="editCreditCard">
-      </wsdl:input>
+    </wsdl:input>
       <wsdl:output message="tns:editCreditCardResponse" name="editCreditCardResponse">
-      </wsdl:output>
+    </wsdl:output>
       <wsdl:fault message="tns:InvalidCreditCardException" name="InvalidCreditCardException">
-      </wsdl:fault>
+    </wsdl:fault>
       <wsdl:fault message="tns:NotAvailablePaymentMethodException" name="NotAvailablePaymentMethodException">
-      </wsdl:fault>
+    </wsdl:fault>
       <wsdl:fault message="tns:NotAssociatedPaymentMethodException" name="NotAssociatedPaymentMethodException">
-      </wsdl:fault>
+    </wsdl:fault>
       <wsdl:fault message="tns:AlreadyExistentPaymentMethodException" name="AlreadyExistentPaymentMethodException">
-      </wsdl:fault>
+    </wsdl:fault>
       <wsdl:fault message="tns:CustomerHasPaymentsInWaitingInfoException" name="CustomerHasPaymentsInWaitingInfoException">
-      </wsdl:fault>
+    </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="getDetailedBillingDocument">
       <wsdl:input message="tns:getDetailedBillingDocument" name="getDetailedBillingDocument">
-      </wsdl:input>
+    </wsdl:input>
       <wsdl:output message="tns:getDetailedBillingDocumentResponse" name="getDetailedBillingDocumentResponse">
-      </wsdl:output>
+    </wsdl:output>
       <wsdl:fault message="tns:InvoiceNotFoundException" name="InvoiceNotFoundException">
-      </wsdl:fault>
+    </wsdl:fault>
       <wsdl:fault message="tns:CustomerNotFoundException" name="CustomerNotFoundException">
-      </wsdl:fault>
+    </wsdl:fault>
       <wsdl:fault message="tns:InvoicePdfNotFoundException" name="InvoicePdfNotFoundException">
-      </wsdl:fault>
+    </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="getDetailedBillingForCustomer">
       <wsdl:input message="tns:getDetailedBillingForCustomer" name="getDetailedBillingForCustomer">
-      </wsdl:input>
+    </wsdl:input>
       <wsdl:output message="tns:getDetailedBillingForCustomerResponse" name="getDetailedBillingForCustomerResponse">
-      </wsdl:output>
+    </wsdl:output>
       <wsdl:fault message="tns:CustomerNotFoundException" name="CustomerNotFoundException">
-      </wsdl:fault>
+    </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="getClientBonusAccountStatement">
       <wsdl:input message="tns:getClientBonusAccountStatement" name="getClientBonusAccountStatement">
-      </wsdl:input>
+    </wsdl:input>
       <wsdl:output message="tns:getClientBonusAccountStatementResponse" name="getClientBonusAccountStatementResponse">
-      </wsdl:output>
+    </wsdl:output>
       <wsdl:fault message="tns:CustomerNotFoundException" name="CustomerNotFoundException">
-      </wsdl:fault>
+    </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="addCreditCard">
       <wsdl:input message="tns:addCreditCard" name="addCreditCard">
-        <wsp:PolicyReference URI="#SecurityServiceUsernameHashPasswordPolicy" />
-      </wsdl:input>
+    <wsp:PolicyReference URI="#SecurityServiceUsernameHashPasswordPolicy"/>
+    </wsdl:input>
       <wsdl:output message="tns:addCreditCardResponse" name="addCreditCardResponse">
-      </wsdl:output>
+    </wsdl:output>
       <wsdl:fault message="tns:InvalidCreditCardException" name="InvalidCreditCardException">
-      </wsdl:fault>
+    </wsdl:fault>
       <wsdl:fault message="tns:NotAvailablePaymentMethodException" name="NotAvailablePaymentMethodException">
-      </wsdl:fault>
+    </wsdl:fault>
       <wsdl:fault message="tns:AlreadyExistentPaymentMethodException" name="AlreadyExistentPaymentMethodException">
-      </wsdl:fault>
+    </wsdl:fault>
       <wsdl:fault message="tns:MaxNumberOfPaymentMethodsReachedException" name="MaxNumberOfPaymentMethodsReachedException">
-      </wsdl:fault>
+    </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="getAvailablePaymentMethodsByCarClubCode">
       <wsdl:input message="tns:getAvailablePaymentMethodsByCarClubCode" name="getAvailablePaymentMethodsByCarClubCode">
-      </wsdl:input>
+    </wsdl:input>
       <wsdl:output message="tns:getAvailablePaymentMethodsByCarClubCodeResponse" name="getAvailablePaymentMethodsByCarClubCodeResponse">
-      </wsdl:output>
+    </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="getAvailablePaymentMethods">
       <wsdl:input message="tns:getAvailablePaymentMethods" name="getAvailablePaymentMethods">
-      </wsdl:input>
+    </wsdl:input>
       <wsdl:output message="tns:getAvailablePaymentMethodsResponse" name="getAvailablePaymentMethodsResponse">
-      </wsdl:output>
+    </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="editPriority">
       <wsdl:input message="tns:editPriority" name="editPriority">
-      </wsdl:input>
+    </wsdl:input>
       <wsdl:output message="tns:editPriorityResponse" name="editPriorityResponse">
-      </wsdl:output>
+    </wsdl:output>
       <wsdl:fault message="tns:NotAssociatedPaymentMethodException" name="NotAssociatedPaymentMethodException">
-      </wsdl:fault>
+    </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="getBonusAccount">
       <wsdl:input message="tns:getBonusAccount" name="getBonusAccount">
-      </wsdl:input>
+    </wsdl:input>
       <wsdl:output message="tns:getBonusAccountResponse" name="getBonusAccountResponse">
-      </wsdl:output>
+    </wsdl:output>
       <wsdl:fault message="tns:CustomerNotFoundException" name="CustomerNotFoundException">
-      </wsdl:fault>
+    </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="getCreditCardDetails">
       <wsdl:input message="tns:getCreditCardDetails" name="getCreditCardDetails">
-      </wsdl:input>
+    </wsdl:input>
       <wsdl:output message="tns:getCreditCardDetailsResponse" name="getCreditCardDetailsResponse">
-      </wsdl:output>
+    </wsdl:output>
       <wsdl:fault message="tns:NotAssociatedPaymentMethodException" name="NotAssociatedPaymentMethodException">
-      </wsdl:fault>
+    </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="editDirectDebit">
       <wsdl:input message="tns:editDirectDebit" name="editDirectDebit">
-      </wsdl:input>
+    </wsdl:input>
       <wsdl:output message="tns:editDirectDebitResponse" name="editDirectDebitResponse">
-      </wsdl:output>
+    </wsdl:output>
       <wsdl:fault message="tns:NotAssociatedPaymentMethodException" name="NotAssociatedPaymentMethodException">
-      </wsdl:fault>
+    </wsdl:fault>
       <wsdl:fault message="tns:AlreadyExistentPaymentMethodException" name="AlreadyExistentPaymentMethodException">
-      </wsdl:fault>
+    </wsdl:fault>
       <wsdl:fault message="tns:CustomerHasPaymentsInWaitingInfoException" name="CustomerHasPaymentsInWaitingInfoException">
-      </wsdl:fault>
+    </wsdl:fault>
       <wsdl:fault message="tns:InvalidDirectDebitException" name="InvalidDirectDebitException">
-      </wsdl:fault>
+    </wsdl:fault>
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BillingWSServiceSoapBinding" type="tns:Billing">
-    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
     <wsdl:operation name="deletePaymentMethod">
-      <soap:operation soapAction="" style="document" />
+      <soap:operation soapAction="" style="document"/>
       <wsdl:input name="deletePaymentMethod">
-        <soap:body use="literal" />
+        <soap:body use="literal"/>
       </wsdl:input>
       <wsdl:output name="deletePaymentMethodResponse">
-        <soap:body use="literal" />
+        <soap:body use="literal"/>
       </wsdl:output>
       <wsdl:fault name="NotAssociatedPaymentMethodException">
-        <soap:fault name="NotAssociatedPaymentMethodException" use="literal" />
+        <soap:fault name="NotAssociatedPaymentMethodException" use="literal"/>
       </wsdl:fault>
       <wsdl:fault name="CustomerHasPaymentsInWaitingInfoException">
-        <soap:fault name="CustomerHasPaymentsInWaitingInfoException" use="literal" />
+        <soap:fault name="CustomerHasPaymentsInWaitingInfoException" use="literal"/>
       </wsdl:fault>
       <wsdl:fault name="ZeroPaymentMethodsException">
-        <soap:fault name="ZeroPaymentMethodsException" use="literal" />
+        <soap:fault name="ZeroPaymentMethodsException" use="literal"/>
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="addDirectDebit">
-      <soap:operation soapAction="" style="document" />
+      <soap:operation soapAction="" style="document"/>
       <wsdl:input name="addDirectDebit">
-        <soap:body use="literal" />
+        <soap:body use="literal"/>
       </wsdl:input>
       <wsdl:output name="addDirectDebitResponse">
-        <soap:body use="literal" />
+        <soap:body use="literal"/>
       </wsdl:output>
       <wsdl:fault name="NotAvailablePaymentMethodException">
-        <soap:fault name="NotAvailablePaymentMethodException" use="literal" />
+        <soap:fault name="NotAvailablePaymentMethodException" use="literal"/>
       </wsdl:fault>
       <wsdl:fault name="AlreadyExistentPaymentMethodException">
-        <soap:fault name="AlreadyExistentPaymentMethodException" use="literal" />
+        <soap:fault name="AlreadyExistentPaymentMethodException" use="literal"/>
       </wsdl:fault>
       <wsdl:fault name="MaxNumberOfPaymentMethodsReachedException">
-        <soap:fault name="MaxNumberOfPaymentMethodsReachedException" use="literal" />
+        <soap:fault name="MaxNumberOfPaymentMethodsReachedException" use="literal"/>
       </wsdl:fault>
       <wsdl:fault name="InvalidDirectDebitException">
-        <soap:fault name="InvalidDirectDebitException" use="literal" />
+        <soap:fault name="InvalidDirectDebitException" use="literal"/>
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="editCreditCard">
-      <soap:operation soapAction="" style="document" />
+      <soap:operation soapAction="" style="document"/>
       <wsdl:input name="editCreditCard">
-        <soap:body use="literal" />
+        <soap:body use="literal"/>
       </wsdl:input>
       <wsdl:output name="editCreditCardResponse">
-        <soap:body use="literal" />
+        <soap:body use="literal"/>
       </wsdl:output>
       <wsdl:fault name="InvalidCreditCardException">
-        <soap:fault name="InvalidCreditCardException" use="literal" />
+        <soap:fault name="InvalidCreditCardException" use="literal"/>
       </wsdl:fault>
       <wsdl:fault name="NotAvailablePaymentMethodException">
-        <soap:fault name="NotAvailablePaymentMethodException" use="literal" />
+        <soap:fault name="NotAvailablePaymentMethodException" use="literal"/>
       </wsdl:fault>
       <wsdl:fault name="NotAssociatedPaymentMethodException">
-        <soap:fault name="NotAssociatedPaymentMethodException" use="literal" />
+        <soap:fault name="NotAssociatedPaymentMethodException" use="literal"/>
       </wsdl:fault>
       <wsdl:fault name="AlreadyExistentPaymentMethodException">
-        <soap:fault name="AlreadyExistentPaymentMethodException" use="literal" />
+        <soap:fault name="AlreadyExistentPaymentMethodException" use="literal"/>
       </wsdl:fault>
       <wsdl:fault name="CustomerHasPaymentsInWaitingInfoException">
-        <soap:fault name="CustomerHasPaymentsInWaitingInfoException" use="literal" />
+        <soap:fault name="CustomerHasPaymentsInWaitingInfoException" use="literal"/>
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="getDetailedBillingDocument">
-      <soap:operation soapAction="" style="document" />
+      <soap:operation soapAction="" style="document"/>
       <wsdl:input name="getDetailedBillingDocument">
-        <soap:body use="literal" />
+        <soap:body use="literal"/>
       </wsdl:input>
       <wsdl:output name="getDetailedBillingDocumentResponse">
-        <soap:body use="literal" />
+        <soap:body use="literal"/>
       </wsdl:output>
       <wsdl:fault name="InvoiceNotFoundException">
-        <soap:fault name="InvoiceNotFoundException" use="literal" />
+        <soap:fault name="InvoiceNotFoundException" use="literal"/>
       </wsdl:fault>
       <wsdl:fault name="CustomerNotFoundException">
-        <soap:fault name="CustomerNotFoundException" use="literal" />
+        <soap:fault name="CustomerNotFoundException" use="literal"/>
       </wsdl:fault>
       <wsdl:fault name="InvoicePdfNotFoundException">
-        <soap:fault name="InvoicePdfNotFoundException" use="literal" />
+        <soap:fault name="InvoicePdfNotFoundException" use="literal"/>
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="getDetailedBillingForCustomer">
-      <soap:operation soapAction="" style="document" />
+      <soap:operation soapAction="" style="document"/>
       <wsdl:input name="getDetailedBillingForCustomer">
-        <soap:body use="literal" />
+        <soap:body use="literal"/>
       </wsdl:input>
       <wsdl:output name="getDetailedBillingForCustomerResponse">
-        <soap:body use="literal" />
+        <soap:body use="literal"/>
       </wsdl:output>
       <wsdl:fault name="CustomerNotFoundException">
-        <soap:fault name="CustomerNotFoundException" use="literal" />
+        <soap:fault name="CustomerNotFoundException" use="literal"/>
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="getClientBonusAccountStatement">
-      <soap:operation soapAction="" style="document" />
+      <soap:operation soapAction="" style="document"/>
       <wsdl:input name="getClientBonusAccountStatement">
-        <soap:body use="literal" />
+        <soap:body use="literal"/>
       </wsdl:input>
       <wsdl:output name="getClientBonusAccountStatementResponse">
-        <soap:body use="literal" />
+        <soap:body use="literal"/>
       </wsdl:output>
       <wsdl:fault name="CustomerNotFoundException">
-        <soap:fault name="CustomerNotFoundException" use="literal" />
+        <soap:fault name="CustomerNotFoundException" use="literal"/>
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="addCreditCard">
-      <soap:operation soapAction="" style="document" />
+      <soap:operation soapAction="" style="document"/>
       <wsdl:input name="addCreditCard">
-        <soap:body use="literal" />
+        <soap:body use="literal"/>
       </wsdl:input>
       <wsdl:output name="addCreditCardResponse">
-        <soap:body use="literal" />
+        <soap:body use="literal"/>
       </wsdl:output>
       <wsdl:fault name="InvalidCreditCardException">
-        <soap:fault name="InvalidCreditCardException" use="literal" />
+        <soap:fault name="InvalidCreditCardException" use="literal"/>
       </wsdl:fault>
       <wsdl:fault name="NotAvailablePaymentMethodException">
-        <soap:fault name="NotAvailablePaymentMethodException" use="literal" />
+        <soap:fault name="NotAvailablePaymentMethodException" use="literal"/>
       </wsdl:fault>
       <wsdl:fault name="AlreadyExistentPaymentMethodException">
-        <soap:fault name="AlreadyExistentPaymentMethodException" use="literal" />
+        <soap:fault name="AlreadyExistentPaymentMethodException" use="literal"/>
       </wsdl:fault>
       <wsdl:fault name="MaxNumberOfPaymentMethodsReachedException">
-        <soap:fault name="MaxNumberOfPaymentMethodsReachedException" use="literal" />
+        <soap:fault name="MaxNumberOfPaymentMethodsReachedException" use="literal"/>
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="getAvailablePaymentMethodsByCarClubCode">
-      <soap:operation soapAction="" style="document" />
+      <soap:operation soapAction="" style="document"/>
       <wsdl:input name="getAvailablePaymentMethodsByCarClubCode">
-        <soap:body use="literal" />
+        <soap:body use="literal"/>
       </wsdl:input>
       <wsdl:output name="getAvailablePaymentMethodsByCarClubCodeResponse">
-        <soap:body use="literal" />
+        <soap:body use="literal"/>
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="getAvailablePaymentMethods">
-      <soap:operation soapAction="" style="document" />
+      <soap:operation soapAction="" style="document"/>
       <wsdl:input name="getAvailablePaymentMethods">
-        <soap:body use="literal" />
+        <soap:body use="literal"/>
       </wsdl:input>
       <wsdl:output name="getAvailablePaymentMethodsResponse">
-        <soap:body use="literal" />
+        <soap:body use="literal"/>
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="editPriority">
-      <soap:operation soapAction="" style="document" />
+      <soap:operation soapAction="" style="document"/>
       <wsdl:input name="editPriority">
-        <soap:body use="literal" />
+        <soap:body use="literal"/>
       </wsdl:input>
       <wsdl:output name="editPriorityResponse">
-        <soap:body use="literal" />
+        <soap:body use="literal"/>
       </wsdl:output>
       <wsdl:fault name="NotAssociatedPaymentMethodException">
-        <soap:fault name="NotAssociatedPaymentMethodException" use="literal" />
+        <soap:fault name="NotAssociatedPaymentMethodException" use="literal"/>
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="getBonusAccount">
-      <soap:operation soapAction="" style="document" />
+      <soap:operation soapAction="" style="document"/>
       <wsdl:input name="getBonusAccount">
-        <soap:body use="literal" />
+        <soap:body use="literal"/>
       </wsdl:input>
       <wsdl:output name="getBonusAccountResponse">
-        <soap:body use="literal" />
+        <soap:body use="literal"/>
       </wsdl:output>
       <wsdl:fault name="CustomerNotFoundException">
-        <soap:fault name="CustomerNotFoundException" use="literal" />
+        <soap:fault name="CustomerNotFoundException" use="literal"/>
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="editDirectDebit">
-      <soap:operation soapAction="" style="document" />
+      <soap:operation soapAction="" style="document"/>
       <wsdl:input name="editDirectDebit">
-        <soap:body use="literal" />
+        <soap:body use="literal"/>
       </wsdl:input>
       <wsdl:output name="editDirectDebitResponse">
-        <soap:body use="literal" />
+        <soap:body use="literal"/>
       </wsdl:output>
       <wsdl:fault name="NotAssociatedPaymentMethodException">
-        <soap:fault name="NotAssociatedPaymentMethodException" use="literal" />
+        <soap:fault name="NotAssociatedPaymentMethodException" use="literal"/>
       </wsdl:fault>
       <wsdl:fault name="AlreadyExistentPaymentMethodException">
-        <soap:fault name="AlreadyExistentPaymentMethodException" use="literal" />
+        <soap:fault name="AlreadyExistentPaymentMethodException" use="literal"/>
       </wsdl:fault>
       <wsdl:fault name="CustomerHasPaymentsInWaitingInfoException">
-        <soap:fault name="CustomerHasPaymentsInWaitingInfoException" use="literal" />
+        <soap:fault name="CustomerHasPaymentsInWaitingInfoException" use="literal"/>
       </wsdl:fault>
       <wsdl:fault name="InvalidDirectDebitException">
-        <soap:fault name="InvalidDirectDebitException" use="literal" />
+        <soap:fault name="InvalidDirectDebitException" use="literal"/>
       </wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="getCreditCardDetails">
-      <soap:operation soapAction="" style="document" />
+      <soap:operation soapAction="" style="document"/>
       <wsdl:input name="getCreditCardDetails">
-        <soap:body use="literal" />
+        <soap:body use="literal"/>
       </wsdl:input>
       <wsdl:output name="getCreditCardDetailsResponse">
-        <soap:body use="literal" />
+        <soap:body use="literal"/>
       </wsdl:output>
       <wsdl:fault name="NotAssociatedPaymentMethodException">
-        <soap:fault name="NotAssociatedPaymentMethodException" use="literal" />
+        <soap:fault name="NotAssociatedPaymentMethodException" use="literal"/>
       </wsdl:fault>
     </wsdl:operation>
   </wsdl:binding>
   <wsdl:service name="BillingWSService">
     <wsdl:port binding="tns:BillingWSServiceSoapBinding" name="BillingPort">
-      <soap:address location="http://localhost:8080/mobics-webservices/Billing" />
+      <soap:address location="http://localhost:8080/mobics-webservices/Billing"/>
     </wsdl:port>
   </wsdl:service>
-  <wsp:Policy wsu:Id="SecurityServiceUsernameHashPasswordPolicy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy"
-    xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
-    <wsp:ExactlyOne>
-      <wsp:All>
-        <sp:SupportingTokens xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702">
-          <wsp:Policy>
-            <sp:UsernameToken sp:IncludeToken="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/AlwaysToRecipient">
-              <wsp:Policy>
-                <sp:HashPassword />
-              </wsp:Policy>
-            </sp:UsernameToken>
-          </wsp:Policy>
-        </sp:SupportingTokens>
-      </wsp:All>
-    </wsp:ExactlyOne>
-  </wsp:Policy>
+    <wsp:Policy wsu:Id="SecurityServiceUsernameHashPasswordPolicy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+  <wsp:ExactlyOne>
+    <wsp:All>
+      <sp:SupportingTokens xmlns:sp="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702">
+        <wsp:Policy>
+          <sp:UsernameToken sp:IncludeToken="http://docs.oasis-open.org/ws-sx/ws-securitypolicy/200702/IncludeToken/AlwaysToRecipient">
+            <wsp:Policy>
+              <sp:HashPassword/>
+            </wsp:Policy>
+          </sp:UsernameToken>
+        </wsp:Policy>
+      </sp:SupportingTokens>
+    </wsp:All>
+  </wsp:ExactlyOne>
+</wsp:Policy>
 </wsdl:definitions>

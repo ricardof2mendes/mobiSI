@@ -169,28 +169,15 @@
 						</span>
                     </li>
                     <li class="detail white">
-                        <div class="left">
-                            <span>
-                                <fmt:message key="trip.detail.max.cost"/>
-                            </span>
-                        </div>
-                        <div class="right">
-                            <span>
-                                <fmt:message key="trip.detail.max.cost.one.hour"/> -
-                                <mobi:formatMobics value="${actionBean.current.carDTO.maxCostPerHour}" type="currencySymbol" /> -
-                                <mobi:formatMobics value="${actionBean.current.carDTO.distanceThreshold}" type="distance" />
-                            </span>
-							<span>
-							    ${actionBean.current.carDTO.configurableTime}h -
-                                <mobi:formatMobics value="${actionBean.current.carDTO.maxCostPerConfigurableHour}" type="currencySymbol" /> -
-                                <mobi:formatMobics value="${actionBean.current.carDTO.includedDistancePerConfigurableHour}" type="distance" />
-                            </span>
-							<span>
-                                <fmt:message key="trip.detail.max.cost.max.hour"/> -
-                                <mobi:formatMobics value="${actionBean.current.carDTO.maxCostPerDay}" type="currencySymbol" /> -
-                                <mobi:formatMobics value="${actionBean.current.carDTO.includedDistancePerDay}" type="distance" />
-                            </span>
-                        </div>
+                        <jsp:include page="/WEB-INF/common/maxValuesTable.jsp">
+						  <jsp:param name="maxCostPerHour" value="${actionBean.current.carDTO.maxCostPerHour}" />
+						  <jsp:param name="distanceThreshold" value="${actionBean.current.carDTO.distanceThreshold}" />
+						  <jsp:param name="configurableTime" value="${actionBean.current.carDTO.configurableTime}" />
+						  <jsp:param name="maxCostPerConfigurableHour" value="${actionBean.current.carDTO.maxCostPerConfigurableHour}" />
+						  <jsp:param name="includedDistancePerConfigurableHour" value="${actionBean.current.carDTO.includedDistancePerConfigurableHour}" />
+						  <jsp:param name="maxCostPerDay" value="${actionBean.current.carDTO.maxCostPerDay}" />
+						  <jsp:param name="includedDistancePerDay" value="${actionBean.current.carDTO.includedDistancePerDay}" />						  
+						</jsp:include>
                         <div class="clear"></div>
                     </li>
                 </ul>

@@ -43,15 +43,15 @@
 						</li>
 						<li class="title"><fmt:message key="book.now.search.limit"/></li>
 						<li class="filter">
-							<span><fmt:message key="book.now.search.price"/></span>
+							<span><fmt:message key="trip.detail.price.booked.per.minute"/></span>
 							<span class="customComboBox">
-								<stripes:select name="price" value="8">
+								<stripes:select name="price" value="2">
 									<stripes:option value=""><fmt:message key="book.now.search.price.any"/></stripes:option>
-									<c:forEach begin="5" end="25" var="index">
+									<c:forEach begin="1" end="10" var="index" step="1">
 										<stripes:option value="${index}" >
 											<fmt:message key="book.now.search.price.label">
 												<fmt:param>
-                                                    <mobi:formatMobics value="${index}" type="currencyHour"/>
+                                                    <mobi:formatMobics value="${index}" type="currencySymbol"/>
                                                 </fmt:param>
 											</fmt:message>
 										</stripes:option>

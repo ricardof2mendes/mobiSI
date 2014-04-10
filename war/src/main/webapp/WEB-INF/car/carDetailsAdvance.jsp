@@ -116,28 +116,15 @@
 						</span>
                     </li>
                     <li class="detail">
-                        <div class="left">
-                            <span>
-                                <fmt:message key="trip.detail.max.cost"/>
-                            </span>
-                        </div>
-                        <div class="right">
-                            <span>
-                                <fmt:message key="trip.detail.max.cost.one.hour"/> -
-                                <mobi:formatMobics value="${actionBean.car.maxCostPerHour}" type="currencySymbol" /> -
-                                <mobi:formatMobics value="${actionBean.car.distanceThreshold}" type="distance" />
-                            </span>
-							<span>
-							    ${actionBean.trip.car.configurableTime}h -
-                                <mobi:formatMobics value="${actionBean.car.maxCostPerConfigurableHour}" type="currencySymbol" /> -
-                                <mobi:formatMobics value="${actionBean.car.includedDistancePerConfigurableHour}" type="distance" />
-                            </span>
-							<span>
-                                <fmt:message key="trip.detail.max.cost.max.hour"/> -
-                                <mobi:formatMobics value="${actionBean.car.maxCostPerDay}" type="currencySymbol" /> -
-                                <mobi:formatMobics value="${actionBean.car.includedDistancePerDay}" type="distance" />
-                            </span>
-                        </div>
+                        <jsp:include page="/WEB-INF/common/maxValuesTable.jsp">
+						  <jsp:param name="maxCostPerHour" value="${actionBean.car.maxCostPerHour}" />
+						  <jsp:param name="distanceThreshold" value="${actionBean.car.distanceThreshold}" />
+						  <jsp:param name="configurableTime" value="${actionBean.car.configurableTime}" />
+						  <jsp:param name="maxCostPerConfigurableHour" value="${actionBean.car.maxCostPerConfigurableHour}" />
+						  <jsp:param name="includedDistancePerConfigurableHour" value="${actionBean.car.includedDistancePerConfigurableHour}" />
+						  <jsp:param name="maxCostPerDay" value="${actionBean.car.maxCostPerDay}" />
+						  <jsp:param name="includedDistancePerDay" value="${actionBean.car.includedDistancePerDay}" />						  
+						</jsp:include>
                         <div class="clear"></div>
                     </li>
                 </ul>

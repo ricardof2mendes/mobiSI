@@ -219,9 +219,9 @@
 		</section>
 		
 		<section>
-			<nav class="panel">
+			<nav class="panel" >
 				<ul>
-					<li class="detail">
+					<li class="detail white">
 						<span>
 							<fmt:message key="trip.detail.price.booked.per.minute"/>
 						</span>
@@ -229,7 +229,7 @@
 							<mobi:formatMobics value="${actionBean.trip.car.priceBookedPerMinute}" type="currencySymbol" />
 						</span>
 					</li>
-					<li class="detail">
+					<li class="detail white">
 						<span>
 							<fmt:message key="trip.detail.cost.per.extra"/>
 						</span>
@@ -237,29 +237,16 @@
 							<mobi:formatMobics value="${actionBean.trip.car.costPerExtraKm}" type="currencySymbol" />
 						</span>
 					</li>
-                    <li class="detail">
-                        <div class="left">
-                            <span>
-                                <fmt:message key="trip.detail.max.cost"/>
-                            </span>
-                        </div>
-						<div class="right">
-                            <span>
-                                <fmt:message key="trip.detail.max.cost.one.hour"/> -
-                                <mobi:formatMobics value="${actionBean.trip.car.maxCostPerHour}" type="currencySymbol" /> -
-                                <mobi:formatMobics value="${actionBean.trip.car.distanceThreshold}" type="distance" />
-                            </span>
-							<span>
-							    ${actionBean.trip.car.configurableTime}h -
-                                <mobi:formatMobics value="${actionBean.trip.car.maxCostPerConfigurableHour}" type="currencySymbol" /> -
-                                <mobi:formatMobics value="${actionBean.trip.car.includedDistancePerConfigurableHour}" type="distance" />
-                            </span>
-							<span>
-                                <fmt:message key="trip.detail.max.cost.max.hour"/> -
-                                <mobi:formatMobics value="${actionBean.trip.car.maxCostPerDay}" type="currencySymbol" /> -
-                                <mobi:formatMobics value="${actionBean.trip.car.includedDistancePerDay}" type="distance" />
-                            </span>
-						</div>
+                    <li class="detail white" >
+						<jsp:include page="/WEB-INF/common/maxValuesTable.jsp">
+						  <jsp:param name="maxCostPerHour" value="${actionBean.trip.car.maxCostPerHour}" />
+						  <jsp:param name="distanceThreshold" value="${actionBean.trip.car.distanceThreshold}" />
+						  <jsp:param name="configurableTime" value="${actionBean.trip.car.configurableTime}" />
+						  <jsp:param name="maxCostPerConfigurableHour" value="${actionBean.trip.car.maxCostPerConfigurableHour}" />
+						  <jsp:param name="includedDistancePerConfigurableHour" value="${actionBean.trip.car.includedDistancePerConfigurableHour}" />
+						  <jsp:param name="maxCostPerDay" value="${actionBean.trip.car.maxCostPerDay}" />
+						  <jsp:param name="includedDistancePerDay" value="${actionBean.trip.car.includedDistancePerDay}" />						  
+						</jsp:include>
                         <div class="clear"></div>
                     </li>
 				</ul>

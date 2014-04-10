@@ -184,28 +184,15 @@
 						</span>
                             </li>
                             <li class="detail white">
-                                <div class="left">
-                                    <span>
-                                        <fmt:message key="trip.detail.max.cost"/>
-                                    </span>
-                                </div>
-                                <div class="right">
-                                    <span>
-                                        <fmt:message key="trip.detail.max.cost.one.hour"/> -
-                                        <mobi:formatMobics value="${actionBean.last.car.maxCostPerHour}" type="currencySymbol" /> -
-                                        <mobi:formatMobics value="${actionBean.last.car.distanceThreshold}" type="distance" />
-                                    </span>
-                                    <span>
-                                        ${actionBean.last.car.configurableTime}h -
-                                        <mobi:formatMobics value="${actionBean.last.car.maxCostPerConfigurableHour}" type="currencySymbol" /> -
-                                        <mobi:formatMobics value="${actionBean.last.car.includedDistancePerConfigurableHour}" type="distance" />
-                                    </span>
-                                    <span>
-                                        <fmt:message key="trip.detail.max.cost.max.hour"/> -
-                                        <mobi:formatMobics value="${actionBean.last.car.maxCostPerDay}" type="currencySymbol" /> -
-                                        <mobi:formatMobics value="${actionBean.last.car.includedDistancePerDay}" type="distance" />
-                                    </span>
-                                </div>
+                                <jsp:include page="/WEB-INF/common/maxValuesTable.jsp">
+								  <jsp:param name="maxCostPerHour" value="${actionBean.last.car.maxCostPerHour}" />
+								  <jsp:param name="distanceThreshold" value="${actionBean.last.car.distanceThreshold}" />
+								  <jsp:param name="configurableTime" value="${actionBean.last.car.configurableTime}" />
+								  <jsp:param name="maxCostPerConfigurableHour" value="${actionBean.last.car.maxCostPerConfigurableHour}" />
+								  <jsp:param name="includedDistancePerConfigurableHour" value="${actionBean.last.car.includedDistancePerConfigurableHour}" />
+								  <jsp:param name="maxCostPerDay" value="${actionBean.last.car.maxCostPerDay}" />
+								  <jsp:param name="includedDistancePerDay" value="${actionBean.last.car.includedDistancePerDay}" />						  
+								</jsp:include>
                                 <div class="clear"></div>
                             </li>
 						</ul>
