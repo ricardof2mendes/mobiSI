@@ -84,7 +84,7 @@ OpenLayers.Control.Legend = OpenLayers.Class(OpenLayers.Control, {
  */
 OpenLayers.Control.List = OpenLayers.Class(OpenLayers.Control, {
     
-    listText: "List",
+    listText: "",
 
     listId: "olListLink",
 

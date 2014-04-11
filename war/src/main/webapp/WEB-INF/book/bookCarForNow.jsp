@@ -38,7 +38,7 @@
 					<ul>
 						<li class="listsearch">
 							<stripes:link id="searchCarsForBook" name="searchCarsForBook" href="#">
-								<fmt:message key="book.now.search.list"/>
+								<fmt:message key="book.now.search.list"/>asd
 							</stripes:link>
 						</li>
 						<li class="title"><fmt:message key="book.now.search.limit"/></li>

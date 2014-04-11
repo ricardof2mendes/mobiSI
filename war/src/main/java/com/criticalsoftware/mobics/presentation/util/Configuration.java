@@ -47,7 +47,7 @@ public class Configuration implements Serializable{
     public static final Configuration INSTANCE = new Configuration();
     
     /** Application state */
-    private final ApplicationState applicationState = ApplicationState.PRODUCTION;
+    private final ApplicationState applicationState = ApplicationState.DEVELOPMENT_WITH_JREBEL;
 
     /** Application Encoding **/
     private final String uriEnconding = "UTF-8";
@@ -88,25 +88,25 @@ public class Configuration implements Serializable{
     private final String authenticationFailureString = "Failed Authentication";
 
     /** Car Club Endpoint **/
-    private final String carClubEndpoint = "http://mobics02.critical.pt:8080/mobics-webservices/CarClub";
+    private final String carClubEndpoint = "http://localhost:8080/mobics-webservices/CarClub";
     
     /** Car Endpoint **/
-    private final String carEndpoint = "http://mobics02.critical.pt:8080/mobics-webservices/Car";
+    private final String carEndpoint = "http://localhost:8080/mobics-webservices/Car";
 
     /** Fleet Endpoint **/
-    private final String fleetEndpoint = "http://mobics02.critical.pt:8080/mobics-webservices/Fleet";
+    private final String fleetEndpoint = "http://localhost:8080/mobics-webservices/Fleet";
 
     /** Booking Endpoint **/
-    private final String bookingEndpoint = "http://mobics02.critical.pt:8080/mobics-webservices/Booking";
+    private final String bookingEndpoint = "http://localhost:8080/mobics-webservices/Booking";
 
     /** Customer Endpoint **/
-    private final String customerEndpoint = "http://mobics02.critical.pt:8080/mobics-webservices/Customer";
+    private final String customerEndpoint = "http://localhost:8080/mobics-webservices/Customer";
 
     /** Miscellaneous Endpoint **/
-    private final String miscellaneousEnpoint = "http://mobics02.critical.pt:8080/mobics-webservices/Miscellaneous";
+    private final String miscellaneousEnpoint = "http://localhost:8080/mobics-webservices/Miscellaneous";
 
     /** Billing Endpoint **/
-    private final String billingEndpoint = "http://mobics02.critical.pt:8080/mobics-webservices/Billing";
+    private final String billingEndpoint = "http://localhost:8080/mobics-webservices/Billing";
 
     /** Geolocation servce **/
     private final String geolocationServer = "nominatim.openstreetmap.org";

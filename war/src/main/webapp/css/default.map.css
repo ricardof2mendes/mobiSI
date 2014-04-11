@@ -84,26 +84,26 @@ div.olControlMyLocation {
 
 div.olControlZoom {
 	left: 10px;
-    bottom: 65px;
+    bottom: 110px;
 }
 
 div.olControlLegend {
     bottom: 20px;
-    right: 10px;
+    left: 10px;
 }
 
 div.olControlList {
     top: 55px;
-    right: 10px;
+    left: 10px;
 }
 
 div.olControlStations {
     top: 10px;
-    right: 10px;
+    left: 10px;
 }
 
 div.olControlMyLocation {
-    bottom: 20px;
+    bottom: 65px;
     left: 10px;
 }
 
@@ -145,10 +145,10 @@ div.olControlStations a {
 div.olControlList a {
 	font-size: 90%;
 	font-weight: bold;
-	background: url('../img/bt_up_30px-height.png') repeat-x white;
+	background: url('../img/map/list-icon.png') repeat-x white;
 	color: #333;
 	text-shadow: 0 1px -1px white;
-	width: 50px;
+	width: 32px;
 }
 
 a.olControlZoomIn {
