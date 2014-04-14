@@ -519,9 +519,6 @@ $(document).ready(function() {
  		
  		urlBO = url;
  		if(data.substring(0, WAITING.length) === WAITING) {
- 			
- 			displayTime();
- 			
  			timerVarBO = setInterval(bookingProcess , smallAttemptIntervalBO);
  		} else if(data === ERROR) {
  			$('body').addClass('confirmation');
@@ -634,17 +631,11 @@ function displayTime(){
 }
 
 function lockUnlockProcess(){
-
-	displayTime();
-	
 	if(retriesLU !== 0) {
 		$.get(urlLU.pooling, 
 				function(dataLU, textStatusLU, jqXHRLU){
 					if (jqXHRLU.getResponseHeader('Stripes-Success') === 'OK') {
 						var evaluated = eval(dataLU);
-						
-						if(evaluated != null) console.log("--- witing for carState: " + urlLU.carState + ". Current state is: " + evaluated.carState);
-						
 						if(evaluated == null || (urlLU.carState && urlLU.carState === evaluated.carState)) {
 							clearInterval(timerVarLU); 
 							window.location.href = urlLU.redirect + 'true';										 			
@@ -687,9 +678,6 @@ function lockUnlockAndWait(url) {
 			if (jqXHR.getResponseHeader('Stripes-Success') === 'OK') {
 				if(eval(dataLU) === true) {
 					retriesLU = Math.floor(url.timeout / smallAttemptIntervalLU) + ATTEMPT_FRACTION - 1;
-					
-					displayTime();
-					
 					timerVarLU = setInterval( lockUnlockProcess , smallAttemptIntervalLU);
 				}
 	        } else {
@@ -711,9 +699,6 @@ var textStatusBO;
 var jqXHRBO;
 
 function bookingProcess(){
-	
-	displayTime();
-	
 	$.get(urlBO.state, 
 			function(data, textStatus, jqXHR){
 		 		dataBO = data;
