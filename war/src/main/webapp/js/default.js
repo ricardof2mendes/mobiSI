@@ -627,7 +627,7 @@ var jqXHRLU;
 
 function displayTime(){
 	var time = new Date();
-	console.log("TEMPO: " + time.getHours() + ":" + time.getMinutes() + ":" + time.getSeconds());
+	console.log("Current time: " + time.getHours() + ":" + time.getMinutes() + ":" + time.getSeconds());
 }
 
 function lockUnlockProcess(){
