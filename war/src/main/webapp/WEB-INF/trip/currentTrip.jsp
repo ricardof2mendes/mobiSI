@@ -100,7 +100,16 @@
 								</span>
 							</li>
 						</c:otherwise>
-					</c:choose>
+						</c:choose>
+						<li class="detail white">
+								<span>
+									<fmt:message key="trip.detail.car.state"/>
+								</span>
+								<span>
+									<fmt:message key="CAR_STATE-${actionBean.current.state}"/>
+								</span>
+							</li>
+					
 				</ul>
 			</nav>
 		</section>
@@ -132,7 +141,7 @@
 						
 						<!-- Lock car End trip with js unwanted zone validation-->
 						<c:choose>
-							<c:when test="${actionBean.current.carState == 'IN_USE'}">	
+							<c:when test="${actionBean.current.carState == 'IN_USE' || actionBean.current.carState == 'ENGINE_RUNNING'}">	
 								<stripes:link id="lockCar" beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn orangered" event="lockCar" addSourcePage="true">
 									<stripes:param name="licensePlate">${actionBean.current.licensePlate}</stripes:param>
 									<fmt:message key="current.trip.button.lock.car"/>
@@ -154,6 +163,7 @@
 						 </c:choose>
 					</section>
 				</c:if>
+			
            </c:when>
            
            <%-- OLD CCOM --%>

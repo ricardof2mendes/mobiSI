@@ -2,6 +2,7 @@
 var WAITING = 'WAIT_OBS_';
 var ERROR = 'OBS_ERROR';
 var IN_USE = 'IN_USE';
+var BOOKED = 'BOOKED';
 // unwanted zone
 var UNWANTED_ZONE = 'UNWANTED';
 // forbidden zone
@@ -518,6 +519,9 @@ $(document).ready(function() {
  		
  		urlBO = url;
  		if(data.substring(0, WAITING.length) === WAITING) {
+ 			
+ 			displayTime();
+ 			
  			timerVarBO = setInterval(bookingProcess , smallAttemptIntervalBO);
  		} else if(data === ERROR) {
  			$('body').addClass('confirmation');
@@ -536,7 +540,7 @@ $(document).ready(function() {
 				timeout : UNLOCK_TIMEOUT_INTERVAL,
  				lockunlock: $(this).prop('href'), 
  				pooling :  CONTEXT_PATH + '/trip/Trip.action?getCurrentTrip=',
- 				state: IN_USE,
+ 				carState: IN_USE,
  				redirect: CONTEXT_PATH + '/trip/Trip.action?finish=&unlockOp=true&successOp='
  			};
 		
@@ -594,7 +598,8 @@ $(document).ready(function() {
 				timeout : LOCK_TIMEOUT_INTERVAL,
 				lockunlock: $(this).prop('href'), 
 				pooling :  CONTEXT_PATH + '/trip/Trip.action?getCurrentTrip=', 
-				redirect: CONTEXT_PATH + '/trip/Trip.action?finish=&successOp='
+				redirect: CONTEXT_PATH + '/trip/Trip.action?finish=&successOp=',
+				carState: BOOKED
 			};
 		lockUnlockAndWait(url);
  	});
@@ -622,13 +627,25 @@ var dataLU;
 var textStatusLU;
 var jqXHRLU;
 
+
+function displayTime(){
+	var time = new Date();
+	console.log("TEMPO: " + time.getHours() + ":" + time.getMinutes() + ":" + time.getSeconds());
+}
+
 function lockUnlockProcess(){
+
+	displayTime();
+	
 	if(retriesLU !== 0) {
 		$.get(urlLU.pooling, 
 				function(dataLU, textStatusLU, jqXHRLU){
 					if (jqXHRLU.getResponseHeader('Stripes-Success') === 'OK') {
 						var evaluated = eval(dataLU);
-						if(evaluated == null || (urlLU.state && urlLU.state === evaluated.carState)) {
+						
+						if(evaluated != null) console.log("--- witing for carState: " + urlLU.carState + ". Current state is: " + evaluated.carState);
+						
+						if(evaluated == null || (urlLU.carState && urlLU.carState === evaluated.carState)) {
 							clearInterval(timerVarLU); 
 							window.location.href = urlLU.redirect + 'true';										 			
 				 		} 
@@ -670,6 +687,9 @@ function lockUnlockAndWait(url) {
 			if (jqXHR.getResponseHeader('Stripes-Success') === 'OK') {
 				if(eval(dataLU) === true) {
 					retriesLU = Math.floor(url.timeout / smallAttemptIntervalLU) + ATTEMPT_FRACTION - 1;
+					
+					displayTime();
+					
 					timerVarLU = setInterval( lockUnlockProcess , smallAttemptIntervalLU);
 				}
 	        } else {
@@ -691,6 +711,9 @@ var textStatusBO;
 var jqXHRBO;
 
 function bookingProcess(){
+	
+	displayTime();
+	
 	$.get(urlBO.state, 
 			function(data, textStatus, jqXHR){
 		 		dataBO = data;

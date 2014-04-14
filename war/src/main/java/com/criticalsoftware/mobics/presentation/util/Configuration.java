@@ -43,6 +43,8 @@ public class Configuration implements Serializable{
 
     public static final String CCOME_CLASS = "com.criticalsoftware.mobios.hal.drivers.obsconvadis.ConvadisEDriverProvider";
     
+    public static final boolean CCOME_MODE_ACTIVATED = false;
+    
     /**
      * The Configuration instance property.
      */
