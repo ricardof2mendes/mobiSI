@@ -502,6 +502,7 @@ $(document).ready(function() {
  	
  	// Current trip state pooling
  	if($('#statePooling').length > 0) {
+ 		
  		// check the state
  		var data = $('#state').text(),
  			url = {state : CONTEXT_PATH, 
@@ -515,27 +516,9 @@ $(document).ready(function() {
  			url.end += '/recent/RecentActivities.action?showMessage=&activityCode=' + $('#activityCode').text() + '&extended=' + $('#extended').text();
  		}
  		
+ 		urlBO = url;
  		if(data.substring(0, WAITING.length) === WAITING) {
- 			var that = setInterval(function(){
- 				$.get(url.state, 
- 						function(data, textStatus, jqXHR){
- 							if (jqXHR.getResponseHeader('Stripes-Success') === 'OK') {
- 								var evaluated = eval(data);
- 								if(evaluated === ERROR) {
- 									clearInterval(that); 
- 									$('#stateError').show();
- 									$('body').addClass('confirmation');
- 									$('body').on('touchmove', 'body', function(e){
- 										e.preventDefault();
- 									});
- 						 		} else if(evaluated.substring(0, WAITING.length) !== WAITING){
- 						 			window.location.href = url.end;
- 						 		}
- 					        } else {
- 					            console.log('An error has occurred or the user\'s session has expired!');
- 					        }
- 					    });	
- 			}, POOLING_INTERVAL);
+ 			timerVarBO = setInterval(bookingProcess , smallAttemptIntervalBO);
  		} else if(data === ERROR) {
  			$('body').addClass('confirmation');
 			$('body').on('touchmove', 'body', function(e){
@@ -584,8 +567,24 @@ $(document).ready(function() {
  		} 		
  	});
 
- 	// End trip
+ 	// Lock & End trip
  	$('#lockEndTrip').on('click', function(e) {
+ 		e.preventDefault();
+        $('div.confirm2 > article section').each(function(){
+            $(this).hide();
+        });
+		$('#locking').show();
+		var url = {
+				timeout : LOCK_TIMEOUT_INTERVAL,
+				lockunlock: $(this).prop('href'), 
+				pooling :  CONTEXT_PATH + '/trip/Trip.action?getCurrentTrip=', 
+				redirect: CONTEXT_PATH + '/trip/Trip.action?finish=&successOp='
+			};
+		lockUnlockAndWait(url);
+ 	});
+ 	
+ 	// Lock car
+ 	$('#lockCar').on('click', function(e) {
  		e.preventDefault();
         $('div.confirm2 > article section').each(function(){
             $(this).hide();
@@ -611,8 +610,51 @@ $(document).ready(function() {
  	
 });
 
+//auxiliar variables for lock unlock pooling
+var ATTEMPT_FRACTION = 3;
+var smallAttemptIntervalLU = Math.floor(POOLING_INTERVAL / ATTEMPT_FRACTION);
+var largeAttemptIntervalLU = POOLING_INTERVAL;
+var numAttemptsLU = 0;
+var retriesLU;
+var timerVarLU;
+var urlLU;
+var dataLU;
+var textStatusLU;
+var jqXHRLU;
+
+function lockUnlockProcess(){
+	if(retriesLU !== 0) {
+		$.get(urlLU.pooling, 
+				function(dataLU, textStatusLU, jqXHRLU){
+					if (jqXHRLU.getResponseHeader('Stripes-Success') === 'OK') {
+						var evaluated = eval(dataLU);
+						if(evaluated == null || (urlLU.state && urlLU.state === evaluated.carState)) {
+							clearInterval(timerVarLU); 
+							window.location.href = urlLU.redirect + 'true';										 			
+				 		} 
+			        } else {
+			            console.log('An error has occurred or the user\'s session has expired!');
+			            $('html').html(dataLU);
+			        }
+			    });
+		
+		// update counters;
+		retriesLU--;
+		numAttemptsLU++;
+		
+		if(numAttemptsLU == ATTEMPT_FRACTION){
+			clearInterval(timerVarLU);
+			timerVarLU = setInterval( lockUnlockProcess , largeAttemptIntervalLU);
+		}
+	} else {
+		clearInterval(timerVarLU);
+		window.location.href = urlLU.redirect + 'false';	
+	}	
+}
+
 function lockUnlockAndWait(url) {
-	
+	urlLU = url;
+
 	// add modal
 	$('body').addClass('confirmation');
 	$('body').on('touchmove', 'body', function(e){
@@ -620,41 +662,67 @@ function lockUnlockAndWait(url) {
 	});
 	// do active pooling
 	$.get(url.lockunlock, 
-			function(data, textStatus, jqXHR){
-				if (jqXHR.getResponseHeader('Stripes-Success') === 'OK') {
-					if(eval(data) === true) {
-						var retries = (url.timeout / POOLING_INTERVAL);
-						var that = setInterval(function(){
-							if(retries !== 0) {
-								$.get(url.pooling, 
-										function(data, textStatus, jqXHR){
-											if (jqXHR.getResponseHeader('Stripes-Success') === 'OK') {
-												var evaluated = eval(data);
-												
-												if(evaluated == null || (url.state && url.state === evaluated.carState)) {
-													clearInterval(that); 
-													window.location.href = url.redirect + 'true';										 			
-										 		} 
-									        } else {
-									            console.log('An error has occurred or the user\'s session has expired!');
-									            $('html').html(data);
-									        }
-									    });
-								retries--;
-							} else {
-								clearInterval(that);
-								window.location.href = url.redirect + 'false';	
-							}	
-						}, POOLING_INTERVAL);
-					}
-		        } else {
-		            console.log('An error has occurred or the user\'s session has expired!');
-		            $('html').html(data);
-		        }
-		    });
-	
+		function(data, textStatus, jqXHR){
+			dataLU = data;
+			textStatusLU = textStatus;
+			jqXHRLU = jqXHR;
+			
+			if (jqXHR.getResponseHeader('Stripes-Success') === 'OK') {
+				if(eval(dataLU) === true) {
+					retriesLU = Math.floor(url.timeout / smallAttemptIntervalLU) + ATTEMPT_FRACTION - 1;
+					timerVarLU = setInterval( lockUnlockProcess , smallAttemptIntervalLU);
+				}
+	        } else {
+	            console.log('An error has occurred or the user\'s session has expired!');
+	            $('html').html(dataLU);
+	        }
+	    });
 }
 
+//auxiliar variables for booking pooling
+var smallAttemptIntervalBO = Math.floor(POOLING_INTERVAL / ATTEMPT_FRACTION);
+var largeAttemptIntervalBO = POOLING_INTERVAL;
+var numAttemptsBO = 0;
+var retriesBO;
+var timerVarBO;
+var urlBO;
+var dataBO;
+var textStatusBO;
+var jqXHRBO;
+
+function bookingProcess(){
+	$.get(urlBO.state, 
+			function(data, textStatus, jqXHR){
+		 		dataBO = data;
+		 		textStatusBO = textStatus;
+		 		jqXHRBO = jqXHR;
+		 		
+				if (jqXHRBO.getResponseHeader('Stripes-Success') === 'OK') {
+				var evaluated = eval(dataBO);
+				if(evaluated === ERROR) {
+					clearInterval(timerVarBO); 
+					$('#stateError').show();
+					$('body').addClass('confirmation');
+					$('body').on('touchmove', 'body', function(e){
+						e.preventDefault();
+					});
+		 		} else if(evaluated.substring(0, WAITING.length) !== WAITING){
+		 			window.location.href = urlBO.end;
+		 		}
+				
+				// update counters;
+				numAttemptsBO++;
+				
+				if(numAttemptsBO == ATTEMPT_FRACTION){
+					clearInterval(timerVarBO);
+					timerVarBO = setInterval( bookingProcess , largeAttemptIntervalBO);
+				}
+				
+	        } else {
+	            console.log('An error has occurred or the user\'s session has expired!');
+	        }
+	    });	
+	}
 
 
 /**

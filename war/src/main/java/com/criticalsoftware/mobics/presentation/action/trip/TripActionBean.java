@@ -75,6 +75,8 @@ public class TripActionBean extends BaseActionBean {
 
     @Validate
     private Boolean unlockOp;
+    
+    private Boolean newDriverVersion = true;
 
     /**
      * Recent list resolution
@@ -134,42 +136,36 @@ public class TripActionBean extends BaseActionBean {
         return new JavaScriptResolution(carWSServiceStub.unlockCar(licensePlate));
     }
 
-    /**
-     * End trip on error
-     * 
-     * @return
-     * @throws UnsupportedEncodingException
-     * @throws RemoteException
-     * @throws BookingNotFoundExceptionException
-     * @throws CustomerNotFoundExceptionException
-     * @throws com.criticalsoftware.mobics.proxy.car.CustomerNotFoundExceptionException
-     * @throws CarLicensePlateNotFoundExceptionException
-     * @throws InterruptedException
-     */
-    public Resolution endTrip() throws UnsupportedEncodingException, RemoteException,
-            BookingNotFoundExceptionException, CustomerNotFoundExceptionException {
+
+    /* Lock and End Trip are separate calls for CCOME */
+    public Resolution lockCar() throws UnsupportedEncodingException, RemoteException,
+            com.criticalsoftware.mobics.proxy.car.CustomerNotFoundExceptionException,
+            CarLicensePlateNotFoundExceptionException {
+        CarWSServiceStub carWSServiceStub = new CarWSServiceStub(Configuration.INSTANCE.getCarEndpoint());
+        carWSServiceStub._getServiceClient().addHeader(
+                AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
+                        .getPassword()));
+        getContext().getResponse().setHeader("Stripes-Success", "OK");
+        return new JavaScriptResolution(carWSServiceStub.lockCar(licensePlate));
+    }
+    
+    public Resolution endTrip()throws UnsupportedEncodingException, RemoteException,
+    com.criticalsoftware.mobics.proxy.car.CustomerNotFoundExceptionException,
+    CarLicensePlateNotFoundExceptionException {
 
         Resolution resolution = new RedirectResolution(this.getClass()).flash(this);
 
-        BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
-                Configuration.INSTANCE.getBookingEndpoint());
-        bookingWSServiceStub._getServiceClient().addHeader(
+        CarWSServiceStub carWSServiceStub = new CarWSServiceStub(Configuration.INSTANCE.getCarEndpoint());
+        carWSServiceStub._getServiceClient().addHeader(
                 AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
                         .getPassword()));
-        bookingWSServiceStub.closeActiveBooking();
+        getContext().getResponse().setHeader("Stripes-Success", "OK");
+        carWSServiceStub.endReservation(licensePlate);
 
         return resolution;
     }
 
-    /**
-     * Locks car and close trip
-     * 
-     * @return javascript resolution
-     * @throws UnsupportedEncodingException
-     * @throws RemoteException
-     * @throws com.criticalsoftware.mobics.proxy.car.CustomerNotFoundExceptionException
-     * @throws CarLicensePlateNotFoundExceptionException
-     */
+    /* On other drivers lock and end trip are performed on one call. */
     public Resolution lockEndTrip() throws UnsupportedEncodingException, RemoteException,
             com.criticalsoftware.mobics.proxy.car.CustomerNotFoundExceptionException,
             CarLicensePlateNotFoundExceptionException {
@@ -181,6 +177,8 @@ public class TripActionBean extends BaseActionBean {
         return new JavaScriptResolution(carWSServiceStub.lockCar(licensePlate));
     }
 
+    
+    
     /**
      * Put messages after lock unlock
      * 
@@ -442,4 +440,11 @@ public class TripActionBean extends BaseActionBean {
         this.unlockOp = unlockOp;
     }
 
+    public Boolean getNewDriverVersion() {
+        return newDriverVersion;
+    }
+
+    public void setNewDriverVersion(Boolean newDriverVersion) {
+        this.newDriverVersion = newDriverVersion;
+    }
 }

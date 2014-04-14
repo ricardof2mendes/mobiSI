@@ -115,6 +115,77 @@
 			</section>
 		</c:if>
 		
+		
+		
+		<c:choose>
+		
+			<%-- CCOME --%>
+       		<c:when test="${actionBean.newDriverVersion}">
+				<c:if test="${actionBean.current.state != 'WAIT_OBS_IMMEDIATE'}">	
+					<section>
+						<!-- Edit current trip (advance booking) -->
+						<c:if test="${actionBean.current.bookingType == 'ADVANCE'}">		
+							<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn gray" addSourcePage="true" event="extend">
+								<fmt:message key="current.trip.button.edit"/>
+							</stripes:link>
+						</c:if>
+						
+						<!-- Lock car End trip with js unwanted zone validation-->
+						<c:choose>
+							<c:when test="${actionBean.current.carState == 'IN_USE'}">	
+								<stripes:link id="lockCar" beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn orangered" event="lockCar" addSourcePage="true">
+									<stripes:param name="licensePlate">${actionBean.current.licensePlate}</stripes:param>
+									<fmt:message key="current.trip.button.lock.car"/>
+								</stripes:link>
+								<stripes:link id="unlock" beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn gray" event="unlockCar" addSourcePage="true">
+									<stripes:param name="licensePlate">${actionBean.current.licensePlate}</stripes:param>
+									<fmt:message key="current.trip.button.unlock.car"/>
+								</stripes:link>
+							 </c:when>
+							 <c:otherwise>
+							 	<stripes:link id="endTrip" beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn orangered" event="endTrip" addSourcePage="true">
+									<stripes:param name="licensePlate">${actionBean.current.licensePlate}</stripes:param>
+									<fmt:message key="current.trip.button.end.trip"/>
+								</stripes:link>
+								<div class="warningMessage">
+									<fmt:message key="current.trip.end.message"/>
+								</div>
+							 </c:otherwise>
+						 </c:choose>
+					</section>
+				</c:if>
+           </c:when>
+           
+           <%-- OLD CCOM --%>
+           <c:otherwise>
+           		<c:if test="${actionBean.current.state != 'WAIT_OBS_IMMEDIATE'}">	
+				<section>
+					<!-- Edit current trip (advance booking) -->
+					<c:if test="${actionBean.current.bookingType == 'ADVANCE'}">		
+						<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn gray" addSourcePage="true" event="extend">
+							<fmt:message key="current.trip.button.edit"/>
+						</stripes:link>
+					</c:if>
+					
+					<!-- Lock car End trip with js unwanted zone validation-->
+					<c:if test="${actionBean.current.carState == 'IN_USE'}">		
+						<stripes:link id="endTrip" beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn orangered" event="lockEndTrip" addSourcePage="true">
+							<stripes:param name="licensePlate">${actionBean.current.licensePlate}</stripes:param>
+							<fmt:message key="current.trip.button.lock.car.end.trip"/>
+						</stripes:link>
+						<div class="warningMessage">
+							<fmt:message key="current.trip.end.message"/>
+						</div>
+					</c:if>
+				</section>
+				</c:if>
+           </c:otherwise>
+		</c:choose>          
+		
+		
+		
+		
+		
 		<section>
             <h2><fmt:message key="current.trip.details"/></h2>
 			<nav class="panel">
@@ -192,27 +263,7 @@
         </div>
 
 
-		<c:if test="${actionBean.current.state != 'WAIT_OBS_IMMEDIATE'}">	
-			<section>
-				<!-- Edit current trip (advance booking) -->
-				<c:if test="${actionBean.current.bookingType == 'ADVANCE'}">		
-					<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn gray" addSourcePage="true" event="extend">
-						<fmt:message key="current.trip.button.edit"/>
-					</stripes:link>
-				</c:if>
-				
-				<!-- Lock car End trip with js unwanted zone validation-->
-				<c:if test="${actionBean.current.carState == 'IN_USE'}">		
-					<stripes:link id="endTrip" beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn orangered" event="lockEndTrip" addSourcePage="true">
-						<stripes:param name="licensePlate">${actionBean.current.licensePlate}</stripes:param>
-						<fmt:message key="current.trip.button.lock.car.end.trip"/>
-					</stripes:link>
-					<div class="warningMessage">
-						<fmt:message key="current.trip.end.message"/>
-					</div>
-				</c:if>
-			</section>
-		</c:if>
+		
 	</article>
 	
 	<!-- Zone variable for js -->
@@ -222,11 +273,29 @@
 	<div class="confirm2">
 		<article>
             <section id="justConfirmLockEndTrip" class="hidden">
-                <h2><fmt:message key="current.trip.end.trip.just.confirm.h2"/></h2>
+            	<c:choose>
+            	<c:when test="${actionBean.newDriverVersion}">
+                	<h2><fmt:message key="current.trip.end.trip.just.confirm.h2.v2"/></h2>
+                </c:when>
+                <c:otherwise>
+                	<h2><fmt:message key="current.trip.end.trip.just.confirm.h2"/></h2>
+                </c:otherwise>
+  				</c:choose>          
+            
                 <h3><fmt:message key="current.trip.end.message"/></h3>
                 <stripes:link id="lockEndTrip" beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="alertBtn orangered" event="lockEndTrip" addSourcePage="true">
                     <stripes:param name="licensePlate">${actionBean.current.licensePlate}</stripes:param>
-                    <fmt:message key="current.trip.button.lock.car.end.trip"/>
+                    
+                    <c:choose>
+		            	<c:when test="${actionBean.newDriverVersion}">
+		                	<fmt:message key="current.trip.button.end.trip"/>
+		                </c:when>
+		                <c:otherwise>
+		                	<fmt:message key="current.trip.button.lock.car.end.trip"/>
+		                </c:otherwise>
+		  			</c:choose>       
+                    
+                    
                 </stripes:link>
                 <stripes:link id="closeConfirm" href="#" class="alertBtn gray" >
                     <fmt:message key="current.trip.extend.cancel"/>
