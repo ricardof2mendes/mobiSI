@@ -110,6 +110,9 @@ public class TripActionBean extends BaseActionBean {
             }
             resolution = new ForwardResolution("/WEB-INF/trip/lastTrip.jsp");
         }
+        
+        //does the car have the CCOME driver? if yes, the webapp interface is different from the conventional.
+        newDriverVersion = current != null && current.getCarDTO() != null && Configuration.CCOME_CLASS.equals(current.getCarDTO().getDeviceDriverClass());
 
         return resolution;
     }
