@@ -55,6 +55,8 @@ public class TripActionBean extends BaseActionBean {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TripActionBean.class);
 
+    private static final String BOOKED = "BOOKED";
+    
     private TripDetailsDTO last;
 
     private CurrentTripDTO current;
@@ -112,11 +114,11 @@ public class TripActionBean extends BaseActionBean {
         }
         
         //does the car have the CCOME driver? if yes, the webapp interface is different from the conventional.
-        newDriverVersion = current != null && current.getCarDTO() != null && Configuration.CCOME_CLASS.equals(current.getCarDTO().getDeviceDriverClass());
-
-        if(Configuration.CCOME_MODE_ACTIVATED == false){
-            newDriverVersion = false;
-        }
+//        newDriverVersion = current != null && current.getCarDTO() != null && Configuration.CCOME_CLASS.equals(current.getCarDTO().getDeviceDriverClass());
+//
+//        if(Configuration.CCOME_MODE_ACTIVATED == false){
+//            newDriverVersion = false;
+//        }
         
         return resolution;
     }
@@ -200,17 +202,28 @@ public class TripActionBean extends BaseActionBean {
         Resolution resolution = new RedirectResolution(this.getClass()).flash(this);
         if (successOp) {
             if (unlockOp != null) {
-//                 getContext().getMessages().add(new LocalizableMessage("current.trip.unlock.car.message"));
+                getContext().getMessages().add(new LocalizableMessage("current.trip.unlock.car.message"));
             } else {
-                getContext().getMessages().add(new LocalizableMessage("current.trip.end.trip.message"));
+                 
+                if( newDriverVersion && current != null && BOOKED.equals(current.getCarState()) ){
+                    getContext().getMessages().add(new LocalizableMessage("current.trip.car.locked"));
+                }else{
+                    getContext().getMessages().add(new LocalizableMessage("current.trip.end.trip.message"));
+                }
+                             
             }
         } else {
             if (unlockOp != null) {
                 getContext().getValidationErrors().addGlobalError(
                         new LocalizableError("current.trip.unlock.car.message.error"));
             } else {
-                getContext().getValidationErrors().addGlobalError(
-                        new LocalizableError("current.trip.end.trip.message.error"));
+                
+                if( newDriverVersion && current != null && BOOKED.equals(current.getCarState()) ){
+                    getContext().getMessages().add(new LocalizableMessage("current.trip.car.locked.error"));
+                }else{
+                    getContext().getValidationErrors().addGlobalError(new LocalizableError("current.trip.end.trip.message.error"));
+                }
+                   
             }
             resolution = main();
         }
