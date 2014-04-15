@@ -94,6 +94,13 @@ public class ImmediateBookingActionBean extends BookingActionBean {
 
     private CarFormattedDTO[] carsFormatted;
 
+    @Validate(required = true, on = "createNegatedTrip")
+    private String negatedTripLatitude;
+    
+    
+    @Validate(required = true, on = "createNegatedTrip")
+    private String negatedTripLongitude;
+    
     /**
      * Main resolution just to avoid errors when no method name on parameter
      * 
@@ -423,6 +430,19 @@ public class ImmediateBookingActionBean extends BookingActionBean {
         }
         return location;
     }
+    
+    public Resolution createNegatedTrip() throws RemoteException, UnsupportedEncodingException, OverlappedCustomerTripExceptionException, InvalidCustomerPinExceptionException, InvalidCarBookingExceptionException, CarNotAvailableForBookingExceptionException, CarNotFoundExceptionException, ForbiddenZoneExceptionException, UnauthorizedCustomerExceptionException, com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException {
+        
+        BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
+                Configuration.INSTANCE.getBookingEndpoint());
+        bookingWSServiceStub._getServiceClient().addHeader(
+                AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
+                        .getPassword()));
+        bookingWSServiceStub.createNegatedTrip(new BigDecimal(negatedTripLatitude), new BigDecimal(negatedTripLongitude));
+        getContext().getMessages().add(new LocalizableMessage("book.now.no.results.info.submitted"));
+        return new ForwardResolution("/WEB-INF/book/bookCarForNow.jsp");
+}
+    
 
     /**
      * @return the cars
@@ -499,6 +519,22 @@ public class ImmediateBookingActionBean extends BookingActionBean {
      */
     public void setClazz(final String clazz) {
         this.clazz = clazz;
+    }
+
+    public String getNegatedTripLatitude() {
+        return negatedTripLatitude;
+    }
+
+    public void setNegatedTripLatitude(String negatedTripLatitude) {
+        this.negatedTripLatitude = negatedTripLatitude;
+    }
+
+    public String getNegatedTripLongitude() {
+        return negatedTripLongitude;
+    }
+
+    public void setNegatedTripLongitude(String negatedTripLongitude) {
+        this.negatedTripLongitude = negatedTripLongitude;
     }
 
 }

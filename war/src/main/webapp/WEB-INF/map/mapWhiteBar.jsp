@@ -60,8 +60,16 @@
 			<section id="noResults" class="hidden">
 				<h2><fmt:message key="book.now.no.results.found.header"/></h2>
 				<h3 id="title1"><fmt:message key="book.now.no.results.found"/></h3>
+				<h3 id="title1"><fmt:message key="book.now.no.results.msg1"/></h3>
+				<stripes:form beanclass="com.criticalsoftware.mobics.presentation.action.booking.ImmediateBookingActionBean" method="post">
+					<stripes:hidden id="negatedTripLatitude" name="negatedTripLatitude" value="${param.latitude}"/>
+					<stripes:hidden id="negatedTripLongitude" name="negatedTripLongitude" value="${param.longitude}"/>
+					<stripes:submit name="createNegatedTrip" class="submitBtn orange">
+						<fmt:message key="book.now.no.results.report.negated.trip"/>						
+					</stripes:submit>	
+				</stripes:form>
 				<stripes:link id="closeConfirm" href="#" class="alertBtn gray" >
-					<fmt:message key="book.now.no.results.ok"/>
+					<fmt:message key="book.now.no.results.cancel"/>
 				</stripes:link>
 			</section>
 		</article>
