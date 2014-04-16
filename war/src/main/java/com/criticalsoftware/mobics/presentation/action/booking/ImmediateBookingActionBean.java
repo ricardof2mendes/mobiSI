@@ -210,9 +210,11 @@ public class ImmediateBookingActionBean extends BookingActionBean {
             car = dtos[0];
             if (car == null) {
                 errors.addGlobalError(new LocalizableError("car.details.validation.car.not.found"));
+                getContext().getServletContext().setAttribute("no-cars", Boolean.TRUE);
             }
         } else {
             errors.addGlobalError(new LocalizableError("car.details.validation.car.not.found"));
+            getContext().getServletContext().setAttribute("no-cars", Boolean.TRUE);
         }
     }
 

@@ -13,6 +13,7 @@
 			</div>
 		</c:otherwise>
 	</c:choose>
+	<jsp:include page="/WEB-INF/common/reportNegatedTrip.jsp"/>
 	<article>
 		<section>
 			<nav class="simpleList">
@@ -43,3 +44,14 @@
 	</article>
 	<jsp:include page="/WEB-INF/common/geolocationErrorAlert.jsp"/>
 </t:main>
+<% 
+	Boolean noCars = (Boolean) getServletContext().getAttribute("no-cars"); 
+	if(noCars != null && noCars.booleanValue()){
+	    getServletContext().setAttribute("no-cars", null); 
+	    %>
+	   	<script type="text/javascript">
+	   		document.getElementById("report-button").className = "report-no-cars-found";
+		</script>
+	    <%  
+	}
+%>

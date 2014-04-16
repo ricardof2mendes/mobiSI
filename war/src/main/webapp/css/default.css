@@ -278,6 +278,10 @@ form.loginForm > div > input  {
 	color: #333;
 }
 
+.report-no-cars-found{
+	padding-left: 10px;
+	padding-right: 10px;
+}
 
 /* Util classes */
 .clear {

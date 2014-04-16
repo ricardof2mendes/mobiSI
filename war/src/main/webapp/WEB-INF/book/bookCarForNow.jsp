@@ -1,11 +1,12 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/common/taglibs.jsp"%>
+
 <c:set var="title" scope="page">
 	<fmt:message key='book.now.title' />
 </c:set>
-
 <t:main title="${title}">
 	<jsp:include page="/WEB-INF/common/message_error.jsp"/>
+	<jsp:include page="/WEB-INF/common/reportNegatedTrip.jsp"/>
 	<article>
 		<section>
 			<nav class="simpleList">
@@ -107,4 +108,14 @@
 	</article>
 	<jsp:include page="/WEB-INF/common/geolocationErrorAlert.jsp"/>
 </t:main>
-
+<% 
+	Boolean noCars = (Boolean) getServletContext().getAttribute("no-cars"); 
+	if(noCars != null && noCars.booleanValue()){
+	    getServletContext().setAttribute("no-cars", null); 
+	    %>
+	   	<script type="text/javascript">
+	   		document.getElementById("report-button").className = "report-no-cars-found";
+		</script>
+	    <%  
+	}
+%>
