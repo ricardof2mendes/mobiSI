@@ -216,7 +216,7 @@
 									<fmt:message key="current.trip.distance"/>
 								</span>
 								<span>
-									<mobi:formatMobics value="${actionBean.current.currentDistance}" type="distance" />
+									<mobi:formatMobics value="${actionBean.current.currentDistance}" type="distanceDecimal" />
 								</span>
 							</li>
 						</c:when>

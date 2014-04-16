@@ -36,6 +36,8 @@ public class FormatUtils {
     private static final Logger LOGGER = LoggerFactory.getLogger(FormatUtils.class);
 
     public static final String DISTANCE = "distance";
+    
+    public static final String DISTANCE_DECIMAL = "distanceDecimal";
 
     public static final String TIME = "time";
     
@@ -125,8 +127,28 @@ public class FormatUtils {
                 value = ((BigDecimal) value).multiply(new BigDecimal(0.001));
             }
             formatted = MessageFormat.format(resources.getString(key), formatter.format(value));
-        } else
+        } else if (DISTANCE_DECIMAL.equals(type)) {
+                key = "distance.meter";
+                formatPattern = patterns.get("mobics.config.meter.string.pattern");
+                if (formatPattern == null) {
+                    LOGGER.warn("Pattern «mobics.config.meter.pattern» is missing!");
+                    return null;
+                }
+                formatter = new DecimalFormat(formatPattern, symbols);
 
+                if (((BigDecimal) value).compareTo(new BigDecimal(0)) == 0
+                        || ((BigDecimal) value).compareTo(new BigDecimal(1000)) >= 0) {
+                    key = "distance.kilometer";
+                    formatPattern = patterns.get("mobics.config.kilometer.decimal.string.pattern");
+                    if (formatPattern == null) {
+                        LOGGER.warn("Pattern «mobics.config.kilometer.pattern» is missing!");
+                        return null;
+                    }
+                    formatter = new DecimalFormat(formatPattern, symbols);
+                    value = ((BigDecimal) value).multiply(new BigDecimal(0.001));
+                }
+                formatted = MessageFormat.format(resources.getString(key), formatter.format(value));
+            } else
         /* --------------------- Format time ------------------- */
         if (TIME.equals(type)) {
             key = "time.minutes";

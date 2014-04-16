@@ -35,7 +35,7 @@
 												<span>
 													<c:choose>
 														<c:when test="${! empty car.distance}">
-															<mobi:formatMobics value="${car.distance}" type="distance" />									
+															<mobi:formatMobics value="${car.distance}" type="distanceDecimal" />									
 														</c:when>
 														<c:otherwise>
 															<fmt:message key="application.value.not.available"/>

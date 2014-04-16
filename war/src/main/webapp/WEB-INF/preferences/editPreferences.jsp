@@ -21,16 +21,16 @@
 										<fmt:message key="book.now.search.distance.any"/>
 									</stripes:option>
 									<stripes:option value="500" >
-										<fmt:message key="book.now.search.distance.label.meters"><fmt:param><mobi:formatMobics value="500" type="distance"/></fmt:param></fmt:message>
+										<fmt:message key="book.now.search.distance.label.meters"><fmt:param><mobi:formatMobics value="500" type="distanceDecimal"/></fmt:param></fmt:message>
 									</stripes:option>
 									<stripes:option value="1000" >
-										<fmt:message key="book.now.search.distance.label"><fmt:param><mobi:formatMobics value="1000" type="distance"/></fmt:param></fmt:message>
+										<fmt:message key="book.now.search.distance.label"><fmt:param><mobi:formatMobics value="1000" type="distanceDecimal"/></fmt:param></fmt:message>
 									</stripes:option>
 									<stripes:option value="2000" >
-										<fmt:message key="book.now.search.distance.label"><fmt:param><mobi:formatMobics value="2000" type="distance"/></fmt:param></fmt:message>
+										<fmt:message key="book.now.search.distance.label"><fmt:param><mobi:formatMobics value="2000" type="distanceDecimal"/></fmt:param></fmt:message>
 									</stripes:option>
 									<stripes:option value="3000" >
-										<fmt:message key="book.now.search.distance.label"><fmt:param><mobi:formatMobics value="3000" type="distance"/></fmt:param></fmt:message>
+										<fmt:message key="book.now.search.distance.label"><fmt:param><mobi:formatMobics value="3000" type="distanceDecimal"/></fmt:param></fmt:message>
 									</stripes:option>
 								</stripes:select>
 							</span>

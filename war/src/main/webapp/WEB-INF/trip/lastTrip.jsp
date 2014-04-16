@@ -139,7 +139,7 @@
 							<li class="detail white">
 								<span><fmt:message key="trip.detail.distance"/></span>
 								<span>
-									<mobi:formatMobics value="${actionBean.last.distance}" type="distance" />
+									<mobi:formatMobics value="${actionBean.last.distance}" type="distanceDecimal" />
 								</span>
 							</li>
 						</ul>

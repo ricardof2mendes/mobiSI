@@ -186,7 +186,7 @@
 					<li class="detail white">
 						<span><fmt:message key="trip.detail.distance"/></span>
 						<span>
-							<mobi:formatMobics value="${actionBean.trip.distance}" type="distance" />
+							<mobi:formatMobics value="${actionBean.trip.distance}" type="distanceDecimal" />
 						</span>
 					</li>
 				</ul>

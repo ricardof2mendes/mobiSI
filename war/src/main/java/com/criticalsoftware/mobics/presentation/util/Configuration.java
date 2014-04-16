@@ -43,7 +43,7 @@ public class Configuration implements Serializable{
 
     public static final String CCOME_CLASS = "com.criticalsoftware.mobios.hal.drivers.obsconvadis.ConvadisEDriverProvider";
     
-    public static final boolean CCOME_MODE_ACTIVATED = false;
+    public static final boolean CCOME_MODE_ACTIVATED = true;
     
     /**
      * The Configuration instance property.
@@ -157,6 +157,9 @@ public class Configuration implements Serializable{
         this.carClubConfiguration.put("mobics.config.kilometer.pattern", carClubConfiguration.getPatterns().getDistancePattern());
         this.carClubConfiguration.put("mobics.config.kilometer.string.pattern",
                                       carClubConfiguration.getPatterns().getDistanceConversionPattern());
+        
+        this.carClubConfiguration.put("mobics.config.kilometer.decimal.string.pattern",
+                carClubConfiguration.getPatterns().getDistanceDecimalConversionPattern());
 
         this.carClubConfiguration.put("mobics.config.currency.pattern", carClubConfiguration.getPatterns().getCurrencyPattern());
         this.carClubConfiguration.put("mobics.config.currency.symbol", carClubConfiguration.getCurrencySymbol());

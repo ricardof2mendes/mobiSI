@@ -47,7 +47,7 @@
 						<span>
 							<c:choose>
 								<c:when test="${actionBean.booking.radius != applicationScope.configuration.anyDistance}">
-									<mobi:formatMobics value="${actionBean.booking.radius}" type="distance"/>
+									<mobi:formatMobics value="${actionBean.booking.radius}" type="distanceDecimal"/>
 								</c:when>
 								<c:otherwise>
 									<fmt:message key="interest.details.any.radius"/>
