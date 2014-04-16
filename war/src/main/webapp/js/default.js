@@ -567,6 +567,26 @@ $(document).ready(function() {
              });
  		} 		
  	});
+ 	
+ 	// End trip With Pooling. Used for new driver version.
+ 	$('#endTripWithPooling').on('click', function(e) {
+ 		e.preventDefault();
+        $('div.confirm2 > article section').each(function(){
+            $(this).hide();
+        });
+ 		$('#locking').show();
+		var url = {
+				timeout : LOCK_TIMEOUT_INTERVAL,
+				lockunlock: $(this).prop('href'), 
+				pooling :  CONTEXT_PATH + '/trip/Trip.action?getCurrentTrip=', 
+				redirect: CONTEXT_PATH + '/trip/Trip.action?finish=&successOp='
+			};
+		
+		testEndTrip = true;
+		lockUnlockAndWait(url);
+ 	});
+ 	
+ 	
 
  	// Lock & End trip
  	$('#lockEndTrip').on('click', function(e) {
@@ -624,6 +644,7 @@ var dataLU;
 var textStatusLU;
 var jqXHRLU;
 
+var testEndTrip = false;
 
 function displayTime(){
 	var time = new Date();
@@ -635,7 +656,8 @@ function lockUnlockProcess(){
 		$.get(urlLU.pooling, 
 				function(dataLU, textStatusLU, jqXHRLU){
 					if (jqXHRLU.getResponseHeader('Stripes-Success') === 'OK') {
-						var evaluated = eval(dataLU);
+						var evaluated = eval(dataLU);	
+						
 						if(evaluated == null || (urlLU.carState && urlLU.carState === evaluated.carState)) {
 							clearInterval(timerVarLU); 
 							window.location.href = urlLU.redirect + 'true';										 			
@@ -662,7 +684,6 @@ function lockUnlockProcess(){
 
 function lockUnlockAndWait(url) {
 	urlLU = url;
-
 	// add modal
 	$('body').addClass('confirmation');
 	$('body').on('touchmove', 'body', function(e){
@@ -674,7 +695,6 @@ function lockUnlockAndWait(url) {
 			dataLU = data;
 			textStatusLU = textStatus;
 			jqXHRLU = jqXHR;
-			
 			if (jqXHR.getResponseHeader('Stripes-Success') === 'OK') {
 				if(eval(dataLU) === true) {
 					retriesLU = Math.floor(url.timeout / smallAttemptIntervalLU) + ATTEMPT_FRACTION - 1;
