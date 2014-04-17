@@ -119,16 +119,12 @@ public class TripActionBean extends BaseActionBean {
         
         
         //does the car have the CCOME driver? if yes, the webapp interface is different from the conventional.
-        
-        //TODO tirar isto!!!
-//        newDriverVersion = current != null && current.getCarDTO() != null && Configuration.CCOME_CLASS.equals(current.getCarDTO().getDeviceDriverClass());
-//
-//        if(Configuration.CCOME_MODE_ACTIVATED == false){
-//            newDriverVersion = false;
-//        }
-        newDriverVersion = true;
-        
-        
+        newDriverVersion = current != null && current.getCarDTO() != null && Configuration.CCOME_CLASS.equals(current.getCarDTO().getDeviceDriverClass());
+
+        if(Configuration.CCOME_MODE_ACTIVATED == false){
+            newDriverVersion = false;
+        }
+
         getContext().getServletContext().setAttribute("showEndTripButton", Boolean.TRUE);
         
         return resolution;
