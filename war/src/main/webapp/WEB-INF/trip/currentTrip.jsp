@@ -153,7 +153,7 @@
 							 </c:when>
 							 <c:otherwise>
 							 	<c:choose>
-							 	<c:when test='<%= getServletContext().getAttribute("showEndTripButton") != null  %>'>
+							 	<c:when test="${actionBean.current.neverStarted}">
 								 	<stripes:link id="endTrip" beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn orangered" event="endTrip" addSourcePage="true">
 										<stripes:param name="licensePlate">${actionBean.current.licensePlate}</stripes:param>
 										<fmt:message key="current.trip.button.end.trip"/>
@@ -387,5 +387,6 @@
 			</section>
 		</article>
 	</div>
-		
 </t:main>
+
+TESTE: ${actionBean.current.neverStarted}

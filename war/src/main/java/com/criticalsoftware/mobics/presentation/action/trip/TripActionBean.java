@@ -90,11 +90,12 @@ public class TripActionBean extends BaseActionBean {
      * @throws RemoteException
      * @throws UnsupportedEncodingException
      * @throws CustomerNotFoundExceptionException
+     * @throws com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException 
      * @throws BookingNotFoundExceptionException
      */
     @DefaultHandler
     @DontValidate
-    public Resolution main() throws RemoteException, UnsupportedEncodingException, CustomerNotFoundExceptionException {
+    public Resolution main() throws RemoteException, UnsupportedEncodingException, CustomerNotFoundExceptionException, com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException {
         Resolution resolution = new ForwardResolution("/WEB-INF/trip/currentTrip.jsp");
         BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
                 Configuration.INSTANCE.getBookingEndpoint());
@@ -124,9 +125,7 @@ public class TripActionBean extends BaseActionBean {
         if(Configuration.CCOME_MODE_ACTIVATED == false){
             newDriverVersion = false;
         }
-
-        getContext().getServletContext().setAttribute("showEndTripButton", Boolean.TRUE);
-        
+  
         return resolution;
     }
 
@@ -215,16 +214,17 @@ public class TripActionBean extends BaseActionBean {
      * @throws CustomerNotFoundExceptionException
      * @throws UnsupportedEncodingException
      * @throws RemoteException
+     * @throws com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException 
      */
     public Resolution finish() throws RemoteException, UnsupportedEncodingException,
-            CustomerNotFoundExceptionException, BookingNotFoundExceptionException {
+            CustomerNotFoundExceptionException, BookingNotFoundExceptionException, com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException {
         Resolution resolution = new RedirectResolution(this.getClass()).flash(this);
         if (successOp) {
             if (unlockOp != null) {
                 getContext().getMessages().add(new LocalizableMessage("current.trip.unlock.car.message"));
             } else {
                  
-                if( newDriverVersion && current != null && BOOKED.equals(current.getCarState()) ){
+                if( newDriverVersion && current != null){
                     getContext().getMessages().add(new LocalizableMessage("current.trip.car.locked"));
                 }else{
                     getContext().getMessages().add(new LocalizableMessage("current.trip.end.trip.message"));
@@ -237,7 +237,7 @@ public class TripActionBean extends BaseActionBean {
                         new LocalizableError("current.trip.unlock.car.message.error"));
             } else {
                 
-                if( newDriverVersion && current != null && BOOKED.equals(current.getCarState()) ){
+                if( newDriverVersion && current != null ){
                     getContext().getMessages().add(new LocalizableMessage("current.trip.car.locked.error"));
                 }else{
                     getContext().getValidationErrors().addGlobalError(new LocalizableError("current.trip.end.trip.message.error"));
@@ -250,14 +250,6 @@ public class TripActionBean extends BaseActionBean {
         return resolution;
     }
 
-    private void updateEndReservationButtonStatus(CurrentTripDTO currentTripDTO){
-        if(currentTripDTO != null){
-            if(IN_USE.equals(currentTripDTO.getCarState())){
-                getContext().getServletContext().setAttribute("showEndTripButton", null);
-            }
-        }
-    }
-    
     /**
      * End current trip resolution
      * 
@@ -267,11 +259,12 @@ public class TripActionBean extends BaseActionBean {
      * @throws BookingNotFoundExceptionException
      * @throws CustomerNotFoundExceptionException
      * @throws com.criticalsoftware.mobics.proxy.car.CustomerNotFoundExceptionException
+     * @throws com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException 
      * @throws CarLicensePlateNotFoundExceptionException
      * @throws InterruptedException
      */
     public Resolution getCurrentTrip() throws UnsupportedEncodingException, RemoteException,
-            BookingNotFoundExceptionException, CustomerNotFoundExceptionException {
+            BookingNotFoundExceptionException, CustomerNotFoundExceptionException, com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException {
 
         BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
                 Configuration.INSTANCE.getBookingEndpoint());
@@ -281,7 +274,6 @@ public class TripActionBean extends BaseActionBean {
         getContext().getResponse().setHeader("Stripes-Success", "OK");
         
         CurrentTripDTO currentTripDTO = bookingWSServiceStub.getCurrentTripDetails();
-        updateEndReservationButtonStatus(currentTripDTO);
         
         return new JavaScriptResolution(currentTripDTO);
     }
@@ -294,9 +286,10 @@ public class TripActionBean extends BaseActionBean {
      * @throws UnsupportedEncodingException
      * @throws CustomerNotFoundExceptionException
      * @throws BookingNotFoundExceptionException
+     * @throws com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException 
      */
     public Resolution extend() throws RemoteException, UnsupportedEncodingException,
-            CustomerNotFoundExceptionException, BookingNotFoundExceptionException {
+            CustomerNotFoundExceptionException, BookingNotFoundExceptionException, com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException {
         BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
                 Configuration.INSTANCE.getBookingEndpoint());
         bookingWSServiceStub._getServiceClient().addHeader(
@@ -305,7 +298,12 @@ public class TripActionBean extends BaseActionBean {
 
         Resolution resolution = new ForwardResolution("/WEB-INF/trip/extendTrip.jsp");
 
-        current = bookingWSServiceStub.getCurrentTripDetails();
+        try {
+            current = bookingWSServiceStub.getCurrentTripDetails();
+        } catch (Exception e) {
+            // TODO Administrator: Auto-generated catch block. This code MUST be changed to the appropriate statements in order to handle the exception.
+            e.printStackTrace();
+        }
         if (current != null) {
             bookingCode = current.getBookingCode();
             endDate = current.getEndDate().getTime();
@@ -390,8 +388,9 @@ public class TripActionBean extends BaseActionBean {
      * @return boolean
      * @throws RemoteException
      * @throws UnsupportedEncodingException
+     * @throws com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException 
      */
-    public Resolution getState() throws RemoteException, UnsupportedEncodingException {
+    public Resolution getState() throws RemoteException, UnsupportedEncodingException, com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException {
         BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
                 Configuration.INSTANCE.getBookingEndpoint());
         bookingWSServiceStub._getServiceClient().addHeader(

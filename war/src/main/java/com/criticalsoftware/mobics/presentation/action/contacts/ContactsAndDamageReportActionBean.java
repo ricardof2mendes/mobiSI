@@ -128,10 +128,11 @@ public class ContactsAndDamageReportActionBean extends BaseActionBean {
      * @throws UnsupportedEncodingException
      * @throws CustomerNotFoundExceptionException
      * @throws CarLicensePlateNotFoundExceptionException
+     * @throws com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException 
      */
     @DontValidate
     public Resolution damageReport() throws RemoteException, UnsupportedEncodingException,
-            CustomerNotFoundExceptionException, CarLicensePlateNotFoundExceptionException {
+            CustomerNotFoundExceptionException, CarLicensePlateNotFoundExceptionException, com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException {
         BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
                 Configuration.INSTANCE.getBookingEndpoint());
         bookingWSServiceStub._getServiceClient().addHeader(
