@@ -544,7 +544,8 @@ $(document).ready(function() {
 		lockUnlockAndWait(url);
  	});
  	
- 	function lockOrEndTripConfirmation(e){
+ 	// End trip
+ 	$('#endTrip').on('click', function(e) {
  		e.preventDefault();
  		if($("#zone").text() === UNWANTED_ZONE) {
  			$('#unwantedZoneError').show();
@@ -565,14 +566,9 @@ $(document).ready(function() {
                  e.preventDefault();
              });
  		} 		
- 	}
- 	
- 	// End trip
- 	$('#endTrip').on('click', function(e) {
- 		lockOrEndTripConfirmation(e);
  	});
  	
- 	// End trip With Pooling. NOT USED.
+ 	// End trip With Pooling. Used for new driver version.
  	$('#endTripWithPooling').on('click', function(e) {
  		e.preventDefault();
         $('div.confirm2 > article section').each(function(){
@@ -607,29 +603,6 @@ $(document).ready(function() {
 			};
 		lockUnlockAndWait(url);
  	});
- 	
- 	
- 	// End trip
- 	$('#lockEndTripNewDriver').on('click', function(e) {
- 		lockOrEndTripConfirmation(e);
- 	});
- 	
- 	
- 	$('#lockEndTripNewDriverConfirmed').on('click', function(e) {
- 		e.preventDefault();
-        $('div.confirm2 > article section').each(function(){
-            $(this).hide();
-        });
-		$('#locking').show();
-		var url = {
-				timeout : LOCK_TIMEOUT_INTERVAL,
-				lockunlock: $(this).prop('href'), 
-				pooling :  CONTEXT_PATH + '/trip/Trip.action?getCurrentTrip=', 
-				redirect: CONTEXT_PATH + '/trip/Trip.action?finish=&successOp='
-			};
-		lockUnlockAndWait(url);
- 	});
- 	
  	
  	// Lock car
  	$('#lockCar').on('click', function(e) {

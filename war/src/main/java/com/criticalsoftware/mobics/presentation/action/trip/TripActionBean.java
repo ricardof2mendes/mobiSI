@@ -201,19 +201,7 @@ public class TripActionBean extends BaseActionBean {
         getContext().getResponse().setHeader("Stripes-Success", "OK");
         return new JavaScriptResolution(carWSServiceStub.lockCar(licensePlate));
     }
-    
-    /* On other drivers lock and end trip are performed on one call. */
-    public Resolution lockEndTripNewDriverConfirmed() throws UnsupportedEncodingException, RemoteException,
-            com.criticalsoftware.mobics.proxy.car.CustomerNotFoundExceptionException,
-            CarLicensePlateNotFoundExceptionException {
-        CarWSServiceStub carWSServiceStub = new CarWSServiceStub(Configuration.INSTANCE.getCarEndpoint());
-        carWSServiceStub._getServiceClient().addHeader(
-                AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
-                        .getPassword()));
-        getContext().getResponse().setHeader("Stripes-Success", "OK");
-        return new JavaScriptResolution(carWSServiceStub.lockCar(licensePlate));
-    }
-    
+
     
     
     /**
