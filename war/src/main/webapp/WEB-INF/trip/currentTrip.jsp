@@ -183,7 +183,7 @@
 					
 					<!-- Lock car End trip with js unwanted zone validation-->
 					<c:if test="${actionBean.current.carState == 'IN_USE'}">		
-						<stripes:link id="endTrip" beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn orangered" event="lockEndTrip" addSourcePage="true">
+						<stripes:link id="endTrip" beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn orangered" event="endTrip" addSourcePage="true">
 							<stripes:param name="licensePlate">${actionBean.current.licensePlate}</stripes:param>
 							<fmt:message key="current.trip.button.lock.car.end.trip"/>
 						</stripes:link>
@@ -287,6 +287,7 @@
 	<div class="confirm2">
 		<article>
             <section id="justConfirmLockEndTrip" class="hidden">
+            
             	<c:choose>
 	            	<c:when test="${actionBean.newDriverVersion}">
 	                	<h2><fmt:message key="current.trip.end.trip.just.confirm.h2.v2"/></h2>
@@ -305,8 +306,6 @@
 	                </c:otherwise>
   				</c:choose>  
   				      
-                
-                
                 <c:choose>
 	            	<c:when test="${actionBean.newDriverVersion}">
 	                	<stripes:link id="lockEndTrip" beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="alertBtn orangered" event="lockEndTrip" addSourcePage="true">
@@ -340,7 +339,7 @@
 				
 				<c:choose>
 	            	<c:when test="${actionBean.newDriverVersion}">
-	                	<stripes:link id="endTripWithPooling" beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="alertBtn orangered" event="endTripWithPooling" addSourcePage="true">
+	                	<stripes:link id="lockEndTrip" beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="alertBtn orangered" event="lockEndTrip" addSourcePage="true">
                     	<stripes:param name="licensePlate">${actionBean.current.licensePlate}</stripes:param>
 			            <fmt:message key="current.trip.button.end.trip"/>
                			</stripes:link>
