@@ -142,7 +142,7 @@
 						<!-- Lock car End trip with js unwanted zone validation-->
 						<c:choose>
 							<c:when test="${actionBean.current.carState == 'IN_USE' || actionBean.current.carState == 'ENGINE_RUNNING'}">	
-								<stripes:link id="endTrip" beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn orangered" event="lockEndTrip" addSourcePage="true">
+								<stripes:link id="lockEndTripNewDriver" beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn orangered" event="lockEndTripNewDriver" addSourcePage="true">
 									<stripes:param name="licensePlate">${actionBean.current.licensePlate}</stripes:param>
 									<fmt:message key="current.trip.button.lock.car"/>
 								</stripes:link>
@@ -183,7 +183,7 @@
 					
 					<!-- Lock car End trip with js unwanted zone validation-->
 					<c:if test="${actionBean.current.carState == 'IN_USE'}">		
-						<stripes:link id="endTrip" beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn orangered" event="lockEndTrip" addSourcePage="true">
+						<stripes:link id="lockEndTrip" beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn orangered" event="lockEndTrip" addSourcePage="true">
 							<stripes:param name="licensePlate">${actionBean.current.licensePlate}</stripes:param>
 							<fmt:message key="current.trip.button.lock.car.end.trip"/>
 						</stripes:link>
@@ -304,12 +304,10 @@
 	                	<h3><fmt:message key="current.trip.end.message"/></h3>
 	                </c:otherwise>
   				</c:choose>  
-  				      
-                
                 
                 <c:choose>
 	            	<c:when test="${actionBean.newDriverVersion}">
-	                	<stripes:link id="lockEndTrip" beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="alertBtn orangered" event="lockEndTrip" addSourcePage="true">
+	                	<stripes:link id="lockEndTripNewDriverConfirmed" beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="alertBtn orangered" event="lockEndTripNewDriverConfirmed" addSourcePage="true">
                     	<stripes:param name="licensePlate">${actionBean.current.licensePlate}</stripes:param>
 			            <fmt:message key="current.trip.button.lock.car"/>
                			</stripes:link>
