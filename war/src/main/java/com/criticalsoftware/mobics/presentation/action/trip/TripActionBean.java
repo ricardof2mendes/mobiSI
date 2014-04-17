@@ -57,6 +57,8 @@ public class TripActionBean extends BaseActionBean {
 
     private static final String BOOKED = "BOOKED";
     
+    private static final String IN_USE = "IN_USE";
+    
     private TripDetailsDTO last;
 
     private CurrentTripDTO current;
@@ -79,7 +81,8 @@ public class TripActionBean extends BaseActionBean {
     private Boolean unlockOp;
     
     private Boolean newDriverVersion = true;
-
+    
+    
     /**
      * Recent list resolution
      * 
@@ -112,13 +115,21 @@ public class TripActionBean extends BaseActionBean {
             }
             resolution = new ForwardResolution("/WEB-INF/trip/lastTrip.jsp");
         }
+
+        
         
         //does the car have the CCOME driver? if yes, the webapp interface is different from the conventional.
-        newDriverVersion = current != null && current.getCarDTO() != null && Configuration.CCOME_CLASS.equals(current.getCarDTO().getDeviceDriverClass());
-
-        if(Configuration.CCOME_MODE_ACTIVATED == false){
-            newDriverVersion = false;
-        }
+        
+        //TODO tirar isto!!!
+//        newDriverVersion = current != null && current.getCarDTO() != null && Configuration.CCOME_CLASS.equals(current.getCarDTO().getDeviceDriverClass());
+//
+//        if(Configuration.CCOME_MODE_ACTIVATED == false){
+//            newDriverVersion = false;
+//        }
+        newDriverVersion = true;
+        
+        
+        getContext().getServletContext().setAttribute("showEndTripButton", Boolean.TRUE);
         
         return resolution;
     }
@@ -234,7 +245,7 @@ public class TripActionBean extends BaseActionBean {
                     getContext().getMessages().add(new LocalizableMessage("current.trip.car.locked.error"));
                 }else{
                     getContext().getValidationErrors().addGlobalError(new LocalizableError("current.trip.end.trip.message.error"));
-                }
+              }
                    
             }
             resolution = main();
@@ -243,6 +254,14 @@ public class TripActionBean extends BaseActionBean {
         return resolution;
     }
 
+    private void updateEndReservationButtonStatus(CurrentTripDTO currentTripDTO){
+        if(currentTripDTO != null){
+            if(IN_USE.equals(currentTripDTO.getCarState())){
+                getContext().getServletContext().setAttribute("showEndTripButton", null);
+            }
+        }
+    }
+    
     /**
      * End current trip resolution
      * 
@@ -264,7 +283,11 @@ public class TripActionBean extends BaseActionBean {
                 AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
                         .getPassword()));
         getContext().getResponse().setHeader("Stripes-Success", "OK");
-        return new JavaScriptResolution(bookingWSServiceStub.getCurrentTripDetails());
+        
+        CurrentTripDTO currentTripDTO = bookingWSServiceStub.getCurrentTripDetails();
+        updateEndReservationButtonStatus(currentTripDTO);
+        
+        return new JavaScriptResolution(currentTripDTO);
     }
 
     /**
@@ -479,4 +502,5 @@ public class TripActionBean extends BaseActionBean {
     public void setNewDriverVersion(Boolean newDriverVersion) {
         this.newDriverVersion = newDriverVersion;
     }
+
 }
