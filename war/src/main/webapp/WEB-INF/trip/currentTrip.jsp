@@ -388,5 +388,3 @@
 		</article>
 	</div>
 </t:main>
-
-TESTE: ${actionBean.current.neverStarted}
