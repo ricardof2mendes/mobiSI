@@ -531,6 +531,9 @@ $(document).ready(function() {
  	// Unlock
  	$('#unlock').on('click', function(e) {
  		e.preventDefault();
+        $('div.confirm2 > article section').each(function(){
+            $(this).hide();
+        });
  		// show message
 		$('#unlocking').show();
 		var url = {
@@ -590,6 +593,21 @@ $(document).ready(function() {
 
  	// Lock & End trip
  	$('#lockEndTrip').on('click', function(e) {
+ 		e.preventDefault();
+        $('div.confirm2 > article section').each(function(){
+            $(this).hide();
+        });
+		$('#locking').show();
+		var url = {
+				timeout : LOCK_TIMEOUT_INTERVAL,
+				lockunlock: $(this).prop('href'), 
+				pooling :  CONTEXT_PATH + '/trip/Trip.action?getCurrentTrip=', 
+				redirect: CONTEXT_PATH + '/trip/Trip.action?finish=&successOp='
+			};
+		lockUnlockAndWait(url);
+ 	});
+ 	
+ 	$('#lockEndTripUnwanted').on('click', function(e) {
  		e.preventDefault();
         $('div.confirm2 > article section').each(function(){
             $(this).hide();

@@ -275,42 +275,58 @@
                 <strong><fmt:message key="car.details.price.link.message"/></strong>
             </stripes:link>
         </div>
-
-
-		
 	</article>
+	
+	
 	
 	<!-- Zone variable for js -->
 	<span id="zone" class="hidden">${actionBean.current.currentZoneType}</span>
-	
 	<!-- Modal window for confirmation -->
 	<div class="confirm2">
 		<article>
             <section id="justConfirmLockEndTrip" class="hidden">
-            
             	<c:choose>
 	            	<c:when test="${actionBean.newDriverVersion}">
-	                	<h2><fmt:message key="current.trip.end.trip.just.confirm.h2.v2"/></h2>
+	                	 <c:choose>
+			            	<c:when test="${actionBean.current.neverStarted}">
+			                	<h2><fmt:message key="current.trip.end.trip.just.end"/></h2>
+			                </c:when>
+			                <c:otherwise>
+			                	<h2><fmt:message key="current.trip.lock.car.just.confirm.h2"/></h2>
+			                </c:otherwise>
+		  				</c:choose>
 	                </c:when>
 	                <c:otherwise>
 	                	<h2><fmt:message key="current.trip.end.trip.just.confirm.h2"/></h2>
 	                </c:otherwise>
   				</c:choose>   
-  				
   				<c:choose>
 	            	<c:when test="${actionBean.newDriverVersion}">
-	                	<h3><fmt:message key="current.trip.end.message.v2"/></h3>
+	                	<c:choose>
+			            	<c:when test="${actionBean.current.neverStarted == false}">
+			                	<h3><fmt:message key="current.trip.end.message.v2"/></h3>
+			                </c:when>
+			                <c:otherwise>
+			                	<h3> </h3>
+			                </c:otherwise>
+		  				</c:choose> 
 	                </c:when>
 	                <c:otherwise>
 	                	<h3><fmt:message key="current.trip.end.message"/></h3>
 	                </c:otherwise>
-  				</c:choose>  
-  				      
+  				</c:choose>	      
                 <c:choose>
 	            	<c:when test="${actionBean.newDriverVersion}">
 	                	<stripes:link id="lockEndTrip" beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="alertBtn orangered" event="lockEndTrip" addSourcePage="true">
                     	<stripes:param name="licensePlate">${actionBean.current.licensePlate}</stripes:param>
-			            <fmt:message key="current.trip.button.lock.car"/>
+			            <c:choose>
+			            	<c:when test="${actionBean.current.neverStarted}">
+			                	<fmt:message key="current.trip.button.end.trip"/>
+			                </c:when>
+			                <c:otherwise>
+			                	<fmt:message key="current.trip.button.lock.car"/>
+			                </c:otherwise>
+		  				</c:choose>
                			</stripes:link>
 	                </c:when>
 	                <c:otherwise>
@@ -325,6 +341,9 @@
                     <fmt:message key="current.trip.extend.cancel"/>
                 </stripes:link>
             </section>
+            
+            
+            
 			<section id="stateError" class="hidden">
 				<h2><fmt:message key="current.trip.booking.cancelled"/></h2>
 				<h3 id="title1"><fmt:message key="current.trip.booking.cancelled.text"/></h3>
@@ -332,38 +351,88 @@
 					<fmt:message key="current.trip.extend.ok"/>
 				</stripes:link>
 			</section>
+			
+			
+			
 			<section id="unwantedZoneError" class="hidden">
-				<h2><fmt:message key="current.trip.end.trip.confirm.h2"/></h2>
-				<h3 id="title1">${pageScope.warnTitle}</h3>
-				
-				
 				<c:choose>
 	            	<c:when test="${actionBean.newDriverVersion}">
-	                	<stripes:link id="lockEndTrip" beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="alertBtn orangered" event="lockEndTrip" addSourcePage="true">
+	            		<c:choose>
+			            	<c:when test="${actionBean.current.neverStarted}">
+			                	<h2><fmt:message key="current.trip.end.trip.confirm.h2.v2"/></h2>
+			                </c:when>
+			                <c:otherwise>
+			                	<h2><fmt:message key="current.trip.lock.car.confirm.h2"/></h2>
+			                </c:otherwise>
+		  				</c:choose>
+	                </c:when>
+	                <c:otherwise>
+	                	<h2><fmt:message key="current.trip.end.trip.confirm.h2"/></h2>
+	                </c:otherwise>
+	  			</c:choose>
+      			<c:choose>
+	            	<c:when test="${actionBean.newDriverVersion}">
+	            		<c:choose>
+			            	<c:when test="${actionBean.current.neverStarted}">
+			                	<h3><fmt:message key="current.trip.end.trip.just.end"/></h3>
+			                </c:when>
+		  				</c:choose>
+	                </c:when>
+	                <c:otherwise>
+	                	<h3><fmt:message key="current.trip.end.trip.just.confirm.h2"/></h3>
+	                </c:otherwise>
+	  			</c:choose>
+				<h3 id="title1">${pageScope.warnTitle}</h3>
+				<c:choose>
+	            	<c:when test="${actionBean.newDriverVersion && actionBean.current.neverStarted == false}">
+	            		<h3><fmt:message key="current.trip.end.message.v2"/></h3>
+	                </c:when>
+	  			</c:choose>	
+				<c:choose>
+	            	<c:when test="${actionBean.newDriverVersion}">
+	                	<stripes:link id="lockEndTripUnwanted" beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="alertBtn orangered" event="lockEndTrip" addSourcePage="true">
                     	<stripes:param name="licensePlate">${actionBean.current.licensePlate}</stripes:param>
-			            <fmt:message key="current.trip.button.end.trip"/>
+			             <c:choose>
+			            	<c:when test="${actionBean.current.neverStarted}">
+			                	<fmt:message key="current.trip.button.end.trip"/>
+			                </c:when>
+			                <c:otherwise>
+			                	<fmt:message key="current.trip.button.lock.car"/>
+			                </c:otherwise>
+		  				</c:choose>
                			</stripes:link>
 	                </c:when>
 	                <c:otherwise>
-	                	<stripes:link id="lockEndTrip" beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="alertBtn orangered" event="lockEndTrip" addSourcePage="true">
+	                	<stripes:link id="lockEndTripUnwanted" beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="alertBtn orangered" event="lockEndTrip" addSourcePage="true">
                     	<stripes:param name="licensePlate">${actionBean.current.licensePlate}</stripes:param>
 			            <fmt:message key="current.trip.button.lock.car.end.trip"/>
                		</stripes:link>
 	                </c:otherwise>
 	  			</c:choose>
-				
-				
 				<stripes:link id="closeConfirm" href="#" class="alertBtn gray" >
 					<fmt:message key="current.trip.extend.cancel"/>
 				</stripes:link>
 			</section>
+			
+			
+			
 			<section id="forbiddenZoneError" class="hidden">
-                <h2><fmt:message key="current.trip.end.trip.error.forbidden.h2"/></h2>
+				<c:choose>
+	                <c:when test="${actionBean.newDriverVersion}">
+	            		<h2><fmt:message key="current.trip.lock.car.error.forbidden.h2"/></h2>
+	                </c:when>
+	                <c:otherwise>
+	                	<h2><fmt:message key="current.trip.end.trip.error.forbidden.h2"/></h2>
+	                </c:otherwise>
+                </c:choose>
                 <h3><fmt:message key="current.trip.end.trip.error.forbidden.h3"/></h3>
                 <stripes:link id="closeConfirm" href="#" class="alertBtn gray" >
                   <fmt:message key="current.trip.end.trip.error.forbidden.close"/>
                 </stripes:link>
 			</section>
+			
+			
+			
 			<section id="unlocking" class="hidden">
 				<h2><fmt:message key="current.trip.unlocking.car"/>&nbsp;&nbsp;&nbsp;<img src="${contextPath}/img/indicator.gif"/></h2>
 				<h3>
