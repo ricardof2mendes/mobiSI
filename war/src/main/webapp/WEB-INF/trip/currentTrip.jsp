@@ -417,14 +417,7 @@
 			
 			
 			<section id="forbiddenZoneError" class="hidden">
-				<c:choose>
-	                <c:when test="${actionBean.newDriverVersion}">
-	            		<h2><fmt:message key="current.trip.lock.car.error.forbidden.h2"/></h2>
-	                </c:when>
-	                <c:otherwise>
-	                	<h2><fmt:message key="current.trip.end.trip.error.forbidden.h2"/></h2>
-	                </c:otherwise>
-                </c:choose>
+	            <h2><fmt:message key="current.trip.end.trip.error.forbidden.h2"/></h2>
                 <h3><fmt:message key="current.trip.end.trip.error.forbidden.h3"/></h3>
                 <stripes:link id="closeConfirm" href="#" class="alertBtn gray" >
                   <fmt:message key="current.trip.end.trip.error.forbidden.close"/>
