@@ -584,8 +584,6 @@ $(document).ready(function() {
 				pooling :  CONTEXT_PATH + '/trip/Trip.action?getCurrentTrip=', 
 				redirect: CONTEXT_PATH + '/trip/Trip.action?finish=&successOp='
 			};
-		
-		testEndTrip = true;
 		lockUnlockAndWait(url);
  	});
  	
@@ -662,8 +660,6 @@ var dataLU;
 var textStatusLU;
 var jqXHRLU;
 
-var testEndTrip = false;
-
 function displayTime(){
 	var time = new Date();
 	console.log("Current time: " + time.getHours() + ":" + time.getMinutes() + ":" + time.getSeconds());
@@ -676,10 +672,15 @@ function lockUnlockProcess(){
 					if (jqXHRLU.getResponseHeader('Stripes-Success') === 'OK') {
 						var evaluated = eval(dataLU);	
 						
+						
 						if(evaluated == null || (urlLU.carState && urlLU.carState === evaluated.carState)) {
 							clearInterval(timerVarLU); 
 							window.location.href = urlLU.redirect + 'true';										 			
-				 		} 
+				 		}else if(evaluated.errorCode && evaluated.errorCode.value && evaluated.errorCode.value === 'KEY_NOT_RETURNED'){
+				 			clearInterval(timerVarLU); 
+							window.location.href = urlLU.redirect + 'false' + '&keysNotReturned=true';			
+				 		}
+						
 			        } else {
 			            console.log('An error has occurred or the user\'s session has expired!');
 			            $('html').html(dataLU);

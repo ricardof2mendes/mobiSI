@@ -5,8 +5,12 @@
 <t:main title="${title}">
 	<jsp:include page="/WEB-INF/common/message_error.jsp"/>
 	
+	
+	
+	
+	
+
 	<article>
-		
 		<c:choose>
 			<c:when test="${actionBean.last != null}">
 				<section>
@@ -198,6 +202,20 @@
 						</ul>
 					</nav>
 				</section>
+				
+						
+				<!-- botoes -->
+				<c:if test="${actionBean.newDriverVersionLastTrip && actionBean.last.canOpenCar}">	
+					<stripes:link id="unlock" beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn gray" event="unlockCar" addSourcePage="true">
+						<stripes:param name="licensePlate">${actionBean.last.car.licensePlate}</stripes:param>
+						<fmt:message key="current.trip.button.unlock.car"/>
+					</stripes:link>
+					<stripes:link id="endTrip" beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn orangered" event="lockEndTrip" addSourcePage="true">
+						<stripes:param name="licensePlate">${actionBean.last.car.licensePlate}</stripes:param>
+						<fmt:message key="current.trip.button.lock.car"/>
+					</stripes:link>
+				</c:if>	
+						
 
                 <div class="warningMessage">
                     <fmt:message key="car.details.price.message"/>
@@ -205,15 +223,15 @@
                         <strong><fmt:message key="car.details.price.link.message"/></strong>
                     </stripes:link>
                 </div>
-
 			</c:when>
 			<c:otherwise>
 				<section id="noresults">
 					<label><fmt:message key="recent.history.no.activities.found"/></label>
 				</section>
 			</c:otherwise>
-		</c:choose>
-		
+		</c:choose>	
 	</article>
 	
+	
+	<jsp:include page="/WEB-INF/common/tripModals.jsp"/>
 </t:main>

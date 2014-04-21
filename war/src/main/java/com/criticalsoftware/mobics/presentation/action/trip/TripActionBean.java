@@ -30,6 +30,7 @@ import net.sourceforge.stripes.validation.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.criticalsoftware.mobics.booking.BookingErrorCodeEnum;
 import com.criticalsoftware.mobics.booking.CurrentTripDTO;
 import com.criticalsoftware.mobics.booking.TripDetailsDTO;
 import com.criticalsoftware.mobics.presentation.action.BaseActionBean;
@@ -76,11 +77,16 @@ public class TripActionBean extends BaseActionBean {
 
     @Validate(required = true, on = "finish")
     private Boolean successOp;
-
+    
+    @Validate(required = true, on = "finish")
+    private Boolean keysNotReturned;
+   
     @Validate
     private Boolean unlockOp;
     
     private Boolean newDriverVersion = true;
+    
+    private Boolean newDriverVersionLastTrip = true;
     
     
     /**
@@ -118,10 +124,12 @@ public class TripActionBean extends BaseActionBean {
         }
 
         //does the car have the CCOME driver? if yes, the webapp interface is different from the conventional.
-        newDriverVersion = current != null && current.getCarDTO() != null && Configuration.CCOME_CLASS.equals(current.getCarDTO().getDeviceDriverClass());
-
+        //newDriverVersion = current != null && current.getCarDTO() != null && Configuration.CCOME_CLASS.equals(current.getCarDTO().getDeviceDriverClass());
+        //newDriverVersionLastTrip = last != null && last.getCar() != null && Configuration.CCOME_CLASS.equals(last.getCar().getDeviceDriverClass());
+        
         if(Configuration.CCOME_MODE_ACTIVATED == false){
             newDriverVersion = false;
+            newDriverVersionLastTrip = false;
         }
   
         return resolution;
@@ -173,7 +181,7 @@ public class TripActionBean extends BaseActionBean {
                 AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
                         .getPassword()));
         getContext().getResponse().setHeader("Stripes-Success", "OK");
-        carWSServiceStub.endReservation(licensePlate);
+        carWSServiceStub.lockCar(licensePlate);
 
         return resolution;
     }
@@ -186,7 +194,7 @@ public class TripActionBean extends BaseActionBean {
                 AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
                         .getPassword()));
         getContext().getResponse().setHeader("Stripes-Success", "OK");
-        return new JavaScriptResolution(carWSServiceStub.endReservation(licensePlate));
+        return new JavaScriptResolution(carWSServiceStub.lockCar(licensePlate));
     }
 
 
@@ -221,26 +229,19 @@ public class TripActionBean extends BaseActionBean {
             if (unlockOp != null) {
                 getContext().getMessages().add(new LocalizableMessage("current.trip.unlock.car.message"));
             } else {
-                 
-                if( newDriverVersion && current != null){
-                    getContext().getMessages().add(new LocalizableMessage("current.trip.car.locked"));
-                }else{
-                    getContext().getMessages().add(new LocalizableMessage("current.trip.end.trip.message"));
-                }
-                             
+                getContext().getMessages().add(new LocalizableMessage("current.trip.end.trip.message"));          
             }
         } else {
             if (unlockOp != null) {
                 getContext().getValidationErrors().addGlobalError(
                         new LocalizableError("current.trip.unlock.car.message.error"));
             } else {
-                
-                if( newDriverVersion && current != null ){
-                    getContext().getMessages().add(new LocalizableMessage("current.trip.car.locked.error"));
+                if(this.keysNotReturned){
+                    getContext().getValidationErrors().addGlobalError(
+                            new LocalizableError("current.trip.keys.not.returned"));
                 }else{
                     getContext().getValidationErrors().addGlobalError(new LocalizableError("current.trip.end.trip.message.error"));
-              }
-                   
+                }      
             }
             resolution = main();
         }
@@ -299,8 +300,7 @@ public class TripActionBean extends BaseActionBean {
         try {
             current = bookingWSServiceStub.getCurrentTripDetails();
         } catch (Exception e) {
-            // TODO Administrator: Auto-generated catch block. This code MUST be changed to the appropriate statements in order to handle the exception.
-            e.printStackTrace();
+            LOGGER.error("Error getting current trip details.", e);
         }
         if (current != null) {
             bookingCode = current.getBookingCode();
@@ -496,4 +496,19 @@ public class TripActionBean extends BaseActionBean {
         this.newDriverVersion = newDriverVersion;
     }
 
+    public Boolean getNewDriverVersionLastTrip() {
+        return newDriverVersionLastTrip;
+    }
+
+    public void setNewDriverVersionLastTrip(Boolean newDriverVersionLastTrip) {
+        this.newDriverVersionLastTrip = newDriverVersionLastTrip;
+    }
+
+    public Boolean getKeysNotReturned() {
+        return keysNotReturned;
+    }
+
+    public void setKeysNotReturned(Boolean keysNotReturned) {
+        this.keysNotReturned = keysNotReturned;
+    }
 }
