@@ -78,7 +78,6 @@ public class TripActionBean extends BaseActionBean {
     @Validate(required = true, on = "finish")
     private Boolean successOp;
     
-    @Validate(required = true, on = "finish")
     private Boolean keysNotReturned;
    
     @Validate
