@@ -123,8 +123,8 @@ public class TripActionBean extends BaseActionBean {
         }
 
         //does the car have the CCOME driver? if yes, the webapp interface is different from the conventional.
-        //newDriverVersion = current != null && current.getCarDTO() != null && Configuration.CCOME_CLASS.equals(current.getCarDTO().getDeviceDriverClass());
-        //newDriverVersionLastTrip = last != null && last.getCar() != null && Configuration.CCOME_CLASS.equals(last.getCar().getDeviceDriverClass());
+        newDriverVersion = current != null && current.getCarDTO() != null && Configuration.CCOME_CLASS.equals(current.getCarDTO().getDeviceDriverClass());
+        newDriverVersionLastTrip = last != null && last.getCar() != null && Configuration.CCOME_CLASS.equals(last.getCar().getDeviceDriverClass());
         
         if(Configuration.CCOME_MODE_ACTIVATED == false){
             newDriverVersion = false;
@@ -184,18 +184,6 @@ public class TripActionBean extends BaseActionBean {
 
         return resolution;
     }
-    
-    public Resolution endTripWithPooling() throws UnsupportedEncodingException, RemoteException,
-            com.criticalsoftware.mobics.proxy.car.CustomerNotFoundExceptionException,
-            CarLicensePlateNotFoundExceptionException {
-        CarWSServiceStub carWSServiceStub = new CarWSServiceStub(Configuration.INSTANCE.getCarEndpoint());
-        carWSServiceStub._getServiceClient().addHeader(
-                AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
-                        .getPassword()));
-        getContext().getResponse().setHeader("Stripes-Success", "OK");
-        return new JavaScriptResolution(carWSServiceStub.lockCar(licensePlate));
-    }
-
 
     /* On other drivers lock and end trip are performed on one call. */
     public Resolution lockEndTrip() throws UnsupportedEncodingException, RemoteException,
@@ -208,8 +196,6 @@ public class TripActionBean extends BaseActionBean {
         getContext().getResponse().setHeader("Stripes-Success", "OK");
         return new JavaScriptResolution(carWSServiceStub.lockCar(licensePlate));
     }
-
-    
     
     /**
      * Put messages after lock unlock

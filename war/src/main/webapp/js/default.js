@@ -570,24 +570,6 @@ $(document).ready(function() {
              });
  		} 		
  	});
- 	
- 	// End trip With Pooling. Used for new driver version.
- 	$('#endTripWithPooling').on('click', function(e) {
- 		e.preventDefault();
-        $('div.confirm2 > article section').each(function(){
-            $(this).hide();
-        });
- 		$('#locking').show();
-		var url = {
-				timeout : LOCK_TIMEOUT_INTERVAL,
-				lockunlock: $(this).prop('href'), 
-				pooling :  CONTEXT_PATH + '/trip/Trip.action?getCurrentTrip=', 
-				redirect: CONTEXT_PATH + '/trip/Trip.action?finish=&successOp='
-			};
-		lockUnlockAndWait(url);
- 	});
- 	
- 	
 
  	// Lock & End trip
  	$('#lockEndTrip').on('click', function(e) {
