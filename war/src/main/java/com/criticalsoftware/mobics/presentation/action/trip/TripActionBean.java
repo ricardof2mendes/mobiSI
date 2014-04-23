@@ -78,7 +78,11 @@ public class TripActionBean extends BaseActionBean {
     @Validate(required = true, on = "finish")
     private Boolean successOp;
     
+    @Validate(required = true, on = "finish")
     private Boolean keysNotReturned;
+    
+    @Validate(required = true, on = "finish")
+    private Boolean keysAlreadyReturned;
    
     @Validate
     private Boolean unlockOp;
@@ -218,10 +222,15 @@ public class TripActionBean extends BaseActionBean {
             }
         } else {
             if (unlockOp != null) {
-                getContext().getValidationErrors().addGlobalError(
-                        new LocalizableError("current.trip.unlock.car.message.error"));
+                if(this.keysAlreadyReturned != null && this.keysAlreadyReturned.booleanValue()){
+                    getContext().getValidationErrors().addGlobalError(
+                            new LocalizableError("current.trip.keys.already.returned"));
+                }else{
+                    getContext().getValidationErrors().addGlobalError(
+                            new LocalizableError("current.trip.unlock.car.message.error"));
+                }
             } else {
-                if(this.keysNotReturned){
+                if(this.keysNotReturned != null && this.keysNotReturned.booleanValue()){
                     getContext().getValidationErrors().addGlobalError(
                             new LocalizableError("current.trip.keys.not.returned"));
                 }else{
@@ -496,4 +505,14 @@ public class TripActionBean extends BaseActionBean {
     public void setKeysNotReturned(Boolean keysNotReturned) {
         this.keysNotReturned = keysNotReturned;
     }
+
+    public Boolean getKeysAlreadyReturned() {
+        return keysAlreadyReturned;
+    }
+
+    public void setKeysAlreadyReturned(Boolean keysAlreadyReturned) {
+        this.keysAlreadyReturned = keysAlreadyReturned;
+    }
+    
+    
 }

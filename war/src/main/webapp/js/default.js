@@ -654,14 +654,18 @@ function lockUnlockProcess(){
 					if (jqXHRLU.getResponseHeader('Stripes-Success') === 'OK') {
 						var evaluated = eval(dataLU);	
 						
-						
+
 						if(evaluated == null || (urlLU.carState && urlLU.carState === evaluated.carState)) {
 							clearInterval(timerVarLU); 
-							window.location.href = urlLU.redirect + 'true';										 			
+							window.location.href = urlLU.redirect + 'true'  + '&keysNotReturned=false' + '&keysAlreadyReturned=false';										 			
 				 		}else if(evaluated.errorCode && evaluated.errorCode.value && evaluated.errorCode.value === 'KEY_NOT_RETURNED'){
 				 			clearInterval(timerVarLU); 
-							window.location.href = urlLU.redirect + 'false' + '&keysNotReturned=true';			
+							window.location.href = urlLU.redirect + 'false' + '&keysNotReturned=true' + '&keysAlreadyReturned=false';				
+				 		}else if(evaluated.errorCode && evaluated.errorCode.value && evaluated.errorCode.value === 'KEY_ALREADY_RETURNED'){
+				 			clearInterval(timerVarLU); 
+							window.location.href = urlLU.redirect + 'false' + '&keysAlreadyReturned=true' + '&keysNotReturned=false';		
 				 		}
+						
 						
 			        } else {
 			            console.log('An error has occurred or the user\'s session has expired!');

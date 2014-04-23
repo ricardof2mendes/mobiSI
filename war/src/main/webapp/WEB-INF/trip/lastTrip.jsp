@@ -205,16 +205,16 @@
 				
 						
 				<!-- botoes -->
-				<c:if test="${actionBean.newDriverVersionLastTrip && actionBean.last.canOpenCar}">	
+				<c:if test="${actionBean.last.canOpenCar}">
 					<stripes:link id="unlock" beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn gray" event="unlockCar" addSourcePage="true">
 						<stripes:param name="licensePlate">${actionBean.last.car.licensePlate}</stripes:param>
 						<fmt:message key="current.trip.button.unlock.car"/>
 					</stripes:link>
-					<stripes:link id="endTrip" beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn orangered" event="lockEndTrip" addSourcePage="true">
+					<stripes:link id="lockEndTrip" beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn orangered" event="lockEndTrip" addSourcePage="true">
 						<stripes:param name="licensePlate">${actionBean.last.car.licensePlate}</stripes:param>
 						<fmt:message key="current.trip.button.lock.car"/>
 					</stripes:link>
-				</c:if>	
+				</c:if>
 						
 
                 <div class="warningMessage">
