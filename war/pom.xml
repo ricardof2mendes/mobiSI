@@ -12,6 +12,7 @@
 	<artifactId>mobics-war</artifactId>
 	<packaging>war</packaging>
 	<name>Mobi Car Sharing - Web application</name>
+  <version>2.1.0</version>
 
 	<build>
 		<resources>
