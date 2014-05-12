@@ -46,7 +46,7 @@
 						<li class="filter">
 							<span><fmt:message key="trip.detail.price.booked.per.minute"/></span>
 							<span class="customComboBox">
-								<stripes:select name="price" value="2">
+								<stripes:select name="price" value="">
 									<stripes:option value=""><fmt:message key="book.now.search.price.any"/></stripes:option>
 									<c:forEach begin="1" end="10" var="index" step="1">
 										<stripes:option value="${index}" >
