@@ -22,18 +22,20 @@
 			</div>
 		</section>
 	</article>
-	
 	<article>
 		<section id="whiteBar">
 			<nav class="threeColumnList hidden">
 				<ul>
 					<li class="noBorder">
 						<stripes:link href="${contextPath}/booking/ImmediateBooking.action?licensePlateBook=">
+						<stripes:param name="latitude">${param.latitude}</stripes:param>
+						<stripes:param name="longitude">${param.longitude}</stripes:param>
 							<div>
 								<img class="carImage" src="" />
 							</div>
 							<div>
 								<div>
+								
 									<span id="licensePlate"></span>
 									<span id="carBrandName"></span>
 									<span id="fuelType"></span>
