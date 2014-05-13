@@ -145,9 +145,11 @@
 								</c:otherwise>
 							</c:choose>
 						</stripes:link>
-						<div class="warningMessage">
-							<fmt:message key="current.trip.end.message"/>
-						</div>
+						<c:if test="${actionBean.current.neverStarted == false}">
+							<div class="warningMessage">
+								<fmt:message key="current.trip.end.message"/>
+							</div>
+						</c:if>
 					 </c:when>
 					 <c:when test="${actionBean.current.carState == 'ENGINE_RUNNING'}">	
 					 	<stripes:link id="endTrip" beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn orangered" event="lockEndTrip" addSourcePage="true">
