@@ -18,6 +18,7 @@
 	<section id="login">
 		<stripes:form class="loginForm" beanclass="com.criticalsoftware.mobics.presentation.action.LoginActionBean" method="post">
 			<div>
+				<stripes:hidden id="ccCode" name="ccCode" value="${param.CC}"/>
 				<stripes:hidden id="retina" name="retina"/>
 				<stripes:text type="email" id="username" name="username" placeholder="${placeholderLogin}"/>
 				<stripes:password id="password" name="password" placeholder="${placeholderPass}"/>

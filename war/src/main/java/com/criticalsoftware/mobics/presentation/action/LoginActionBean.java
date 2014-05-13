@@ -48,6 +48,9 @@ public class LoginActionBean extends BaseActionBean {
 
     @Validate
     private boolean retina;
+    
+    @Validate
+    private String ccCode;
 
     @DefaultHandler
     @DontValidate
@@ -72,10 +75,11 @@ public class LoginActionBean extends BaseActionBean {
                 Configuration.INSTANCE.getCarClubEndpoint());
         carClubWSServiceStub._getServiceClient().addHeader(authHeader);
 
+        String errorResolution = "/WEB-INF/login.jsp?CC=" + ccCode;
+        
         try {
             CarClubSimpleDTO carClubDTO = carClubWSServiceStub.getCustomerCarClub();
             if (carClubDTO != null) {
-
                 CustomerWSServiceStub customerWSServiceStub = new CustomerWSServiceStub(
                         Configuration.INSTANCE.getCustomerEndpoint());
                 customerWSServiceStub._getServiceClient().addHeader(authHeader);
@@ -96,12 +100,12 @@ public class LoginActionBean extends BaseActionBean {
                 this.getContext().setRetina(retina);
             } else {
                 this.getContext().getValidationErrors().addGlobalError(new LocalizableError("login.carclub.error"));
-                resolution = new ForwardResolution("/WEB-INF/login.jsp");
+                resolution = new ForwardResolution(errorResolution);
             }
         } catch (AxisFault e) {
             if (e.getMessage().startsWith(Configuration.INSTANCE.getAuthenticationFailureString())) {
                 this.getContext().getValidationErrors().addGlobalError(new LocalizableError("login.error"));
-                resolution = new ForwardResolution("/WEB-INF/login.jsp");
+                resolution = new ForwardResolution(errorResolution);
             } else {
                 throw e;
             }
@@ -149,6 +153,14 @@ public class LoginActionBean extends BaseActionBean {
      */
     public void setRetina(boolean retina) {
         this.retina = retina;
+    }
+
+    public String getCcCode() {
+        return ccCode;
+    }
+
+    public void setCcCode(String ccCode) {
+        this.ccCode = ccCode;
     }
 
 }
