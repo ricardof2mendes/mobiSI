@@ -371,7 +371,7 @@ Map.prototype = {
 					 $(this.polygon.coordenates).each(function() {
 						 var newPoint = new OpenLayers.Geometry.Point(this.longitude, this.latitude).transform(that.mapDisplayProjection, that.map.getProjectionObject());
 						 pointList.push(newPoint);
-						 that.points.push(newPoint);
+						 //that.points.push(newPoint);
 					 });
 					 pointList.push(pointList[0]);
 					 var linearRing = new OpenLayers.Geometry.LinearRing(pointList);
@@ -394,7 +394,7 @@ Map.prototype = {
             $(returnData.polygon.coordenates).each(function() {
                 var newPoint = new OpenLayers.Geometry.Point(this.longitude, this.latitude).transform(that.mapDisplayProjection, that.map.getProjectionObject());
                 pointList.push(newPoint);
-                that.points.push(newPoint);
+                //that.points.push(newPoint);
             });
             pointList.push(pointList[0]);
             var linearRing = new OpenLayers.Geometry.LinearRing(pointList);
