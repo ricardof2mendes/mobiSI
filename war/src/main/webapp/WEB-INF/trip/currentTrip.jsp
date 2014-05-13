@@ -104,14 +104,16 @@
 							</li>
 						</c:otherwise>
 						</c:choose>
+						<c:if test="${actionBean.current.state != 'WAIT_OBS_IMMEDIATE'}">	
 						<li class="detail white">
-								<span>
-									<fmt:message key="trip.detail.car.state"/>
-								</span>
-								<span>
-									<fmt:message key="CAR_STATE-${actionBean.current.carState}"/>
-								</span>
-							</li>
+							<span>
+								<fmt:message key="trip.detail.car.state"/>
+							</span>
+							<span>
+								<fmt:message key="CAR_STATE-${actionBean.current.carState}"/>
+							</span>
+						</li>
+						</c:if>
 				</ul>
 			</nav>
 		</section>
