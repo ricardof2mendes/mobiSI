@@ -318,7 +318,7 @@
 								</goals>
 								<configuration>
 									<packageName>com.criticalsoftware.mobics.proxy.booking</packageName>
-									<wsdlFile>http://176.111.104.20/mobics-webservices/Booking?wsdl</wsdlFile>
+									<wsdlFile>http://localhost:8080/mobics-webservices/Booking?wsdl</wsdlFile>
 									<unwrap>true</unwrap>
 									<overWrite>true</overWrite>
 									<unpackClasses>true</unpackClasses>
@@ -331,7 +331,7 @@
 								</goals>
 								<configuration>
 									<packageName>com.criticalsoftware.mobics.proxy.fleet</packageName>
-									<wsdlFile>http://176.111.104.20/mobics-webservices/Fleet?wsdl</wsdlFile>
+									<wsdlFile>http://localhost:8080/mobics-webservices/Fleet?wsdl</wsdlFile>
 									<unwrap>true</unwrap>
 									<overWrite>true</overWrite>
 									<unpackClasses>true</unpackClasses>
@@ -344,7 +344,7 @@
 								</goals>
 								<configuration>
 									<packageName>com.criticalsoftware.mobics.proxy.customer</packageName>
-									<wsdlFile>http://176.111.104.20/mobics-webservices/Customer?wsdl</wsdlFile>
+									<wsdlFile>http://localhost:8080/mobics-webservices/Customer?wsdl</wsdlFile>
 									<unwrap>true</unwrap>
 									<overWrite>true</overWrite>
 									<unpackClasses>true</unpackClasses>
@@ -357,7 +357,7 @@
 								</goals>
 								<configuration>
 									<packageName>com.criticalsoftware.mobics.proxy.car</packageName>
-									<wsdlFile>http://176.111.104.20/mobics-webservices/Car?wsdl</wsdlFile>
+									<wsdlFile>http://localhost:8080/mobics-webservices/Car?wsdl</wsdlFile>
 									<unwrap>true</unwrap>
 									<overWrite>true</overWrite>
 									<unpackClasses>true</unpackClasses>
@@ -370,7 +370,7 @@
 								</goals>
 								<configuration>
 									<packageName>com.criticalsoftware.mobics.proxy.carclub</packageName>
-									<wsdlFile>http://176.111.104.20/mobics-webservices/CarClub?wsdl</wsdlFile>
+									<wsdlFile>http://localhost:8080/mobics-webservices/CarClub?wsdl</wsdlFile>
 									<unwrap>true</unwrap>
 									<overWrite>true</overWrite>
 									<unpackClasses>true</unpackClasses>
@@ -383,7 +383,7 @@
 								</goals>
 								<configuration>
 									<packageName>com.criticalsoftware.mobics.proxy.miscellaneous</packageName>
-									<wsdlFile>http://176.111.104.20/mobics-webservices/Miscellaneous?wsdl</wsdlFile>
+									<wsdlFile>http://localhost:8080/mobics-webservices/Miscellaneous?wsdl</wsdlFile>
 									<unwrap>true</unwrap>
 									<overWrite>true</overWrite>
 									<unpackClasses>true</unpackClasses>
@@ -396,7 +396,7 @@
 								</goals>
 								<configuration>
 									<packageName>com.criticalsoftware.mobics.proxy.billing</packageName>
-									<wsdlFile>http://176.111.104.20/mobics-webservices/Billing?wsdl</wsdlFile>
+									<wsdlFile>http://localhost:8080/mobics-webservices/Billing?wsdl</wsdlFile>
 									<unwrap>true</unwrap>
 									<overWrite>true</overWrite>
 									<unpackClasses>true</unpackClasses>
