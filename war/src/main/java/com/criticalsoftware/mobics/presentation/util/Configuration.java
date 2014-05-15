@@ -92,25 +92,25 @@ public class Configuration implements Serializable{
     private final String authenticationFailureString = "Failed Authentication";
 
     /** Car Club Endpoint **/
-    private final String carClubEndpoint = "http://176.111.104.20/mobics-webservices/CarClub";
+    private final String carClubEndpoint = "http://mobics.mobiag.com/mobics-webservices/CarClub";
     
     /** Car Endpoint **/
-    private final String carEndpoint = "http://176.111.104.20/mobics-webservices/Car";
+    private final String carEndpoint = "http://mobics.mobiag.com/mobics-webservices/Car";
 
     /** Fleet Endpoint **/
-    private final String fleetEndpoint = "http://176.111.104.20/mobics-webservices/Fleet";
+    private final String fleetEndpoint = "http://mobics.mobiag.com/mobics-webservices/Fleet";
 
     /** Booking Endpoint **/
-    private final String bookingEndpoint = "http://176.111.104.20/mobics-webservices/Booking";
+    private final String bookingEndpoint = "http://mobics.mobiag.com/mobics-webservices/Booking";
 
     /** Customer Endpoint **/
-    private final String customerEndpoint = "http://176.111.104.20/mobics-webservices/Customer";
+    private final String customerEndpoint = "http://mobics.mobiag.com/mobics-webservices/Customer";
 
     /** Miscellaneous Endpoint **/
-    private final String miscellaneousEnpoint = "http://176.111.104.20/mobics-webservices/Miscellaneous";
+    private final String miscellaneousEnpoint = "http://mobics.mobiag.com/mobics-webservices/Miscellaneous";
 
-    /** Billing Endpoint **/
-    private final String billingEndpoint = "http://176.111.104.20/mobics-webservices/Billing";
+    /** Billing Endpoint **/ 
+    private final String billingEndpoint = "http://mobics.mobiag.com/mobics-webservices/Billing";
 
     /** Geolocation servce **/
     private final String geolocationServer = "nominatim.openstreetmap.org";
