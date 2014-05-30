@@ -748,8 +748,7 @@ Map.prototype = {
 			    bind: false,
 			    geolocationOptions: {
 			    	timeout : 10000,
-					maximumAge : 60000,
-					enableHighAccuracy : true
+					maximumAge : 60000
 			    }
 			});
 			this.map.addControl(geolocate);
