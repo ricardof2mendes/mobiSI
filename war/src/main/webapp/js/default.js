@@ -657,13 +657,19 @@ function lockUnlockProcess(){
 
 						if(evaluated == null || (urlLU.carState && urlLU.carState === evaluated.carState)) {
 							clearInterval(timerVarLU); 
-							window.location.href = urlLU.redirect + 'true'  + '&keysNotReturned=false' + '&keysAlreadyReturned=false';										 			
+							window.location.href = urlLU.redirect + 'true'  + '&keysNotReturned=false' + '&keysAlreadyReturned=false' + '&doorsAlreadyOpen=false' + '&doorsAlreadyClosed=false';										 			
 				 		}else if(evaluated.errorCode && evaluated.errorCode.value && evaluated.errorCode.value === 'KEY_NOT_RETURNED'){
 				 			clearInterval(timerVarLU); 
-							window.location.href = urlLU.redirect + 'false' + '&keysNotReturned=true' + '&keysAlreadyReturned=false';				
+							window.location.href = urlLU.redirect + 'false' + '&keysNotReturned=true' + '&keysAlreadyReturned=false' + '&doorsAlreadyOpen=false' + '&doorsAlreadyClosed=false';				
 				 		}else if(evaluated.errorCode && evaluated.errorCode.value && evaluated.errorCode.value === 'KEY_ALREADY_RETURNED'){
 				 			clearInterval(timerVarLU); 
-							window.location.href = urlLU.redirect + 'false' + '&keysAlreadyReturned=true' + '&keysNotReturned=false';		
+							window.location.href = urlLU.redirect + 'false' + '&keysAlreadyReturned=true' + '&keysNotReturned=false' + '&doorsAlreadyOpen=false' + '&doorsAlreadyClosed=false';		
+				 		}else if(evaluated.errorCode && evaluated.errorCode.value && evaluated.errorCode.value === 'DOORS_ALREADY_OPEN'){
+				 			clearInterval(timerVarLU); 
+							window.location.href = urlLU.redirect + 'false'  + '&keysNotReturned=false' + '&keysAlreadyReturned=false' + '&doorsAlreadyOpen=true' + '&doorsAlreadyClosed=false';		
+				 		}else if(evaluated.errorCode && evaluated.errorCode.value && evaluated.errorCode.value === 'DOORS_ALREADY_LOCKED'){
+				 			clearInterval(timerVarLU); 
+							window.location.href = urlLU.redirect + 'false'  + '&keysNotReturned=false' + '&keysAlreadyReturned=false' + '&doorsAlreadyOpen=false' + '&doorsAlreadyClosed=true';		
 				 		}
 						
 						
