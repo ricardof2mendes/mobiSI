@@ -91,41 +91,43 @@ public class Configuration implements Serializable{
     /** Authentication failure string return by webservices on Axis fault **/
     private final String authenticationFailureString = "Failed Authentication";
 
+    private final String backofficeHost = "mobics.mobiag.com";
+    
     /** Car Club Endpoint **/
-    private final String carClubEndpoint = "http://localhost:8080/mobics-webservices/CarClub";
+    private final String carClubEndpoint = "http://" + backofficeHost + "/mobics-webservices/CarClub";
     
     /** Car Endpoint **/
-    private final String carEndpoint = "http://localhost:8080/mobics-webservices/Car";
+    private final String carEndpoint = "http://" + backofficeHost + "/mobics-webservices/Car";
 
     /** Fleet Endpoint **/
-    private final String fleetEndpoint = "http://localhost:8080/mobics-webservices/Fleet";
+    private final String fleetEndpoint = "http://" + backofficeHost + "/mobics-webservices/Fleet";
 
     /** Booking Endpoint **/
-    private final String bookingEndpoint = "http://localhost:8080/mobics-webservices/Booking";
+    private final String bookingEndpoint = "http://" + backofficeHost + "/mobics-webservices/Booking";
 
     /** Customer Endpoint **/
-    private final String customerEndpoint = "http://localhost:8080/mobics-webservices/Customer";
+    private final String customerEndpoint = "http://" + backofficeHost + "/mobics-webservices/Customer";
 
     /** Miscellaneous Endpoint **/
-    private final String miscellaneousEnpoint = "http://localhost:8080/mobics-webservices/Miscellaneous";
+    private final String miscellaneousEnpoint = "http://" + backofficeHost + "/mobics-webservices/Miscellaneous";
 
     /** Billing Endpoint **/ 
-    private final String billingEndpoint = "http://localhost:8080/mobics-webservices/Billing";
+    private final String billingEndpoint = "http://" + backofficeHost + "/mobics-webservices/Billing";
 
     /** Geolocation servce **/
-    private final String geolocationServer = "nominatim.openstreetmap.org";
+    private final String geolocationServer = "map.mobiag.com/osm";
 
     /** Max results **/
     private final int maxResults = 99;
     
     /** Default theme warm word **/
-    private final String defaultThemeWarmWord = "warm";
+    private final String defaultThemeWarmWord = "solid";
     
     /** Default theme style **/
     private final String defaultThemeStyle = "map";
 
     /** Default theme color **/
-    private final String defaultThemeColor = "darkgreen";
+    private final String defaultThemeColor = "lightblue";
     
     /** Allowed countries on search location server **/
     private final String geolocationServerAllowedCountries = "pt";
