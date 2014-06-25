@@ -91,7 +91,7 @@ public class Configuration implements Serializable{
     /** Authentication failure string return by webservices on Axis fault **/
     private final String authenticationFailureString = "Failed Authentication";
 
-    private final String backofficeHost = "localhost:8080";
+    private final String backofficeHost = "mobics.mobiag.com";
     
     /** Car Club Endpoint **/
     private final String carClubEndpoint = "http://" + backofficeHost + "/mobics-webservices/CarClub";
