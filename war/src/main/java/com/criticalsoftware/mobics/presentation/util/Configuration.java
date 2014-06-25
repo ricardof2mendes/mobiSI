@@ -121,10 +121,10 @@ public class Configuration implements Serializable{
     private final int maxResults = 99;
     
     /** Default theme warm word **/
-    private final String defaultThemeWarmWord = "solid";
+    private final String defaultThemeWarmWord = "warm";
     
     /** Default theme style **/
-    private final String defaultThemeStyle = "map";
+    private final String defaultThemeStyle = "solid";
 
     /** Default theme color **/
     private final String defaultThemeColor = "lightblue";

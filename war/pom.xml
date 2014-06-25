@@ -14,8 +14,9 @@
 	<name>Mobi Car Sharing - Web application</name>
     <version>2.1.2</version>
 	
-	<properties>    
-      <backoffice-host>mobics.mobiag.com</backoffice-host> 
+	<properties>
+	  <!-- <backoffice-host>localhost:8080</backoffice-host> -->	  
+	  <backoffice-host>mobics.mobiag.com</backoffice-host>
     </properties>
 
 	<build>
