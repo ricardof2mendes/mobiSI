@@ -13,6 +13,10 @@
 	<packaging>war</packaging>
 	<name>Mobi Car Sharing - Web application</name>
     <version>2.1.2</version>
+	
+	<properties>    
+      <backoffice-host>mobics.mobiag.com</backoffice-host> 
+    </properties>
 
 	<build>
 		<resources>
@@ -318,7 +322,7 @@
 								</goals>
 								<configuration>
 									<packageName>com.criticalsoftware.mobics.proxy.booking</packageName>
-									<wsdlFile>http://localhost:8080/mobics-webservices/Booking?wsdl</wsdlFile>
+									<wsdlFile>http://${backoffice-host}/mobics-webservices/Booking?wsdl</wsdlFile>
 									<unwrap>true</unwrap>
 									<overWrite>true</overWrite>
 									<unpackClasses>true</unpackClasses>
@@ -331,7 +335,7 @@
 								</goals>
 								<configuration>
 									<packageName>com.criticalsoftware.mobics.proxy.fleet</packageName>
-									<wsdlFile>http://localhost:8080/mobics-webservices/Fleet?wsdl</wsdlFile>
+									<wsdlFile>http://${backoffice-host}/mobics-webservices/Fleet?wsdl</wsdlFile>
 									<unwrap>true</unwrap>
 									<overWrite>true</overWrite>
 									<unpackClasses>true</unpackClasses>
@@ -344,7 +348,7 @@
 								</goals>
 								<configuration>
 									<packageName>com.criticalsoftware.mobics.proxy.customer</packageName>
-									<wsdlFile>http://localhost:8080/mobics-webservices/Customer?wsdl</wsdlFile>
+									<wsdlFile>http://${backoffice-host}/mobics-webservices/Customer?wsdl</wsdlFile>
 									<unwrap>true</unwrap>
 									<overWrite>true</overWrite>
 									<unpackClasses>true</unpackClasses>
@@ -357,7 +361,7 @@
 								</goals>
 								<configuration>
 									<packageName>com.criticalsoftware.mobics.proxy.car</packageName>
-									<wsdlFile>http://localhost:8080/mobics-webservices/Car?wsdl</wsdlFile>
+									<wsdlFile>http://${backoffice-host}/mobics-webservices/Car?wsdl</wsdlFile>
 									<unwrap>true</unwrap>
 									<overWrite>true</overWrite>
 									<unpackClasses>true</unpackClasses>
@@ -370,7 +374,7 @@
 								</goals>
 								<configuration>
 									<packageName>com.criticalsoftware.mobics.proxy.carclub</packageName>
-									<wsdlFile>http://localhost:8080/mobics-webservices/CarClub?wsdl</wsdlFile>
+									<wsdlFile>http://${backoffice-host}/mobics-webservices/CarClub?wsdl</wsdlFile>
 									<unwrap>true</unwrap>
 									<overWrite>true</overWrite>
 									<unpackClasses>true</unpackClasses>
@@ -383,7 +387,7 @@
 								</goals>
 								<configuration>
 									<packageName>com.criticalsoftware.mobics.proxy.miscellaneous</packageName>
-									<wsdlFile>http://localhost:8080/mobics-webservices/Miscellaneous?wsdl</wsdlFile>
+									<wsdlFile>http://${backoffice-host}/mobics-webservices/Miscellaneous?wsdl</wsdlFile>
 									<unwrap>true</unwrap>
 									<overWrite>true</overWrite>
 									<unpackClasses>true</unpackClasses>
@@ -396,7 +400,7 @@
 								</goals>
 								<configuration>
 									<packageName>com.criticalsoftware.mobics.proxy.billing</packageName>
-									<wsdlFile>http://localhost:8080/mobics-webservices/Billing?wsdl</wsdlFile>
+									<wsdlFile>http://${backoffice-host}/mobics-webservices/Billing?wsdl</wsdlFile>
 									<unwrap>true</unwrap>
 									<overWrite>true</overWrite>
 									<unpackClasses>true</unpackClasses>
