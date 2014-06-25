@@ -115,7 +115,7 @@ public class Configuration implements Serializable{
     private final String billingEndpoint = "http://" + backofficeHost + "/mobics-webservices/Billing";
 
     /** Geolocation servce **/
-    private final String geolocationServer = "map.mobiag.com/osm";
+    private final String geolocationServer = "nominatim.openstreetmap.org";
 
     /** Max results **/
     private final int maxResults = 99;
