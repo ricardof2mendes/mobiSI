@@ -49,6 +49,28 @@ public class GeolocationUtil {
     private static final String LATITUDE_NAME = "lat";
     private static final String LONGITUDE_NAME = "lon";
 
+    private static String getFormattedAddress(JSONObject jsonObject){
+        String result = null;
+        
+        if(jsonObject != null && jsonObject.containsKey("address")){
+            result = "";
+            JSONObject address = (JSONObject) jsonObject.get("address");
+            if (address.containsKey("road")) {
+                result += address.get("road").toString();
+            }
+            
+            if (address.containsKey("house_number")) {
+                if(result.isEmpty() == false){
+                    result += " ";
+                }
+                result += address.get("house_number").toString();
+            }
+            
+        }
+        
+        return result;
+    }
+    
     /**
      * Get the full address name
      * 
@@ -77,7 +99,7 @@ public class GeolocationUtil {
                 if (LOGGER.isTraceEnabled()) {
                     LOGGER.trace(jsonObject.toJSONString());
                 }
-                address = (String) jsonObject.get(DISPLAY_NAME);
+                address = getFormattedAddress(jsonObject);
             } else {
                 LOGGER.warn("Recived a HTTP status {}. Response was not good from {}", statusCode, url);
             }
