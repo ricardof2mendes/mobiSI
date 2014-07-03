@@ -126,7 +126,8 @@ Map.prototype = {
 								enableKinetic : true
 							}
 						}), new OpenLayers.Control.Zoom()],
-				layers : [ new OpenLayers.Layer.OSM('OpenStreetMap', null, {
+						//TODO: put the map endpoint on a configuration.
+				layers : [ new OpenLayers.Layer.OSM('OpenStreetMap', 'http://map.mobiag.com', {
 					transitionEffect : 'resize'
 				}) ],
 				numZoomLevels: 18,
