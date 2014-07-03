@@ -57,12 +57,14 @@
      	<script type="text/javascript" src="${contextPath}/js/OpenLayers.mobile.js"></script>
 		
 		<c:choose>
+		<!-- 
        		<c:when test="${pageScope.state == 'PRODUCTION'}">
         		<script type="text/javascript" src="${contextPath}/js/script.map.min.jsp?version=${version}"></script>
        		</c:when>
        		<c:when test="${pageScope.state == 'DEVELOPMENT'}">
         		<script type="text/javascript" src="${contextPath}/js/script.map.jsp?version=${version}"></script>
        		</c:when>
+        -->
        		<c:otherwise>
 		        <script type="text/javascript" >
 		        	//
