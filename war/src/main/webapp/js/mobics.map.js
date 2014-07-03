@@ -127,7 +127,7 @@ Map.prototype = {
 							}
 						}), new OpenLayers.Control.Zoom()],
 						//TODO: put the map endpoint on a configuration.
-				layers : [ new OpenLayers.Layer.OSM('OpenStreetMap', null, {
+				layers : [ new OpenLayers.Layer.OSM('OpenStreetMap', 'http://map.mobiag.com/osm/${z}/${x}/${y}.png', {
 					transitionEffect : 'resize'
 				}) ],
 				numZoomLevels: 18,
