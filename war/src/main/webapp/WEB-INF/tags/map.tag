@@ -56,15 +56,14 @@
         <script type="text/javascript" src="${contextPath}/js/zepto.js"></script>
      	<script type="text/javascript" src="${contextPath}/js/OpenLayers.mobile.js"></script>
 		
+		<%--
 		<c:choose>
-		<!-- 
        		<c:when test="${pageScope.state == 'PRODUCTION'}">
         		<script type="text/javascript" src="${contextPath}/js/script.map.min.jsp?version=${version}"></script>
        		</c:when>
        		<c:when test="${pageScope.state == 'DEVELOPMENT'}">
         		<script type="text/javascript" src="${contextPath}/js/script.map.jsp?version=${version}"></script>
        		</c:when>
-        -->
        		<c:otherwise>
 		        <script type="text/javascript" >
 		        	//
@@ -79,5 +78,19 @@
 		        <script type="text/javascript" src="${contextPath}/js/default.map.js"></script>
        		</c:otherwise>
        	</c:choose>
+       	 --%>
+       	 
+        <script type="text/javascript" >
+        	//
+        	//Any variable declared here must be replicated in variables.js
+        	//
+        	var CONTEXT_PATH = '${pageContext.request.contextPath}';
+			var ANY_DISTANCE = '${applicationScope.configuration.anyDistance}';
+        </script>
+        
+        <script type="text/javascript" src="${contextPath}/js/OpenLayers.mobics.extension.js"></script>
+        <script type="text/javascript" src="${contextPath}/js/mobics.map.js"></script>
+        <script type="text/javascript" src="${contextPath}/js/default.map.js"></script>
+       	
     </body>
 </html>
