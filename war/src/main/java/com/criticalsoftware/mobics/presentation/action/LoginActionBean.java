@@ -23,10 +23,12 @@ import org.apache.axiom.om.OMElement;
 import org.apache.axis2.AxisFault;
 
 import com.criticalsoftware.mobics.carclub.CarClubSimpleDTO;
+import com.criticalsoftware.mobics.presentation.action.trip.TripActionBean;
 import com.criticalsoftware.mobics.presentation.security.AuthenticationUtil;
 import com.criticalsoftware.mobics.presentation.security.User;
 import com.criticalsoftware.mobics.presentation.util.CarClubSimple;
 import com.criticalsoftware.mobics.presentation.util.Configuration;
+import com.criticalsoftware.mobics.proxy.booking.BookingWSServiceStub;
 import com.criticalsoftware.mobics.proxy.carclub.CarClubWSServiceStub;
 import com.criticalsoftware.mobics.proxy.customer.CustomerNotFoundExceptionException;
 import com.criticalsoftware.mobics.proxy.customer.CustomerWSServiceStub;
@@ -64,6 +66,15 @@ public class LoginActionBean extends BaseActionBean {
             errors.addGlobalError(new LocalizableError("login.error"));
         }
     }
+    
+    private boolean customerHasOngoingTrip() throws UnsupportedEncodingException, RemoteException{
+       BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
+               Configuration.INSTANCE.getBookingEndpoint());
+       bookingWSServiceStub._getServiceClient().addHeader(
+               AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
+                       .getPassword()));
+       return bookingWSServiceStub.isCustomerInOngoingTrip();
+    }
 
     public Resolution authenticate() throws UnsupportedEncodingException, RemoteException,
     CustomerNotFoundExceptionException {
@@ -98,6 +109,12 @@ public class LoginActionBean extends BaseActionBean {
                 this.getContext().getServletContext().setAttribute("carClubCode", carClubDTO.getCarClubCode());
 
                 this.getContext().setRetina(retina);
+                
+                //MOBICSMAINT-142
+                if(customerHasOngoingTrip()){
+                    resolution = new RedirectResolution(TripActionBean.class);
+                }
+                
             } else {
                 this.getContext().getValidationErrors().addGlobalError(new LocalizableError("login.carclub.error"));
                 resolution = new ForwardResolution(errorResolution);
