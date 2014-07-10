@@ -653,9 +653,8 @@ function lockUnlockProcess(){
 				function(dataLU, textStatusLU, jqXHRLU){
 					if (jqXHRLU.getResponseHeader('Stripes-Success') === 'OK') {
 						var evaluated = eval(dataLU);	
-						
-
-						if(evaluated == null || (urlLU.carState && urlLU.carState === evaluated.carState)) {
+												
+						if(evaluated == null || (urlLU.carState && urlLU.carState === evaluated.carState && evaluated.carState !== $('#carState').text())) {
 							clearInterval(timerVarLU); 
 							window.location.href = urlLU.redirect + 'true'  + '&keysNotReturned=false' + '&keysAlreadyReturned=false' + '&doorsAlreadyOpen=false' + '&doorsAlreadyClosed=false';										 			
 				 		}else if(evaluated.errorCode && evaluated.errorCode.value && evaluated.errorCode.value === 'KEY_NOT_RETURNED'){
@@ -667,7 +666,7 @@ function lockUnlockProcess(){
 				 		}else if(evaluated.errorCode && evaluated.errorCode.value && evaluated.errorCode.value === 'DOORS_ALREADY_OPEN'){
 				 			clearInterval(timerVarLU); 
 							window.location.href = urlLU.redirect + 'false'  + '&keysNotReturned=false' + '&keysAlreadyReturned=false' + '&doorsAlreadyOpen=true' + '&doorsAlreadyClosed=false';		
-				 		}else if(evaluated.errorCode && evaluated.errorCode.value && evaluated.errorCode.value === 'DOORS_ALREADY_LOCKED'){
+				 		}else if(evaluated.errorCode && evaluated.errorCode.value && evaluated.errorCode.value === 'DOORS_ALREADY_CLOSED'){
 				 			clearInterval(timerVarLU); 
 							window.location.href = urlLU.redirect + 'false'  + '&keysNotReturned=false' + '&keysAlreadyReturned=false' + '&doorsAlreadyOpen=false' + '&doorsAlreadyClosed=true';		
 				 		}

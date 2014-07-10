@@ -112,6 +112,7 @@
 							<span>
 								<fmt:message key="CAR_STATE-${actionBean.current.carState}"/>
 							</span>
+							<span id="carState" style="display:none">${actionBean.current.carState}</span>
 						</li>
 						</c:if>
 				</ul>
