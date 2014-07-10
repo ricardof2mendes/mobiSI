@@ -206,7 +206,7 @@
 						
 				<!-- botoes -->
 				<c:if test="${actionBean.last.canOpenCar}">
-					<stripes:link id="unlock" beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn gray" event="unlockCar" addSourcePage="true">
+					<stripes:link id="unlock" beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn green" event="unlockCar" addSourcePage="true">
 						<stripes:param name="licensePlate">${actionBean.last.car.licensePlate}</stripes:param>
 						<fmt:message key="current.trip.button.unlock.car"/>
 					</stripes:link>

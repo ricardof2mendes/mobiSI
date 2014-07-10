@@ -130,7 +130,7 @@
 				<!-- Lock car End trip with js unwanted zone validation-->
 				<c:choose>
 					<c:when test="${actionBean.current.carState == 'IN_USE' || actionBean.current.carState == 'BOOKED'}">	
-						<stripes:link id="unlock" beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn gray" event="unlockCar" addSourcePage="true">
+						<stripes:link id="unlock" beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn green" event="unlockCar" addSourcePage="true">
 							<stripes:param name="licensePlate">${actionBean.current.licensePlate}</stripes:param>
 							<fmt:message key="current.trip.button.unlock.car"/>
 						</stripes:link>
@@ -433,7 +433,7 @@
 			<!-- Unlock car -->
 			<c:if test="${actionBean.current.carState == 'BOOKED' && actionBean.current.state != 'WAIT_OBS_IMMEDIATE' && actionBean.current.state != 'OBS_ERROR'}">	
 				<section>
-					<stripes:link id="unlock" beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn gray" event="unlockCar" addSourcePage="true">
+					<stripes:link id="unlock" beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn green" event="unlockCar" addSourcePage="true">
 						<stripes:param name="licensePlate">${actionBean.current.licensePlate}</stripes:param>
 						<fmt:message key="current.trip.button.unlock.car"/>
 					</stripes:link>
