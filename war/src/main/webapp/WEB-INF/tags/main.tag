@@ -76,7 +76,7 @@
 		</script>
     </head>
 
-    <body onload="noBack();">
+    <body >
 		<div class="modal"><!-- Place at bottom of page --></div>
         
         <t:header title="${title}"/>
