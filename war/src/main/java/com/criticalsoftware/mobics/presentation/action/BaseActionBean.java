@@ -33,7 +33,7 @@ import com.criticalsoftware.mobics.proxy.fleet.FleetWSServiceStub;
 
 /**
  * Base ActionBean class.
- * 
+ *
  * @author Samuel Santos
  * @version $Revision: 1.4 $
  */
@@ -55,7 +55,7 @@ public abstract class BaseActionBean implements ActionBean {
 
     /**
      * Gets the context.
-     * 
+     *
      * @return the context
      */
     @Override
@@ -65,7 +65,7 @@ public abstract class BaseActionBean implements ActionBean {
 
     /**
      * Sets the context.
-     * 
+     *
      * @param context the context to set
      */
     @Override
@@ -75,7 +75,7 @@ public abstract class BaseActionBean implements ActionBean {
 
     /**
      * Get the active menu
-     * 
+     *
      * @return
      */
     public String getActiveMenu() {
@@ -85,7 +85,7 @@ public abstract class BaseActionBean implements ActionBean {
 
     /**
      * Get the splash screen style
-     * 
+     *
      * @return
      * @throws CarClubCodeNotFoundExceptionException
      * @throws CarClubWebSiteURLNotFoundExceptionException
@@ -101,7 +101,7 @@ public abstract class BaseActionBean implements ActionBean {
         String carClubCode = getContext().getRequest().getParameter("CC");
         getContext().getServletContext().setAttribute("CC", carClubCode);
 
-        if (carClubCode != null && !carClubCode.isEmpty()) {
+        if (carClubCode != null && !carClubCode.isEmpty() && !carClubCode.equals("null")) {
             carClubSimpleDTO = new CarClubWSServiceStub(Configuration.INSTANCE.getCarClubEndpoint())
             .getCarClubByCarClubCode(carClubCode.toUpperCase());
 
@@ -154,7 +154,7 @@ public abstract class BaseActionBean implements ActionBean {
         String carClubCode = getContext().getRequest().getParameter("CC");
         getContext().getServletContext().setAttribute("CC", carClubCode);
 
-        if (carClubCode != null && !carClubCode.isEmpty()) {
+        if (carClubCode != null && !carClubCode.isEmpty() && !carClubCode.equals("null")) {
             try {
                 CarClubWSService carClubService = new CarClubWSServiceStub(Configuration.INSTANCE.getCarClubEndpoint());
                 handler = carClubService.getCarClubThumbnailByCarClubCode(carClubCode.toUpperCase(),
@@ -190,7 +190,7 @@ public abstract class BaseActionBean implements ActionBean {
 
     /**
      * Get the header style
-     * 
+     *
      * @return
      */
     public final String getHeaderStyle() {
@@ -211,7 +211,7 @@ public abstract class BaseActionBean implements ActionBean {
 
     /**
      * Get the contacts image style
-     * 
+     *
      * @return
      * @throws CarClubCodeNotFoundExceptionException
      * @throws CarClubWebSiteURLNotFoundExceptionException
@@ -224,7 +224,7 @@ public abstract class BaseActionBean implements ActionBean {
 
     /**
      * Check if action bean it has validation field errors
-     * 
+     *
      * @return
      */
     public final boolean getFieldErrors() {
