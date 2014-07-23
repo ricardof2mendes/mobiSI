@@ -22,6 +22,18 @@
 	
   	<c:choose>
 	<c:when test="${actionBean.newDriverVersion}">
+	
+	<style>
+		.errors {
+			border: 0px -1px 1px rgba(0, 0, 0, 0.5) !important;
+			background: #f09000 url(../img/info.png) no-repeat top left !important;
+		}
+		.globalErrors .errors li {
+			color: #FFF;
+			text-shadow: 0px -1px 1px rgba(0, 0, 0, 0.5);
+		}
+	</style>
+	
 	<!-- State variable -->
 	<span id="state" class="hidden">${actionBean.current.state}</span>
 	<article id="statePooling" class="${actionBean.current.state != 'WAIT_OBS_IMMEDIATE' ? 'hidden' : ''} currentTrip">
