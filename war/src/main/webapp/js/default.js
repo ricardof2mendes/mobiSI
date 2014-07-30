@@ -38,14 +38,14 @@ $(document).ready(function() {
 		e.preventDefault();
 		$('#menu').toggle();
 	});
-	
+
 	$('.menuBack').on('click', function(e) {
 		e.preventDefault();
 		window.history.back();
 	});
 	
 	/**
-	 * Body with white backgroud
+	 * Body with white background
 	 */
 	if($('.bodyWhite').length > 0) {
 		$('body').addClass('noBackground');

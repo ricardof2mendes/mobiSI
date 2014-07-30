@@ -346,6 +346,19 @@ form.loginForm > div > input  {
 }
 
 .menuBack {
+	width: 30px;
+	height: 30px;
+	border: 1px solid rgba(0, 0, 0, 0.3);
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	float: left;
+	margin-top: 7px;
+	margin-left: 10px;
+	background-color: transparent;
+	background-position: top left;
+	background-repeat: repeat-x;
+	background-size: 28px 28px;
 	background-image: url(../img/back.png);
 }
 
