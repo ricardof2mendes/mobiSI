@@ -345,6 +345,10 @@ form.loginForm > div > input  {
 	background-size: 28px 28px;
 }
 
+.menuBack {
+	background-image: url(../img/back.png);
+}
+
 .alertBtn,
 .linkBtn {
 	display: block;

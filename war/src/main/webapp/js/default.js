@@ -39,6 +39,11 @@ $(document).ready(function() {
 		$('#menu').toggle();
 	});
 	
+	$('.menuBack').on('click', function(e) {
+		e.preventDefault();
+		window.history.back();
+	});
+	
 	/**
 	 * Body with white backgroud
 	 */
