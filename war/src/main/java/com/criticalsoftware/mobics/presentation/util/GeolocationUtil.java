@@ -51,29 +51,37 @@ public class GeolocationUtil {
 
     private static String getFormattedAddress(JSONObject jsonObject){
         String result = null;
-        
+
         if(jsonObject != null && jsonObject.containsKey("address")){
             result = "";
             JSONObject address = (JSONObject) jsonObject.get("address");
             if (address.containsKey("road")) {
                 result += address.get("road").toString();
             }
-            
+
+            if (result.isEmpty() && address.containsKey("path")) {
+                result += address.get("path").toString();
+            }
+
+            if (result.isEmpty() && address.containsKey("cycleway")) {
+                result += address.get("cycleway").toString();
+            }
+
             if (address.containsKey("house_number")) {
                 if(result.isEmpty() == false){
                     result += " ";
                 }
                 result += address.get("house_number").toString();
             }
-            
+
         }
-        
+
         return result;
     }
-    
+
     /**
      * Get the full address name
-     * 
+     *
      * @param latitude
      * @param longitude
      * @return address string
