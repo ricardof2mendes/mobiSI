@@ -216,6 +216,14 @@
 
                     <li class="detail white">
 						<span>
+							<fmt:message key="trip.detail.price.reserved.per.minute"/>
+						</span>
+						<span>
+							<mobi:formatMobics value="${actionBean.current.carDTO.priceReservedPerMinute}" type="currencySymbol" />
+						</span>
+                    </li>
+                    <li class="detail white">
+						<span>
 							<fmt:message key="trip.detail.price.booked.per.minute"/>
 						</span>
 						<span>
@@ -514,6 +522,14 @@
 					</c:choose>
 
 
+                    <li class="detail white">
+						<span>
+							<fmt:message key="trip.detail.price.booked.per.minute"/>
+						</span>
+						<span>
+							<mobi:formatMobics value="${actionBean.current.carDTO.priceReservedPerMinute}" type="currencySymbol" />
+						</span>
+                    </li>
                     <li class="detail white">
 						<span>
 							<fmt:message key="trip.detail.price.booked.per.minute"/>

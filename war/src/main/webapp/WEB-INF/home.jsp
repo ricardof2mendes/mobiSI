@@ -30,7 +30,7 @@
 					</li>
 					<li class="bookAdvance">
 						<!--<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.HomeActionBean" event="bookInAdvance">-->
-						<span style="text-align:left; padding-left: 45px;">
+						<span style="text-align:left; padding-left: 45px; width:100%">
 							<fmt:message key="book.advance.title"/>
 						</span>							
 						<!--</stripes:link>-->

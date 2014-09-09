@@ -223,6 +223,14 @@
 				<ul>
 					<li class="detail white">
 						<span>
+							<fmt:message key="trip.detail.price.reserved.per.minute"/>
+						</span>
+						<span>
+							<mobi:formatMobics value="${actionBean.trip.car.priceReservedPerMinute}" type="currencySymbol" />
+						</span>
+					</li>				
+					<li class="detail white">
+						<span>
 							<fmt:message key="trip.detail.price.booked.per.minute"/>
 						</span>
 						<span>

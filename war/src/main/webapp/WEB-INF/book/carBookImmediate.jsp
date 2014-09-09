@@ -61,6 +61,14 @@
 					</c:if>
                     <li class="detail">
 						<span>
+							<fmt:message key="trip.detail.price.reserved.per.minute"/>
+						</span>
+						<span>
+							<mobi:formatMobics value="${actionBean.car.priceReservedPerMinute}" type="currencySymbol" />
+						</span>
+                    </li>  					
+                    <li class="detail">
+						<span>
 							<fmt:message key="trip.detail.price.booked.per.minute"/>
 						</span>
 						<span>

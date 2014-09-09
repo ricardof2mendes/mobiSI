@@ -59,6 +59,14 @@
                     </c:choose>
                     <li class="detail">
 						<span>
+							<fmt:message key="car.details.price.locked"/>
+						</span>
+						<span>
+							<mobi:formatMobics value="${actionBean.next.car.priceReservedPerMinute}" type="currencyHour" />
+						</span>
+                    </li>                    
+                    <li class="detail">
+						<span>
 							<fmt:message key="car.details.price.use"/>
 						</span>
 						<span>
