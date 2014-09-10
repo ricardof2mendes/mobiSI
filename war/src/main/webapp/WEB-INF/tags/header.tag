@@ -3,7 +3,7 @@
 <%@attribute name="title" required="true" %>
 
 <header class="${actionBean.headerStyle}">
-	<a href="#" class="menuBack"></a>
+	<a href="javascript:window.history.back();" class="menuBack"></a>
 	<a href="#" class="menuBtn"></a>	
 	<h1>${title}</h1>
 </header>
