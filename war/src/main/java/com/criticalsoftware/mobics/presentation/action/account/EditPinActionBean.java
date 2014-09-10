@@ -21,8 +21,13 @@ import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.LocalizableMessage;
 import net.sourceforge.stripes.action.RedirectResolution;
 import net.sourceforge.stripes.action.Resolution;
+import net.sourceforge.stripes.validation.LocalizableError;
 import net.sourceforge.stripes.validation.Validate;
+import net.sourceforge.stripes.validation.ValidationErrors;
+import net.sourceforge.stripes.validation.ValidationMethod;
+import net.sourceforge.stripes.validation.ValidationState;
 
+import com.criticalsoftware.mobics.presentation.action.BaseActionBean;
 import com.criticalsoftware.mobics.presentation.security.AuthenticationUtil;
 import com.criticalsoftware.mobics.presentation.security.MobiCSSecure;
 import com.criticalsoftware.mobics.presentation.util.Configuration;
@@ -37,13 +42,18 @@ import com.criticalsoftware.mobics.proxy.customer.InvalidLoginExceptionException
  * @version $Revision: $
  */
 @MobiCSSecure
-public class EditPinActionBean extends AskPinActionBean {
+public class EditPinActionBean extends BaseActionBean {
 
     @Validate(required = true, on = "saveData", minlength = 4, maxlength = 4)
     private String newPin;
 
     @Validate(required = true, on = "saveData", minlength = 4, maxlength = 4, expression = "this == newPin")
     private String pinConfirm;
+    
+    
+    @Validate(required = true, on = { "data" })
+    private String password;
+
 
     /**
      * Account page
@@ -53,7 +63,7 @@ public class EditPinActionBean extends AskPinActionBean {
     @DefaultHandler
     @DontValidate
     public Resolution main() {
-        return new ForwardResolution("/WEB-INF/account/askPin.jsp");
+        return new ForwardResolution("/WEB-INF/account/askPassword.jsp");
     }
 
     /**
@@ -115,5 +125,27 @@ public class EditPinActionBean extends AskPinActionBean {
     public void setPinConfirm(String emailConfirm) {
         this.pinConfirm = emailConfirm;
     }
+    
+    @ValidationMethod(when = ValidationState.NO_ERRORS, on = "data")
+    public void validation(ValidationErrors errors) throws RemoteException, CustomerNotFoundExceptionException,
+            UnsupportedEncodingException {
 
+        CustomerWSServiceStub customerWSServiceStub = new CustomerWSServiceStub(
+                Configuration.INSTANCE.getCustomerEndpoint());
+        customerWSServiceStub._getServiceClient().addHeader(
+                AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
+                        .getPassword()));
+        String s = getContext().getUser().getPassword();
+        if (getContext().getUser().getPassword().equals( password ) == false) {
+            errors.add("password", new LocalizableError("account.security.check.password.invalid"));
+        }
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }
