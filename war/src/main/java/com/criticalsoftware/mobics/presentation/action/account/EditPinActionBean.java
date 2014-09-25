@@ -34,6 +34,7 @@ import com.criticalsoftware.mobics.presentation.util.Configuration;
 import com.criticalsoftware.mobics.proxy.customer.CustomerNotFoundExceptionException;
 import com.criticalsoftware.mobics.proxy.customer.CustomerWSServiceStub;
 import com.criticalsoftware.mobics.proxy.customer.InvalidLoginExceptionException;
+import com.criticalsoftware.mobics.proxy.customer.InvalidPinExceptionException;
 
 /**
  * Account action bean
@@ -84,7 +85,7 @@ public class EditPinActionBean extends BaseActionBean {
      * @throws InvalidLoginExceptionException
      * @throws UnsupportedEncodingException
      */
-    public Resolution saveData() throws RemoteException, InvalidLoginExceptionException, UnsupportedEncodingException {
+    public Resolution saveData() throws RemoteException, InvalidLoginExceptionException, InvalidPinExceptionException, UnsupportedEncodingException {
 
         CustomerWSServiceStub customerWSServiceStub = new CustomerWSServiceStub(
                 Configuration.INSTANCE.getCustomerEndpoint());
