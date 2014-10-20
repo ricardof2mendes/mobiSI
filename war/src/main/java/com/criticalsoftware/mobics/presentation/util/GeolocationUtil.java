@@ -42,8 +42,8 @@ public class GeolocationUtil {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GeolocationUtil.class);
 
-    private static final String GEOLOCATION_URL = "http://{0}/reverse?format=json&lat={1}&lon={2}&addressdetails=1";
-    private static final String SEARCH_URL = "http://{0}/search?format=json&q={1}&countrycodes={2}&addressdetails=1&limit={3}";
+    private static final String GEOLOCATION_URL = "http://{0}/reverse?format=json&lat={1}&lon={2}&zoom=17&addressdetails=1";
+    private static final String SEARCH_URL = "http://{0}/search?format=json&q={1}&countrycodes={2}&zoom=17&addressdetails=1&limit={3}";
 
     private static final String DISPLAY_NAME = "display_name";
     private static final String LATITUDE_NAME = "lat";
