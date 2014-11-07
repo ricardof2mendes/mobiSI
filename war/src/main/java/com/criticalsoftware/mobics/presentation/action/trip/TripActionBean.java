@@ -76,6 +76,9 @@ public class TripActionBean extends BaseActionBean {
 
     @Validate(required = true, on = "finish")
     private Boolean successOp;
+    
+    @Validate(required = true, on = "finish")
+    private Boolean isClosed;    
 
     @Validate(required = true, on = "finish")
     private Boolean keysNotReturned;
@@ -223,9 +226,17 @@ public class TripActionBean extends BaseActionBean {
         Resolution resolution = new RedirectResolution(this.getClass()).flash(this);
         if (successOp) {
             if (unlockOp != null) {
-                getContext().getMessages().add(new LocalizableMessage("current.trip.unlock.car.message"));
+                if (!isClosed) {
+                    getContext().getMessages().add(new LocalizableMessage("current.trip.unlock.car.message"));
+                }else {
+                    getContext().getMessages().add(new LocalizableMessage("trip.detail.unlock_sucess"));
+                }
             } else {
-                getContext().getMessages().add(new LocalizableMessage("current.trip.end.trip.message"));
+                if (!isClosed) {
+                    getContext().getMessages().add(new LocalizableMessage("current.trip.end.trip.message"));
+                }else {
+                    getContext().getMessages().add(new LocalizableMessage("trip.detail.lock_sucess"));
+                }                
             }
         } else {
             if (unlockOp != null) {
@@ -283,6 +294,22 @@ public class TripActionBean extends BaseActionBean {
         CurrentTripDTO currentTripDTO = bookingWSServiceStub.getCurrentTripDetails();
 
         return new JavaScriptResolution(currentTripDTO);
+    }
+    
+    public Resolution getLastTrip() throws UnsupportedEncodingException, RemoteException,
+            BookingNotFoundExceptionException, CustomerNotFoundExceptionException,
+            com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException {
+
+        BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
+                Configuration.INSTANCE.getBookingEndpoint());
+        bookingWSServiceStub._getServiceClient().addHeader(
+                AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
+                        .getPassword()));
+        getContext().getResponse().setHeader("Stripes-Success", "OK");
+
+        TripDetailsDTO lastTripDTO = bookingWSServiceStub.getLastTripDetails();
+
+        return new JavaScriptResolution(lastTripDTO);
     }
 
     /**
@@ -487,6 +514,20 @@ public class TripActionBean extends BaseActionBean {
      */
     public void setSuccessOp(Boolean successOp) {
         this.successOp = successOp;
+    }
+
+    /**
+     * @return the isClosed
+     */
+    public Boolean getIsClosed() {
+        return isClosed;
+    }
+
+    /**
+     * @param isClosed the isClosed to set
+     */
+    public void setIsClosed(Boolean isClosed) {
+        this.isClosed = isClosed;
     }
 
     /**

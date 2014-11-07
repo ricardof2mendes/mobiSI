@@ -15,7 +15,7 @@
     <version>2.1.4</version>
 	
 	<properties>
-	  <backoffice-host>mobics.mobiag.com</backoffice-host>
+	  <backoffice-host>127.0.0.1:8080</backoffice-host>
   </properties>
 
 	<build>

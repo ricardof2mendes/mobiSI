@@ -3,6 +3,8 @@ var WAITING = 'WAIT_OBS_';
 var ERROR = 'OBS_ERROR';
 var IN_USE = 'IN_USE';
 var BOOKED = 'BOOKED';
+// car status
+var AVAILABLE = 'AVAILABLE'
 // unwanted zone
 var UNWANTED_ZONE = 'UNWANTED';
 // forbidden zone
@@ -554,6 +556,25 @@ $(document).ready(function() {
 		lockUnlockAndWait(url);
  	});
  	
+ 	// Unlock Last Trip (5 Minutes After Booking Closed)
+ 	$('#unlockLastTrip').on('click', function(e) {
+ 		e.preventDefault();
+        $('div.confirm2 > article section').each(function(){
+            $(this).hide();
+        });
+ 		// show message
+		$('#unlocking').show();
+		var url = {
+				timeout : UNLOCK_TIMEOUT_INTERVAL,
+ 				lockunlock: $(this).prop('href'), 
+ 				pooling :  CONTEXT_PATH + '/trip/Trip.action?getLastTrip=',
+ 				carState: AVAILABLE,
+ 				redirect: CONTEXT_PATH + '/trip/Trip.action?finish=&unlockOp=true&successOp='
+ 			};
+		
+		lockUnlockAndWait(url);
+ 	}); 	
+ 	
  	// End trip
  	$('#endTrip').on('click', function(e) {
  		e.preventDefault();
@@ -626,7 +647,23 @@ $(document).ready(function() {
 		lockUnlockAndWait(url);
  	});
  	
- 	
+ 	// Lock Last Trip (5 Minutes After Booking Closed)
+ 	$('#lockLastTrip').on('click', function(e) {
+ 		e.preventDefault();
+        $('div.confirm2 > article section').each(function(){
+            $(this).hide();
+        });
+		$('#locking').show();
+		var url = {
+				timeout : LOCK_TIMEOUT_INTERVAL,
+				lockunlock: $(this).prop('href'), 
+				pooling :  CONTEXT_PATH + '/trip/Trip.action?getLastTrip=', 
+				redirect: CONTEXT_PATH + '/trip/Trip.action?finish=&successOp=',
+				carState: BOOKED
+			};
+		lockUnlockAndWait(url);
+ 	});	
+ 	 	
  	// click on li to change checkbox
  	$('#check').on('click', function(){
  		$('#check input[type="checkbox"]').on('click', function(e){
@@ -660,24 +697,29 @@ function lockUnlockProcess(){
 				function(dataLU, textStatusLU, jqXHRLU){
 					if (jqXHRLU.getResponseHeader('Stripes-Success') === 'OK') {
 						var evaluated = eval(dataLU);	
-												
+						
 						if(evaluated == null || (urlLU.carState && urlLU.carState === evaluated.carState && evaluated.carState !== $('#carState').text())) {
 							clearInterval(timerVarLU); 
-							window.location.href = urlLU.redirect + 'true'  + '&keysNotReturned=false' + '&keysAlreadyReturned=false' + '&doorsAlreadyOpen=false' + '&doorsAlreadyClosed=false';										 			
+							window.location.href = urlLU.redirect + 'true' + '&isClosed=false' + '&keysNotReturned=false' + '&keysAlreadyReturned=false' + '&doorsAlreadyOpen=false' + '&doorsAlreadyClosed=false';										 			
 				 		}else if(evaluated.errorCode && evaluated.errorCode.value && evaluated.errorCode.value === 'KEY_NOT_RETURNED'){
 				 			clearInterval(timerVarLU); 
-							window.location.href = urlLU.redirect + 'false' + '&keysNotReturned=true' + '&keysAlreadyReturned=false' + '&doorsAlreadyOpen=false' + '&doorsAlreadyClosed=false';				
+							window.location.href = urlLU.redirect + 'false'  + '&isClosed=false' + '&keysNotReturned=true' + '&keysAlreadyReturned=false' + '&doorsAlreadyOpen=false' + '&doorsAlreadyClosed=false';				
 				 		}else if(evaluated.errorCode && evaluated.errorCode.value && evaluated.errorCode.value === 'KEY_ALREADY_RETURNED'){
 				 			clearInterval(timerVarLU); 
-							window.location.href = urlLU.redirect + 'false' + '&keysAlreadyReturned=true' + '&keysNotReturned=false' + '&doorsAlreadyOpen=false' + '&doorsAlreadyClosed=false';		
+							window.location.href = urlLU.redirect + 'false'  + '&isClosed=false' + '&keysAlreadyReturned=true' + '&keysNotReturned=false' + '&doorsAlreadyOpen=false' + '&doorsAlreadyClosed=false';		
 				 		}else if(evaluated.errorCode && evaluated.errorCode.value && evaluated.errorCode.value === 'DOORS_ALREADY_OPEN'){
 				 			clearInterval(timerVarLU); 
-							window.location.href = urlLU.redirect + 'false'  + '&keysNotReturned=false' + '&keysAlreadyReturned=false' + '&doorsAlreadyOpen=true' + '&doorsAlreadyClosed=false';		
+							window.location.href = urlLU.redirect + 'false' + '&isClosed=false' + '&keysNotReturned=false' + '&keysAlreadyReturned=false' + '&doorsAlreadyOpen=true' + '&doorsAlreadyClosed=false';		
 				 		}else if(evaluated.errorCode && evaluated.errorCode.value && evaluated.errorCode.value === 'DOORS_ALREADY_CLOSED'){
 				 			clearInterval(timerVarLU); 
-							window.location.href = urlLU.redirect + 'false'  + '&keysNotReturned=false' + '&keysAlreadyReturned=false' + '&doorsAlreadyOpen=false' + '&doorsAlreadyClosed=true';		
+							window.location.href = urlLU.redirect + 'false' + '&isClosed=false' + '&keysNotReturned=false' + '&keysAlreadyReturned=false' + '&doorsAlreadyOpen=false' + '&doorsAlreadyClosed=true';		
+				 		}else if(evaluated.errorCode && evaluated.errorCode.value && evaluated.errorCode.value === 'DOORS_OPENED'){
+				 			clearInterval(timerVarLU); 
+							window.location.href = urlLU.redirect + 'true' + '&isClosed=true' + '&keysNotReturned=false' + '&keysAlreadyReturned=false' + '&doorsAlreadyOpen=false' + '&doorsAlreadyClosed=false';		
+				 		}else if(evaluated.errorCode && evaluated.errorCode.value && evaluated.errorCode.value === 'DOORS_CLOSED'){
+				 			clearInterval(timerVarLU); 
+							window.location.href = urlLU.redirect + 'true' + '&isClosed=true' + '&keysNotReturned=false' + '&keysAlreadyReturned=false' + '&doorsAlreadyOpen=false' + '&doorsAlreadyClosed=false';		
 				 		}
-						
 						
 			        } else {
 			            console.log('An error has occurred or the user\'s session has expired!');
