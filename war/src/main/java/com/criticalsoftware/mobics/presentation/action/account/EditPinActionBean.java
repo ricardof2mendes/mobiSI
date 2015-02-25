@@ -34,6 +34,7 @@ import com.criticalsoftware.mobics.presentation.util.Configuration;
 import com.criticalsoftware.mobics.proxy.customer.CustomerNotFoundExceptionException;
 import com.criticalsoftware.mobics.proxy.customer.CustomerWSServiceStub;
 import com.criticalsoftware.mobics.proxy.customer.InvalidLoginExceptionException;
+import com.criticalsoftware.mobics.proxy.customer.InvalidPinExceptionException;
 
 /**
  * Account action bean
@@ -83,16 +84,18 @@ public class EditPinActionBean extends BaseActionBean {
      * 
      * @throws InvalidLoginExceptionException
      * @throws UnsupportedEncodingException
+     * @throws InvalidPinExceptionException 
      */
-    public Resolution saveData() throws RemoteException, InvalidLoginExceptionException, UnsupportedEncodingException {
+    public Resolution saveData() throws RemoteException, InvalidLoginExceptionException, UnsupportedEncodingException,
+            InvalidPinExceptionException {
 
         CustomerWSServiceStub customerWSServiceStub = new CustomerWSServiceStub(
                 Configuration.INSTANCE.getCustomerEndpoint());
         customerWSServiceStub._getServiceClient().addHeader(
                 AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
                         .getPassword()));
-        customerWSServiceStub.updateCustomerPin(getContext().getUser().getUsername(), AuthenticationUtil.encriptSHA(getContext().getUser()
-                .getPassword()), newPin);
+        customerWSServiceStub.updateCustomerPin(getContext().getUser().getUsername(),
+                AuthenticationUtil.encriptSHA(getContext().getUser().getPassword()), newPin);
 
         getContext().getMessages().add(new LocalizableMessage("account.authentication.edit.email.pin.success"));
         return new RedirectResolution(AccountActionBean.class, "authentication").flash(this);
