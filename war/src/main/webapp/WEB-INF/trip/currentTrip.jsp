@@ -187,7 +187,15 @@
 				<ul>
 					<li class="detail white">
 						<span>
-							<fmt:message key="current.trip.duration"/>
+							<fmt:message key="current.trip.standby.time"/>
+						</span>
+						<span>
+							<mobi:formatMobics value="${actionBean.current.bookingDuration}" type="time" />
+						</span>
+					</li>
+					<li class="detail white">
+						<span>
+							<fmt:message key="current.trip.use.time"/>
 						</span>
 						<span>
 							<mobi:formatMobics value="${actionBean.current.bookingDuration}" type="time" />
@@ -493,12 +501,28 @@
             <h2><fmt:message key="current.trip.details"/></h2>
 			<nav class="panel">
 				<ul>
-					<li class="detail white">
+					<%-- <li class="detail white">
 						<span>
 							<fmt:message key="current.trip.duration"/>
 						</span>
 						<span>
 							<mobi:formatMobics value="${actionBean.current.bookingDuration}" type="time" />
+						</span>
+					</li> --%>
+					<li class="detail white">
+						<span>
+							<fmt:message key="current.trip.standby.time" />
+						</span> 
+						<span> 
+							<mobi:formatMobics value="${actionBean.current.timeBooked}" type="time" />
+						</span>
+					</li>
+					<li class="detail white">
+						<span> 
+							<fmt:message key="current.trip.use.time" />
+						</span> 
+						<span> 
+							<mobi:formatMobics value="${actionBean.current.timeInUse}" type="time" />
 						</span>
 					</li>
 					

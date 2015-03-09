@@ -130,10 +130,26 @@
 											pattern="${applicationScope.configuration.dateTimePattern}"/>
 						</span>
 					</li>
-					<li class="detail white">
+					<%-- <li class="detail white">
 						<span><fmt:message key="trip.detail.duration"/></span>
 						<span>
 							<mobi:formatMobics value="${actionBean.trip.duration}" type="time"/>
+						</span>
+					</li> --%>
+					<li class="detail white">
+						<span>
+							<fmt:message key="current.trip.standby.time" />
+						</span> 
+						<span> 
+							<mobi:formatMobics value="${actionBean.trip.timeBooked}" type="time" />
+						</span>
+					</li>
+					<li class="detail white">
+						<span> 
+							<fmt:message key="current.trip.use.time" />
+						</span> 
+						<span> 
+							<mobi:formatMobics value="${actionBean.trip.timeInUse}" type="time" />
 						</span>
 					</li>
 				</ul>
