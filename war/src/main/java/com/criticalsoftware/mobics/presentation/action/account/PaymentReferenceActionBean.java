@@ -24,6 +24,7 @@ import net.sourceforge.stripes.validation.LocalizableError;
 
 import com.criticalsoftware.mobics.customer.CreditPurchasePaymentInfoDTO;
 import com.criticalsoftware.mobics.customer.CreditPurchasePaymentMethodEnum;
+import com.criticalsoftware.mobics.customer.PaymentTypeEnum;
 import com.criticalsoftware.mobics.presentation.action.BaseActionBean;
 import com.criticalsoftware.mobics.presentation.security.AuthenticationUtil;
 import com.criticalsoftware.mobics.presentation.security.MobiCSSecure;
@@ -44,6 +45,8 @@ public class PaymentReferenceActionBean extends BaseActionBean {
 
     private CreditPurchasePaymentInfoDTO creditPurchase;
 
+    private boolean isPrepaid;
+
     /**
      * @return
      * @throws UnsupportedEncodingException
@@ -55,8 +58,8 @@ public class PaymentReferenceActionBean extends BaseActionBean {
     @DefaultHandler
     @DontValidate
     public Resolution createPaymentReference() throws UnsupportedEncodingException, RemoteException,
-            OrganizationNotFoundExceptionException, CustomerNotFoundExceptionException,
-            CreditPurchaseExceptionException {
+    OrganizationNotFoundExceptionException, CustomerNotFoundExceptionException,
+    CreditPurchaseExceptionException {
 
         final CustomerWSServiceStub customerWSServiceStub = new CustomerWSServiceStub(
                 Configuration.INSTANCE.getCustomerEndpoint());
@@ -73,7 +76,30 @@ public class PaymentReferenceActionBean extends BaseActionBean {
             this.getContext().getValidationErrors().addGlobalError(new LocalizableError("credit.send.reference.error"));
         }
 
+        final PaymentTypeEnum paymentType = customerWSServiceStub.getCustomerDetails(
+                this.getContext().getLocale().getLanguage()).getPaymentType();
+
+        if (paymentType.equals(PaymentTypeEnum.POSTPAID_PENDING) || paymentType.equals(PaymentTypeEnum.PREPAID)) {
+            this.setIsPrepaid(true);
+        } else {
+            this.setIsPrepaid(false);
+        }
+
         return new ForwardResolution("/WEB-INF/account/account.jsp");
+    }
+
+    /**
+     * @return the isPrepaid
+     */
+    public boolean getIsPrepaid() {
+        return this.isPrepaid;
+    }
+
+    /**
+     * @param isPrepaid the isPrepaid to set
+     */
+    public void setIsPrepaid(final boolean isPrepaid) {
+        this.isPrepaid = isPrepaid;
     }
 
 }

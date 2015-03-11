@@ -190,7 +190,7 @@
 							<fmt:message key="current.trip.standby.time"/>
 						</span>
 						<span>
-							<mobi:formatMobics value="${actionBean.current.bookingDuration}" type="time" />
+							<mobi:formatMobics value="${actionBean.current.timeBooked}" type="time" />
 						</span>
 					</li>
 					<li class="detail white">
@@ -198,7 +198,7 @@
 							<fmt:message key="current.trip.use.time"/>
 						</span>
 						<span>
-							<mobi:formatMobics value="${actionBean.current.bookingDuration}" type="time" />
+							<mobi:formatMobics value="${actionBean.current.timeInUse}" type="time" />
 						</span>
 					</li>
 					

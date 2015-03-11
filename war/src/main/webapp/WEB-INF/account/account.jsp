@@ -21,12 +21,14 @@
 					</li>
 				</ul>
 			</nav>
-			<h2><fmt:message key="account.credit"/></h2>
-			<stripes:form beanclass="com.criticalsoftware.mobics.presentation.action.account.PaymentReferenceActionBean" method="post">
-				<section class="submit">
-					<stripes:submit name="createPaymentReference" class="submitBtn green"><fmt:message key="account.credit.buy"/></stripes:submit>
-				</section>
-			</stripes:form>
+			<c:if test="${actionBean.isPrepaid == true}">	
+				<h2><fmt:message key="account.credit"/></h2>
+				<stripes:form beanclass="com.criticalsoftware.mobics.presentation.action.account.PaymentReferenceActionBean" method="post">
+					<section class="submit">
+						<stripes:submit name="createPaymentReference" class="submitBtn green"><fmt:message key="account.credit.buy"/></stripes:submit>
+					</section>
+				</stripes:form>
+			</c:if>
 			<h2><fmt:message key="account.session"/></h2>
 			<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.LogoutActionBean" class="linkBtn red">
 				<fmt:message key="main.logout"/>
