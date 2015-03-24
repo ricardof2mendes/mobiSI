@@ -32,6 +32,7 @@ import com.criticalsoftware.mobics.presentation.util.Configuration;
 import com.criticalsoftware.mobics.proxy.customer.CreditPurchaseExceptionException;
 import com.criticalsoftware.mobics.proxy.customer.CustomerNotFoundExceptionException;
 import com.criticalsoftware.mobics.proxy.customer.CustomerWSServiceStub;
+import com.criticalsoftware.mobics.proxy.customer.EntityPaymentMethodNotFoundExceptionException;
 import com.criticalsoftware.mobics.proxy.customer.OrganizationNotFoundExceptionException;
 
 /**
@@ -54,12 +55,13 @@ public class PaymentReferenceActionBean extends BaseActionBean {
      * @throws OrganizationNotFoundExceptionException
      * @throws CustomerNotFoundExceptionException
      * @throws CreditPurchaseExceptionException
+     * @throws EntityPaymentMethodNotFoundExceptionException 
      */
     @DefaultHandler
     @DontValidate
     public Resolution createPaymentReference() throws UnsupportedEncodingException, RemoteException,
     OrganizationNotFoundExceptionException, CustomerNotFoundExceptionException,
-    CreditPurchaseExceptionException {
+    CreditPurchaseExceptionException, EntityPaymentMethodNotFoundExceptionException {
 
         final CustomerWSServiceStub customerWSServiceStub = new CustomerWSServiceStub(
                 Configuration.INSTANCE.getCustomerEndpoint());
