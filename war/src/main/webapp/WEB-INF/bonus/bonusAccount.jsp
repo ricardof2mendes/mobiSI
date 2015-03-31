@@ -3,6 +3,7 @@
 <c:set var="title" scope="page"><fmt:message key="bonus.account.title" /></c:set>
 
 <t:main title="${title}">
+	
 	<article>
         <section>
             <nav class="orderCriteria">
@@ -25,7 +26,7 @@
         </section>
         <div class="bottomShadow2"></div>
     </article>
-
+	
     <c:choose>
         <c:when test="${actionBean.orderBy == 'BALANCE'}">
             <!-- Balance -->
@@ -185,4 +186,17 @@
             </c:if>
         </c:otherwise>
     </c:choose>
+    <jsp:include page="/WEB-INF/common/message_error.jsp"/>
+    <c:if test="${actionBean.isPrepaid == true}">	
+		<article>
+			<section>
+				<%-- <h2><fmt:message key="account.credit"/></h2> --%>
+				<stripes:form beanclass="com.criticalsoftware.mobics.presentation.action.bonus.BonusAccountActionBean" method="post">
+					<section class="submit">
+				<stripes:submit name="createPaymentReference" class="submitBtn green"><fmt:message key="account.credit.buy"/></stripes:submit>
+			</section>
+		</stripes:form>
+			</section>
+		</article>
+	</c:if>
 </t:main>

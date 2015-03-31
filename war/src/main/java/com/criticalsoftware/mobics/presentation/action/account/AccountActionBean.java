@@ -20,7 +20,6 @@ import net.sourceforge.stripes.action.DontValidate;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.Resolution;
 
-import com.criticalsoftware.mobics.customer.PaymentTypeEnum;
 import com.criticalsoftware.mobics.presentation.action.BaseActionBean;
 import com.criticalsoftware.mobics.presentation.security.AuthenticationUtil;
 import com.criticalsoftware.mobics.presentation.security.MobiCSSecure;
@@ -38,8 +37,6 @@ import com.criticalsoftware.mobics.proxy.customer.InvalidEmailTokenExceptionExce
 @MobiCSSecure
 public class AccountActionBean extends BaseActionBean {
 
-    private boolean isPrepaid;
-
     /**
      * Account page
      *
@@ -56,14 +53,6 @@ public class AccountActionBean extends BaseActionBean {
         customerWSServiceStub._getServiceClient().addHeader(
                 AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this.getContext()
                         .getUser().getPassword()));
-        final PaymentTypeEnum paymentType = customerWSServiceStub.getCustomerDetails(
-                this.getContext().getLocale().getLanguage()).getPaymentType();
-
-        if (paymentType.equals(PaymentTypeEnum.POSTPAID_PENDING) || paymentType.equals(PaymentTypeEnum.PREPAID)) {
-            this.setIsPrepaid(true);
-        } else {
-            this.setIsPrepaid(false);
-        }
 
         return new ForwardResolution("/WEB-INF/account/account.jsp");
     }
@@ -91,7 +80,7 @@ public class AccountActionBean extends BaseActionBean {
      * @throws InvalidEmailTokenExceptionException
      */
     public boolean getMessage() throws RemoteException, CustomerNotFoundExceptionException,
-    UnsupportedEncodingException, InvalidEmailTokenExceptionException {
+            UnsupportedEncodingException, InvalidEmailTokenExceptionException {
 
         final CustomerWSServiceStub customerWSServiceStub = new CustomerWSServiceStub(
                 Configuration.INSTANCE.getCustomerEndpoint());
@@ -101,19 +90,4 @@ public class AccountActionBean extends BaseActionBean {
 
         return customerWSServiceStub.checkCustomerHasEmailToken();
     }
-
-    /**
-     * @return the isPrepaid
-     */
-    public boolean getIsPrepaid() {
-        return this.isPrepaid;
-    }
-
-    /**
-     * @param isPrepaid the isPrepaid to set
-     */
-    public void setIsPrepaid(final boolean isPrepaid) {
-        this.isPrepaid = isPrepaid;
-    }
-
 }
