@@ -79,7 +79,7 @@ public class RecentActivitiesActionBean extends BaseActionBean {
     private IncidentForCustomerDTO incident;
 
     private CreditPurchaseDetailsDTO credit;
-    
+
     private BonusDetailsDTO bonus;
 
     @Validate(
@@ -105,21 +105,21 @@ public class RecentActivitiesActionBean extends BaseActionBean {
     @DefaultHandler
     @DontValidate
     public Resolution main() throws RemoteException, UnsupportedEncodingException,
-                                    com.criticalsoftware.mobics.proxy.customer.CustomerNotFoundExceptionException {
+    com.criticalsoftware.mobics.proxy.customer.CustomerNotFoundExceptionException {
 
-        CustomerWSServiceStub customerWSServiceStub = new CustomerWSServiceStub(
+        final CustomerWSServiceStub customerWSServiceStub = new CustomerWSServiceStub(
                 Configuration.INSTANCE.getCustomerEndpoint());
         customerWSServiceStub._getServiceClient().addHeader(
-                AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
+                AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this.getContext().getUser()
                         .getPassword()));
 
         // TODO add to configuration
-        Calendar thisMonth = Calendar.getInstance();
-        Calendar lastMonth = Calendar.getInstance();
+        final Calendar thisMonth = Calendar.getInstance();
+        final Calendar lastMonth = Calendar.getInstance();
         lastMonth.add(Calendar.MONTH, -1);
 
-        recents = customerWSServiceStub.getRecentActivities(lastMonth.getTimeInMillis(), thisMonth.getTimeInMillis(),
-                                                            CustomerActivityEnum.ALL.getValue(), 0, Integer.MAX_VALUE);
+        this.recents = customerWSServiceStub.getRecentActivities(lastMonth.getTimeInMillis(), thisMonth.getTimeInMillis(),
+                CustomerActivityEnum.ALL.getValue(), 0, Integer.MAX_VALUE);
 
         return new ForwardResolution("/WEB-INF/recent/recentActivities.jsp");
     }
@@ -131,16 +131,16 @@ public class RecentActivitiesActionBean extends BaseActionBean {
      * @throws RemoteException
      * @throws UnsupportedEncodingException
      * @throws BookingNotFoundExceptionException
-     *
+     * @throws CustomerNotFoundExceptionException
      */
     public Resolution tripDetails() throws RemoteException, UnsupportedEncodingException,
-                                           BookingNotFoundExceptionException {
-        BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
+            BookingNotFoundExceptionException, CustomerNotFoundExceptionException {
+        final BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
                 Configuration.INSTANCE.getBookingEndpoint());
         bookingWSServiceStub._getServiceClient().addHeader(
-                AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
+                AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this.getContext().getUser()
                         .getPassword()));
-        trip = bookingWSServiceStub.getTripDetails(activityCode);
+        this.trip = bookingWSServiceStub.getTripDetails(this.activityCode);
 
         return new ForwardResolution("/WEB-INF/recent/tripDetails.jsp");
     }
@@ -152,20 +152,20 @@ public class RecentActivitiesActionBean extends BaseActionBean {
      * @throws RemoteException
      * @throws UnsupportedEncodingException
      * @throws BookingNotFoundExceptionException
-     *
+     * @throws CustomerNotFoundExceptionException
      */
     public Resolution advanceBookingDetails() throws RemoteException, UnsupportedEncodingException,
-                                                     BookingNotFoundExceptionException {
-        BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
+            BookingNotFoundExceptionException, CustomerNotFoundExceptionException {
+        final BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
                 Configuration.INSTANCE.getBookingEndpoint());
         bookingWSServiceStub._getServiceClient().addHeader(
-                AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
+                AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this.getContext().getUser()
                         .getPassword()));
 
-        trip = bookingWSServiceStub.getTripDetails(activityCode);
+        this.trip = bookingWSServiceStub.getTripDetails(this.activityCode);
         Resolution resolution = new ForwardResolution("/WEB-INF/recent/advanceBookingDetails.jsp");
 
-        if (BookingState.IN_USE.name().equals(trip.getState())) {
+        if (BookingState.IN_USE.name().equals(this.trip.getState())) {
             resolution = new RedirectResolution(TripActionBean.class);
         }
 
@@ -179,17 +179,17 @@ public class RecentActivitiesActionBean extends BaseActionBean {
      * @throws RemoteException
      * @throws UnsupportedEncodingException
      * @throws BookingNotFoundExceptionException
-     *
+     * @throws CustomerNotFoundExceptionException
      */
     public Resolution hasCancelCost() throws RemoteException, UnsupportedEncodingException,
-                                             BookingNotFoundExceptionException {
-        BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
+            BookingNotFoundExceptionException, CustomerNotFoundExceptionException {
+        final BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
                 Configuration.INSTANCE.getBookingEndpoint());
         bookingWSServiceStub._getServiceClient().addHeader(
-                AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
+                AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this.getContext().getUser()
                         .getPassword()));
-        getContext().getResponse().setHeader("Stripes-Success", "OK");
-        return new JavaScriptResolution(bookingWSServiceStub.getTripDetails(activityCode));
+        this.getContext().getResponse().setHeader("Stripes-Success", "OK");
+        return new JavaScriptResolution(bookingWSServiceStub.getTripDetails(this.activityCode));
     }
 
     /**
@@ -206,23 +206,23 @@ public class RecentActivitiesActionBean extends BaseActionBean {
      *
      */
     public Resolution cancelAdvanceBooking() throws RemoteException, UnsupportedEncodingException,
-                                                    BookingNotFoundExceptionException,
-                                                    CustomerNotFoundExceptionException,
-                                                    UnauthorizedCustomerExceptionException,
-                                                    com.criticalsoftware.mobics.proxy.booking.CustomerNotFoundExceptionException {
+    BookingNotFoundExceptionException,
+    CustomerNotFoundExceptionException,
+    UnauthorizedCustomerExceptionException,
+    com.criticalsoftware.mobics.proxy.booking.CustomerNotFoundExceptionException {
         Class<? extends BaseActionBean> clazz = this.getClass();
-        BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
+        final BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
                 Configuration.INSTANCE.getBookingEndpoint());
         bookingWSServiceStub._getServiceClient().addHeader(
-                AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
+                AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this.getContext().getUser()
                         .getPassword()));
 
         try {
-            bookingWSServiceStub.cancelAdvanceBooking(activityCode);
-            getContext().getMessages().add(new LocalizableMessage("trip.detail.advance.booking.cancel.success"));
-        } catch (BookingWrongStateExceptionException e) {
+            bookingWSServiceStub.cancelAdvanceBooking(this.activityCode);
+            this.getContext().getMessages().add(new LocalizableMessage("trip.detail.advance.booking.cancel.success"));
+        } catch (final BookingWrongStateExceptionException e) {
             LOGGER.debug("Could not cancel advance booking. Booking is in wrong state to cancel!");
-            getContext().getValidationErrors().addGlobalError(
+            this.getContext().getValidationErrors().addGlobalError(
                     new LocalizableError("trip.detail.advance.booking.cancel.unsuccess"));
             clazz = TripActionBean.class;
         }
@@ -236,23 +236,25 @@ public class RecentActivitiesActionBean extends BaseActionBean {
      * @return booking state
      * @throws RemoteException
      * @throws UnsupportedEncodingException
+     * @throws CustomerNotFoundExceptionException
      */
-    public Resolution getState() throws RemoteException, UnsupportedEncodingException {
-        BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
+    public Resolution getState() throws RemoteException, UnsupportedEncodingException,
+            CustomerNotFoundExceptionException {
+        final BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
                 Configuration.INSTANCE.getBookingEndpoint());
         bookingWSServiceStub._getServiceClient().addHeader(
-                AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
+                AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this.getContext().getUser()
                         .getPassword()));
 
         try {
-            trip = bookingWSServiceStub.getTripDetails(activityCode);
-        } catch (BookingNotFoundExceptionException e) {
+            this.trip = bookingWSServiceStub.getTripDetails(this.activityCode);
+        } catch (final BookingNotFoundExceptionException e) {
             LOGGER.error("Booking not found", e);
         }
 
-        getContext().getResponse().setHeader("Stripes-Success", "OK");
+        this.getContext().getResponse().setHeader("Stripes-Success", "OK");
 
-        return new JavaScriptResolution(trip == null ? null : trip.getState());
+        return new JavaScriptResolution(this.trip == null ? null : this.trip.getState());
     }
 
     /**
@@ -263,15 +265,15 @@ public class RecentActivitiesActionBean extends BaseActionBean {
      *
      */
     public Resolution showMessage() throws RemoteException, UnsupportedEncodingException,
-                                           CustomerNotFoundExceptionException {
-        Map<String, String> params = new HashMap<String, String>();
+    CustomerNotFoundExceptionException {
+        final Map<String, String> params = new HashMap<String, String>();
         params.put("advanceBookingDetails", "");
-        params.put("activityCode", activityCode);
+        params.put("activityCode", this.activityCode);
 
-        if (Boolean.parseBoolean(extended)) {
-            getContext().getMessages().add(new LocalizableMessage("trip.detail.advance.booking.edit.success"));
+        if (Boolean.parseBoolean(this.extended)) {
+            this.getContext().getMessages().add(new LocalizableMessage("trip.detail.advance.booking.edit.success"));
         } else {
-            getContext().getMessages().add(new LocalizableMessage("car.details.book.done"));
+            this.getContext().getMessages().add(new LocalizableMessage("car.details.book.done"));
         }
         return new RedirectResolution(this.getClass()).addParameters(params).flash(this);
     }
@@ -282,15 +284,15 @@ public class RecentActivitiesActionBean extends BaseActionBean {
      * @return streaming resolution
      */
     public Resolution incidentDetails() throws RemoteException, UnsupportedEncodingException,
-                                               EventNotFoundExceptionException,
-                                               com.criticalsoftware.mobics.proxy.customer.EventNotFoundExceptionException {
-        CustomerWSServiceStub customerWSServiceStub = new CustomerWSServiceStub(
+    EventNotFoundExceptionException,
+    com.criticalsoftware.mobics.proxy.customer.EventNotFoundExceptionException {
+        final CustomerWSServiceStub customerWSServiceStub = new CustomerWSServiceStub(
                 Configuration.INSTANCE.getCustomerEndpoint());
         customerWSServiceStub._getServiceClient().addHeader(
-                AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
+                AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this.getContext().getUser()
                         .getPassword()));
-        incident = customerWSServiceStub.getIncidentDetailsForCustomer(
-                activityCode, getContext().getUser().getCustomerPreferencesDTO().getLanguage());
+        this.incident = customerWSServiceStub.getIncidentDetailsForCustomer(
+                this.activityCode, this.getContext().getUser().getCustomerPreferencesDTO().getLanguage());
 
         return new ForwardResolution("/WEB-INF/recent/incidentDetails.jsp");
     }
@@ -305,14 +307,14 @@ public class RecentActivitiesActionBean extends BaseActionBean {
      *
      */
     public Resolution interestDetails() throws RemoteException, UnsupportedEncodingException,
-                                               BookingInterestNotFoundExceptionException {
-        BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
+    BookingInterestNotFoundExceptionException {
+        final BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
                 Configuration.INSTANCE.getBookingEndpoint());
         bookingWSServiceStub._getServiceClient().addHeader(
-                AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
+                AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this.getContext().getUser()
                         .getPassword()));
 
-        booking = bookingWSServiceStub.getBookingInterest(activityCode);
+        this.booking = bookingWSServiceStub.getBookingInterest(this.activityCode);
 
         return new ForwardResolution("/WEB-INF/recent/detailBookingInterest.jsp");
     }
@@ -327,19 +329,19 @@ public class RecentActivitiesActionBean extends BaseActionBean {
      * @throws CreditPurchaseExceptionException
      */
     public Resolution creditDetails() throws RemoteException, UnsupportedEncodingException,
-                                             com.criticalsoftware.mobics.proxy.customer.CustomerNotFoundExceptionException,
-                                             CreditPurchaseExceptionException {
-        CustomerWSServiceStub customerWSServiceStub = new CustomerWSServiceStub(
+    com.criticalsoftware.mobics.proxy.customer.CustomerNotFoundExceptionException,
+    CreditPurchaseExceptionException {
+        final CustomerWSServiceStub customerWSServiceStub = new CustomerWSServiceStub(
                 Configuration.INSTANCE.getCustomerEndpoint());
         customerWSServiceStub._getServiceClient().addHeader(
-                AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
+                AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this.getContext().getUser()
                         .getPassword()));
 
-        credit = customerWSServiceStub.getCreditDetailsByOrderReference(activityCode);
+        this.credit = customerWSServiceStub.getCreditDetailsByOrderReference(this.activityCode);
 
         return new ForwardResolution("/WEB-INF/recent/creditDetails.jsp");
     }
-    
+
     /**
      * Credit details
      *
@@ -347,21 +349,21 @@ public class RecentActivitiesActionBean extends BaseActionBean {
      * @throws RemoteException
      * @throws UnsupportedEncodingException
      * @throws com.criticalsoftware.mobics.proxy.customer.CustomerNotFoundExceptionException
-     * @throws PromotionCodeNotFoundExceptionException 
-     * @throws PromotionalCodeCodeNotFoundExceptionException 
-     * @throws PromotionalCodeCodeInvalidExceptionException 
+     * @throws PromotionCodeNotFoundExceptionException
+     * @throws PromotionalCodeCodeNotFoundExceptionException
+     * @throws PromotionalCodeCodeInvalidExceptionException
      */
     public Resolution bonusDetails() throws RemoteException, UnsupportedEncodingException,
-                                             com.criticalsoftware.mobics.proxy.customer.CustomerNotFoundExceptionException,
-                                             PromotionalCodeCodeInvalidExceptionException, PromotionalCodeCodeNotFoundExceptionException {
-        CustomerWSServiceStub customerWSServiceStub = new CustomerWSServiceStub(
+    com.criticalsoftware.mobics.proxy.customer.CustomerNotFoundExceptionException,
+    PromotionalCodeCodeInvalidExceptionException, PromotionalCodeCodeNotFoundExceptionException {
+        final CustomerWSServiceStub customerWSServiceStub = new CustomerWSServiceStub(
                 Configuration.INSTANCE.getCustomerEndpoint());
         customerWSServiceStub._getServiceClient().addHeader(
-                AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
+                AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this.getContext().getUser()
                         .getPassword()));
 
-        bonus = customerWSServiceStub.getBonusDetail(activityCode);
-        
+        this.bonus = customerWSServiceStub.getBonusDetail(this.activityCode);
+
         return new ForwardResolution("/WEB-INF/recent/bonusDetails.jsp");
     }
 
@@ -379,15 +381,15 @@ public class RecentActivitiesActionBean extends BaseActionBean {
      *
      */
     public Resolution cancelInterest() throws RemoteException, UnsupportedEncodingException {
-        BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
+        final BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
                 Configuration.INSTANCE.getBookingEndpoint());
         bookingWSServiceStub._getServiceClient().addHeader(
-                AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
+                AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this.getContext().getUser()
                         .getPassword()));
 
-        bookingWSServiceStub.removeBookingInterest(activityCode);
+        bookingWSServiceStub.removeBookingInterest(this.activityCode);
 
-        getContext().getMessages().add(new LocalizableMessage("trip.detail.advance.booking.cancel.success"));
+        this.getContext().getMessages().add(new LocalizableMessage("trip.detail.advance.booking.cancel.success"));
 
         return new RedirectResolution(this.getClass()).flash(this);
     }
@@ -399,9 +401,9 @@ public class RecentActivitiesActionBean extends BaseActionBean {
      */
     public String getStartLocation() {
         String location = new LocalizableMessage("application.value.not.available")
-                .getMessage(getContext().getLocale());
-        if (trip.getStartLatitude() != null && trip.getStartLongitude() != null) {
-            location = GeolocationUtil.getAddressFromCoordinates(trip.getStartLatitude().toString(), trip
+        .getMessage(this.getContext().getLocale());
+        if ((this.trip.getStartLatitude() != null) && (this.trip.getStartLongitude() != null)) {
+            location = GeolocationUtil.getAddressFromCoordinates(this.trip.getStartLatitude().toString(), this.trip
                     .getStartLongitude().toString());
         }
         return location;
@@ -414,9 +416,9 @@ public class RecentActivitiesActionBean extends BaseActionBean {
      */
     public String getEndLocation() {
         String location = new LocalizableMessage("application.value.not.available")
-                .getMessage(getContext().getLocale());
-        if (trip.getEndtLatitude() != null && trip.getEndLongitude() != null) {
-            location = GeolocationUtil.getAddressFromCoordinates(trip.getEndtLatitude().toString(), trip
+        .getMessage(this.getContext().getLocale());
+        if ((this.trip.getEndtLatitude() != null) && (this.trip.getEndLongitude() != null)) {
+            location = GeolocationUtil.getAddressFromCoordinates(this.trip.getEndtLatitude().toString(), this.trip
                     .getEndLongitude().toString());
         }
         return location;
@@ -426,13 +428,13 @@ public class RecentActivitiesActionBean extends BaseActionBean {
      * @return the activityCode
      */
     public String getActivityCode() {
-        return activityCode;
+        return this.activityCode;
     }
 
     /**
      * @param activityCode the activityCode to set
      */
-    public void setActivityCode(String activityCode) {
+    public void setActivityCode(final String activityCode) {
         this.activityCode = activityCode;
     }
 
@@ -440,55 +442,55 @@ public class RecentActivitiesActionBean extends BaseActionBean {
      * @return the recents
      */
     public CustomerActivityListDTO[] getRecents() {
-        return recents;
+        return this.recents;
     }
 
     /**
      * @return the trip
      */
     public TripDetailsDTO getTrip() {
-        return trip;
+        return this.trip;
     }
 
     /**
      * @return the booking
      */
     public BookingInterestDTO getBooking() {
-        return booking;
+        return this.booking;
     }
 
     /**
      * @return the extended
      */
     public String getExtended() {
-        return extended;
+        return this.extended;
     }
 
     /**
      * @param extended the extended to set
      */
-    public void setExtended(String extended) {
+    public void setExtended(final String extended) {
         this.extended = extended;
     }
 
     public IncidentForCustomerDTO getIncident() {
-        return incident;
+        return this.incident;
     }
 
     public String getActivityType() {
-        return activityType;
+        return this.activityType;
     }
 
-    public void setActivityType(String activityType) {
+    public void setActivityType(final String activityType) {
         this.activityType = activityType;
     }
 
     public CreditPurchaseDetailsDTO getCredit() {
-        return credit;
+        return this.credit;
     }
 
     public BonusDetailsDTO getBonus() {
-        return bonus;
+        return this.bonus;
     }
 
 }

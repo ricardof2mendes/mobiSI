@@ -12,12 +12,12 @@
  */
 package com.criticalsoftware.mobics.presentation.action.booking;
 
+import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
+import java.rmi.RemoteException;
+
 import javax.activation.DataHandler;
 
-import com.criticalsoftware.mobics.miscellaneous.ChargingStationDTO;
-import com.criticalsoftware.mobics.miscellaneous.ChargingStationSimpleDTO;
-import com.criticalsoftware.mobics.proxy.miscellaneous.MiscellaneousWSService;
-import com.criticalsoftware.mobics.proxy.miscellaneous.MiscellaneousWSServiceStub;
 import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.StreamingResolution;
@@ -29,21 +29,20 @@ import net.sourceforge.stripes.validation.ValidationErrors;
 import net.sourceforge.stripes.validation.ValidationMethod;
 import net.sourceforge.stripes.validation.ValidationState;
 
-import org.apache.axis2.AxisFault;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.criticalsoftware.mobics.fleet.CarDTO;
+import com.criticalsoftware.mobics.miscellaneous.ChargingStationDTO;
+import com.criticalsoftware.mobics.miscellaneous.ChargingStationSimpleDTO;
 import com.criticalsoftware.mobics.presentation.action.BaseActionBean;
 import com.criticalsoftware.mobics.presentation.extension.ZoneDTOTypeConverter;
 import com.criticalsoftware.mobics.presentation.security.AuthenticationUtil;
 import com.criticalsoftware.mobics.presentation.util.Configuration;
 import com.criticalsoftware.mobics.proxy.fleet.FleetWSServiceStub;
 import com.criticalsoftware.mobics.proxy.fleet.IOExceptionException;
-
-import java.io.UnsupportedEncodingException;
-import java.math.BigDecimal;
-import java.rmi.RemoteException;
+import com.criticalsoftware.mobics.proxy.miscellaneous.MiscellaneousWSService;
+import com.criticalsoftware.mobics.proxy.miscellaneous.MiscellaneousWSServiceStub;
 
 /**
  * @author ltiago
@@ -54,8 +53,8 @@ public abstract class BookingActionBean extends BaseActionBean {
     protected final Logger LOG = LoggerFactory.getLogger(BookingActionBean.class);
 
     @ValidateNestedProperties({ @Validate(field = "licensePlate"), @Validate(field = "carBrandName"),
-            @Validate(field = "carModelName"), @Validate(field = "fuelType.name"), @Validate(field = "range"),
-            @Validate(field = "zones", converter = ZoneDTOTypeConverter.class) })
+        @Validate(field = "carModelName"), @Validate(field = "fuelType.name"), @Validate(field = "range"),
+        @Validate(field = "zones", converter = ZoneDTOTypeConverter.class) })
     protected CarDTO car;
 
     @Validate(required = true, on = { "getCarImage", "carLocation", "licensePlateBook", "licensePlateBookFromMessages",
@@ -73,27 +72,27 @@ public abstract class BookingActionBean extends BaseActionBean {
 
     @Validate(required = true, on = "chargingStation")
     protected Integer id;
-    
+
     @Validate
     protected Integer width = 58;
-     
+
     @Validate
     protected Integer height = 58;
 
     protected ChargingStationDTO station;
-    
+
     protected String stationAddress;
 
     /**
      * Show pin to user
-     * 
+     *
      * @return resolution page
      */
     public abstract Resolution showPin();
 
     /**
      * Book the specified car
-     * 
+     *
      * @return sucess or error page
      * @throws Exception
      */
@@ -101,7 +100,7 @@ public abstract class BookingActionBean extends BaseActionBean {
 
     /**
      * See car details
-     * 
+     *
      * @return
      * @throws Exception
      */
@@ -109,31 +108,31 @@ public abstract class BookingActionBean extends BaseActionBean {
 
     /**
      * Validate and load the car
-     * 
+     *
      * @throws RemoteException
      * @throws com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException
      * @throws UnsupportedEncodingException
      */
     @ValidationMethod(on = { "licensePlateBook", "licensePlateBookFromMessages", "showPin", "carDetails",
-            "licensePlateBookAdvance" }, when = ValidationState.NO_ERRORS, priority = 1)
-    public void validateLicensePlateCar(ValidationErrors errors) throws RemoteException,
-            com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException,
-            UnsupportedEncodingException {
-        FleetWSServiceStub fleetWSServiceStub = new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint());
+    "licensePlateBookAdvance" }, when = ValidationState.NO_ERRORS, priority = 1)
+    public void validateLicensePlateCar(final ValidationErrors errors) throws RemoteException,
+    com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException,
+    UnsupportedEncodingException {
+        final FleetWSServiceStub fleetWSServiceStub = new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint());
         fleetWSServiceStub._getServiceClient().addHeader(
-                AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
+                AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this.getContext().getUser()
                         .getPassword()));
 
-        car = fleetWSServiceStub.getCarDetails(licensePlate.toUpperCase(), latitude == null ? null : new BigDecimal(
-                latitude), longitude == null ? null : new BigDecimal(longitude));
-        if (car == null) {
+        this.car = fleetWSServiceStub.getCarDetails(this.licensePlate.toUpperCase(), this.latitude == null ? null : new BigDecimal(
+                this.latitude), this.longitude == null ? null : new BigDecimal(this.longitude));
+        if (this.car == null) {
             errors.addGlobalError(new LocalizableError("car.details.validation.car.not.available"));
         }
     }
 
     /**
      * Get the car image
-     * 
+     *
      * @return the image stream resolution
      * @throws RemoteException a jax-b webservice exception
      * @throws IOExceptionException a exception with car validation
@@ -141,14 +140,58 @@ public abstract class BookingActionBean extends BaseActionBean {
     public Resolution getCarImage() {
         Resolution resolution = null;
         try {
-            int w = this.getContext().getRetina() ? 2 * width : width;
-            int h = this.getContext().getRetina() ? 2 * height : height;
+            final int w = this.getContext().getRetina() ? 2 * this.width : this.width;
+            final int h = this.getContext().getRetina() ? 2 * this.height : this.height;
 
-            DataHandler handler = new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint()).getCarThumbnail(
-                    licensePlate, w, h);
+            final DataHandler handler = new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint()).getCarThumbnail(
+                    this.licensePlate, w, h);
             resolution = new StreamingResolution(handler.getContentType(), handler.getInputStream());
-        } catch (Exception e) {
-            LOG.warn("Could not load image", e.getMessage());
+        } catch (final Exception e) {
+            this.LOG.warn("Could not load image", e.getMessage());
+        }
+        return resolution;
+    }
+
+    /**
+     * Get the car intenal image
+     *
+     * @return the image stream resolution
+     * @throws RemoteException a jax-b webservice exception
+     * @throws IOExceptionException a exception with car validation
+     */
+    public Resolution getCarInternalImage() {
+        Resolution resolution = null;
+        try {
+            final int w = this.getContext().getRetina() ? 2 * this.width : this.width;
+            final int h = this.getContext().getRetina() ? 2 * this.height : this.height;
+
+            final DataHandler handler = new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint())
+                    .getCarInternalSketch(this.licensePlate, w, h);
+            resolution = new StreamingResolution(handler.getContentType(), handler.getInputStream());
+        } catch (final Exception e) {
+            this.LOG.warn("Could not load image", e.getMessage());
+        }
+        return resolution;
+    }
+
+    /**
+     * Get the car intenal image
+     *
+     * @return the image stream resolution
+     * @throws RemoteException a jax-b webservice exception
+     * @throws IOExceptionException a exception with car validation
+     */
+    public Resolution getCarExternalImage() {
+        Resolution resolution = null;
+        try {
+            final int w = this.getContext().getRetina() ? 2 * this.width : this.width;
+            final int h = this.getContext().getRetina() ? 2 * this.height : this.height;
+
+            final DataHandler handler = new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint())
+                    .getCarExternalSketch(this.licensePlate, w, h);
+            resolution = new StreamingResolution(handler.getContentType(), handler.getInputStream());
+        } catch (final Exception e) {
+            this.LOG.warn("Could not load image", e.getMessage());
         }
         return resolution;
     }
@@ -156,26 +199,26 @@ public abstract class BookingActionBean extends BaseActionBean {
     public Resolution basePrice(){
         return new ForwardResolution("/WEB-INF/common/price.jsp");
     }
-    
+
     private String getFullAdress(){
         String streetNumber = "";
-        if(station.getAddress().getNumber() != null && station.getAddress().getNumber().equals("-") == false ){
-            streetNumber = station.getAddress().getNumber() + ", ";
+        if((this.station.getAddress().getNumber() != null) && (this.station.getAddress().getNumber().equals("-") == false) ){
+            streetNumber = this.station.getAddress().getNumber() + ", ";
         }
-        
+
         String postalCode = "";
-        if(station.getAddress().getPostalCode() != null && station.getAddress().getPostalCode().equals("0000-000") == false){
-            postalCode = station.getAddress().getPostalCode() + ", ";
+        if((this.station.getAddress().getPostalCode() != null) && (this.station.getAddress().getPostalCode().equals("0000-000") == false)){
+            postalCode = this.station.getAddress().getPostalCode() + ", ";
         }
-        
-        String fullAddress = station.getAddress().getStreet() + ", " + streetNumber + postalCode + station.getAddress().getCity();
+
+        final String fullAddress = this.station.getAddress().getStreet() + ", " + streetNumber + postalCode + this.station.getAddress().getCity();
         return fullAddress;
     }
 
     public Resolution chargingStation() throws RemoteException {
-        MiscellaneousWSService mix = new MiscellaneousWSServiceStub(Configuration.INSTANCE.getMiscellaneousEnpoint());
-        station = mix.getMobiEChargingStationDetails(id);
-        stationAddress = getFullAdress();
+        final MiscellaneousWSService mix = new MiscellaneousWSServiceStub(Configuration.INSTANCE.getMiscellaneousEnpoint());
+        this.station = mix.getMobiEChargingStationDetails(this.id);
+        this.stationAddress = this.getFullAdress();
         return new ForwardResolution("/WEB-INF/common/chargingStations.jsp");
     }
 
@@ -186,9 +229,9 @@ public abstract class BookingActionBean extends BaseActionBean {
      * @throws RemoteException a jax-b webservice exception
      */
     public Resolution chargingStationsData() throws RemoteException {
-        MiscellaneousWSService mix = new MiscellaneousWSServiceStub(Configuration.INSTANCE.getMiscellaneousEnpoint());
-        ChargingStationSimpleDTO[] stations = mix.getMobiEChargingStations();
-        getContext().getResponse().setHeader("Stripes-Success", "OK");
+        final MiscellaneousWSService mix = new MiscellaneousWSServiceStub(Configuration.INSTANCE.getMiscellaneousEnpoint());
+        final ChargingStationSimpleDTO[] stations = mix.getMobiEChargingStations();
+        this.getContext().getResponse().setHeader("Stripes-Success", "OK");
         return new JavaScriptResolution(stations);
     }
 
@@ -196,13 +239,13 @@ public abstract class BookingActionBean extends BaseActionBean {
      * @return the car
      */
     public CarDTO getCar() {
-        return car;
+        return this.car;
     }
 
     /**
      * @param car the car to set
      */
-    public void setCar(CarDTO car) {
+    public void setCar(final CarDTO car) {
         this.car = car;
     }
 
@@ -210,13 +253,13 @@ public abstract class BookingActionBean extends BaseActionBean {
      * @return the licensePlate
      */
     public String getLicensePlate() {
-        return licensePlate;
+        return this.licensePlate;
     }
 
     /**
      * @param licensePlate the licensePlate to set
      */
-    public void setLicensePlate(String licensePlate) {
+    public void setLicensePlate(final String licensePlate) {
         this.licensePlate = licensePlate;
     }
 
@@ -224,13 +267,13 @@ public abstract class BookingActionBean extends BaseActionBean {
      * @return the pin
      */
     public Integer getPin() {
-        return pin;
+        return this.pin;
     }
 
     /**
      * @param pin the pin to set
      */
-    public void setPin(Integer pin) {
+    public void setPin(final Integer pin) {
         this.pin = pin;
     }
 
@@ -238,13 +281,13 @@ public abstract class BookingActionBean extends BaseActionBean {
      * @return the latitude
      */
     public String getLatitude() {
-        return latitude;
+        return this.latitude;
     }
 
     /**
      * @param latitude the latitude to set
      */
-    public void setLatitude(String latitude) {
+    public void setLatitude(final String latitude) {
         this.latitude = latitude;
     }
 
@@ -252,13 +295,13 @@ public abstract class BookingActionBean extends BaseActionBean {
      * @return the longitude
      */
     public String getLongitude() {
-        return longitude;
+        return this.longitude;
     }
 
     /**
      * @param longitude the longitude to set
      */
-    public void setLongitude(String longitude) {
+    public void setLongitude(final String longitude) {
         this.longitude = longitude;
     }
 
@@ -266,13 +309,13 @@ public abstract class BookingActionBean extends BaseActionBean {
      * @return the width
      */
     public Integer getWidth() {
-        return width;
+        return this.width;
     }
 
     /**
      * @param width the width to set
      */
-    public void setWidth(Integer width) {
+    public void setWidth(final Integer width) {
         this.width = width;
     }
 
@@ -280,13 +323,13 @@ public abstract class BookingActionBean extends BaseActionBean {
      * @return the height
      */
     public Integer getHeight() {
-        return height;
+        return this.height;
     }
 
     /**
      * @param height the height to set
      */
-    public void setHeight(Integer height) {
+    public void setHeight(final Integer height) {
         this.height = height;
     }
 
@@ -295,26 +338,26 @@ public abstract class BookingActionBean extends BaseActionBean {
      * @return   id
      */
     public Integer getId() {
-        return id;
+        return this.id;
     }
 
     /**
      * Sets the id
      * @param id
      */
-    public void setId(Integer id) {
+    public void setId(final Integer id) {
         this.id = id;
     }
 
     public ChargingStationDTO getStation() {
-        return station;
+        return this.station;
     }
 
     public String getStationAddress() {
-        return stationAddress;
+        return this.stationAddress;
     }
 
-    public void setStationAddress(String stationAddress) {
+    public void setStationAddress(final String stationAddress) {
         this.stationAddress = stationAddress;
-    }   
+    }
 }

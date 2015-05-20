@@ -34,6 +34,7 @@ import com.criticalsoftware.mobics.proxy.booking.BookingNotFoundExceptionExcepti
 import com.criticalsoftware.mobics.proxy.booking.BookingValidationExceptionException;
 import com.criticalsoftware.mobics.proxy.booking.BookingWSServiceStub;
 import com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException;
+import com.criticalsoftware.mobics.proxy.booking.CustomerNotFoundExceptionException;
 import com.criticalsoftware.mobics.proxy.booking.InvalidCustomerPinExceptionException;
 
 /**
@@ -55,36 +56,37 @@ public class EditAvanceBookingActionBean extends AdvanceBookingActionBean {
 
     /**
      * Show Edition page
-     * 
+     *
      * @return
      * @throws RemoteException
      * @throws UnsupportedEncodingException
      * @throws BookingNotFoundExceptionException
+     * @throws CustomerNotFoundExceptionException
      */
     @DefaultHandler
     public Resolution editAdvanceBooking() throws RemoteException, UnsupportedEncodingException,
-            BookingNotFoundExceptionException {
-        BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
+    BookingNotFoundExceptionException, CustomerNotFoundExceptionException {
+        final BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
                 Configuration.INSTANCE.getBookingEndpoint());
         bookingWSServiceStub._getServiceClient().addHeader(
-                AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
+                AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this.getContext().getUser()
                         .getPassword()));
-        trip = bookingWSServiceStub.getTripDetails(activityCode);
+        this.trip = bookingWSServiceStub.getTripDetails(this.activityCode);
 
-        long time = bookingWSServiceStub.getNextAdvanceBooking(activityCode);
+        final long time = bookingWSServiceStub.getNextAdvanceBooking(this.activityCode);
         Calendar c = null;
         if(time > 0) {
             c = Calendar.getInstance();
             c.setTimeInMillis(time);
         }
-        extendBookingDate = (c == null ? null : c.getTime());
+        this.extendBookingDate = (c == null ? null : c.getTime());
 
         return new ForwardResolution("/WEB-INF/recent/editAdvanceBookingDetails.jsp");
     }
 
     /**
      * Save the advance booking
-     * 
+     *
      * @return
      * @throws RemoteException
      * @throws UnsupportedEncodingException
@@ -94,19 +96,19 @@ public class EditAvanceBookingActionBean extends AdvanceBookingActionBean {
      * @throws CarLicensePlateNotFoundExceptionException
      */
     public Resolution saveAdvanceBooking() throws RemoteException, UnsupportedEncodingException,
-            BookingNotFoundExceptionException, BookingValidationExceptionException,
-            InvalidCustomerPinExceptionException, CarLicensePlateNotFoundExceptionException {
-        BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
+    BookingNotFoundExceptionException, BookingValidationExceptionException,
+    InvalidCustomerPinExceptionException, CarLicensePlateNotFoundExceptionException {
+        final BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
                 Configuration.INSTANCE.getBookingEndpoint());
         bookingWSServiceStub._getServiceClient().addHeader(
-                AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
+                AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this.getContext().getUser()
                         .getPassword()));
-        Calendar c = Calendar.getInstance();
-        c.setTime(endDate);
-        bookingWSServiceStub.extendAdvanceBooking(activityCode, c.getTimeInMillis());
+        final Calendar c = Calendar.getInstance();
+        c.setTime(this.endDate);
+        bookingWSServiceStub.extendAdvanceBooking(this.activityCode, c.getTimeInMillis());
 
-        Map<String, String> parameters = new HashMap<String, String>();
-        parameters.put("activityCode", activityCode);
+        final Map<String, String> parameters = new HashMap<String, String>();
+        parameters.put("activityCode", this.activityCode);
         parameters.put("extended", "true");
 
         return new RedirectResolution(RecentActivitiesActionBean.class, "advanceBookingDetails").addParameters(parameters).flash(this);
@@ -115,14 +117,16 @@ public class EditAvanceBookingActionBean extends AdvanceBookingActionBean {
     /**
      * @return the endDate
      */
+    @Override
     public Date getEndDate() {
-        return endDate;
+        return this.endDate;
     }
 
     /**
      * @param endDate the endDate to set
      */
-    public void setEndDate(Date endDate) {
+    @Override
+    public void setEndDate(final Date endDate) {
         this.endDate = endDate;
     }
 
@@ -130,27 +134,27 @@ public class EditAvanceBookingActionBean extends AdvanceBookingActionBean {
      * @return the trip
      */
     public TripDetailsDTO getTrip() {
-        return trip;
+        return this.trip;
     }
 
     /**
      * @return the extendBookingDate
      */
     public Date getExtendBookingDate() {
-        return extendBookingDate;
+        return this.extendBookingDate;
     }
 
     /**
      * @return the activityCode
      */
     public String getActivityCode() {
-        return activityCode;
+        return this.activityCode;
     }
 
     /**
      * @param activityCode the activityCode to set
      */
-    public void setActivityCode(String activityCode) {
+    public void setActivityCode(final String activityCode) {
         this.activityCode = activityCode;
     }
 }

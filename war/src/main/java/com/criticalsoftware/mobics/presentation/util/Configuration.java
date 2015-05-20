@@ -41,10 +41,8 @@ public class Configuration implements Serializable{
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Configuration.class);
 
-    public static final String CCOME_CLASS = "com.criticalsoftware.mobios.hal.drivers.obsconvadis.ConvadisEDriverProvider";
-    
-    public static final boolean CCOME_MODE_ACTIVATED = true;
-    
+    public static final String CCOM_CLASS = "com.criticalsoftware.mobios.hal.drivers.obsconvadis.ConvadisDriverProvider";
+        
     /**
      * The Configuration instance property.
      */

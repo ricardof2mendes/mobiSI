@@ -10,6 +10,15 @@ var UNWANTED_ZONE = 'UNWANTED';
 // forbidden zone
 var FORBIDDEN = 'FORBIDDEN';
 
+// Define Damage zone default as interior
+var CAR_DAMAGE_VISIBLE = false;
+var CAR_DAMAGE_ZONE = true;
+var INCIDENT_CODE = 'INTERNAL_DAMAGE'; // INTERNAL_DAMAGE (default) or EXTERNAL_DAMAGE
+var INCIDENT_TYPE = 'SCRATCHED'; // SCRATCHED(default) or SMASHED
+var COORDINATE_ROW = '';
+var COORDINATE_COL = '';
+var LAST_DAMAGE_CIRCLE = '';
+
 /*
  * Default Script
  */
@@ -550,7 +559,8 @@ $(document).ready(function() {
  				lockunlock: $(this).prop('href'), 
  				pooling :  CONTEXT_PATH + '/trip/Trip.action?getCurrentTrip=',
  				carState: IN_USE,
- 				redirect: CONTEXT_PATH + '/trip/Trip.action?finish=&unlockOp=true&successOp='
+ 				redirect: CONTEXT_PATH + '/trip/Trip.action?finish=&unlockOp=true&successOp=',
+ 				redirectToDamageReport: CONTEXT_PATH + '/trip/DamageReport.action?finish=&unlockOp=true&successOp='
  			};
 		
 		lockUnlockAndWait(url);
@@ -672,6 +682,333 @@ $(document).ready(function() {
  	 	$('#check input[type="checkbox"]').trigger('click');
  	});
  	
+ 	/*********************************  Begin - Damages Listeners ************************/
+ 	
+ 	//TODO embarros: Get the session data if exists and display at the image. (To do this the user should be able to delete damage unreported)
+ 	// Clear the session data - Remove possibles data from page reload or error's on submit
+ 	sessionStorage.clear();
+ 	
+ 	
+ 	//Display the selected car damage area image (Interior or Exterior)
+ 	$('#damageCarAreaInterior, #damageCarAreaExterior').click(function(e){
+ 		e.preventDefault();
+ 		
+ 		// Check if the click element it's already selected
+ 		if ( (CAR_DAMAGE_ZONE && (this == $('#damageCarAreaInterior')[0])) || 
+ 				(!CAR_DAMAGE_ZONE && (this == $('#damageCarAreaExterior')[0]))) {
+ 			return;
+ 		}
+ 		
+ 		CAR_DAMAGE_ZONE = !CAR_DAMAGE_ZONE;
+ 		$('#damageCarAreaInterior').removeClass('selected');
+ 		$('#damageCarAreaExterior').removeClass('selected');
+ 		
+ 		// Switch the image to the selected area
+ 		if (CAR_DAMAGE_ZONE) {
+ 			$('#imageInternal').css('display', 'block');
+ 			$('#imageExternal').css('display', 'none');
+ 			$('#damageCarAreaInterior').addClass('selected');
+ 			$('input[name=incidentCode]').attr('value', 'INTERNAL_DAMAGE');
+ 			// 	If exists damage to report is selected
+ 	 		if ( CAR_DAMAGE_VISIBLE ) {
+ 	 			$('.interiorRect').show();
+ 	 		}
+ 		} else {
+ 			$('#imageExternal').css('display', 'block');
+ 			$('#imageInternal').css('display', 'none');
+ 			$('#damageCarAreaExterior').addClass('selected');
+ 			$('input[name=incidentCode]').attr('value', 'EXTERNAL_DAMAGE');
+ 			// 	If exists damage to report is selected
+ 	 		if ( CAR_DAMAGE_VISIBLE ) {
+ 	 			$('.exteriorRect').show();
+ 	 		}
+ 		}
+
+ 	});
+ 	
+ 	
+ 	// Select Car Damage Type - Damage
+ 	$('#typeScratched').on('click', function(e){
+ 		e.preventDefault();
+ 		
+ 		INCIDENT_TYPE  = 'SCRATCHED';
+ 		$(this).addClass('selected');
+ 		$('#typeSmashed').removeClass('selected');
+ 		$('input[name=incidentType]').attr('value', 'SCRATCHED');
+ 	});
+
+ 	// Select Car Damage Type - Dirtiness
+ 	$('#typeSmashed').on('click', function(e){
+ 		e.preventDefault();
+ 		
+ 		INCIDENT_TYPE  = 'SMASHED';
+ 		$(this).addClass('selected');
+ 		$('#typeScratched').removeClass('selected');
+ 		$('input[name=incidentType]').attr('value', 'SMASHED');
+ 	});
+ 	
+ 	
+ 	// Create Damage Report Button Listner
+ 	$('input[name=createDamageReport]').on('click', function(e){
+ 		e.preventDefault();
+ 		CAR_DAMAGE_VISIBLE = true;
+ 		// Change buttons
+ 		$('#checkIfExistDamages').hide();
+ 		if (CAR_DAMAGE_ZONE) {
+ 			// Show the interior map
+ 			$('.interiorRect').show();
+ 			$('.exteriorRect').hide();
+ 		} else {
+ 			// Show the exterior map
+ 			$('.interiorRect').hide();
+ 			$('.exteriorRect').show();
+ 		}
+ 		$('#cancelReportDamage').show();
+ 	});
+ 	
+ 	
+ 	// Get Image Map Clicked Zone
+ 	$('rect').on('click', function(e){
+
+ 		COORDINATE_COL = e.target.attributes.col.value;
+ 		COORDINATE_ROW = e.target.attributes.row.value;
+ 		
+ 		$('input[name=rowCoord]').attr('value', COORDINATE_ROW);
+ 		$('input[name=colCoord]').attr('value', COORDINATE_COL);
+ 	
+ 		$('body').addClass('confirmation');
+ 		
+ 		if (CAR_DAMAGE_ZONE) {
+ 			var cxValue = ((parseInt(COORDINATE_COL))*40)-20;
+ 			var cyValue = ((parseInt(COORDINATE_ROW)-10)*30)-15;
+ 			// Add a new interior damage ball
+ 			var circle= makeSVG('circle', {cx: cxValue, cy: cyValue, r:15, row:COORDINATE_ROW, col: COORDINATE_COL, class:'toReport'});
+ 			$("#imageInternal").append(circle);
+ 			LAST_DAMAGE_CIRCLE = circle;
+ 		} else {
+ 			// Add a new exterior damage ball
+ 			var cxValue = ((parseInt(COORDINATE_COL))*40)-20;
+ 			var cyValue = ((parseInt(COORDINATE_ROW)+1)*32)-16;
+ 			// Add a new interior damage ball
+ 			var circle= makeSVG('circle', {cx: cxValue, cy: cyValue, r:15, row:COORDINATE_ROW, col: COORDINATE_COL, class:'toReport'});
+ 			$("#imageExternal").append(circle);
+ 			LAST_DAMAGE_CIRCLE = circle;
+ 		}
+		$('#sendOrReportNew').show();
+ 	});
+ 	
+ 	/**
+ 	 * Display the dialog to remove the selected damage circle
+ 	 */
+ 	var selectedCircle;
+ 	$('circle.toReport').live('click', function(e){
+ 		selectedCircle = e.target;
+ 		$('body').addClass('confirmation');
+ 		$('#removeCircleOrCancel').show();
+ 	});
+ 	
+ 	$('#removeClickedCirle').on('click',function(e){
+ 		e.preventDefault();
+ 		
+ 		for(var i=0;i<damagesItems.length;i++){
+ 			if(damagesItems[i].id == selectedCircle.attributes.row.value+"-"+selectedCircle.attributes.col.value){
+ 				findAndRemove(damagesItems, 'id', damagesItems[i].id);
+ 				sessionStorage.setItem("damages", JSON.stringify(damagesItems));
+ 				if (CAR_DAMAGE_ZONE) {
+ 		 			$(selectedCircle).remove();
+ 		 		} else {
+ 		 			$(selectedCircle).remove();
+ 		 		}
+ 			}
+ 		}
+ 		$('body').removeClass('confirmation');
+ 		$('#removeCircleOrCancel').hide();
+ 	});
+ 	
+ 	function findAndRemove(array, property, value) {
+ 	   $.each(array, function(index, result) {
+ 	      if(result[property] == value) {
+ 	          //Remove from array
+ 	          array.splice(index, 1);
+ 	      }    
+ 	   });
+ 	}
+ 	 	
+ 	var hasImage = [false,false,false,false,false,false,false,false,false,false];
+ 	var imgIndex = 1;
+ 	// Check for changes of upload files
+ 	$("#upload1, #upload2, #upload3 ,#upload4, #upload5, #upload6, #upload7, #upload8 ,#upload9, #upload10").on("change", function(e){	
+ 		// Create a image preview
+ 		if (typeof (FileReader) != "undefined") {
+            var regex = /^([a-zA-Z0-9\s_\'\,\(\)\\.\-:])+(.jpg|.jpeg|.gif|.png|.bmp)$/;
+            for (var i = 0; i < this.files.length; i++) {
+                var file = this.files[i];
+                if (regex.test(file.name.toLowerCase())) {
+                    var reader = new FileReader();
+                    reader.onloadend = function (e1) {
+                    	// Create and append the thumbnail
+                    	var img = $('<img id="'+imgIndex+'" class="selectedImg" width="100px" height="100px">');
+                    	img.attr('src', e1.target.result );
+                    	img.appendTo('.picSelectorSnap');
+                    	$('.picSelectorSnap').css('width', ''+100*(i+1));
+                    }
+                    // Mark position as unavailable
+            		hasImage[imgIndex-1] = true;
+//            		sessionStorage.setItem("image"+imgIndex, e.target.value);
+                    reader.readAsDataURL(file);
+                } else {
+                    alert(file.name + " is not a valid image file.");
+                    return false;
+                }
+            }
+        } else {
+            alert("This browser does not support HTML5 FileReader.");
+        }
+ 		$('#reportNewBtn').trigger('click');
+ 	});
+ 	
+ 	
+ 	
+ 	$('.picSelectorSnap').on('click', function(e){
+ 		e.preventDefault();
+ 		console.log(e.target);
+ 		$('body').addClass('confirmation');
+ 		$('#removeSelectedImg').show();
+ 		
+ 		$('#removeImg').on('click', function(e1){
+ 			e1.preventDefault();
+
+ 			var id = $(e.target).attr('id');
+ 			$(e.target).remove();
+ 			
+ 			// Clear the input of removed image
+ 	        $('#upload'+id).val('');
+ 	        // Set position as available
+ 	        hasImage[id-1] = false;
+ 	        
+ 			
+ 			$('body').removeClass('confirmation');
+ 	        $('#removeImg').parent().hide();
+ 	        
+ 	        
+ 		});
+ 		
+ 	});
+ 	
+ 	
+	// Display the modal to choose between take picture or select from galery
+ 	$('.picImage').on('click', function(e){
+ 		e.preventDefault();
+ 		$('body').addClass('confirmation');
+ 		$('#openCameraOrGalery').show();
+ 	});
+ 	
+ 	// Cancel Button
+ 	$('.cancelBtn').on('click',function(e){
+ 		e.preventDefault();
+ 		sessionStorage.clear();
+ 		location.reload();
+
+ 	});
+ 	
+	// Cancel Button
+ 	$('.cancelRemoveBtn').on('click',function(e){
+ 		e.preventDefault();
+ 		
+ 		$('body').removeClass('confirmation');
+ 		$('#removeCircleOrCancel').hide();
+ 	});
+ 	
+ 	
+ 	// Open Galery Button
+ 	$('.openGaleryBtn').on('click', function(e){
+ 		e.preventDefault();
+ 		
+ 		// Get the first free position
+ 		for(var k = 0; k < hasImage.length; k++) {
+        	if (!hasImage[k]){
+        		imgIndex = k+1;
+        		break;
+        	}
+        }
+
+ 		$('#noPicturesMessage').hide();
+ 		$('#upload'+imgIndex).trigger('click');
+ 		$('body').removeClass('confirmation');
+ 		$('#openCameraOrGalery').hide();
+ 	});
+    
+ 	var damagesItems = new Array();
+ 	$('#reportNewBtn').on('click', function(e){
+ 		e.preventDefault();
+
+ 		damagesItems.push({id:COORDINATE_ROW+'-'+COORDINATE_COL, row:COORDINATE_ROW, col:COORDINATE_COL})
+ 		sessionStorage.setItem("damages", JSON.stringify(damagesItems));
+
+ 		$('body').removeClass('confirmation');
+ 		$('#sendOrReportNew').hide();
+	
+ 	});
+ 	
+ 	$('input[name=continueBtn]').on('click',function(e){
+ 		e.preventDefault();
+ 		
+ 		// Check if exists damages to report
+ 		if (sessionStorage.getItem("damages")) {
+ 			// Hide the zone images and display the damage info
+ 			$(".selectDamage").hide();
+ 	 		$(".damageDetails").show();
+ 	 		$('body').removeClass('confirmation');
+ 	 		if ($('.picSelectorSnap img').size() == 0) {
+ 	 			$('.picSelectorSnap').unbind();
+ 	 		}
+ 	 		$('#sendOrReportNew').hide();
+ 		} else {
+ 			$('body').addClass('confirmation');
+ 	 		$('#noDamageToReport').show();
+ 		}
+ 	});
+ 	
+ 	// Send Report Button
+ 	$('input[name=submitDamageReport]').on('click', function(e){
+ 		
+ 		var rowC = "";
+ 		var colC = "";
+ 		
+ 		for (var i=0;i<damagesItems.length;i++){
+ 			rowC = rowC + damagesItems[i].row + ", ";
+ 			colC = colC + damagesItems[i].col + ", ";
+ 		}
+ 		
+ 		$('input[name=rowCoord]').val(rowC);
+ 		$('input[name=colCoord]').val(colC);
+ 		
+ 		if ($('#damageDescription').val() == "") {
+ 			$('#errorForm').html("<section class=\"errors\"><div><strong>Unable to submit.</strong></div><ul><li>Description is a required field</li></ul></section>");
+ 			$('html,body').animate({scrollTop: $("#errorForm").offset().top}, 'slow');
+ 			return false;
+ 		}
+ 		
+ 		$('body').addClass('confirmation');
+ 		$('#sendingReport').show();
+ 		sessionStorage.clear();
+
+ 	});
+ 	
+ 	$('.removeLastDamage').on('click', function(e){
+ 		e.preventDefault();
+ 		$(LAST_DAMAGE_CIRCLE).remove();
+ 		$('body').removeClass('confirmation');
+        $(e.target).parent().hide();
+        $('#removeImg').unbind('click');
+ 	});
+ 	
+// 	$('input[name=continueToTrip]').on('click', function(e){
+// 		sessionStorage.clear();
+// 		location.reload();
+// 	});
+/*********************************  End - Damages Listeners ************************/
+ 	
 });
 
 //auxiliar variables for lock unlock pooling
@@ -700,7 +1037,12 @@ function lockUnlockProcess(){
 						
 						if(evaluated == null || (urlLU.carState && urlLU.carState === evaluated.carState && evaluated.carState !== $('#carState').text())) {
 							clearInterval(timerVarLU); 
-							window.location.href = urlLU.redirect + 'true' + '&isClosed=false' + '&keysNotReturned=false' + '&keysAlreadyReturned=false' + '&doorsAlreadyOpen=false' + '&doorsAlreadyClosed=false';										 			
+							if (urlLU.redirectToDamageReport == null) {
+								window.location.href = urlLU.redirect + 'true' + '&isClosed=false' + '&keysNotReturned=false' + '&keysAlreadyReturned=false' + '&doorsAlreadyOpen=false' + '&doorsAlreadyClosed=false';
+							} else {
+								window.location.href = urlLU.redirectToDamageReport + 'true' + '&isClosed=false' + '&keysNotReturned=false' + '&keysAlreadyReturned=false' + '&doorsAlreadyOpen=false' + '&doorsAlreadyClosed=false';
+							}
+																		 			
 				 		}else if(evaluated.errorCode && evaluated.errorCode.value && evaluated.errorCode.value === 'KEY_NOT_RETURNED'){
 				 			clearInterval(timerVarLU); 
 							window.location.href = urlLU.redirect + 'false'  + '&isClosed=false' + '&keysNotReturned=true' + '&keysAlreadyReturned=false' + '&doorsAlreadyOpen=false' + '&doorsAlreadyClosed=false';				
@@ -715,10 +1057,14 @@ function lockUnlockProcess(){
 							window.location.href = urlLU.redirect + 'false' + '&isClosed=false' + '&keysNotReturned=false' + '&keysAlreadyReturned=false' + '&doorsAlreadyOpen=false' + '&doorsAlreadyClosed=true';		
 				 		}else if(evaluated.errorCode && evaluated.errorCode.value && evaluated.errorCode.value === 'DOORS_OPENED'){
 				 			clearInterval(timerVarLU); 
-							window.location.href = urlLU.redirect + 'true' + '&isClosed=true' + '&keysNotReturned=false' + '&keysAlreadyReturned=false' + '&doorsAlreadyOpen=false' + '&doorsAlreadyClosed=false';		
+							window.location.href = urlLU.redirectToDamageReport + 'true' + '&isClosed=true' + '&keysNotReturned=false' + '&keysAlreadyReturned=false' + '&doorsAlreadyOpen=false' + '&doorsAlreadyClosed=false';		
 				 		}else if(evaluated.errorCode && evaluated.errorCode.value && evaluated.errorCode.value === 'DOORS_CLOSED'){
 				 			clearInterval(timerVarLU); 
-							window.location.href = urlLU.redirect + 'true' + '&isClosed=true' + '&keysNotReturned=false' + '&keysAlreadyReturned=false' + '&doorsAlreadyOpen=false' + '&doorsAlreadyClosed=false';		
+				 			if (urlLU.redirectToDamageReport == null) {
+								window.location.href = urlLU.redirect + 'true' + '&isClosed=false' + '&keysNotReturned=false' + '&keysAlreadyReturned=false' + '&doorsAlreadyOpen=false' + '&doorsAlreadyClosed=false';
+							} else {
+								window.location.href = urlLU.redirectToDamageReport + 'true' + '&isClosed=false' + '&keysNotReturned=false' + '&keysAlreadyReturned=false' + '&doorsAlreadyOpen=false' + '&doorsAlreadyClosed=false';
+							}		
 				 		}
 						
 			        } else {
@@ -922,3 +1268,16 @@ function toogleSort(sort2, sort1, sort0) {
 	});
 }
 
+/**
+ * Create the SVG element with attributes.
+ * 
+ * @param tag the element type(rect, circle,..)
+ * @param attrs the element attributes
+ * @returns the created element
+ */
+function makeSVG(tag, attrs) {
+    var el= document.createElementNS('http://www.w3.org/2000/svg', tag);
+    for (var k in attrs)
+        el.setAttribute(k, attrs[k]);
+    return el;
+}

@@ -425,7 +425,7 @@ section.submit {
 	padding: 0 10px;
 }
 
-.submitBtn {
+.submitBtn, .damageReport {
 	border-radius: 4px;
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
@@ -446,6 +446,11 @@ section.submit {
 	background-position: top left;
 	margin-bottom: 10px;
 	margin-top: 5px;
+}
+
+.damageReport {
+	width: 49%;
+	display: inline-block;
 }
 
 .submitBtn:active {
@@ -968,7 +973,9 @@ nav.panel ul li.link span:nth-child(2) {
 }
 
 nav.panel ul li.detail,
-nav.panel ul li.link {
+nav.panel ul li.link,
+nav.panelPicture ul li.detail,
+nav.panelPicture ul li.link {
 	text-align: left;
 	font-size: 100%;
 	font-weight: bold;
@@ -1033,13 +1040,15 @@ nav.panel ul li.promoRest span:nth-child(2) {
     vertical-align: top;
 }
 
-nav.panel ul li.detail {
+nav.panel ul li.detail,
+nav.panelPicture ul li.detail {
 	padding: 10px 0;
 	background: none;
 	background-color: #f4f4f4;
 }
 
-nav.panel ul li.detail span {
+nav.panel ul li.detail span,
+nav.panelPicture ul li.detail span {
 	display: inline-block;
 }
 
@@ -1048,7 +1057,8 @@ nav.panel ul li.detail span:nth-child(1) {
 	width: 38%;
 }
 
-nav.panel ul li.detail span:nth-child(2) {
+nav.panel ul li.detail span:nth-child(2)
+nav.panelPicture ul li.detail span:nth-child(2) {
 	padding-left: 10px;
 	color: #666;
 	font-weight: normal;
@@ -1056,13 +1066,15 @@ nav.panel ul li.detail span:nth-child(2) {
 	vertical-align: top;
 }
 
-nav.panel ul li.detail div {
+nav.panel ul li.detail div,
+nav.panelPicture ul li.detail div {
     padding-left: 10px;
     font-weight: bold;
     vertical-align: top;
 }
 
-nav.panel ul li.detail div:nth-child(2) {
+nav.panel ul li.detail div:nth-child(2),
+nav.panelPicture ul li.detail div:nth-child(2) {
     color: #666;
     font-size: 80%;
     font-weight: normal;
@@ -1167,22 +1179,22 @@ nav.orderCriteria {
 	padding-top: 2px;
 }
 
-nav.orderCriteria ul:first-child {
-	float: left;
-	padding-left: 10px;
+nav.orderCriteria ul:first-child, nav.damageButtons ul:first-child, nav.damageDetailsButtons ul:first-child {
+	 float: left; 
+/* 	padding-left: 10px; */
 }
 
-nav.orderCriteria ul:last-child {
-	float: right;
-	padding-right: 10px;
+nav.orderCriteria ul:last-child, nav.damageButtons ul:last-child, nav.damageDetailsButtons ul:last-child {
+	float: right; 
+	/* padding-right: 10px; */
 }
 
-nav.orderCriteria ul li {
+nav.orderCriteria ul li, nav.damageButtons ul li, nav.damageDetailsButtons ul li {
 	float: left;
 	text-align: center;		
 }
 
-nav.orderCriteria ul li a{
+nav.orderCriteria ul li a, nav.damageButtons ul li a, nav.damageDetailsButtons ul li a {
 	display:block;
 	color: #333;
 	text-shadow: 0 1px 1px white;
@@ -1197,38 +1209,260 @@ nav.orderCriteria ul li a{
 	line-height: 28px;
 }
 
-nav.orderCriteria ul li a.selected{
+nav.orderCriteria ul li a.selected, nav.damageButtons ul li a.selected, nav.damageDetailsButtons ul li a.selected {
 	background: url('../img/bt_down_30px-height.png');
 	background-size: 1px 30px;
 }
 
-nav.orderCriteria ul li:first-child a{
+nav.orderCriteria ul li:first-child a, nav.damageButtons ul li:first-child a, nav.damageDetailsButtons  ul li:first-child a {
 	border-radius: 4px 0 0 4px;
 	-moz-border-radius: 4px 0 0 4px;
 	-webkit-border-radius: 4px 0 0 4px;
 	margin-left: 1px;
 }
 
-nav.orderCriteria ul li:last-child a {
+nav.orderCriteria ul li:last-child a, nav.damageButtons ul li:last-child a, nav.damageDetailsButtons ul li:last-child a {
 	border-radius: 0 4px 4px 0;
 	-moz-border-radius: 0 4px 4px 0;
 	-webkit-border-radius: 0 4px 4px 0;
 }
 
-nav.orderCriteria ul:last-child li a {
+nav.orderCriteria ul:last-child li a, nav.damageButtons ul:last-child li a, nav.damageDetailsButtonsul:last-child li a {
 	width: 50px;
 	border-radius: 4px;
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;	
 }
 
-nav.orderCriteria ul.mid {
+nav.orderCriteria ul.mid{
     width: 220px;
     margin: 0 auto;
     float: none !important;
 }
 nav.orderCriteria ul.mid li a{
     width: 100px;
+}
+
+
+/************************************ Damage Buttons Style */
+
+nav.damageButtons, nav.damageDetailsButtons {
+	height: 40px;
+	line-height: 40px;
+	background-color: #E4E4E4;
+	padding-top: 2px;
+	white-space: nowrap;
+	margin: 0 10px 10px 10px;
+}
+
+nav.damageDetailsButtons ul li a { 
+	width: 110px;
+} 
+
+nav.panelNoBorder ul{
+	border: none !important;
+	box-shadow: none !important;
+	-moz-box-shadow: none !important;
+	-webkit-box-shadow: none !important;
+}
+
+nav.damageButtons ul.mid {
+    width: 152px !important;
+    margin: 0 auto;
+    float: none !important;
+}
+
+nav.damageDetailsButtons ul.mid {
+    width: 227px !important;
+    margin: 0 auto;
+    float: none !important;
+}
+
+.damageToReport {
+	display: block;
+	margin: 0 auto;
+}
+nav.damageToReport ul li {
+	float: right;
+	width: 40vw;
+}
+
+svg {
+	display: block;
+	/* margin-left: auto; */
+	margin-right: auto;
+}
+
+
+rect {
+	/* fill: red;
+	stroke: black; */
+	opacity: 0; 
+	display:none;
+	cursor: pointer;
+}
+
+
+map {
+	z-index: 100;
+}
+
+circle {
+	fill: red;
+	stroke: black;
+	
+	opacity: 0.4;
+    filter: alpha(opacity=40);
+}
+
+circle.toReport {
+	fill:blue !important;
+}
+
+#imageExternal {
+	display: none;
+}
+
+.picSelector {
+	display: inline-flex;
+	margin-top:10px;
+	margin-bottom: 10px;
+}
+
+.selectedImg {
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+.picSelectorImg, .picImage {
+	width: 100px;
+	height: 100px;
+	float: right;
+ 	margin-left: 10px;
+ 	cursor: pointer;
+}
+
+.picSelectorSnap {
+	margin-left: 9px;
+}
+
+.picSelectorText {
+  	text-align: left;
+  	margin-top: 25px;
+  	margin-bottom: 25px;
+  	margin-left: 15px;
+  	margin-right: 20px;
+}
+
+	z-index: 100;
+	/* width: 100px; */
+	/* height: 100px; */
+	float: right;
+ 	padding-right: 20%;
+ 	cursor: pointer; 
+ 	/* background:url(../img/galery.png);
+ 	background-repeat: no-repeat;
+ 	background-position: center; */
+}
+
+area {
+	fill: transparent;
+    stroke:gray; /* Replace with none if you like */
+    stroke-width: 4;
+}
+
+/* #video {
+	position: fixed; 
+	left: 10px;
+	top: 0;
+	min-width: 100%;
+	min-height: 100%;
+	width: 94%; 
+	height: 100%; 
+	z-index: -100;
+}
+#takePicture {
+	float: left;
+}
+
+.round-button {
+	bottom: 30px;
+	float: left;
+	margin: 0 90px;
+	position: fixed;
+
+	width:25%;
+}
+.round-button-circle {
+	width: 90%;
+	height:0;
+	padding-bottom: 70%;
+    border-radius: 50%;
+	border:10px solid #202020;
+    overflow:hidden;
+    
+    background: #555B64; 
+    box-shadow: 0 0 3px gray;
+}
+.round-button-circle:active {
+	background:#000;
+}
+.round-button a {
+    display:block;
+	float:left;
+	width:100%;
+	padding-top:50%;
+    padding-bottom:50%;
+	line-height:1em;
+	margin-top:-0.5em;
+    
+	text-align:center;
+	color:#e2eaf3;
+    font-family:Verdana;
+    font-size:1.2em;
+    font-weight:bold;
+    text-decoration:none;
+} */
+
+input[type='file'].hidden
+{
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    font-size: 50px;
+    cursor: pointer;
+    opacity: 0;
+    -moz-opacity: 0;
+    filter: Alpha(Opacity=0);
+}
+
+#damageDescription {
+	padding: 10px;
+	width: 100% !important;
+	resize: none;
+}
+
+.panelPicture {
+	border-radius: 4px 0 0 4px;
+	-moz-border-radius: 4px 0 0 4px;
+	-webkit-border-radius: 4px 0 0 4px;
+	margin-left: 1px;
+}
+
+nav.panelPicture ul {
+	margin: 0 10px 15px;
+	background: #FFF;
+	border: 1px solid #E5E5E5;
+	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
+	-moz-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
+	-webkit-box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	overflow: hidden;
 }
 
 /************************************ No result list */
@@ -1272,7 +1506,8 @@ section#noresultsrestrictions {
 .customComboBox > select,
 .customComboBox > input[type="text"],
 .customComboBox > input[type="number"],
-.customComboBox > input[type="password"] {
+.customComboBox > input[type="password"],
+.customComboBox > textarea {
 	border: 0;
 	color: #333;
 	width: 100%;
@@ -1949,9 +2184,19 @@ div.clear {
 
 /********************************************************************* Media Queries */
 
+@media (max-width: 400px) {
+
+	.picSelectorImg, .picImage, /* .picSelectorSnap, */ .picSelectorSnap img {
+		width: 90px;
+  		height: 90px;
+	}
+}
+
 @media screen and (-webkit-min-device-pixel-ratio: 1.5),
 	   screen and (min-device-pixel-ratio: 1.5),
 	   screen and (min-resolution: 1.5dppx) {
+	   
+	
 	   
    	.bottomShadow,
    	.bottomShadow2,
