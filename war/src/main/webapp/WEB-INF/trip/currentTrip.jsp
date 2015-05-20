@@ -142,7 +142,7 @@
 				
 				<!-- Lock car End trip with js unwanted zone validation-->
 				<c:choose>
-					<c:when test="${actionBean.current.carState == 'IN_USE' || actionBean.current.carState == 'BOOKED'}">
+					<c:when test="${actionBean.current.carState == 'IN_USE' || actionBean.current.carState == 'READY' || actionBean.current.carState == 'BOOKED'}">
 						<c:choose>
 						<c:when test="${actionBean.current.carState == 'BOOKED'}">
 							<stripes:link id="unlock" beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn green" event="unlockCar" addSourcePage="true">
@@ -486,7 +486,7 @@
 			</c:if>
 			
 			<!-- Lock car End trip with js unwanted zone validation-->
-			<c:if test="${actionBean.current.carState == 'IN_USE'}">		
+			<c:if test="${actionBean.current.carState == 'READY' || actionBean.current.carState == 'IN_USE'}">		
 				<stripes:link id="endTrip" beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn orangered" event="endTrip" addSourcePage="true">
 					<stripes:param name="licensePlate">${actionBean.current.licensePlate}</stripes:param>
 					<fmt:message key="current.trip.button.lock.car.end.trip"/>
