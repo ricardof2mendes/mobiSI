@@ -29,11 +29,9 @@
 						</stripes:link>
 					</li>
 					<li class="bookAdvance">
-						<!--<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.HomeActionBean" event="bookInAdvance">-->
-						<span style="text-align:left; padding-left: 45px; width:100%">
+						<stripes:link beanclass="com.criticalsoftware.mobics.presentation.action.HomeActionBean" event="bookInAdvance">
 							<fmt:message key="book.advance.title"/>
-						</span>							
-						<!--</stripes:link>-->
+						</stripes:link>
 					</li>
 				</ul>
 			</nav>
