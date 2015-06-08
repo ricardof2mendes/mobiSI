@@ -138,10 +138,10 @@ public class TripActionBean extends BaseActionBean {
         }
         // Send the user to damages report action
         else if (this.current.getCarState().equals(IN_USE)) {
+            LOGGER.debug("State: " + this.current.getCarState());
+            
             return new RedirectResolution(DamageReportActionBean.class);
-        }
-
-        LOGGER.debug("State: " + this.current.getCarState());
+        }        
 
         //does the car have the CCOME driver? if yes, the webapp interface is different from the conventional.
         this.newDriverVersion = (this.current != null) && (this.current.getCarDTO() != null)
