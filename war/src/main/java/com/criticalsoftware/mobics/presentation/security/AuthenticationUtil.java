@@ -39,17 +39,11 @@ public class AuthenticationUtil {
         byte[] nonceB = Long.toString(new Date().getTime()).getBytes(); // random stuff
         String nonce = Base64.encodeBase64String(nonceB);
         autenticationData[0] = nonce;
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("nonce: {}", nonce);
-        }
 
         // created
         String created = (new SimpleDateFormat(datePattern)).format(new Date()); // current
         byte[] createdB = created.getBytes(utf8Encoding); // timestamp
         autenticationData[1] = created;
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("date created: [}", created);
-        }
 
         // Password
         String password = Hex.encodeHexString(DigestUtils.sha(customerPassword));
@@ -63,9 +57,6 @@ public class AuthenticationUtil {
 
         String password64 = Base64.encodeBase64String(DigestUtils.sha(combinedB));
         autenticationData[2] = password64;
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("password: {}", password64);
-        }
 
         return autenticationData;
     }

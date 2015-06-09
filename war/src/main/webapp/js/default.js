@@ -1139,7 +1139,7 @@ function bookingProcess(){
 					$('body').on('touchmove', 'body', function(e){
 						e.preventDefault();
 					});
-		 		} else if(evaluated.substring(0, WAITING.length) !== WAITING){
+		 		} else if(evaluated != null && evaluated.substring(0, WAITING.length) !== WAITING){
 		 			window.location.href = urlBO.end;
 		 		}
 				
