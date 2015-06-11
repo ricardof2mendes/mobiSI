@@ -1009,17 +1009,14 @@ $(document).ready(function() {
 // 	});
  	
  	$('#continueToTrip').on('click', function(e){
- 		//e.preventDefault();
- 		console.log("Continue Clicked");
- 		
+
  		$('div.confirm2 > article section').each(function(){
             $(this).hide();
         });
- 		// show message
-		$('#validating').show();
+ 		
 		var url = {
 				timeout : UNLOCK_TIMEOUT_INTERVAL,
-				validate: CONTEXT_PATH + '/trip/DamageReport.action?validatePin=',
+				validate: CONTEXT_PATH + '/trip/DamageReport.action?getCarState=',
  				pooling : CONTEXT_PATH + '/trip/DamageReport.action?getCarState=',
  				carState: $('#carState').text(),
  				redirect: CONTEXT_PATH + '/trip/DamageReport.action?showPin='
@@ -1137,11 +1134,7 @@ function lockUnlockAndWait(url) {
 
 function validatePinAndWait(url) {
 	urlLU = url;
-	// add modal
-	$('body').addClass('confirmation');
-	$('body').on('touchmove', 'body', function(e){
-		e.preventDefault();
-	});
+	
 	// do active pooling
 	$.get(url.validate, 
 		function(data, textStatus, jqXHR){
@@ -1149,7 +1142,14 @@ function validatePinAndWait(url) {
 			textStatusLU = textStatus;
 			jqXHRLU = jqXHR;
 			if (jqXHR.getResponseHeader('Stripes-Success') === 'OK') {
-				if(eval(dataLU) === true) {
+				// add modal
+				$('body').addClass('confirmation');
+				$('body').on('touchmove', 'body', function(e){
+					e.preventDefault();
+				});
+				// show message
+				$('#validating').show();
+				if(eval(dataLU) === "IN_USE") {
 					retriesLU = Math.floor(url.timeout / smallAttemptIntervalLU) + ATTEMPT_FRACTION - 1;
 					timerVarLU = setInterval( lockUnlockProcess , smallAttemptIntervalLU);
 				}
