@@ -48,7 +48,7 @@
 			<article>
 				<section id="validating" class="hidden">
 					<h2>
-						<fmt:message key="current.trip.unlocking.car" />
+						<fmt:message key="current.trip.damages.unlocking.car" />
 						&nbsp;&nbsp;&nbsp;<img src="${contextPath}/img/indicator.gif" />
 					</h2>
 					<h3>
