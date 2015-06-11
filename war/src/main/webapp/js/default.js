@@ -1003,10 +1003,31 @@ $(document).ready(function() {
         $('#removeImg').unbind('click');
  	});
  	
-// 	$('input[name=continueToTrip]').on('click', function(e){
-// 		sessionStorage.clear();
-// 		location.reload();
+// 	$('input[name=continueToTripBtn]').on('click', function(e){
+// 		e.preventDefault();
+// 		console.log("Continue Clicked");
 // 	});
+ 	
+ 	$('#continueToTrip').on('click', function(e){
+ 		//e.preventDefault();
+ 		console.log("Continue Clicked");
+ 		
+ 		$('div.confirm2 > article section').each(function(){
+            $(this).hide();
+        });
+ 		// show message
+		$('#validating').show();
+		var url = {
+				timeout : UNLOCK_TIMEOUT_INTERVAL,
+				validate: CONTEXT_PATH + '/trip/DamageReport.action?validatePin=',
+ 				pooling : CONTEXT_PATH + '/trip/DamageReport.action?getCarState=',
+ 				carState: $('#carState').text(),
+ 				redirect: CONTEXT_PATH + '/trip/DamageReport.action?showPin='
+ 			};
+		
+		validatePinAndWait(url);
+ 		
+ 	});
 /*********************************  End - Damages Listeners ************************/
  	
 });
@@ -1098,6 +1119,31 @@ function lockUnlockAndWait(url) {
 	});
 	// do active pooling
 	$.get(url.lockunlock, 
+		function(data, textStatus, jqXHR){
+			dataLU = data;
+			textStatusLU = textStatus;
+			jqXHRLU = jqXHR;
+			if (jqXHR.getResponseHeader('Stripes-Success') === 'OK') {
+				if(eval(dataLU) === true) {
+					retriesLU = Math.floor(url.timeout / smallAttemptIntervalLU) + ATTEMPT_FRACTION - 1;
+					timerVarLU = setInterval( lockUnlockProcess , smallAttemptIntervalLU);
+				}
+	        } else {
+	            console.log('An error has occurred or the user\'s session has expired!');
+	            $('html').html(dataLU);
+	        }
+	    });
+}
+
+function validatePinAndWait(url) {
+	urlLU = url;
+	// add modal
+	$('body').addClass('confirmation');
+	$('body').on('touchmove', 'body', function(e){
+		e.preventDefault();
+	});
+	// do active pooling
+	$.get(url.validate, 
 		function(data, textStatus, jqXHR){
 			dataLU = data;
 			textStatusLU = textStatus;
