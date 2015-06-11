@@ -1107,7 +1107,7 @@ function lockUnlockProcess(){
 		}
 	} else {
 		clearInterval(timerVarLU);
-		window.location.href = urlLU.redirect + 'false';	
+		window.location.href = urlLU.redirect + '?successOp=false'  + '&isClosed=false' + '&keysNotReturned=false' + '&keysAlreadyReturned=false' + '&doorsAlreadyOpen=false' + '&doorsAlreadyClosed=false' + '&unableToCommunicate=true';					
 	}	
 }
 
