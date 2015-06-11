@@ -102,7 +102,7 @@ public class DamageReportActionBean extends AskPinActionBean {
     private Integer pin;
 
     @ValidateNestedProperties({ @Validate(field = "licensePlate"), @Validate(field = "carBrandName"),
-            @Validate(field = "carModelName"), @Validate(field = "fuelType.name") })
+        @Validate(field = "carModelName"), @Validate(field = "fuelType.name") })
     private CarDTO car;
 
     private List<FileBean> files;
@@ -131,9 +131,9 @@ public class DamageReportActionBean extends AskPinActionBean {
     @DontValidate
     @DefaultHandler
     public Resolution getCurrent() throws RemoteException, UnsupportedEncodingException, CarNotFoundExceptionException,
-            CustomerNotFoundExceptionException, CarLicensePlateNotFoundExceptionException,
-            com.criticalsoftware.mobics.proxy.car.CarLicensePlateNotFoundExceptionException,
-            com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException {
+    CustomerNotFoundExceptionException, CarLicensePlateNotFoundExceptionException,
+    com.criticalsoftware.mobics.proxy.car.CarLicensePlateNotFoundExceptionException,
+    com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException {
 
         final BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
                 Configuration.INSTANCE.getBookingEndpoint());
@@ -197,12 +197,12 @@ public class DamageReportActionBean extends AskPinActionBean {
      * @throws com.criticalsoftware.mobics.proxy.car.CarLicensePlateNotFoundExceptionException
      */
     public Resolution submitDamageReport() throws EventValidationExceptionException,
-            BookingNotFoundForEventExceptionException, EventInClosedStateExceptionException,
-            com.criticalsoftware.mobics.proxy.car.CustomerNotFoundExceptionException, CarNotFoundExceptionException,
-            CarLicensePlateNotFoundExceptionException, CustomerNotFoundExceptionException,
-            com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException,
-            com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException, IOException,
-            com.criticalsoftware.mobics.proxy.car.CarLicensePlateNotFoundExceptionException {
+    BookingNotFoundForEventExceptionException, EventInClosedStateExceptionException,
+    com.criticalsoftware.mobics.proxy.car.CustomerNotFoundExceptionException, CarNotFoundExceptionException,
+    CarLicensePlateNotFoundExceptionException, CustomerNotFoundExceptionException,
+    com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException,
+    com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException, IOException,
+    com.criticalsoftware.mobics.proxy.car.CarLicensePlateNotFoundExceptionException {
 
         final BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
                 Configuration.INSTANCE.getBookingEndpoint());
@@ -305,11 +305,11 @@ public class DamageReportActionBean extends AskPinActionBean {
      * @throws CarNotFoundExceptionException
      */
     public Resolution continueToTrip() throws UnsupportedEncodingException, RemoteException,
-            com.criticalsoftware.mobics.proxy.car.CustomerNotFoundExceptionException,
-            com.criticalsoftware.mobics.proxy.car.CarLicensePlateNotFoundExceptionException,
-            CustomerNotFoundExceptionException, CarLicensePlateNotFoundExceptionException,
-            com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException,
-            CarNotFoundExceptionException {
+    com.criticalsoftware.mobics.proxy.car.CustomerNotFoundExceptionException,
+    com.criticalsoftware.mobics.proxy.car.CarLicensePlateNotFoundExceptionException,
+    CustomerNotFoundExceptionException, CarLicensePlateNotFoundExceptionException,
+    com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException,
+    CarNotFoundExceptionException {
         return this.showPin();
     }
 
@@ -364,38 +364,13 @@ public class DamageReportActionBean extends AskPinActionBean {
      * @throws AxisFault
      * @throws RemoteException
      * @throws UnsupportedEncodingException
+     * @throws com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException
+     * @throws com.criticalsoftware.mobics.proxy.car.CarLicensePlateNotFoundExceptionException
+     * @throws CarNotFoundExceptionException
      */
-    @Override
-    @ValidationMethod(when = ValidationState.NO_ERRORS, on = "data")
-    public void validation(final ValidationErrors errors) throws RemoteException, UnsupportedEncodingException {
-
-        final CustomerWSServiceStub customerWSServiceStub = new CustomerWSServiceStub(
-                Configuration.INSTANCE.getCustomerEndpoint());
-        customerWSServiceStub._getServiceClient().addHeader(
-                AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this.getContext()
-                        .getUser().getPassword()));
-        if (!customerWSServiceStub.isValidCustomerPin(this.pin.toString())) {
-            errors.add("pin", new LocalizableError("account.security.check.pin.invalid"));
-        } else {
-            final CarWSServiceStub carWSServiceStub = new CarWSServiceStub(Configuration.INSTANCE.getCarEndpoint());
-            carWSServiceStub._getServiceClient().addHeader(
-                    AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this
-                            .getContext().getUser().getPassword()));
-            try {
-                carWSServiceStub.imobilizerOff(this.licensePlate);
-            } catch (final com.criticalsoftware.mobics.proxy.car.CustomerNotFoundExceptionException e) {
-                LOGGER.error("Customer not found exception");
-            } catch (final com.criticalsoftware.mobics.proxy.car.CarLicensePlateNotFoundExceptionException e) {
-                LOGGER.error("Car License Plate not found exception");
-            }
-        }
-    }
-
+    // @Override
     // @ValidationMethod(when = ValidationState.NO_ERRORS, on = "data")
-    // public Resolution validatePin(final ValidationErrors errors) throws RemoteException,
-    // UnsupportedEncodingException,
-    // BookingNotFoundExceptionException, CustomerNotFoundExceptionException,
-    // CarLicensePlateNotFoundExceptionException {
+    // public void validation(final ValidationErrors errors) throws RemoteException, UnsupportedEncodingException {
     //
     // final CustomerWSServiceStub customerWSServiceStub = new CustomerWSServiceStub(
     // Configuration.INSTANCE.getCustomerEndpoint());
@@ -417,13 +392,51 @@ public class DamageReportActionBean extends AskPinActionBean {
     // LOGGER.error("Car License Plate not found exception");
     // }
     // }
-    //
-    // return this.getCarState();
     // }
 
+    public Resolution validatePin() throws RemoteException, UnsupportedEncodingException,
+    BookingNotFoundExceptionException, CustomerNotFoundExceptionException,
+    CarLicensePlateNotFoundExceptionException,
+    com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException,
+    CarNotFoundExceptionException,
+    com.criticalsoftware.mobics.proxy.car.CarLicensePlateNotFoundExceptionException {
+
+        if (this.pin == null) {
+            this.getContext().getValidationErrors()
+                    .addGlobalError(new LocalizableError("account.security.check.pin.invalid"));
+            return this.showPin();
+        }
+
+        final CustomerWSServiceStub customerWSServiceStub = new CustomerWSServiceStub(
+                Configuration.INSTANCE.getCustomerEndpoint());
+        customerWSServiceStub._getServiceClient().addHeader(
+                AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this.getContext()
+                        .getUser().getPassword()));
+
+        if (!customerWSServiceStub.isValidCustomerPin(this.pin.toString())) {
+            this.getContext().getValidationErrors()
+            .addGlobalError(new LocalizableError("account.security.check.pin.invalid"));
+            return this.showPin();
+        } else {
+            final CarWSServiceStub carWSServiceStub = new CarWSServiceStub(Configuration.INSTANCE.getCarEndpoint());
+            carWSServiceStub._getServiceClient().addHeader(
+                    AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this
+                            .getContext().getUser().getPassword()));
+            try {
+                carWSServiceStub.imobilizerOff(this.licensePlate);
+            } catch (final com.criticalsoftware.mobics.proxy.car.CustomerNotFoundExceptionException e) {
+                LOGGER.error("Customer not found exception");
+            } catch (final com.criticalsoftware.mobics.proxy.car.CarLicensePlateNotFoundExceptionException e) {
+                LOGGER.error("Car License Plate not found exception");
+            }
+        }
+
+        return this.getCarState();
+    }
+
     public Resolution getCarState() throws UnsupportedEncodingException, RemoteException,
-            BookingNotFoundExceptionException, CustomerNotFoundExceptionException,
-            com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException {
+    BookingNotFoundExceptionException, CustomerNotFoundExceptionException,
+    com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException {
 
         final BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
                 Configuration.INSTANCE.getBookingEndpoint());
@@ -451,11 +464,11 @@ public class DamageReportActionBean extends AskPinActionBean {
      * @throws com.criticalsoftware.mobics.proxy.car.CarLicensePlateNotFoundExceptionException
      */
     public Resolution showPin() throws RemoteException, UnsupportedEncodingException,
-            CustomerNotFoundExceptionException, CarLicensePlateNotFoundExceptionException,
-            com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException,
-            com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException,
-            CarNotFoundExceptionException,
-            com.criticalsoftware.mobics.proxy.car.CarLicensePlateNotFoundExceptionException {
+    CustomerNotFoundExceptionException, CarLicensePlateNotFoundExceptionException,
+    com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException,
+    com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException,
+    CarNotFoundExceptionException,
+    com.criticalsoftware.mobics.proxy.car.CarLicensePlateNotFoundExceptionException {
         this.getCurrent();
         return new ForwardResolution("/WEB-INF/trip/pinUnlockCar.jsp");
     }

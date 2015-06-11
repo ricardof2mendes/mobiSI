@@ -2,6 +2,7 @@
 var WAITING = 'WAIT_OBS_';
 var ERROR = 'OBS_ERROR';
 var IN_USE = 'IN_USE';
+var READY = 'READY';
 var BOOKED = 'BOOKED';
 // car status
 var AVAILABLE = 'AVAILABLE'
@@ -1009,17 +1010,17 @@ $(document).ready(function() {
 // 	});
  	
  	$('#continueToTrip').on('click', function(e){
-
+ 		e.preventDefault();
  		$('div.confirm2 > article section').each(function(){
             $(this).hide();
         });
  		
 		var url = {
 				timeout : UNLOCK_TIMEOUT_INTERVAL,
-				validate: CONTEXT_PATH + '/trip/DamageReport.action?getCarState=',
+				validate: CONTEXT_PATH + '/trip/DamageReport.action?validatePin&pin='+$('input[name=pin]').val()+'&licensePlate='+$('input[name=licensePlate]').val(),
  				pooling : CONTEXT_PATH + '/trip/DamageReport.action?getCarState=',
- 				carState: $('#carState').text(),
- 				redirect: CONTEXT_PATH + '/trip/DamageReport.action?showPin='
+ 				carState: READY,
+ 				redirect: CONTEXT_PATH + '/trip/Trip.action'
  			};
 		
 		validatePinAndWait(url);
@@ -1085,6 +1086,9 @@ function lockUnlockProcess(){
 							} else {
 								window.location.href = urlLU.redirectToDamageReport + 'true' + '&isClosed=false' + '&keysNotReturned=false' + '&keysAlreadyReturned=false' + '&doorsAlreadyOpen=false' + '&doorsAlreadyClosed=false' + '&unableToCommunicate=false';
 							}		
+				 		} else if (urlLU.carState && (urlLU.carState.indexOf(evaluated) > -1)) {
+				 			clearInterval(timerVarLU);
+				 			window.location.href = urlLU.redirect;
 				 		}
 						
 			        } else {
@@ -1149,7 +1153,8 @@ function validatePinAndWait(url) {
 				});
 				// show message
 				$('#validating').show();
-				if(eval(dataLU) === "IN_USE") {
+				var state = eval(dataLU);
+				if(state != null && (state.indexOf(IN_USE) >-1 )) {
 					retriesLU = Math.floor(url.timeout / smallAttemptIntervalLU) + ATTEMPT_FRACTION - 1;
 					timerVarLU = setInterval( lockUnlockProcess , smallAttemptIntervalLU);
 				}
