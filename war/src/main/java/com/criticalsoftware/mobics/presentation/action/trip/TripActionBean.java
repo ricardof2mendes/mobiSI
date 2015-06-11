@@ -92,6 +92,9 @@ public class TripActionBean extends BaseActionBean {
     @Validate(required = true, on = "finish")
     private Boolean doorsAlreadyClosed;
 
+    @Validate(required = true, on = "finish")
+    private Boolean unableToCommunicate;
+
     @Validate
     private Boolean unlockOp;
 
@@ -101,7 +104,6 @@ public class TripActionBean extends BaseActionBean {
     private Boolean newDriverVersion = true;
 
     private Boolean newDriverVersionLastTrip = true;
-
 
     /**
      * Recent list resolution
@@ -115,35 +117,37 @@ public class TripActionBean extends BaseActionBean {
      */
     @DefaultHandler
     @DontValidate
-    public Resolution main() throws RemoteException, UnsupportedEncodingException, CustomerNotFoundExceptionException, com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException {
+    public Resolution main() throws RemoteException, UnsupportedEncodingException, CustomerNotFoundExceptionException,
+            com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException {
         Resolution resolution = new ForwardResolution("/WEB-INF/trip/currentTrip.jsp");
         final BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
                 Configuration.INSTANCE.getBookingEndpoint());
         bookingWSServiceStub._getServiceClient().addHeader(
-                AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this.getContext().getUser()
-                        .getPassword()));
+                AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this.getContext()
+                        .getUser().getPassword()));
 
         this.current = bookingWSServiceStub.getCurrentTripDetails();
 
-        if ((this.current == null) || (this.current.getLicensePlate() == null) || (this.current.getLicensePlate().length() == 0)) {
+        if ((this.current == null) || (this.current.getLicensePlate() == null)
+                || (this.current.getLicensePlate().length() == 0)) {
             bookingWSServiceStub._getServiceClient().addHeader(
-                    AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this.getContext().getUser()
-                            .getPassword()));
+                    AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this
+                            .getContext().getUser().getPassword()));
             try {
                 this.last = bookingWSServiceStub.getLastTripDetails();
             } catch (final BookingNotFoundExceptionException e) {
-                //Do nothing
+                // Do nothing
             }
             resolution = new ForwardResolution("/WEB-INF/trip/lastTrip.jsp");
         }
         // Send the user to damages report action
         else if (this.current.getCarState().equals(IN_USE)) {
             LOGGER.debug("State: " + this.current.getCarState());
-            
-            return new RedirectResolution(DamageReportActionBean.class);
-        }        
 
-        //does the car have the CCOME driver? if yes, the webapp interface is different from the conventional.
+            return new RedirectResolution(DamageReportActionBean.class);
+        }
+
+        // does the car have the CCOME driver? if yes, the webapp interface is different from the conventional.
         this.newDriverVersion = (this.current != null) && (this.current.getCarDTO() != null)
                 && !Configuration.CCOM_CLASS.equals(this.current.getCarDTO().getDeviceDriverClass());
         this.newDriverVersionLastTrip = (this.last != null) && (this.last.getCar() != null)
@@ -162,42 +166,41 @@ public class TripActionBean extends BaseActionBean {
      * @throws com.criticalsoftware.mobics.proxy.car.CustomerNotFoundExceptionException
      */
     public Resolution unlockCar() throws RemoteException, UnsupportedEncodingException,
-    CarLicensePlateNotFoundExceptionException,
-    com.criticalsoftware.mobics.proxy.car.CustomerNotFoundExceptionException {
+            CarLicensePlateNotFoundExceptionException,
+            com.criticalsoftware.mobics.proxy.car.CustomerNotFoundExceptionException {
 
         final CarWSServiceStub carWSServiceStub = new CarWSServiceStub(Configuration.INSTANCE.getCarEndpoint());
         carWSServiceStub._getServiceClient().addHeader(
-                AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this.getContext().getUser()
-                        .getPassword()));
+                AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this.getContext()
+                        .getUser().getPassword()));
 
         this.getContext().getResponse().setHeader("Stripes-Success", "OK");
         return new JavaScriptResolution(carWSServiceStub.unlockCar(this.licensePlate));
 
     }
 
-
     /* Lock and End Trip are separate calls for CCOME */
     public Resolution lockCar() throws UnsupportedEncodingException, RemoteException,
-    com.criticalsoftware.mobics.proxy.car.CustomerNotFoundExceptionException,
-    CarLicensePlateNotFoundExceptionException {
+            com.criticalsoftware.mobics.proxy.car.CustomerNotFoundExceptionException,
+            CarLicensePlateNotFoundExceptionException {
         final CarWSServiceStub carWSServiceStub = new CarWSServiceStub(Configuration.INSTANCE.getCarEndpoint());
         carWSServiceStub._getServiceClient().addHeader(
-                AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this.getContext().getUser()
-                        .getPassword()));
+                AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this.getContext()
+                        .getUser().getPassword()));
         this.getContext().getResponse().setHeader("Stripes-Success", "OK");
         return new JavaScriptResolution(carWSServiceStub.lockCar(this.licensePlate));
     }
 
-    public Resolution endTrip()throws UnsupportedEncodingException, RemoteException,
-    com.criticalsoftware.mobics.proxy.car.CustomerNotFoundExceptionException,
-    CarLicensePlateNotFoundExceptionException {
+    public Resolution endTrip() throws UnsupportedEncodingException, RemoteException,
+            com.criticalsoftware.mobics.proxy.car.CustomerNotFoundExceptionException,
+            CarLicensePlateNotFoundExceptionException {
 
         final Resolution resolution = new RedirectResolution(this.getClass()).flash(this);
 
         final CarWSServiceStub carWSServiceStub = new CarWSServiceStub(Configuration.INSTANCE.getCarEndpoint());
         carWSServiceStub._getServiceClient().addHeader(
-                AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this.getContext().getUser()
-                        .getPassword()));
+                AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this.getContext()
+                        .getUser().getPassword()));
         this.getContext().getResponse().setHeader("Stripes-Success", "OK");
         carWSServiceStub.lockCar(this.licensePlate);
 
@@ -206,12 +209,12 @@ public class TripActionBean extends BaseActionBean {
 
     /* On other drivers lock and end trip are performed on one call. */
     public Resolution lockEndTrip() throws UnsupportedEncodingException, RemoteException,
-    com.criticalsoftware.mobics.proxy.car.CustomerNotFoundExceptionException,
-    CarLicensePlateNotFoundExceptionException {
+            com.criticalsoftware.mobics.proxy.car.CustomerNotFoundExceptionException,
+            CarLicensePlateNotFoundExceptionException {
         final CarWSServiceStub carWSServiceStub = new CarWSServiceStub(Configuration.INSTANCE.getCarEndpoint());
         carWSServiceStub._getServiceClient().addHeader(
-                AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this.getContext().getUser()
-                        .getPassword()));
+                AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this.getContext()
+                        .getUser().getPassword()));
         this.getContext().getResponse().setHeader("Stripes-Success", "OK");
         return new JavaScriptResolution(carWSServiceStub.lockCar(this.licensePlate));
     }
@@ -227,51 +230,53 @@ public class TripActionBean extends BaseActionBean {
      * @throws com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException
      */
     public Resolution finish() throws RemoteException, UnsupportedEncodingException,
-    CustomerNotFoundExceptionException, BookingNotFoundExceptionException, com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException {
+            CustomerNotFoundExceptionException, BookingNotFoundExceptionException,
+            com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException {
         Resolution resolution = new RedirectResolution(this.getClass()).flash(this);
 
         if (this.successOp) {
             if (this.unlockOp != null) {
                 if (!this.isClosed) {
                     this.getContext().getMessages().add(new LocalizableMessage("current.trip.unlock.car.message"));
-                }else {
+                } else {
                     this.getContext().getMessages().add(new LocalizableMessage("trip.detail.unlock_sucess"));
                 }
             } else {
                 if (!this.isClosed) {
                     this.getContext().getMessages().add(new LocalizableMessage("current.trip.end.trip.message"));
-                }else {
+                } else {
                     this.getContext().getMessages().add(new LocalizableMessage("trip.detail.lock_sucess"));
                 }
             }
         } else {
-            if ((this.sendReport != null)) {
-                if (this.sendReport) {
-                    this.getContext().getMessages()
-                    .add(new LocalizableError("trip.detail.unlock_and_damage_report_sucess"));
-                }
+            if (this.unableToCommunicate != null && this.unableToCommunicate == true) {
+                this.getContext().getValidationErrors()
+                        .addGlobalError(new LocalizableError("current.trip.communication.message.error"));
+            } else if (this.sendReport != null && this.sendReport == true) {
+                this.getContext().getMessages()
+                        .add(new LocalizableError("trip.detail.unlock_and_damage_report_sucess"));
             } else {
                 if (this.unlockOp != null) {
                     if ((this.keysAlreadyReturned != null) && this.keysAlreadyReturned.booleanValue()) {
                         this.getContext().getValidationErrors()
-                        .addGlobalError(new LocalizableError("current.trip.keys.already.returned"));
+                                .addGlobalError(new LocalizableError("current.trip.keys.already.returned"));
                     } else if ((this.doorsAlreadyOpen != null) && this.doorsAlreadyOpen.booleanValue()) {
                         this.getContext().getValidationErrors()
-                        .addGlobalError(new LocalizableError("current.trip.doors.already.open"));
+                                .addGlobalError(new LocalizableError("current.trip.doors.already.open"));
                     } else {
                         this.getContext().getValidationErrors()
-                        .addGlobalError(new LocalizableError("current.trip.unlock.car.message.error"));
+                                .addGlobalError(new LocalizableError("current.trip.unlock.car.message.error"));
                     }
                 } else {
                     if ((this.keysNotReturned != null) && this.keysNotReturned.booleanValue()) {
                         this.getContext().getValidationErrors()
-                        .addGlobalError(new LocalizableError("current.trip.keys.not.returned"));
+                                .addGlobalError(new LocalizableError("current.trip.keys.not.returned"));
                     } else if ((this.doorsAlreadyClosed != null) && this.doorsAlreadyClosed.booleanValue()) {
                         this.getContext().getValidationErrors()
-                        .addGlobalError(new LocalizableError("current.trip.doors.already.closed"));
+                                .addGlobalError(new LocalizableError("current.trip.doors.already.closed"));
                     } else {
                         this.getContext().getValidationErrors()
-                        .addGlobalError(new LocalizableError("current.trip.end.trip.message.error"));
+                                .addGlobalError(new LocalizableError("current.trip.end.trip.message.error"));
                     }
                 }
             }
@@ -296,13 +301,14 @@ public class TripActionBean extends BaseActionBean {
      * @throws InterruptedException
      */
     public Resolution getCurrentTrip() throws UnsupportedEncodingException, RemoteException,
-    BookingNotFoundExceptionException, CustomerNotFoundExceptionException, com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException {
+            BookingNotFoundExceptionException, CustomerNotFoundExceptionException,
+            com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException {
 
         final BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
                 Configuration.INSTANCE.getBookingEndpoint());
         bookingWSServiceStub._getServiceClient().addHeader(
-                AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this.getContext().getUser()
-                        .getPassword()));
+                AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this.getContext()
+                        .getUser().getPassword()));
         this.getContext().getResponse().setHeader("Stripes-Success", "OK");
 
         final CurrentTripDTO currentTripDTO = bookingWSServiceStub.getCurrentTripDetails();
@@ -311,14 +317,14 @@ public class TripActionBean extends BaseActionBean {
     }
 
     public Resolution getLastTrip() throws UnsupportedEncodingException, RemoteException,
-    BookingNotFoundExceptionException, CustomerNotFoundExceptionException,
-    com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException {
+            BookingNotFoundExceptionException, CustomerNotFoundExceptionException,
+            com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException {
 
         final BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
                 Configuration.INSTANCE.getBookingEndpoint());
         bookingWSServiceStub._getServiceClient().addHeader(
-                AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this.getContext().getUser()
-                        .getPassword()));
+                AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this.getContext()
+                        .getUser().getPassword()));
         this.getContext().getResponse().setHeader("Stripes-Success", "OK");
 
         final TripDetailsDTO lastTripDTO = bookingWSServiceStub.getLastTripDetails();
@@ -337,12 +343,13 @@ public class TripActionBean extends BaseActionBean {
      * @throws com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException
      */
     public Resolution extend() throws RemoteException, UnsupportedEncodingException,
-    CustomerNotFoundExceptionException, BookingNotFoundExceptionException, com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException {
+            CustomerNotFoundExceptionException, BookingNotFoundExceptionException,
+            com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException {
         final BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
                 Configuration.INSTANCE.getBookingEndpoint());
         bookingWSServiceStub._getServiceClient().addHeader(
-                AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this.getContext().getUser()
-                        .getPassword()));
+                AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this.getContext()
+                        .getUser().getPassword()));
 
         Resolution resolution = new ForwardResolution("/WEB-INF/trip/extendTrip.jsp");
 
@@ -366,14 +373,14 @@ public class TripActionBean extends BaseActionBean {
     }
 
     public Resolution save() throws RemoteException, UnsupportedEncodingException, BookingValidationExceptionException,
-    InvalidCustomerPinExceptionException, BookingNotFoundExceptionException,
-    com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException {
+            InvalidCustomerPinExceptionException, BookingNotFoundExceptionException,
+            com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException {
 
         final BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
                 Configuration.INSTANCE.getBookingEndpoint());
         bookingWSServiceStub._getServiceClient().addHeader(
-                AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this.getContext().getUser()
-                        .getPassword()));
+                AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this.getContext()
+                        .getUser().getPassword()));
 
         final Calendar aux = Calendar.getInstance();
         aux.setTime(this.endDate);
@@ -390,8 +397,8 @@ public class TripActionBean extends BaseActionBean {
      * @return the address string
      */
     public String getLocation() {
-        String location = new LocalizableMessage("application.value.not.available")
-        .getMessage(this.getContext().getLocale());
+        String location = new LocalizableMessage("application.value.not.available").getMessage(this.getContext()
+                .getLocale());
         if ((this.current.getLatitude() != null) && (this.current.getLongitude() != null)) {
             location = GeolocationUtil.getAddressFromCoordinates(this.current.getLatitude().toString(), this.current
                     .getLongitude().toString());
@@ -405,8 +412,8 @@ public class TripActionBean extends BaseActionBean {
      * @return the adress string
      */
     public String getStartLocation() {
-        String location = new LocalizableMessage("application.value.not.available")
-        .getMessage(this.getContext().getLocale());
+        String location = new LocalizableMessage("application.value.not.available").getMessage(this.getContext()
+                .getLocale());
         if ((this.last.getStartLatitude() != null) && (this.last.getStartLongitude() != null)) {
             location = GeolocationUtil.getAddressFromCoordinates(this.last.getStartLatitude().toString(), this.last
                     .getStartLongitude().toString());
@@ -420,8 +427,8 @@ public class TripActionBean extends BaseActionBean {
      * @return the adress string
      */
     public String getEndLocation() {
-        String location = new LocalizableMessage("application.value.not.available")
-        .getMessage(this.getContext().getLocale());
+        String location = new LocalizableMessage("application.value.not.available").getMessage(this.getContext()
+                .getLocale());
         if ((this.last.getEndtLatitude() != null) && (this.last.getEndLongitude() != null)) {
             location = GeolocationUtil.getAddressFromCoordinates(this.last.getEndtLatitude().toString(), this.last
                     .getEndLongitude().toString());
@@ -437,12 +444,13 @@ public class TripActionBean extends BaseActionBean {
      * @throws UnsupportedEncodingException
      * @throws com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException
      */
-    public Resolution getState() throws RemoteException, UnsupportedEncodingException, com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException {
+    public Resolution getState() throws RemoteException, UnsupportedEncodingException,
+            com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException {
         final BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
                 Configuration.INSTANCE.getBookingEndpoint());
         bookingWSServiceStub._getServiceClient().addHeader(
-                AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this.getContext().getUser()
-                        .getPassword()));
+                AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this.getContext()
+                        .getUser().getPassword()));
 
         try {
             this.current = bookingWSServiceStub.getCurrentTripDetails();
@@ -462,7 +470,7 @@ public class TripActionBean extends BaseActionBean {
      * @throws CustomerNotFoundExceptionException
      */
     public Resolution showMessage() throws RemoteException, UnsupportedEncodingException,
-    CustomerNotFoundExceptionException {
+            CustomerNotFoundExceptionException {
         this.getContext().getMessages().add(new LocalizableMessage("car.details.book.done"));
         return new RedirectResolution(this.getClass()).flash(this);
     }
@@ -623,6 +631,20 @@ public class TripActionBean extends BaseActionBean {
      */
     public void setSendReport(final Boolean sendReport) {
         this.sendReport = sendReport;
+    }
+
+    /**
+     * @return the unableToCommunicate
+     */
+    public Boolean getUnableToCommunicate() {
+        return unableToCommunicate;
+    }
+
+    /**
+     * @param unableToCommunicate the unableToCommunicate to set
+     */
+    public void setUnableToCommunicate(Boolean unableToCommunicate) {
+        this.unableToCommunicate = unableToCommunicate;
     }
 
 }

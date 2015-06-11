@@ -1038,32 +1038,34 @@ function lockUnlockProcess(){
 						if(evaluated == null || (urlLU.carState && urlLU.carState === evaluated.carState && evaluated.carState !== $('#carState').text())) {
 							clearInterval(timerVarLU); 
 							if (urlLU.redirectToDamageReport == null) {
-								window.location.href = urlLU.redirect + 'true' + '&isClosed=false' + '&keysNotReturned=false' + '&keysAlreadyReturned=false' + '&doorsAlreadyOpen=false' + '&doorsAlreadyClosed=false';
+								window.location.href = urlLU.redirect + 'true' + '&isClosed=false' + '&keysNotReturned=false' + '&keysAlreadyReturned=false' + '&doorsAlreadyOpen=false' + '&doorsAlreadyClosed=false' + '&unableToCommunicate=false';
 							} else {
-								window.location.href = urlLU.redirectToDamageReport + 'true' + '&isClosed=false' + '&keysNotReturned=false' + '&keysAlreadyReturned=false' + '&doorsAlreadyOpen=false' + '&doorsAlreadyClosed=false';
-							}
-																		 			
+								window.location.href = urlLU.redirectToDamageReport + 'true' + '&isClosed=false' + '&keysNotReturned=false' + '&keysAlreadyReturned=false' + '&doorsAlreadyOpen=false' + '&doorsAlreadyClosed=false' + '&unableToCommunicate=false';
+							}																		 		
+				 		}else if(evaluated.errorCode && evaluated.errorCode.value && evaluated.errorCode.value === 'TIMEOUT'){
+				 			clearInterval(timerVarLU); 
+							window.location.href = urlLU.redirect + 'false'  + '&isClosed=false' + '&keysNotReturned=false' + '&keysAlreadyReturned=false' + '&doorsAlreadyOpen=false' + '&doorsAlreadyClosed=false' + '&unableToCommunicate=true';				
 				 		}else if(evaluated.errorCode && evaluated.errorCode.value && evaluated.errorCode.value === 'KEY_NOT_RETURNED'){
 				 			clearInterval(timerVarLU); 
-							window.location.href = urlLU.redirect + 'false'  + '&isClosed=false' + '&keysNotReturned=true' + '&keysAlreadyReturned=false' + '&doorsAlreadyOpen=false' + '&doorsAlreadyClosed=false';				
+							window.location.href = urlLU.redirect + 'false'  + '&isClosed=false' + '&keysNotReturned=true' + '&keysAlreadyReturned=false' + '&doorsAlreadyOpen=false' + '&doorsAlreadyClosed=false' + '&unableToCommunicate=false';				
 				 		}else if(evaluated.errorCode && evaluated.errorCode.value && evaluated.errorCode.value === 'KEY_ALREADY_RETURNED'){
 				 			clearInterval(timerVarLU); 
-							window.location.href = urlLU.redirect + 'false'  + '&isClosed=false' + '&keysAlreadyReturned=true' + '&keysNotReturned=false' + '&doorsAlreadyOpen=false' + '&doorsAlreadyClosed=false';		
+							window.location.href = urlLU.redirect + 'false'  + '&isClosed=false' + '&keysAlreadyReturned=true' + '&keysNotReturned=false' + '&doorsAlreadyOpen=false' + '&doorsAlreadyClosed=false' + '&unableToCommunicate=false';		
 				 		}else if(evaluated.errorCode && evaluated.errorCode.value && evaluated.errorCode.value === 'DOORS_ALREADY_OPEN'){
 				 			clearInterval(timerVarLU); 
-							window.location.href = urlLU.redirect + 'false' + '&isClosed=false' + '&keysNotReturned=false' + '&keysAlreadyReturned=false' + '&doorsAlreadyOpen=true' + '&doorsAlreadyClosed=false';		
+							window.location.href = urlLU.redirect + 'false' + '&isClosed=false' + '&keysNotReturned=false' + '&keysAlreadyReturned=false' + '&doorsAlreadyOpen=true' + '&doorsAlreadyClosed=false' + '&unableToCommunicate=false';		
 				 		}else if(evaluated.errorCode && evaluated.errorCode.value && evaluated.errorCode.value === 'DOORS_ALREADY_CLOSED'){
 				 			clearInterval(timerVarLU); 
-							window.location.href = urlLU.redirect + 'false' + '&isClosed=false' + '&keysNotReturned=false' + '&keysAlreadyReturned=false' + '&doorsAlreadyOpen=false' + '&doorsAlreadyClosed=true';		
+							window.location.href = urlLU.redirect + 'false' + '&isClosed=false' + '&keysNotReturned=false' + '&keysAlreadyReturned=false' + '&doorsAlreadyOpen=false' + '&doorsAlreadyClosed=true' + '&unableToCommunicate=false';		
 				 		}else if(evaluated.errorCode && evaluated.errorCode.value && evaluated.errorCode.value === 'DOORS_OPENED'){
 				 			clearInterval(timerVarLU); 
-							window.location.href = urlLU.redirectToDamageReport + 'true' + '&isClosed=true' + '&keysNotReturned=false' + '&keysAlreadyReturned=false' + '&doorsAlreadyOpen=false' + '&doorsAlreadyClosed=false';		
+							window.location.href = urlLU.redirectToDamageReport + 'true' + '&isClosed=true' + '&keysNotReturned=false' + '&keysAlreadyReturned=false' + '&doorsAlreadyOpen=false' + '&doorsAlreadyClosed=false' + '&unableToCommunicate=false';		
 				 		}else if(evaluated.errorCode && evaluated.errorCode.value && evaluated.errorCode.value === 'DOORS_CLOSED'){
 				 			clearInterval(timerVarLU); 
 				 			if (urlLU.redirectToDamageReport == null) {
-								window.location.href = urlLU.redirect + 'true' + '&isClosed=false' + '&keysNotReturned=false' + '&keysAlreadyReturned=false' + '&doorsAlreadyOpen=false' + '&doorsAlreadyClosed=false';
+								window.location.href = urlLU.redirect + 'true' + '&isClosed=false' + '&keysNotReturned=false' + '&keysAlreadyReturned=false' + '&doorsAlreadyOpen=false' + '&doorsAlreadyClosed=false' + '&unableToCommunicate=false';
 							} else {
-								window.location.href = urlLU.redirectToDamageReport + 'true' + '&isClosed=false' + '&keysNotReturned=false' + '&keysAlreadyReturned=false' + '&doorsAlreadyOpen=false' + '&doorsAlreadyClosed=false';
+								window.location.href = urlLU.redirectToDamageReport + 'true' + '&isClosed=false' + '&keysNotReturned=false' + '&keysAlreadyReturned=false' + '&doorsAlreadyOpen=false' + '&doorsAlreadyClosed=false' + '&unableToCommunicate=false';
 							}		
 				 		}
 						
