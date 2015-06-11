@@ -39,6 +39,7 @@ import net.sourceforge.stripes.validation.ValidationMethod;
 import net.sourceforge.stripes.validation.ValidationState;
 
 import org.apache.axiom.attachments.ByteArrayDataSource;
+import org.apache.axis2.AxisFault;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,6 +61,7 @@ import com.criticalsoftware.mobics.proxy.car.CarNotFoundExceptionException;
 import com.criticalsoftware.mobics.proxy.car.CarWSServiceStub;
 import com.criticalsoftware.mobics.proxy.car.EventInClosedStateExceptionException;
 import com.criticalsoftware.mobics.proxy.car.EventValidationExceptionException;
+import com.criticalsoftware.mobics.proxy.customer.CustomerWSServiceStub;
 import com.criticalsoftware.mobics.proxy.fleet.FleetWSServiceStub;
 
 /**
@@ -93,6 +95,9 @@ public class DamageReportActionBean extends AskPinActionBean {
 
     @Validate(on = { "submitDamageReport" })
     private String colCoord;
+
+    @Validate(required = true, on = { "data", "saveData" }, minlength = 4, maxlength = 4)
+    private Integer pin;
 
     @ValidateNestedProperties({ @Validate(field = "licensePlate"), @Validate(field = "carBrandName"),
         @Validate(field = "carModelName"), @Validate(field = "fuelType.name") })
@@ -131,8 +136,8 @@ public class DamageReportActionBean extends AskPinActionBean {
         final BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
                 Configuration.INSTANCE.getBookingEndpoint());
         bookingWSServiceStub._getServiceClient().addHeader(
-                AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this.getContext().getUser()
-                        .getPassword()));
+                AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this.getContext()
+                        .getUser().getPassword()));
 
         final CurrentTripDTO current = bookingWSServiceStub.getCurrentTripDetails();
         if (current.getCarState().equals(READY)) {
@@ -141,10 +146,11 @@ public class DamageReportActionBean extends AskPinActionBean {
 
         if ((current != null) && (current.getLicensePlate() != null)) {
             this.licensePlate = current.getLicensePlate();
-            final FleetWSServiceStub fleetWSServiceStub = new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint());
+            final FleetWSServiceStub fleetWSServiceStub = new FleetWSServiceStub(
+                    Configuration.INSTANCE.getFleetEndpoint());
             fleetWSServiceStub._getServiceClient().addHeader(
-                    AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this.getContext()
-                            .getUser().getPassword()));
+                    AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this
+                            .getContext().getUser().getPassword()));
 
             final CarWSServiceStub carWSServiceStub = new CarWSServiceStub(Configuration.INSTANCE.getCarEndpoint());
             carWSServiceStub._getServiceClient().addHeader(
@@ -172,7 +178,6 @@ public class DamageReportActionBean extends AskPinActionBean {
 
     }
 
-
     /**
      * Save damage report
      *
@@ -190,8 +195,7 @@ public class DamageReportActionBean extends AskPinActionBean {
      * @throws com.criticalsoftware.mobics.proxy.car.CarLicensePlateNotFoundExceptionException
      */
     public Resolution submitDamageReport() throws EventValidationExceptionException,
-    BookingNotFoundForEventExceptionException,
-    EventInClosedStateExceptionException,
+    BookingNotFoundForEventExceptionException, EventInClosedStateExceptionException,
     com.criticalsoftware.mobics.proxy.car.CustomerNotFoundExceptionException, CarNotFoundExceptionException,
     CarLicensePlateNotFoundExceptionException, CustomerNotFoundExceptionException,
     com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException,
@@ -218,9 +222,8 @@ public class DamageReportActionBean extends AskPinActionBean {
 
         final CarWSServiceStub carWSServiceStub = new CarWSServiceStub(Configuration.INSTANCE.getCarEndpoint());
         carWSServiceStub._getServiceClient().addHeader(
-                AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this.getContext().getUser()
-                        .getPassword()));
-
+                AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this.getContext()
+                        .getUser().getPassword()));
 
         // Get the images if exists
         if (this.files != null) {
@@ -242,8 +245,7 @@ public class DamageReportActionBean extends AskPinActionBean {
 
                 final FileAttachmentDTO attFile = new FileAttachmentDTO();
 
-                attFile.setFileName(this.licensePlate + "_" + fileCount
-                        + "." + file.getContentType().split("/")[1]);
+                attFile.setFileName(this.licensePlate + "_" + fileCount + "." + file.getContentType().split("/")[1]);
                 attFile.setMimeType(file.getContentType());
 
                 attFile.setFileContents(data);
@@ -277,8 +279,6 @@ public class DamageReportActionBean extends AskPinActionBean {
         LOGGER.info("The user " + this.description, this.getContext().getUser().getUsername() + " is reporting "
                 + rows.length + " damages on veichle " + this.licensePlate);
 
-        carWSServiceStub.imobilizerOff(this.licensePlate);
-
         if (result) {
             this.getContext().getMessages().add(new LocalizableMessage("damage.report.save.success"));
             this.getContext().getResponse().setHeader("licensePlate", this.licensePlate);
@@ -308,16 +308,10 @@ public class DamageReportActionBean extends AskPinActionBean {
     CustomerNotFoundExceptionException, CarLicensePlateNotFoundExceptionException,
     com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException,
     CarNotFoundExceptionException {
-        final CarWSServiceStub carWSServiceStub = new CarWSServiceStub(Configuration.INSTANCE.getCarEndpoint());
-        carWSServiceStub._getServiceClient().addHeader(
-                AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this.getContext()
-                        .getUser().getPassword()));
-        carWSServiceStub.imobilizerOff(this.licensePlate);
         return this.showPin();
     }
 
     /**
-     *
      * @param errors
      */
     @ValidationMethod(on = "submitDamaRCargeReport", when = ValidationState.NO_ERRORS)
@@ -361,6 +355,39 @@ public class DamageReportActionBean extends AskPinActionBean {
         return null;
     }
 
+    /**
+     * Validation method for PIN
+     *
+     * @param errors
+     * @throws AxisFault
+     * @throws RemoteException
+     * @throws UnsupportedEncodingException
+     */
+    @Override
+    @ValidationMethod(when = ValidationState.NO_ERRORS, on = "data")
+    public void validation(final ValidationErrors errors) throws RemoteException, UnsupportedEncodingException {
+
+        final CustomerWSServiceStub customerWSServiceStub = new CustomerWSServiceStub(
+                Configuration.INSTANCE.getCustomerEndpoint());
+        customerWSServiceStub._getServiceClient().addHeader(
+                AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this.getContext()
+                        .getUser().getPassword()));
+        if (!customerWSServiceStub.isValidCustomerPin(this.pin.toString())) {
+            errors.add("pin", new LocalizableError("account.security.check.pin.invalid"));
+        } else {
+            final CarWSServiceStub carWSServiceStub = new CarWSServiceStub(Configuration.INSTANCE.getCarEndpoint());
+            carWSServiceStub._getServiceClient().addHeader(
+                    AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this
+                            .getContext().getUser().getPassword()));
+            try {
+                carWSServiceStub.imobilizerOff(this.licensePlate);
+            } catch (final com.criticalsoftware.mobics.proxy.car.CustomerNotFoundExceptionException e) {
+                LOGGER.error("Customer not found exception");
+            } catch (final com.criticalsoftware.mobics.proxy.car.CarLicensePlateNotFoundExceptionException e) {
+                LOGGER.error("Car License Plate not found exception");
+            }
+        }
+    }
 
     /**
      * Show PIN resolution
@@ -384,7 +411,6 @@ public class DamageReportActionBean extends AskPinActionBean {
         this.getCurrent();
         return new ForwardResolution("/WEB-INF/trip/pinUnlockCar.jsp");
     }
-
 
     /**
      * @return the licensePlate
@@ -442,7 +468,6 @@ public class DamageReportActionBean extends AskPinActionBean {
         this.incidentCode = incidentCode;
     }
 
-
     /**
      * @return the rowCoord
      */
@@ -499,7 +524,6 @@ public class DamageReportActionBean extends AskPinActionBean {
         this.incidentType = incidentType;
     }
 
-
     /**
      * @return the files
      */
@@ -507,11 +531,10 @@ public class DamageReportActionBean extends AskPinActionBean {
         return this.files;
     }
 
-
     /**
      * @param files the files to set
      */
-    public void setFiles(List<FileBean> files) {
+    public void setFiles(final List<FileBean> files) {
         this.files = files;
     }
 
@@ -541,6 +564,22 @@ public class DamageReportActionBean extends AskPinActionBean {
      */
     public void setCarDamages(final CarDamageDetailsListDTO[] carDamages) {
         this.carDamages = carDamages;
+    }
+
+    /**
+     * @return the pin
+     */
+    @Override
+    public Integer getPin() {
+        return this.pin;
+    }
+
+    /**
+     * @param pin the pin to set
+     */
+    @Override
+    public void setPin(final Integer pin) {
+        this.pin = pin;
     }
 
 }
