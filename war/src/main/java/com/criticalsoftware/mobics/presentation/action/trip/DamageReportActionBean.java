@@ -98,7 +98,7 @@ public class DamageReportActionBean extends AskPinActionBean {
     @Validate(on = { "submitDamageReport" })
     private String colCoord;
 
-    @Validate(required = true, on = { "data", "saveData" }, minlength = 4, maxlength = 4)
+    @Validate(on = { "data", "saveData", "validatePin" }, minlength = 4, maxlength = 4)
     private Integer pin;
 
     @ValidateNestedProperties({ @Validate(field = "licensePlate"), @Validate(field = "carBrandName"),
@@ -316,7 +316,7 @@ public class DamageReportActionBean extends AskPinActionBean {
     /**
      * @param errors
      */
-    @ValidationMethod(on = "submitDamaRCargeReport", when = ValidationState.NO_ERRORS)
+    @ValidationMethod(on = "submitDamageReport", when = ValidationState.NO_ERRORS)
     public void validate(final ValidationErrors errors) {
 
         if ((this.licensePlate == null) || (this.rowCoord == null) || (this.colCoord == null)
