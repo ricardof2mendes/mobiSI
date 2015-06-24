@@ -40,7 +40,6 @@ import net.sourceforge.stripes.validation.ValidationMethod;
 import net.sourceforge.stripes.validation.ValidationState;
 
 import org.apache.axiom.attachments.ByteArrayDataSource;
-import org.apache.axis2.AxisFault;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -98,9 +97,6 @@ public class DamageReportActionBean extends AskPinActionBean {
     @Validate(on = { "submitDamageReport" })
     private String colCoord;
 
-    @Validate(on = { "data", "saveData", "validatePin" }, minlength = 4, maxlength = 4)
-    private Integer pin;
-
     @ValidateNestedProperties({ @Validate(field = "licensePlate"), @Validate(field = "carBrandName"),
         @Validate(field = "carModelName"), @Validate(field = "fuelType.name") })
     private CarDTO car;
@@ -114,6 +110,9 @@ public class DamageReportActionBean extends AskPinActionBean {
     private final List<String> lines_exterior = Arrays.asList("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K");
     private final List<String> lines_interior = Arrays.asList("L", "M", "M", "N", "O", "P", "Q", "R", "S", "T", "U",
             "V");
+
+    @Validate(required = true, on = { "data", "saveData" }, minlength = 4, maxlength = 4)
+    private Integer pin;
 
     /**
      * Default handler
@@ -142,7 +141,8 @@ public class DamageReportActionBean extends AskPinActionBean {
                         .getUser().getPassword()));
 
         final CurrentTripDTO current = bookingWSServiceStub.getCurrentTripDetails();
-        if (current.getCarState().equals(READY)) {
+
+        if (current.getCarState().equals(READY) || !current.getShowDamageReport()) {
             return new RedirectResolution(TripActionBean.class);
         }
 
@@ -271,6 +271,10 @@ public class DamageReportActionBean extends AskPinActionBean {
             }
         }
 
+        for (int i = 0; i < cols.length; i++) {
+            cols[i] = cols[i].trim();
+        }
+
         // Default Incident Code (Car Damage)
         this.incidentCode = "EXTERNAL_DAMAGE";
 
@@ -345,7 +349,7 @@ public class DamageReportActionBean extends AskPinActionBean {
      */
     @Override
     public Resolution data() throws Exception {
-        return new RedirectResolution(TripActionBean.class).flash(this);
+        return new RedirectResolution(DamageReportActionBean.class).flash(this);
     }
 
     /**
@@ -361,77 +365,39 @@ public class DamageReportActionBean extends AskPinActionBean {
      * Validation method for PIN
      *
      * @param errors
-     * @throws AxisFault
      * @throws RemoteException
      * @throws UnsupportedEncodingException
-     * @throws com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException
-     * @throws com.criticalsoftware.mobics.proxy.car.CarLicensePlateNotFoundExceptionException
-     * @throws CarNotFoundExceptionException
      */
-    // @Override
-    // @ValidationMethod(when = ValidationState.NO_ERRORS, on = "data")
-    // public void validation(final ValidationErrors errors) throws RemoteException, UnsupportedEncodingException {
-    //
-    // final CustomerWSServiceStub customerWSServiceStub = new CustomerWSServiceStub(
-    // Configuration.INSTANCE.getCustomerEndpoint());
-    // customerWSServiceStub._getServiceClient().addHeader(
-    // AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this.getContext()
-    // .getUser().getPassword()));
-    // if (!customerWSServiceStub.isValidCustomerPin(this.pin.toString())) {
-    // errors.add("pin", new LocalizableError("account.security.check.pin.invalid"));
-    // } else {
-    // final CarWSServiceStub carWSServiceStub = new CarWSServiceStub(Configuration.INSTANCE.getCarEndpoint());
-    // carWSServiceStub._getServiceClient().addHeader(
-    // AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this
-    // .getContext().getUser().getPassword()));
-    // try {
-    // carWSServiceStub.imobilizerOff(this.licensePlate);
-    // } catch (final com.criticalsoftware.mobics.proxy.car.CustomerNotFoundExceptionException e) {
-    // LOGGER.error("Customer not found exception");
-    // } catch (final com.criticalsoftware.mobics.proxy.car.CarLicensePlateNotFoundExceptionException e) {
-    // LOGGER.error("Car License Plate not found exception");
-    // }
-    // }
-    // }
-
-    public Resolution validatePin() throws RemoteException, UnsupportedEncodingException,
-    BookingNotFoundExceptionException, CustomerNotFoundExceptionException,
-    CarLicensePlateNotFoundExceptionException,
-    com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException,
-    CarNotFoundExceptionException,
-    com.criticalsoftware.mobics.proxy.car.CarLicensePlateNotFoundExceptionException {
-
-        if (this.pin == null) {
-            this.getContext().getValidationErrors()
-                    .addGlobalError(new LocalizableError("account.security.check.pin.invalid"));
-            return this.showPin();
-        }
+    @ValidationMethod(when = ValidationState.NO_ERRORS, on = "data")
+    public Resolution validation() throws RemoteException, UnsupportedEncodingException {
 
         final CustomerWSServiceStub customerWSServiceStub = new CustomerWSServiceStub(
                 Configuration.INSTANCE.getCustomerEndpoint());
         customerWSServiceStub._getServiceClient().addHeader(
                 AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this.getContext()
                         .getUser().getPassword()));
-
         if (!customerWSServiceStub.isValidCustomerPin(this.pin.toString())) {
             this.getContext().getValidationErrors()
             .addGlobalError(new LocalizableError("account.security.check.pin.invalid"));
-            return this.showPin();
+
         } else {
+
             final CarWSServiceStub carWSServiceStub = new CarWSServiceStub(Configuration.INSTANCE.getCarEndpoint());
             carWSServiceStub._getServiceClient().addHeader(
                     AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this
                             .getContext().getUser().getPassword()));
             try {
                 carWSServiceStub.imobilizerOff(this.licensePlate);
+                this.getContext().getMessages().add(new LocalizableMessage("trip.detail.unlock_sucess"));
             } catch (final com.criticalsoftware.mobics.proxy.car.CustomerNotFoundExceptionException e) {
-                LOGGER.error("Customer not found exception");
+                LOGGER.error("Customer Not Found");
             } catch (final com.criticalsoftware.mobics.proxy.car.CarLicensePlateNotFoundExceptionException e) {
-                LOGGER.error("Car License Plate not found exception");
+                LOGGER.error("Car License Plate Not Found");
             }
+            return new ForwardResolution("/WEB-INF/trip/currentTrip.jsp");
+            // return new RedirectResolution(TripActionBean.class);
         }
-
-        return this.getCarState();
+        return new RedirectResolution(DamageReportActionBean.class).flash(this);
     }
 
     public Resolution getCarState() throws UnsupportedEncodingException, RemoteException,
