@@ -45,6 +45,7 @@ import org.slf4j.LoggerFactory;
 
 import com.criticalsoftware.mobics.booking.CurrentTripDTO;
 import com.criticalsoftware.mobics.car.CarDamageDetailsListDTO;
+import com.criticalsoftware.mobics.car.CarDamageType;
 import com.criticalsoftware.mobics.car.FileAttachmentDTO;
 import com.criticalsoftware.mobics.car.FileAttachmentTypeEnum;
 import com.criticalsoftware.mobics.fleet.CarDTO;
@@ -262,6 +263,7 @@ public class DamageReportActionBean extends AskPinActionBean {
         final String[] rows = this.rowCoord.split(",");
         final String[] cols = this.colCoord.split(",");
         final String[] incTypes = this.incidentType.split(",");
+        final CarDamageType[] damageTypes = new CarDamageType[incTypes.length];
 
         for (int i = 0; i < rows.length; i++) {
             // Set the line coordinate
@@ -275,7 +277,11 @@ public class DamageReportActionBean extends AskPinActionBean {
             cols[i] = cols[i].trim();
 
             // Clear the incident type string
-            incTypes[i] = incTypes[i].trim();
+            if ("SCRATCHED".equals(incTypes[i].trim())) {
+            	damageTypes[i] = CarDamageType.SCRATCHED;
+            } else if ("SMASHED".equals(incTypes[i].trim())) {
+            	damageTypes[i] = CarDamageType.SMASHED;
+            }
         }
 
         // Default Incident Code (Car Damage)
@@ -283,7 +289,7 @@ public class DamageReportActionBean extends AskPinActionBean {
 
         final boolean result = carWSServiceStub.reportNewDamage(this.licensePlate, rows, cols,
                 this.getDate().getTime(), this.imageFiles, this.description, this.getContext().getUser().getUsername(),
-                this.incidentCode, incTypes);
+                this.incidentCode, damageTypes);
 
         LOGGER.info("The user " + this.description, this.getContext().getUser().getUsername() + " is reporting "
                 + rows.length + " damages on veichle " + this.licensePlate);
