@@ -1250,10 +1250,12 @@ nav.orderCriteria ul.mid li a{
 nav.damageButtons, nav.damageDetailsButtons {
 	height: 40px;
 	line-height: 40px;
-	background-color: #E4E4E4;
 	padding-top: 2px;
 	white-space: nowrap;
 	margin: 0 10px 10px 10px;
+}
+nav.damageButtons {
+	background-color: #E4E4E4;
 }
 
 nav.damageDetailsButtons ul li a { 

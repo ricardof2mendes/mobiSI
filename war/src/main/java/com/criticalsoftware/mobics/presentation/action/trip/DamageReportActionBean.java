@@ -261,6 +261,7 @@ public class DamageReportActionBean extends AskPinActionBean {
 
         final String[] rows = this.rowCoord.split(",");
         final String[] cols = this.colCoord.split(",");
+        final String[] incTypes = this.incidentType.split(",");
 
         for (int i = 0; i < rows.length; i++) {
             // Set the line coordinate
@@ -269,10 +270,12 @@ public class DamageReportActionBean extends AskPinActionBean {
             } else {
                 rows[i] = this.lines_exterior.get(Integer.parseInt(rows[i].trim()));
             }
-        }
 
-        for (int i = 0; i < cols.length; i++) {
+            // Clear the cols string
             cols[i] = cols[i].trim();
+
+            // Clear the incident type string
+            incTypes[i] = incTypes[i].trim();
         }
 
         // Default Incident Code (Car Damage)
@@ -280,7 +283,7 @@ public class DamageReportActionBean extends AskPinActionBean {
 
         final boolean result = carWSServiceStub.reportNewDamage(this.licensePlate, rows, cols,
                 this.getDate().getTime(), this.imageFiles, this.description, this.getContext().getUser().getUsername(),
-                this.incidentCode, this.incidentType);
+                this.incidentCode, incTypes);
 
         LOGGER.info("The user " + this.description, this.getContext().getUser().getUsername() + " is reporting "
                 + rows.length + " damages on veichle " + this.licensePlate);

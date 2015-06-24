@@ -943,7 +943,7 @@ $(document).ready(function() {
  	$('#reportNewBtn').on('click', function(e){
  		e.preventDefault();
 
- 		damagesItems.push({id:COORDINATE_ROW+'-'+COORDINATE_COL, row:COORDINATE_ROW, col:COORDINATE_COL})
+ 		damagesItems.push({id:COORDINATE_ROW+'-'+COORDINATE_COL, row:COORDINATE_ROW, col:COORDINATE_COL, type:INCIDENT_TYPE})
  		sessionStorage.setItem("damages", JSON.stringify(damagesItems));
 
  		$('body').removeClass('confirmation');
@@ -975,14 +975,17 @@ $(document).ready(function() {
  		
  		var rowC = "";
  		var colC = "";
+ 		var incType = "";
  		
  		for (var i=0;i<damagesItems.length;i++){
  			rowC = rowC + damagesItems[i].row + ", ";
  			colC = colC + damagesItems[i].col + ", ";
+ 			incType = incType + damagesItems[i].type + ", ";
  		}
  		
  		$('input[name=rowCoord]').val(rowC);
  		$('input[name=colCoord]').val(colC);
+ 		$('input[name=incidentType]').val(incType);
  		
  		if ($('#damageDescription').val() == "") {
  			$('#errorForm').html("<section class=\"errors\"><div><strong>Unable to submit.</strong></div><ul><li>Description is a required field</li></ul></section>");

@@ -311,6 +311,21 @@
 				
 				<!-- New Damage or Send Report Modal -->
 				<section id="sendOrReportNew" class="hidden">
+					<nav class="damageDetailsButtons"> 
+		                <ul class="mid">
+		                	<li>
+		                   		<stripes:link id="typeScratched" beanclass="com.criticalsoftware.mobics.presentation.action.trip.DamageReportActionBean" event="changeIncidentType" class="selected">
+		                            <fmt:message key="damage.report.damage.type.scratched"/>
+		                        </stripes:link>
+		                    </li>
+		                    <li>
+		                    	<stripes:link id="typeSmashed" beanclass="com.criticalsoftware.mobics.presentation.action.trip.DamageReportActionBean" event="changeIncidentType" class="">
+		                           <fmt:message key="damage.report.damage.type.smashed"/>
+		                        </stripes:link>
+		                    </li>
+		                </ul>
+		                <ul><!--Do not remove this empty ul--></ul>
+		            </nav>
 					<stripes:link id="" href="#" class="alertBtn openGaleryBtn gray" >
 	                	<fmt:message key="damage.report.open.galery"/>
 					</stripes:link>
