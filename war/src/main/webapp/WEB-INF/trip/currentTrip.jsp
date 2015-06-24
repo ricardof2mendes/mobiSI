@@ -121,7 +121,7 @@
 							<span>
 								<fmt:message key="trip.detail.car.state"/>
 							</span>
-							<span>
+							<span id="carStateToChange">
 								<fmt:message key="CAR_STATE-${actionBean.current.carState}"/>
 							</span>
 							<span id="carState" style="display:none">${actionBean.current.carState}</span>
@@ -142,12 +142,17 @@
 				
 				<!-- Lock car End trip with js unwanted zone validation-->
 				<c:choose>
-					<c:when test="${actionBean.current.carState == 'IN_USE' || actionBean.current.carState == 'READY' || actionBean.current.carState == 'BOOKED'}">
+					<%-- <c:when test="${actionBean.current.carState == 'IN_USE' || actionBean.current.carState == 'READY' || actionBean.current.carState == 'BOOKED'}"> --%>
+					<c:when test="${actionBean.current.carState == 'READY' || actionBean.current.carState == 'BOOKED'}">
 						<c:choose>
 						<c:when test="${actionBean.current.carState == 'BOOKED'}">
 							<stripes:link id="unlock" beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn green" event="unlockCar" addSourcePage="true">
 								<stripes:param name="licensePlate">${actionBean.current.licensePlate}</stripes:param>
 								<fmt:message key="current.trip.button.unlock.car"/>
+							</stripes:link>
+							<stripes:link id="endTrip" beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn orangered" event="lockEndTrip" addSourcePage="true">
+								<stripes:param name="licensePlate">${actionBean.current.licensePlate}</stripes:param>
+								<fmt:message key="current.trip.button.end.trip"/>
 							</stripes:link>
 						</c:when>
 						</c:choose>
@@ -470,6 +475,10 @@
 						<stripes:param name="licensePlate">${actionBean.current.licensePlate}</stripes:param>
 						<fmt:message key="current.trip.button.unlock.car"/>
 					</stripes:link>
+					<stripes:link id="endTrip" beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn orangered" event="lockEndTrip" addSourcePage="true">
+						<stripes:param name="licensePlate">${actionBean.current.licensePlate}</stripes:param>
+						<fmt:message key="current.trip.button.end.trip"/>
+					</stripes:link>
 				</section>
 			</c:if>
 			
@@ -486,7 +495,8 @@
 			</c:if>
 			
 			<!-- Lock car End trip with js unwanted zone validation-->
-			<c:if test="${actionBean.current.carState == 'READY' || actionBean.current.carState == 'IN_USE'}">		
+			<%-- <c:if test="${actionBean.current.carState == 'READY' || actionBean.current.carState == 'IN_USE'}">	 --%>	
+			<c:if test="${actionBean.current.carState == 'READY'}">		
 				<stripes:link id="endTrip" beanclass="com.criticalsoftware.mobics.presentation.action.trip.TripActionBean" class="linkBtn orangered" event="endTrip" addSourcePage="true">
 					<stripes:param name="licensePlate">${actionBean.current.licensePlate}</stripes:param>
 					<fmt:message key="current.trip.button.lock.car.end.trip"/>
@@ -661,6 +671,21 @@
 					</fmt:message>
 			</h3>
 			</section>
+			<section id="validatingCarState" class="${actionBean.current.carState == 'READY' ? 'hidden' : ''}" >
+				<div id="carState" value="${actionBean.current.carState}" class="hidden" />
+					<h2>
+						<fmt:message key="current.trip.damages.unlocking.car" />
+						&nbsp;&nbsp;&nbsp;<img src="${contextPath}/img/indicator.gif" />
+					</h2>
+					<h3>
+						<fmt:message key="current.trip.validating.seconds">
+							<fmt:param>
+								<mobi:formatMobics type="milliseconds"
+									value="${applicationScope.configuration.unlockPollingTimeoutMilliseconds}" />
+							</fmt:param>
+						</fmt:message>
+					</h3>
+				</section>
 			</article>
 		</div>
 	</c:otherwise>

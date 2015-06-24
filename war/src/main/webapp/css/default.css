@@ -1050,6 +1050,7 @@ nav.panelPicture ul li.detail {
 nav.panel ul li.detail span,
 nav.panelPicture ul li.detail span {
 	display: inline-block;
+	padding-left: 10px;
 }
 
 nav.panel ul li.detail span:nth-child(1) {
