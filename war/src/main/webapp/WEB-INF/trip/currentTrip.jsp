@@ -124,7 +124,7 @@
 							<span id="carStateToChange">
 								<fmt:message key="CAR_STATE-${actionBean.current.carState}"/>
 							</span>
-							<span id="carState" style="display:none">${actionBean.current.carState}</span>
+							<div id="carState" value="${actionBean.current.carState}" class="hidden" />
 						</li>
 						</c:if>
 				</ul>
