@@ -780,18 +780,18 @@ $(document).ready(function() {
  		$('body').addClass('confirmation');
  		
  		if (CAR_DAMAGE_ZONE) {
- 			var cxValue = ((parseInt(COORDINATE_COL))*40)-20;
- 			var cyValue = ((parseInt(COORDINATE_ROW)-10)*30)-15;
+ 			var cxValue = ((parseInt(COORDINATE_COL))*33)-16;
+ 			var cyValue = ((parseInt(COORDINATE_ROW)-10)*25)-12;
  			// Add a new interior damage ball
- 			var circle= makeSVG('circle', {cx: cxValue, cy: cyValue, r:15, row:COORDINATE_ROW, col: COORDINATE_COL, class:'toReport'});
+ 			var circle= makeSVG('circle', {cx: cxValue, cy: cyValue, r:10, row:COORDINATE_ROW, col: COORDINATE_COL, class:'toReport'});
  			$("#imageInternal").append(circle);
  			LAST_DAMAGE_CIRCLE = circle;
  		} else {
  			// Add a new exterior damage ball
- 			var cxValue = ((parseInt(COORDINATE_COL))*40)-20;
- 			var cyValue = ((parseInt(COORDINATE_ROW)+1)*32)-16;
+ 			var cxValue = ((parseInt(COORDINATE_COL))*33)-12;
+ 			var cyValue = ((parseInt(COORDINATE_ROW)+1)*27)-13;
  			// Add a new interior damage ball
- 			var circle= makeSVG('circle', {cx: cxValue, cy: cyValue, r:15, row:COORDINATE_ROW, col: COORDINATE_COL, class:'toReport'});
+ 			var circle= makeSVG('circle', {cx: cxValue, cy: cyValue, r:10, row:COORDINATE_ROW, col: COORDINATE_COL, class:'toReport'});
  			$("#imageExternal").append(circle);
  			LAST_DAMAGE_CIRCLE = circle;
  		}
@@ -1009,23 +1009,23 @@ $(document).ready(function() {
 // 		console.log("Continue Clicked");
 // 	});
  	
- 	$('#continueToTrip').on('click', function(e){
- 		e.preventDefault();
+ 	//if (!$('#validatingCarState').hasClass('hidden') && $('#validatingCarState').length) {
+ 	if ($('#carState').length && ($('#carState').attr('value').indexOf("IN_USE") > -1) && ( ($('#validatingCarState').length) && (!$('#validatingCarState').hasClass('hidden')))) {
  		$('div.confirm2 > article section').each(function(){
             $(this).hide();
         });
  		
 		var url = {
 				timeout : UNLOCK_TIMEOUT_INTERVAL,
-				validate: CONTEXT_PATH + '/trip/DamageReport.action?validatePin&pin='+$('input[name=pin]').val()+'&licensePlate='+$('input[name=licensePlate]').val(),
- 				pooling : CONTEXT_PATH + '/trip/DamageReport.action?getCarState=',
+				pooling : CONTEXT_PATH + '/trip/Trip.action?getCarState=',
  				carState: READY,
- 				redirect: CONTEXT_PATH + '/trip/Trip.action'
+ 				redirect: CONTEXT_PATH + '/trip/Trip.action',
+ 				resultAction: 'TIMEOUT'
  			};
 		
-		validatePinAndWait(url);
- 		
- 	});
+		validateCarState(url);
+ 	}
+ 	
 /*********************************  End - Damages Listeners ************************/
  	
 });
@@ -1088,7 +1088,11 @@ function lockUnlockProcess(){
 							}		
 				 		} else if (urlLU.carState && (urlLU.carState.indexOf(evaluated) > -1)) {
 				 			clearInterval(timerVarLU);
+				 			//$('body').removeClass('confirmation');
+//				 			$('#statePooling').hide();
+//				 			$('#carStateToChange').html(READY);
 				 			window.location.href = urlLU.redirect;
+				 			
 				 		}
 						
 			        } else {
@@ -1136,25 +1140,22 @@ function lockUnlockAndWait(url) {
 	    });
 }
 
-function validatePinAndWait(url) {
+function validateCarState(url) {
 	urlLU = url;
-	
+	// add modal
+	//$('body').addClass('confirmation');
+	// show message
+	$('#statePooling').show();
 	// do active pooling
-	$.get(url.validate, 
+	$.get(url.pooling, 
 		function(data, textStatus, jqXHR){
 			dataLU = data;
 			textStatusLU = textStatus;
 			jqXHRLU = jqXHR;
 			if (jqXHR.getResponseHeader('Stripes-Success') === 'OK') {
-				// add modal
-				$('body').addClass('confirmation');
-				$('body').on('touchmove', 'body', function(e){
-					e.preventDefault();
-				});
-				// show message
-				$('#validating').show();
+				
 				var state = eval(dataLU);
-				if(state != null && (state.indexOf(IN_USE) >-1 )) {
+				if(state != null && ((state.indexOf(IN_USE) >-1 ) || (state.indexOf(READY) >-1 ))) {
 					retriesLU = Math.floor(url.timeout / smallAttemptIntervalLU) + ATTEMPT_FRACTION - 1;
 					timerVarLU = setInterval( lockUnlockProcess , smallAttemptIntervalLU);
 				}

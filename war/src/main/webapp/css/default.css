@@ -1290,14 +1290,14 @@ nav.damageToReport ul li {
 
 svg {
 	display: block;
-	/* margin-left: auto; */
+	margin-left: auto;
 	margin-right: auto;
 }
 
 
 rect {
-	/* fill: red;
-	stroke: black; */
+	/* fill: red; */
+	/* stroke: black; */
 	opacity: 0; 
 	display:none;
 	cursor: pointer;
