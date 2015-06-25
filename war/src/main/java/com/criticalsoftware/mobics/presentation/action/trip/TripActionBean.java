@@ -141,7 +141,7 @@ public class TripActionBean extends BaseActionBean {
             resolution = new ForwardResolution("/WEB-INF/trip/lastTrip.jsp");
         }
         // Send the user to damages report action
-        else if (this.current.getCarState().equals(IN_USE)) {
+        else if (this.current.getCarState().equals(IN_USE) && current.getShowDamageReport()) {
             LOGGER.debug("State: " + this.current.getCarState());
 
             return new RedirectResolution(DamageReportActionBean.class);

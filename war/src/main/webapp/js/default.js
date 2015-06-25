@@ -1013,21 +1013,21 @@ $(document).ready(function() {
 // 	});
  	
  	//if (!$('#validatingCarState').hasClass('hidden') && $('#validatingCarState').length) {
- 	if ($('#carState').length && ($('#carState').attr('value').indexOf("IN_USE") > -1) && ( ($('#validatingCarState').length) && (!$('#validatingCarState').hasClass('hidden')))) {
- 		$('div.confirm2 > article section').each(function(){
-            $(this).hide();
-        });
- 		
-		var url = {
-				timeout : UNLOCK_TIMEOUT_INTERVAL,
-				pooling : CONTEXT_PATH + '/trip/Trip.action?getCarState=',
- 				carState: READY,
- 				redirect: CONTEXT_PATH + '/trip/Trip.action',
- 				resultAction: 'TIMEOUT'
- 			};
-		
-		validateCarState(url);
- 	}
+// 	if ($('#carState').length && ($('#carState').attr('value').indexOf("IN_USE") > -1) && ( ($('#validatingCarState').length) && (!$('#validatingCarState').hasClass('hidden')))) {
+// 		$('div.confirm2 > article section').each(function(){
+//            $(this).hide();
+//        });
+// 		
+//		var url = {
+//				timeout : UNLOCK_TIMEOUT_INTERVAL,
+//				pooling : CONTEXT_PATH + '/trip/Trip.action?getCarState=',
+// 				carState: READY,
+// 				redirect: CONTEXT_PATH + '/trip/Trip.action',
+// 				resultAction: 'TIMEOUT'
+// 			};
+//		
+//		validateCarState(url);
+// 	}
  	
 /*********************************  End - Damages Listeners ************************/
  	
