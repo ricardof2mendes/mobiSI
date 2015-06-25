@@ -1007,11 +1007,6 @@ $(document).ready(function() {
         $('#removeImg').unbind('click');
  	});
  	
-// 	$('input[name=continueToTripBtn]').on('click', function(e){
-// 		e.preventDefault();
-// 		console.log("Continue Clicked");
-// 	});
- 	
  	
  	// Unlock
  	$('#continueToTrip').on('click', function(e) {
@@ -1019,22 +1014,21 @@ $(document).ready(function() {
  		
  		var pin = $('#pin').val();
  		if (pin.length < 4) {
- 			var url = {
-				call: CONTEXT_PATH + '/trip/DamageReport.action?getPinMessageError&pinErrorMessageId=1',
- 			};
-			getPinErrorMessage(url);
+ 			if (navigator.language.indexOf("en") > -1) {
+				$('.globalErrors').html("<section class=\"errors\"><div><strong>Unable to submit.</strong></div><ul><li>Pin must be at least 4 characters long.</li></ul></section>");
+			} else {
+				$('.globalErrors').html("<section class=\"errors\"><div><strong>Erro.</strong></div><ul><li>PIN precisa de ter pelo menos 4 caracteres.</li></ul></section>");
+			}
 			return false;
  		} else if (pin.length > 4) {
- 			var url = {
-				call: CONTEXT_PATH + '/trip/DamageReport.action?getPinMessageError&pinErrorMessageId=2',
- 			};
-			getPinErrorMessage(url);
+ 			if (navigator.language.indexOf("en") > -1) {
+				$('.globalErrors').html("<section class=\"errors\"><div><strong>Unable to submit.</strong></div><ul><li>Pin must be no more than 4 characters long.</li></ul></section>");
+			} else {
+				$('.globalErrors').html("<section class=\"errors\"><div><strong>Erro.</strong></div><ul><li>PIN não pode ter mais 4 caracteres.</li></ul></section>");
+			}
 			return false;
  		}
  		
-//        $('div.confirm2 > article section').each(function(){
-//            $(this).hide();
-//        });
  		// show message
  		$('body').addClass('confirmation');
  		$('#unlocking').show();
@@ -1051,22 +1045,6 @@ $(document).ready(function() {
 		validateCarState(url);
  	});
  	
- 	//if (!$('#validatingCarState').hasClass('hidden') && $('#validatingCarState').length) {
-// 	if ($('#carState').length && ($('#carState').attr('value').indexOf("IN_USE") > -1) && ( ($('#validatingCarState').length) && (!$('#validatingCarState').hasClass('hidden')))) {
-// 		$('div.confirm2 > article section').each(function(){
-//            $(this).hide();
-//        });
-// 		
-//		var url = {
-//				timeout : UNLOCK_TIMEOUT_INTERVAL,
-//				pooling : CONTEXT_PATH + '/trip/Trip.action?getCarState=',
-// 				carState: READY,
-// 				redirect: CONTEXT_PATH + '/trip/Trip.action',
-// 				resultAction: 'TIMEOUT'
-// 			};
-//		
-//		validateCarState(url);
-// 	}
  	
 /*********************************  End - Damages Listeners ************************/
  	
@@ -1133,7 +1111,7 @@ function lockUnlockProcess(){
 				 			//$('body').removeClass('confirmation');
 //				 			$('#statePooling').hide();
 //				 			$('#carStateToChange').html(READY);
-				 			window.location.href = urlLU.redirect;
+				 			window.location.href = urlLU.redirect + "?errorMessages";
 				 			
 				 		}
 						
@@ -1197,36 +1175,20 @@ function validateCarState(url) {
 			if (jqXHR.getResponseHeader('Stripes-Success') === 'OK') {
 				
 				var result = eval(dataLU);
-				//if(state != null && ((state.indexOf(IN_USE) >-1 ) || (state.indexOf(READY) >-1 ))) {
+
 				if (result.indexOf("PIN_OK") > -1) {
 					retriesLU = Math.floor(urlLU.timeout / smallAttemptIntervalLU) + ATTEMPT_FRACTION - 1;
 					timerVarLU = setInterval( lockUnlockProcess , smallAttemptIntervalLU);
 				} else if (result.indexOf("PIN_ERROR") > -1) {
-					$('.globalErrors').html("<section class=\"errors\"><div><strong>Unable to submit.</strong></div><ul><li>Invalid Pin</li></ul></section>");
-					var url = {
-						call: CONTEXT_PATH + '/trip/DamageReport.action?getPinMessageError&pinErrorMessageId=3',
-		 			};
-					getPinErrorMessage(url);
+					$('body').removeClass('confirmation');
+		 			$('#unlocking').hide();
+					if (navigator.language.indexOf("en") > -1) {
+						$('.globalErrors').html("<section class=\"errors\"><div><strong>Unable to submit.</strong></div><ul><li>Invalid Pin</li></ul></section>");
+					} else {
+						$('.globalErrors').html("<section class=\"errors\"><div><strong>Erro.</strong></div><ul><li>Pin Inválido</li></ul></section>");
+					}
 					return false;
 				}
-	        } else {
-	            console.log('An error has occurred or the user\'s session has expired!');
-	            $('html').html(dataLU);
-	        }
-	    });
-}
-
-function getPinErrorMessage(url) {
-
-	$.get(url.call, 
-		function(data, textStatus, jqXHR){
-			dataLU = data;
-			textStatusLU = textStatus;
-			jqXHRLU = jqXHR;
-			if (jqXHR.getResponseHeader('Stripes-Success') === 'OK') {
-				$('.globalErrors').html(dataLU);
-				$('body').removeClass('confirmation');
-				$('#unlocking').hide();
 	        } else {
 	            console.log('An error has occurred or the user\'s session has expired!');
 	            $('html').html(dataLU);

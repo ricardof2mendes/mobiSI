@@ -49,7 +49,7 @@ import com.criticalsoftware.mobics.car.CarDamageType;
 import com.criticalsoftware.mobics.car.FileAttachmentDTO;
 import com.criticalsoftware.mobics.car.FileAttachmentTypeEnum;
 import com.criticalsoftware.mobics.fleet.CarDTO;
-import com.criticalsoftware.mobics.presentation.action.account.AskPinActionBean;
+import com.criticalsoftware.mobics.presentation.action.BaseActionBean;
 import com.criticalsoftware.mobics.presentation.extension.DatetimeTypeConverter;
 import com.criticalsoftware.mobics.presentation.security.AuthenticationUtil;
 import com.criticalsoftware.mobics.presentation.security.MobiCSSecure;
@@ -71,7 +71,7 @@ import com.criticalsoftware.mobics.proxy.fleet.FleetWSServiceStub;
  * @version $Revision: 562 $
  */
 @MobiCSSecure
-public class DamageReportActionBean extends AskPinActionBean {
+public class DamageReportActionBean extends BaseActionBean {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(DamageReportActionBean.class);
 
@@ -115,7 +115,7 @@ public class DamageReportActionBean extends AskPinActionBean {
     // @Validate(required = true, on = { "data", "saveData" }, minlength = 4, maxlength = 4)
     private Integer pin;
 
-    private Integer pinErrorMessageId;
+    private Integer errorCode;
 
     /**
      * Default handler
@@ -347,32 +347,6 @@ public class DamageReportActionBean extends AskPinActionBean {
     }
 
     /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Resolution main() {
-        LOGGER.debug("MAIN");
-        return null;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Resolution data() throws Exception {
-        return new RedirectResolution(DamageReportActionBean.class).flash(this);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Resolution saveData() throws Exception {
-        LOGGER.debug("SAVE DATA");
-        return null;
-    }
-
-    /**
      * Validation method for PIN
      *
      * @param errors
@@ -388,6 +362,7 @@ public class DamageReportActionBean extends AskPinActionBean {
                 AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this.getContext()
                         .getUser().getPassword()));
         this.getContext().getResponse().setHeader("Stripes-Success", "OK");
+        this.pin = Integer.parseInt(this.getContext().getRequest().getParameter("pin"));
         if (!customerWSServiceStub.isValidCustomerPin(this.pin.toString())) {
             this.getContext().getValidationErrors()
             .addGlobalError(new LocalizableError("account.security.check.pin.invalid"));
@@ -408,26 +383,22 @@ public class DamageReportActionBean extends AskPinActionBean {
                 LOGGER.error("Car License Plate Not Found");
                 return new JavaScriptResolution("PIN_ERROR");
             }
-            // return new ForwardResolution("/WEB-INF/trip/currentTrip.jsp");
-            // return new RedirectResolution(TripActionBean.class);
         }
         return new JavaScriptResolution("PIN_OK");
     }
 
-    public Resolution getPinMessageError() {
+    public Resolution errorMessages() throws RemoteException, UnsupportedEncodingException,
+            CustomerNotFoundExceptionException, CarLicensePlateNotFoundExceptionException,
+            com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException,
+            CarNotFoundExceptionException,
+            com.criticalsoftware.mobics.proxy.car.CarLicensePlateNotFoundExceptionException {
         this.getContext().getResponse().setHeader("Stripes-Success", "OK");
-        if (this.pinErrorMessageId == 1) { // < 4
-            LOGGER.debug("STRING RESULT: " + new LocalizableMessage("error.InvalidCustomerPin.at.least").getMessage());
-            return new JavaScriptResolution(new LocalizableMessage("error.InvalidCustomerPin.at.least").getMessage());
-        } else if (this.pinErrorMessageId == 2) { // > 4
-            LOGGER.debug("STRING RESULT: "
-                    + new LocalizableMessage("error.InvalidCustomerPin.no.more.than").getMessage());
-            return new JavaScriptResolution(
-                    new LocalizableMessage("error.InvalidCustomerPin.no.more.than").getMessage());
-        }
-        // Invalid
-        LOGGER.debug("STRING RESULT: " + new LocalizableMessage("error.InvalidCustomerPin.error").getMessage());
-        return new JavaScriptResolution(new LocalizableMessage("error.InvalidCustomerPin.error").getMessage());
+
+        this.errorCode = Integer.parseInt(this.getContext().getRequest().getParameter("errorCode"));
+        this.getContext().getValidationErrors()
+                .addGlobalError(new LocalizableError("current.trip.communication.message.error"));
+        return new RedirectResolution(DamageReportActionBean.class).flash(this);
+
     }
 
     public Resolution getCarState() throws UnsupportedEncodingException, RemoteException,
@@ -626,7 +597,7 @@ public class DamageReportActionBean extends AskPinActionBean {
     /**
      * @return the pin
      */
-    @Override
+    // @Override
     public Integer getPin() {
         return this.pin;
     }
@@ -634,23 +605,23 @@ public class DamageReportActionBean extends AskPinActionBean {
     /**
      * @param pin the pin to set
      */
-    @Override
+    // @Override
     public void setPin(final Integer pin) {
         this.pin = pin;
     }
 
     /**
-     * @return the pinErrorMessageId
+     * @return the errorCode
      */
-    public Integer getPinErrorMessageId() {
-        return this.pinErrorMessageId;
+    public Integer getErrorCode() {
+        return this.errorCode;
     }
 
     /**
-     * @param pinErrorMessageId the pinErrorMessageId to set
+     * @param errorCode the pinErrorMessageId to set
      */
-    public void setPinErrorMessageId(final Integer pinErrorMessageId) {
-        this.pinErrorMessageId = pinErrorMessageId;
+    public void setErrorCode(final Integer errorCode) {
+        this.errorCode = errorCode;
     }
 
 }
