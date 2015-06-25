@@ -112,8 +112,10 @@ public class DamageReportActionBean extends AskPinActionBean {
     private final List<String> lines_interior = Arrays.asList("L", "M", "M", "N", "O", "P", "Q", "R", "S", "T", "U",
             "V");
 
-    @Validate(required = true, on = { "data", "saveData" }, minlength = 4, maxlength = 4)
+    // @Validate(required = true, on = { "data", "saveData" }, minlength = 4, maxlength = 4)
     private Integer pin;
+
+    private Integer pinErrorMessageId;
 
     /**
      * Default handler
@@ -278,9 +280,9 @@ public class DamageReportActionBean extends AskPinActionBean {
 
             // Clear the incident type string
             if ("SCRATCHED".equals(incTypes[i].trim())) {
-            	damageTypes[i] = CarDamageType.SCRATCHED;
+                damageTypes[i] = CarDamageType.SCRATCHED;
             } else if ("SMASHED".equals(incTypes[i].trim())) {
-            	damageTypes[i] = CarDamageType.SMASHED;
+                damageTypes[i] = CarDamageType.SMASHED;
             }
         }
 
@@ -377,7 +379,7 @@ public class DamageReportActionBean extends AskPinActionBean {
      * @throws RemoteException
      * @throws UnsupportedEncodingException
      */
-    @ValidationMethod(when = ValidationState.NO_ERRORS, on = "data")
+    // @ValidationMethod(when = ValidationState.NO_ERRORS, on = "data")
     public Resolution validation() throws RemoteException, UnsupportedEncodingException {
 
         final CustomerWSServiceStub customerWSServiceStub = new CustomerWSServiceStub(
@@ -385,10 +387,11 @@ public class DamageReportActionBean extends AskPinActionBean {
         customerWSServiceStub._getServiceClient().addHeader(
                 AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this.getContext()
                         .getUser().getPassword()));
+        this.getContext().getResponse().setHeader("Stripes-Success", "OK");
         if (!customerWSServiceStub.isValidCustomerPin(this.pin.toString())) {
             this.getContext().getValidationErrors()
             .addGlobalError(new LocalizableError("account.security.check.pin.invalid"));
-
+            return new JavaScriptResolution("PIN_ERROR");
         } else {
 
             final CarWSServiceStub carWSServiceStub = new CarWSServiceStub(Configuration.INSTANCE.getCarEndpoint());
@@ -400,13 +403,31 @@ public class DamageReportActionBean extends AskPinActionBean {
                 this.getContext().getMessages().add(new LocalizableMessage("trip.detail.unlock_sucess"));
             } catch (final com.criticalsoftware.mobics.proxy.car.CustomerNotFoundExceptionException e) {
                 LOGGER.error("Customer Not Found");
+                return new JavaScriptResolution("PIN_ERROR");
             } catch (final com.criticalsoftware.mobics.proxy.car.CarLicensePlateNotFoundExceptionException e) {
                 LOGGER.error("Car License Plate Not Found");
+                return new JavaScriptResolution("PIN_ERROR");
             }
-            return new ForwardResolution("/WEB-INF/trip/currentTrip.jsp");
+            // return new ForwardResolution("/WEB-INF/trip/currentTrip.jsp");
             // return new RedirectResolution(TripActionBean.class);
         }
-        return new RedirectResolution(DamageReportActionBean.class).flash(this);
+        return new JavaScriptResolution("PIN_OK");
+    }
+
+    public Resolution getPinMessageError() {
+        this.getContext().getResponse().setHeader("Stripes-Success", "OK");
+        if (this.pinErrorMessageId == 1) { // < 4
+            LOGGER.debug("STRING RESULT: " + new LocalizableMessage("error.InvalidCustomerPin.at.least").getMessage());
+            return new JavaScriptResolution(new LocalizableMessage("error.InvalidCustomerPin.at.least").getMessage());
+        } else if (this.pinErrorMessageId == 2) { // > 4
+            LOGGER.debug("STRING RESULT: "
+                    + new LocalizableMessage("error.InvalidCustomerPin.no.more.than").getMessage());
+            return new JavaScriptResolution(
+                    new LocalizableMessage("error.InvalidCustomerPin.no.more.than").getMessage());
+        }
+        // Invalid
+        LOGGER.debug("STRING RESULT: " + new LocalizableMessage("error.InvalidCustomerPin.error").getMessage());
+        return new JavaScriptResolution(new LocalizableMessage("error.InvalidCustomerPin.error").getMessage());
     }
 
     public Resolution getCarState() throws UnsupportedEncodingException, RemoteException,
@@ -616,6 +637,20 @@ public class DamageReportActionBean extends AskPinActionBean {
     @Override
     public void setPin(final Integer pin) {
         this.pin = pin;
+    }
+
+    /**
+     * @return the pinErrorMessageId
+     */
+    public Integer getPinErrorMessageId() {
+        return this.pinErrorMessageId;
+    }
+
+    /**
+     * @param pinErrorMessageId the pinErrorMessageId to set
+     */
+    public void setPinErrorMessageId(final Integer pinErrorMessageId) {
+        this.pinErrorMessageId = pinErrorMessageId;
     }
 
 }

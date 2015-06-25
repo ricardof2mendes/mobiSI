@@ -44,7 +44,9 @@
 				</div>
 			</section>
 		</article>
-		<div class="confirm2">
+	</stripes:form>
+	
+	<div class="confirm2">
 			<article>
 				<section id="validating" class="hidden">
 					<h2>
@@ -60,7 +62,16 @@
 						</fmt:message>
 					</h3>
 				</section>
+				<section id="unlocking" class="hidden">
+					<h2><fmt:message key="current.trip.unlocking.car"/>&nbsp;&nbsp;&nbsp;<img src="${contextPath}/img/indicator.gif"/></h2>
+					<h3>
+						<fmt:message key="current.trip.validating.seconds">
+							<fmt:param>
+								<mobi:formatMobics type="milliseconds" value="${applicationScope.configuration.unlockPollingTimeoutMilliseconds}"/>
+							</fmt:param>
+						</fmt:message>
+					</h3>
+				</section>
 			</article>
 		</div>
-	</stripes:form>
 </t:main>

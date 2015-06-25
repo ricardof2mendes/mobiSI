@@ -1012,6 +1012,45 @@ $(document).ready(function() {
 // 		console.log("Continue Clicked");
 // 	});
  	
+ 	
+ 	// Unlock
+ 	$('#continueToTrip').on('click', function(e) {
+ 		e.preventDefault();
+ 		
+ 		var pin = $('#pin').val();
+ 		if (pin.length < 4) {
+ 			var url = {
+				call: CONTEXT_PATH + '/trip/DamageReport.action?getPinMessageError&pinErrorMessageId=1',
+ 			};
+			getPinErrorMessage(url);
+			return false;
+ 		} else if (pin.length > 4) {
+ 			var url = {
+				call: CONTEXT_PATH + '/trip/DamageReport.action?getPinMessageError&pinErrorMessageId=2',
+ 			};
+			getPinErrorMessage(url);
+			return false;
+ 		}
+ 		
+//        $('div.confirm2 > article section').each(function(){
+//            $(this).hide();
+//        });
+ 		// show message
+ 		$('body').addClass('confirmation');
+ 		$('#unlocking').show();
+		var url = {
+				timeout : UNLOCK_TIMEOUT_INTERVAL,
+ 				lockunlock: $(this).prop('href'), 
+				call: CONTEXT_PATH + '/trip/DamageReport.action?validation&pin=' + $('#pin').val() + "&licensePlate="+$("input[name=licensePlate]").val(),
+				pooling : CONTEXT_PATH + '/trip/DamageReport.action?getCarState=',
+ 				carState: READY,
+ 				redirect: CONTEXT_PATH + '/trip/Trip.action',
+ 				resultAction: 'TIMEOUT'
+ 			};
+		
+		validateCarState(url);
+ 	});
+ 	
  	//if (!$('#validatingCarState').hasClass('hidden') && $('#validatingCarState').length) {
 // 	if ($('#carState').length && ($('#carState').attr('value').indexOf("IN_USE") > -1) && ( ($('#validatingCarState').length) && (!$('#validatingCarState').hasClass('hidden')))) {
 // 		$('div.confirm2 > article section').each(function(){
@@ -1148,20 +1187,46 @@ function validateCarState(url) {
 	// add modal
 	//$('body').addClass('confirmation');
 	// show message
-	$('#statePooling').show();
+	//$('#unlocking').show();
 	// do active pooling
-	$.get(url.pooling, 
+	$.get(url.call, 
 		function(data, textStatus, jqXHR){
 			dataLU = data;
 			textStatusLU = textStatus;
 			jqXHRLU = jqXHR;
 			if (jqXHR.getResponseHeader('Stripes-Success') === 'OK') {
 				
-				var state = eval(dataLU);
-				if(state != null && ((state.indexOf(IN_USE) >-1 ) || (state.indexOf(READY) >-1 ))) {
-					retriesLU = Math.floor(url.timeout / smallAttemptIntervalLU) + ATTEMPT_FRACTION - 1;
+				var result = eval(dataLU);
+				//if(state != null && ((state.indexOf(IN_USE) >-1 ) || (state.indexOf(READY) >-1 ))) {
+				if (result.indexOf("PIN_OK") > -1) {
+					retriesLU = Math.floor(urlLU.timeout / smallAttemptIntervalLU) + ATTEMPT_FRACTION - 1;
 					timerVarLU = setInterval( lockUnlockProcess , smallAttemptIntervalLU);
+				} else if (result.indexOf("PIN_ERROR") > -1) {
+					$('.globalErrors').html("<section class=\"errors\"><div><strong>Unable to submit.</strong></div><ul><li>Invalid Pin</li></ul></section>");
+					var url = {
+						call: CONTEXT_PATH + '/trip/DamageReport.action?getPinMessageError&pinErrorMessageId=3',
+		 			};
+					getPinErrorMessage(url);
+					return false;
 				}
+	        } else {
+	            console.log('An error has occurred or the user\'s session has expired!');
+	            $('html').html(dataLU);
+	        }
+	    });
+}
+
+function getPinErrorMessage(url) {
+
+	$.get(url.call, 
+		function(data, textStatus, jqXHR){
+			dataLU = data;
+			textStatusLU = textStatus;
+			jqXHRLU = jqXHR;
+			if (jqXHR.getResponseHeader('Stripes-Success') === 'OK') {
+				$('.globalErrors').html(dataLU);
+				$('body').removeClass('confirmation');
+				$('#unlocking').hide();
 	        } else {
 	            console.log('An error has occurred or the user\'s session has expired!');
 	            $('html').html(dataLU);
