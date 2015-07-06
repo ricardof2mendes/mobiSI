@@ -12,7 +12,6 @@
  */
 package com.criticalsoftware.mobics.presentation.action.trip;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -22,32 +21,14 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import javax.activation.DataHandler;
-
-import net.sourceforge.stripes.action.DefaultHandler;
-import net.sourceforge.stripes.action.DontValidate;
-import net.sourceforge.stripes.action.FileBean;
-import net.sourceforge.stripes.action.ForwardResolution;
-import net.sourceforge.stripes.action.LocalizableMessage;
-import net.sourceforge.stripes.action.RedirectResolution;
-import net.sourceforge.stripes.action.Resolution;
-import net.sourceforge.stripes.ajax.JavaScriptResolution;
-import net.sourceforge.stripes.validation.LocalizableError;
-import net.sourceforge.stripes.validation.Validate;
-import net.sourceforge.stripes.validation.ValidateNestedProperties;
-import net.sourceforge.stripes.validation.ValidationErrors;
-import net.sourceforge.stripes.validation.ValidationMethod;
-import net.sourceforge.stripes.validation.ValidationState;
-
-import org.apache.axiom.attachments.ByteArrayDataSource;
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.criticalsoftware.mobics.booking.CurrentTripDTO;
 import com.criticalsoftware.mobics.car.CarDamageDetailsListDTO;
 import com.criticalsoftware.mobics.car.CarDamageType;
-import com.criticalsoftware.mobics.car.FileAttachmentDTO;
-import com.criticalsoftware.mobics.car.FileAttachmentTypeEnum;
 import com.criticalsoftware.mobics.fleet.CarDTO;
 import com.criticalsoftware.mobics.presentation.action.BaseActionBean;
 import com.criticalsoftware.mobics.presentation.extension.DatetimeTypeConverter;
@@ -65,6 +46,21 @@ import com.criticalsoftware.mobics.proxy.car.EventInClosedStateExceptionExceptio
 import com.criticalsoftware.mobics.proxy.car.EventValidationExceptionException;
 import com.criticalsoftware.mobics.proxy.customer.CustomerWSServiceStub;
 import com.criticalsoftware.mobics.proxy.fleet.FleetWSServiceStub;
+
+import net.sourceforge.stripes.action.DefaultHandler;
+import net.sourceforge.stripes.action.DontValidate;
+import net.sourceforge.stripes.action.FileBean;
+import net.sourceforge.stripes.action.ForwardResolution;
+import net.sourceforge.stripes.action.LocalizableMessage;
+import net.sourceforge.stripes.action.RedirectResolution;
+import net.sourceforge.stripes.action.Resolution;
+import net.sourceforge.stripes.ajax.JavaScriptResolution;
+import net.sourceforge.stripes.validation.LocalizableError;
+import net.sourceforge.stripes.validation.Validate;
+import net.sourceforge.stripes.validation.ValidateNestedProperties;
+import net.sourceforge.stripes.validation.ValidationErrors;
+import net.sourceforge.stripes.validation.ValidationMethod;
+import net.sourceforge.stripes.validation.ValidationState;
 
 /**
  * @author embarros
@@ -104,7 +100,7 @@ public class DamageReportActionBean extends BaseActionBean {
 
     private List<FileBean> files;
 
-    private FileAttachmentDTO[] imageFiles;
+    private String[] imageFiles;
 
     private CarDamageDetailsListDTO[] carDamages;
 
@@ -234,31 +230,12 @@ public class DamageReportActionBean extends BaseActionBean {
         if (this.files != null) {
             this.files.removeAll(Collections.singleton(null));
             int fileCount = 0;
-            this.imageFiles = new FileAttachmentDTO[this.files.size()];
+            this.imageFiles = new String[this.files.size()];
             for (final FileBean file : this.files) {
-                final ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
                 final InputStream inputStream = file.getInputStream();
-                final byte[] buffer = new byte[1024];
-                int read;
-                while ((read = inputStream.read(buffer)) >= 0) {
-                    outputStream.write(buffer, 0, read);
-                }
-                final byte[] contentAsByteArray = outputStream.toByteArray();
-                final ByteArrayDataSource rawData = new ByteArrayDataSource(contentAsByteArray);
-
-                final DataHandler data = new DataHandler(rawData);
-
-                final FileAttachmentDTO attFile = new FileAttachmentDTO();
-
-                attFile.setFileName(this.licensePlate + "_" + fileCount + "." + file.getContentType().split("/")[1]);
-                attFile.setMimeType(file.getContentType());
-
-                attFile.setFileContents(data);
-
-                attFile.setType(FileAttachmentTypeEnum.CAR_IMAGE);
-
+                byte[] imageBytes = IOUtils.toByteArray(inputStream);
+                this.imageFiles[fileCount++] = Base64.encodeBase64String(imageBytes);
                 file.delete();
-                this.imageFiles[fileCount++] = attFile;
             }
         }
 
@@ -388,15 +365,15 @@ public class DamageReportActionBean extends BaseActionBean {
     }
 
     public Resolution errorMessages() throws RemoteException, UnsupportedEncodingException,
-            CustomerNotFoundExceptionException, CarLicensePlateNotFoundExceptionException,
-            com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException,
-            CarNotFoundExceptionException,
-            com.criticalsoftware.mobics.proxy.car.CarLicensePlateNotFoundExceptionException {
+    CustomerNotFoundExceptionException, CarLicensePlateNotFoundExceptionException,
+    com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException,
+    CarNotFoundExceptionException,
+    com.criticalsoftware.mobics.proxy.car.CarLicensePlateNotFoundExceptionException {
         this.getContext().getResponse().setHeader("Stripes-Success", "OK");
 
         this.errorCode = Integer.parseInt(this.getContext().getRequest().getParameter("errorCode"));
         this.getContext().getValidationErrors()
-                .addGlobalError(new LocalizableError("current.trip.communication.message.error"));
+        .addGlobalError(new LocalizableError("current.trip.communication.message.error"));
         return new RedirectResolution(DamageReportActionBean.class).flash(this);
 
     }
@@ -569,14 +546,14 @@ public class DamageReportActionBean extends BaseActionBean {
     /**
      * @return the imageFiles
      */
-    public final FileAttachmentDTO[] getImageFiles() {
+    public final String[] getImageFiles() {
         return this.imageFiles;
     }
 
     /**
      * @param imageFiles the imageFiles to set
      */
-    public final void setImageFiles(final FileAttachmentDTO[] imageFiles) {
+    public final void setImageFiles(final String[] imageFiles) {
         this.imageFiles = imageFiles;
     }
 
