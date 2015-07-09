@@ -685,7 +685,6 @@ $(document).ready(function() {
  	
  	/*********************************  Begin - Damages Listeners ************************/
  	
- 	//TODO embarros: Get the session data if exists and display at the image. (To do this the user should be able to delete damage unreported)
  	// Clear the session data - Remove possibles data from page reload or error's on submit
  	sessionStorage.clear();
  	
@@ -781,14 +780,14 @@ $(document).ready(function() {
  		
  		if (CAR_DAMAGE_ZONE) {
  			var cxValue = ((parseInt(COORDINATE_COL))*33)-16;
- 			var cyValue = ((parseInt(COORDINATE_ROW)-10)*25)-12;
+ 			var cyValue = ((parseInt(COORDINATE_ROW)-10)*27)-13;
  			// Add a new interior damage ball
  			var circle= makeSVG('circle', {cx: cxValue, cy: cyValue, r:10, row:COORDINATE_ROW, col: COORDINATE_COL, class:'toReport'});
  			$("#imageInternal").append(circle);
  			LAST_DAMAGE_CIRCLE = circle;
  		} else {
  			// Add a new exterior damage ball
- 			var cxValue = ((parseInt(COORDINATE_COL))*33)-12;
+ 			var cxValue = ((parseInt(COORDINATE_COL))*33)-16;
  			var cyValue = ((parseInt(COORDINATE_ROW)+1)*27)-13;
  			// Add a new interior damage ball
  			var circle= makeSVG('circle', {cx: cxValue, cy: cyValue, r:10, row:COORDINATE_ROW, col: COORDINATE_COL, class:'toReport'});
@@ -831,6 +830,7 @@ $(document).ready(function() {
  	      if(result[property] == value) {
  	          //Remove from array
  	          array.splice(index, 1);
+ 	          return false;
  	      }    
  	   });
  	}

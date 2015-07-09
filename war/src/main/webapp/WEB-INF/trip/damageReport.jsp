@@ -87,10 +87,10 @@
 									usemap="#damageZoneMap" width="300" height="300"/>
 								<!-- Draw the clickable area -->
 								<c:set var="row" value="11" scope="page" />
-								<c:forEach begin="0" end="275" step="25" var="lines">
+								<c:forEach begin="0" end="273" step="27" var="lines">
 									<c:set var="col" value="1" scope="page" />
 									<c:forEach begin="0" end="267"  step="33" var="columns">
-								    	<rect class="interiorRect" width="33" height="25"
+								    	<rect class="interiorRect" width="33" height="27"
 								    		x="<c:out value="${columns}"/>" 
 								    		y="<c:out value="${lines}"/>"  
 								    		row="<c:out value="${row}"/>" 
@@ -103,8 +103,8 @@
 								<c:forEach items="${actionBean.carDamages}" var="damages">
 									<c:if test="${damages.row >= 11 }">
 							    		<circle r="10"
-							    			cx="<c:out value="${((damages.col)*33)-17}"/>" 
-							    			cy="<c:out value="${((damages.row-10)*25)-12}"/>"  
+							    			cx="<c:out value="${((damages.col)*33)-16}"/>" 
+							    			cy="<c:out value="${((damages.row-10)*27)-13}"/>"  
 							    			row="<c:out value="${damages.row}"/>" 
 							    			col="<c:out value="${damages.col}"/>"  />
 							    	</c:if>
