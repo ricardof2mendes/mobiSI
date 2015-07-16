@@ -779,18 +779,18 @@ $(document).ready(function() {
  		$('body').addClass('confirmation');
  		
  		if (CAR_DAMAGE_ZONE) {
- 			var cxValue = ((parseInt(COORDINATE_COL))*33)-16;
- 			var cyValue = ((parseInt(COORDINATE_ROW)-10)*27)-13;
+ 			var cxValue = ((parseInt(COORDINATE_COL))*18)-9;
+ 			var cyValue = ((parseInt(COORDINATE_ROW)-17)*18)-9;
  			// Add a new interior damage ball
- 			var circle= makeSVG('circle', {cx: cxValue, cy: cyValue, r:10, row:COORDINATE_ROW, col: COORDINATE_COL, class:'toReport'});
+ 			var circle= makeSVG('circle', {cx: cxValue, cy: cyValue, r:7, row:COORDINATE_ROW, col: COORDINATE_COL, class:'toReport'});
  			$("#imageInternal").append(circle);
  			LAST_DAMAGE_CIRCLE = circle;
  		} else {
  			// Add a new exterior damage ball
- 			var cxValue = ((parseInt(COORDINATE_COL))*33)-16;
- 			var cyValue = ((parseInt(COORDINATE_ROW)+1)*27)-13;
+ 			var cxValue = ((parseInt(COORDINATE_COL))*18)-9;
+ 			var cyValue = ((parseInt(COORDINATE_ROW))*18)-9;
  			// Add a new interior damage ball
- 			var circle= makeSVG('circle', {cx: cxValue, cy: cyValue, r:10, row:COORDINATE_ROW, col: COORDINATE_COL, class:'toReport'});
+ 			var circle= makeSVG('circle', {cx: cxValue, cy: cyValue, r:7, row:parseInt(COORDINATE_ROW), col: COORDINATE_COL, class:'toReport'});
  			$("#imageExternal").append(circle);
  			LAST_DAMAGE_CIRCLE = circle;
  		}
@@ -971,33 +971,63 @@ $(document).ready(function() {
  	});
  	
  	// Send Report Button
- 	$('input[name=submitDamageReport]').on('click', function(e){
- 		
- 		var rowC = "";
- 		var colC = "";
- 		var incType = "";
- 		
- 		for (var i=0;i<damagesItems.length;i++){
- 			rowC = rowC + damagesItems[i].row + ", ";
- 			colC = colC + damagesItems[i].col + ", ";
- 			incType = incType + damagesItems[i].type + ", ";
- 		}
- 		
- 		$('input[name=rowCoord]').val(rowC);
- 		$('input[name=colCoord]').val(colC);
- 		$('input[name=incidentType]').val(incType);
- 		
+ 	$('input[name=askPin]').on('click', function(e) {
+ 		e.preventDefault();
  		if ($('#damageDescription').val() == "") {
  			$('#errorForm').html("<section class=\"errors\"><div><strong>Unable to submit.</strong></div><ul><li>Description is a required field</li></ul></section>");
  			$('html,body').animate({scrollTop: $("#errorForm").offset().top}, 'slow');
  			return false;
+ 		} else {
+ 	 		$(".damageDetails").hide();
+ 	 		$('#errorForm').html("");
+ 	 		$('#pinArea').show();
  		}
- 		
- 		$('body').addClass('confirmation');
- 		$('#sendingReport').show();
- 		sessionStorage.clear();
-
  	});
+ 	
+ 	$('#submitPin').on('click', function(e){
+ 		e.preventDefault();
+ 		var url = {
+				timeout : UNLOCK_TIMEOUT_INTERVAL,
+ 				lockunlock: $(this).prop('href'), 
+				call: CONTEXT_PATH + '/trip/DamageReport.action?validation&pin=' + $('#pin').val() + "&licensePlate="+$("input[name=licensePlate]").val(),
+ 			};
+ 		$.get(url.call, 
+				function(data, textStatus, jqXHR){
+					if (jqXHR.getResponseHeader('Stripes-Success') === 'OK') {
+						if (data.indexOf("PIN_OK") > -1) { 
+							var rowC = "";
+					 		var colC = "";
+					 		var incType = "";
+					 		
+					 		for (var i=0;i<damagesItems.length;i++){
+					 			rowC = rowC + damagesItems[i].row + ", ";
+					 			colC = colC + damagesItems[i].col + ", ";
+					 			incType = incType + damagesItems[i].type + ", ";
+					 		}
+					 		
+					 		$('input[name=rowCoord]').val(rowC);
+					 		$('input[name=colCoord]').val(colC);
+					 		$('input[name=incidentType]').val(incType);
+					 		
+					 		$('body').addClass('confirmation');
+					 		$('#sendingReport').show();
+							$('input[name=submitDamageReport]').trigger('click');
+							sessionStorage.clear();
+						} else {
+							$('#errorForm').html("<section class=\"errors\"><div><strong>Invalid Pin</strong></div></section>");
+				 			$('html,body').animate({scrollTop: $("#errorForm").offset().top}, 'slow');
+						}
+					}
+ 		});
+ 	});
+ 	
+ 	//input[name=submitDamageReport]
+ 	
+// 	$('#submitDamageReport').on('click', function(e){
+// 		
+// 		
+//
+// 	});
  	
  	$('.removeLastDamage').on('click', function(e){
  		e.preventDefault();

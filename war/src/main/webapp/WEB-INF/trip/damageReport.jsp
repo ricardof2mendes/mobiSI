@@ -81,62 +81,62 @@
 						<li class="detail white">
 							<div id="svgContainer">
 							<!-- Interior -->
-							<svg id="imageInternal" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="300" height="300">
+							<svg id="imageInternal" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="306" height="306">
 								<image  class="imageDamage map" 
 									xlink:href="${contextPath}/booking/ImmediateBooking.action?getCarInternalImage=&licensePlate=${actionBean.car.licensePlate}&width=360&height=360" 
-									usemap="#damageZoneMap" width="300" height="300"/>
+									usemap="#damageZoneMap" width="306" height="306"/>
 								<!-- Draw the clickable area -->
-								<c:set var="row" value="11" scope="page" />
-								<c:forEach begin="0" end="273" step="27" var="lines">
-									<c:set var="col" value="1" scope="page" />
-									<c:forEach begin="0" end="267"  step="33" var="columns">
-								    	<rect class="interiorRect" width="33" height="27"
-								    		x="<c:out value="${columns}"/>" 
-								    		y="<c:out value="${lines}"/>"  
+								<c:set var="col" value="1" scope="page" />
+								<c:forEach begin="0" end="288" step="18" var="lines">
+									<c:set var="row" value="18" scope="page" />
+									<c:forEach begin="0" end="288"  step="18" var="columns">
+								    	<rect class="interiorRect" width="17" height="17"
+								    		x="<c:out value="${lines}"/>" 
+								    		y="<c:out value="${columns}"/>"  
 								    		row="<c:out value="${row}"/>" 
 								    		col="<c:out value="${col}"/>" ></rect>	
-							    		<c:set var="col" value="${col + 1}" scope="page"/>
+							    		<c:set var="row" value="${row + 1}" scope="page"/>
 							    	</c:forEach>
-							    	<c:set var="row" value="${row + 1}" scope="page"/>
+							    	<c:set var="col" value="${col + 1}" scope="page"/>
 								</c:forEach>
 								<!-- Draw the damages circles -->
 								<c:forEach items="${actionBean.carDamages}" var="damages">
-									<c:if test="${damages.row >= 11 }">
-							    		<circle r="10"
-							    			cx="<c:out value="${((damages.col)*33)-16}"/>" 
-							    			cy="<c:out value="${((damages.row-10)*27)-13}"/>"  
+									<c:if test="${damages.row > 17 }">
+							    		<circle r="7"
+							    			cx="<c:out value="${((damages.col+1)*18)-9}"/>" 
+							    			cy="<c:out value="${((damages.row-17)*18)-9}"/>"  
 							    			row="<c:out value="${damages.row}"/>" 
 							    			col="<c:out value="${damages.col}"/>"  />
 							    	</c:if>
 								</c:forEach>
 							</svg>
 							<!-- Exterior -->
-							<svg id="imageExternal" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="300" height="300">
+							<svg id="imageExternal" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="306" height="306">
 								<image  class="imageDamage map" 
 									xlink:href="${contextPath}/booking/ImmediateBooking.action?getCarExternalImage=&licensePlate=${actionBean.car.licensePlate}&width=360&height=360" 
-									usemap="#damageZoneMap" width="300" height="300"/>
+									usemap="#damageZoneMap" width="306" height="306"/>
 								<!-- Draw the clickable area -->
-								<c:set var="row" value="0" scope="page" />
-								<c:forEach begin="0" end="273" step="27" var="lines">
-									<c:set var="col" value="1" scope="page" />
-									<c:forEach begin="0" end="267"  step="33" var="columns">
-								    	<rect  class="exteriorRect" width="33" height="27"
-									    	x="<c:out value="${columns}"/>" 
-									    	y="<c:out value="${lines}"/>"  
+								<c:set var="col" value="1" scope="page" />
+								<c:forEach begin="0" end="288" step="18" var="lines">
+									<c:set var="row" value="1" scope="page" />
+									<c:forEach begin="0" end="288"  step="18" var="columns">
+								    	<rect  class="exteriorRect" width="17" height="17"
+									    	x="<c:out value="${lines}"/>" 
+									    	y="<c:out value="${columns}"/>"  
 									    	row="<c:out value="${row}"/>" 
 									    	col="<c:out value="${col}"/>" ></rect>
-								    	<c:set var="col" value="${col + 1}" scope="page"/>
+								    	<c:set var="row" value="${row + 1}" scope="page"/>
 							    	</c:forEach>
-							    	<c:set var="row" value="${row + 1}" scope="page"/>
+							    	<c:set var="col" value="${col + 1}" scope="page"/>
 								</c:forEach>
 								<!-- Draw the damages circles -->
 								<c:forEach items="${actionBean.carDamages}" var="damages">
-									<c:if test="${damages.row < 11 }">
-										<circle r="10" 
-											cx="<c:out value="${((damages.col)*33)-16}"/>" 
-											cy="<c:out value="${((damages.row+1)*27)-13}"/>" 
-											row="<c:out value="${damages.row}"/>" 
-											col="<c:out value="${damages.col}"/>" />
+									<c:if test="${damages.row <= 17 }">
+										<circle r="7" 
+											cx="<c:out value="${((damages.col+1)*18)-9}"/>" 
+							    			cy="<c:out value="${((damages.row)*18)-9}"/>"  
+							    			row="<c:out value="${damages.row}"/>" 
+							    			col="<c:out value="${damages.col}"/>"  />
 							    	</c:if>
 								</c:forEach>
 							</svg>
@@ -273,7 +273,7 @@
 						</li>
 						<li>
 					        <section class="submit">
-								<stripes:submit name="submitDamageReport" class="damageReport green">
+								<stripes:submit name="askPin" class="damageReport green">
 									<fmt:message key="damage.report.submit"/>
 								</stripes:submit>
 								<stripes:submit name="" class="damageReport red cancelBtn">
@@ -286,6 +286,31 @@
 			</section>
 		</article>
 		<!--  End: Report damages area  -->
+		
+		<!--  Begin: Pin Area -->
+		<article id="pinArea" class="pin hidden">
+			<section>
+				<div>
+					<label>${actionBean.car.licensePlate}</label> <label>${actionBean.car.carBrandName}&nbsp;${actionBean.car.carModelName}</label>
+					<label><fmt:message
+							key="FuelType.${actionBean.car.fuelType.name}" />&nbsp; <c:choose>
+							<c:when test="${actionBean.car.fuelLevel != null}">(${actionBean.car.fuelLevel}%)</c:when>
+							<c:otherwise>(<fmt:message
+									key="application.value.not.available" />)</c:otherwise>
+						</c:choose> </label>
+				</div>
+				<div>
+					<stripes:text type="number" name="pin" id="pin"
+						placeholder="${placeholder}" autocomplete="off" />
+				</div>
+				<div>
+					<stripes:submit id="submitPin" name="data">
+						<fmt:message key="pin.button" />
+					</stripes:submit>
+				</div>
+			</section>
+		</article>
+		<!-- End: Pin Area -->
 		
 		<div class="confirm2">
 			<article>
@@ -370,6 +395,7 @@
 				</section>
 			</article>
 		</div>
+		<stripes:submit name="submitDamageReport" class="hidden"></stripes:submit>
 	</stripes:form> 
 
 </t:main>

@@ -95,7 +95,7 @@ public class DamageReportActionBean extends BaseActionBean {
     private String colCoord;
 
     @ValidateNestedProperties({ @Validate(field = "licensePlate"), @Validate(field = "carBrandName"),
-            @Validate(field = "carModelName"), @Validate(field = "fuelType.name") })
+        @Validate(field = "carModelName"), @Validate(field = "fuelType.name") })
     private CarDTO car;
 
     private List<FileBean> files;
@@ -104,8 +104,8 @@ public class DamageReportActionBean extends BaseActionBean {
 
     private CarDamageDetailsListDTO[] carDamages;
 
-    private final List<String> lines_exterior = Arrays.asList("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K");
-    private final List<String> lines_interior = Arrays.asList("L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V");
+    private final List<String> columns = Arrays.asList("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
+            "N", "O", "P", "Q");
 
     // @Validate(required = true, on = { "data", "saveData" }, minlength = 4, maxlength = 4)
     private Integer pin;
@@ -128,9 +128,9 @@ public class DamageReportActionBean extends BaseActionBean {
     @DontValidate
     @DefaultHandler
     public Resolution getCurrent() throws RemoteException, UnsupportedEncodingException, CarNotFoundExceptionException,
-            CustomerNotFoundExceptionException, CarLicensePlateNotFoundExceptionException,
-            com.criticalsoftware.mobics.proxy.car.CarLicensePlateNotFoundExceptionException,
-            com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException {
+    CustomerNotFoundExceptionException, CarLicensePlateNotFoundExceptionException,
+    com.criticalsoftware.mobics.proxy.car.CarLicensePlateNotFoundExceptionException,
+    com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException {
 
         final BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
                 Configuration.INSTANCE.getBookingEndpoint());
@@ -161,10 +161,8 @@ public class DamageReportActionBean extends BaseActionBean {
 
             if (this.carDamages != null) {
                 for (final CarDamageDetailsListDTO damages : this.carDamages) {
-                    if (this.lines_exterior.contains(damages.getRow())) {
-                        damages.setRow(String.valueOf(this.lines_exterior.indexOf(damages.getRow())));
-                    } else if (this.lines_interior.contains(damages.getRow())) {
-                        damages.setRow(String.valueOf(11 + this.lines_interior.indexOf(damages.getRow())));
+                    if (this.columns.contains(damages.getCol())) {
+                        damages.setCol(String.valueOf(this.columns.indexOf(damages.getCol())));
                     }
                 }
             }
@@ -195,12 +193,12 @@ public class DamageReportActionBean extends BaseActionBean {
      * @throws com.criticalsoftware.mobics.proxy.car.CarLicensePlateNotFoundExceptionException
      */
     public Resolution submitDamageReport() throws EventValidationExceptionException,
-            BookingNotFoundForEventExceptionException, EventInClosedStateExceptionException,
-            com.criticalsoftware.mobics.proxy.car.CustomerNotFoundExceptionException, CarNotFoundExceptionException,
-            CarLicensePlateNotFoundExceptionException, CustomerNotFoundExceptionException,
-            com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException,
-            com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException, IOException,
-            com.criticalsoftware.mobics.proxy.car.CarLicensePlateNotFoundExceptionException {
+    BookingNotFoundForEventExceptionException, EventInClosedStateExceptionException,
+    com.criticalsoftware.mobics.proxy.car.CustomerNotFoundExceptionException, CarNotFoundExceptionException,
+    CarLicensePlateNotFoundExceptionException, CustomerNotFoundExceptionException,
+    com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException,
+    com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException, IOException,
+    com.criticalsoftware.mobics.proxy.car.CarLicensePlateNotFoundExceptionException {
 
         final BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
                 Configuration.INSTANCE.getBookingEndpoint());
@@ -244,15 +242,11 @@ public class DamageReportActionBean extends BaseActionBean {
         final CarDamageType[] damageTypes = new CarDamageType[incTypes.length];
 
         for (int i = 0; i < rows.length; i++) {
-            // Set the line coordinate
-            if (Integer.parseInt(rows[i].trim()) >= 11) {
-                rows[i] = this.lines_interior.get(Integer.parseInt(rows[i].trim()) - 11);
-            } else {
-                rows[i] = this.lines_exterior.get(Integer.parseInt(rows[i].trim()));
-            }
+            // Set the column coordinate
+            cols[i] = this.columns.get(Integer.parseInt(cols[i].trim()) - 1);
 
-            // Clear the cols string
-            cols[i] = cols[i].trim();
+            // Clear the line string
+            rows[i] = rows[i].trim();
 
             // Clear the incident type string
             if ("SCRATCHED".equals(incTypes[i].trim())) {
@@ -279,7 +273,7 @@ public class DamageReportActionBean extends BaseActionBean {
             this.getContext().getMessages().add(new LocalizableMessage("damage.report.save.error"));
 
         }
-        return this.showPin();
+        return new RedirectResolution(TripActionBean.class);
     }
 
     /**
@@ -296,11 +290,11 @@ public class DamageReportActionBean extends BaseActionBean {
      * @throws CarNotFoundExceptionException
      */
     public Resolution continueToTrip() throws UnsupportedEncodingException, RemoteException,
-            com.criticalsoftware.mobics.proxy.car.CustomerNotFoundExceptionException,
-            com.criticalsoftware.mobics.proxy.car.CarLicensePlateNotFoundExceptionException,
-            CustomerNotFoundExceptionException, CarLicensePlateNotFoundExceptionException,
-            com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException,
-            CarNotFoundExceptionException {
+    com.criticalsoftware.mobics.proxy.car.CustomerNotFoundExceptionException,
+    com.criticalsoftware.mobics.proxy.car.CarLicensePlateNotFoundExceptionException,
+    CustomerNotFoundExceptionException, CarLicensePlateNotFoundExceptionException,
+    com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException,
+    CarNotFoundExceptionException {
         return this.showPin();
     }
 
@@ -341,7 +335,7 @@ public class DamageReportActionBean extends BaseActionBean {
         this.pin = Integer.parseInt(this.getContext().getRequest().getParameter("pin"));
         if (!customerWSServiceStub.isValidCustomerPin(this.pin.toString())) {
             this.getContext().getValidationErrors()
-                    .addGlobalError(new LocalizableError("account.security.check.pin.invalid"));
+            .addGlobalError(new LocalizableError("account.security.check.pin.invalid"));
             return new JavaScriptResolution("PIN_ERROR");
         } else {
 
@@ -364,22 +358,22 @@ public class DamageReportActionBean extends BaseActionBean {
     }
 
     public Resolution errorMessages() throws RemoteException, UnsupportedEncodingException,
-            CustomerNotFoundExceptionException, CarLicensePlateNotFoundExceptionException,
-            com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException,
-            CarNotFoundExceptionException,
-            com.criticalsoftware.mobics.proxy.car.CarLicensePlateNotFoundExceptionException {
+    CustomerNotFoundExceptionException, CarLicensePlateNotFoundExceptionException,
+    com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException,
+    CarNotFoundExceptionException,
+    com.criticalsoftware.mobics.proxy.car.CarLicensePlateNotFoundExceptionException {
         this.getContext().getResponse().setHeader("Stripes-Success", "OK");
 
         this.errorCode = Integer.parseInt(this.getContext().getRequest().getParameter("errorCode"));
         this.getContext().getValidationErrors()
-                .addGlobalError(new LocalizableError("current.trip.communication.message.error"));
+        .addGlobalError(new LocalizableError("current.trip.communication.message.error"));
         return new RedirectResolution(DamageReportActionBean.class).flash(this);
 
     }
 
     public Resolution getCarState() throws UnsupportedEncodingException, RemoteException,
-            BookingNotFoundExceptionException, CustomerNotFoundExceptionException,
-            com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException {
+    BookingNotFoundExceptionException, CustomerNotFoundExceptionException,
+    com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException {
 
         final BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
                 Configuration.INSTANCE.getBookingEndpoint());
@@ -407,11 +401,11 @@ public class DamageReportActionBean extends BaseActionBean {
      * @throws com.criticalsoftware.mobics.proxy.car.CarLicensePlateNotFoundExceptionException
      */
     public Resolution showPin() throws RemoteException, UnsupportedEncodingException,
-            CustomerNotFoundExceptionException, CarLicensePlateNotFoundExceptionException,
-            com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException,
-            com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException,
-            CarNotFoundExceptionException,
-            com.criticalsoftware.mobics.proxy.car.CarLicensePlateNotFoundExceptionException {
+    CustomerNotFoundExceptionException, CarLicensePlateNotFoundExceptionException,
+    com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException,
+    com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException,
+    CarNotFoundExceptionException,
+    com.criticalsoftware.mobics.proxy.car.CarLicensePlateNotFoundExceptionException {
         this.getCurrent();
         return new ForwardResolution("/WEB-INF/trip/pinUnlockCar.jsp");
     }
