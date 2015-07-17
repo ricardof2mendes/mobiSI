@@ -1014,9 +1014,12 @@ $(document).ready(function() {
 							$('input[name=submitDamageReport]').trigger('click');
 							sessionStorage.clear();
 						} else {
-							$('#errorForm').html("<section class=\"errors\"><div><strong>Invalid Pin</strong></div></section>");
+							$('#errorForm').html("<section class=\"errors\"><div><strong>Pin Inválido</strong></div></section>");
 				 			$('html,body').animate({scrollTop: $("#errorForm").offset().top}, 'slow');
 						}
+					} else {
+						$('#errorForm').html("<section class=\"errors\"><div><strong>Submissão inválida.</strong></div></section>");
+			 			$('html,body').animate({scrollTop: $("#errorForm").offset().top}, 'slow');
 					}
  		});
  	});
