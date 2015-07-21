@@ -110,7 +110,7 @@
 					        var TIME_PATTERN = '${applicationScope.configuration.jsTimePattern}';
 				        </script>
 				        
-				        <script type="text/javascript" src="${contextPath}/js/default.js"></script>
+				        <script type="text/javascript" src="${contextPath}/js/default.js?version=${version}"></script>
 	        		</c:otherwise>
 	        	</c:choose>
         	</c:when>
@@ -146,7 +146,7 @@
 					        var TIME_PATTERN = '${applicationScope.configuration.jsTimePattern}';
 				        </script>
 				        
-				        <script type="text/javascript" src="${contextPath}/js/default.js"></script>
+				        <script type="text/javascript" src="${contextPath}/js/default.js?version=${version}"></script>
 	        		</c:otherwise>
 	        	</c:choose>
         	</c:otherwise>

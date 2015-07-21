@@ -778,17 +778,17 @@ $(document).ready(function() {
  	
  		$('body').addClass('confirmation');
  		
- 		if (CAR_DAMAGE_ZONE) {
- 			var cxValue = ((parseInt(COORDINATE_COL))*18)-9;
- 			var cyValue = ((parseInt(COORDINATE_ROW)-17)*18)-9;
+ 		if (CAR_DAMAGE_ZONE) {  
+ 			var cxValue = ((parseInt(COORDINATE_COL))*17.6)-8.8;
+ 			var cyValue = ((parseInt(COORDINATE_ROW)-16)*17.6)-8.8;
  			// Add a new interior damage ball
  			var circle= makeSVG('circle', {cx: cxValue, cy: cyValue, r:7, row:COORDINATE_ROW, col: COORDINATE_COL, class:'toReport'});
  			$("#imageInternal").append(circle);
  			LAST_DAMAGE_CIRCLE = circle;
  		} else {
  			// Add a new exterior damage ball
- 			var cxValue = ((parseInt(COORDINATE_COL))*18)-9;
- 			var cyValue = ((parseInt(COORDINATE_ROW))*18)-9;
+ 			var cxValue = ((parseInt(COORDINATE_COL))*17.6)-8.8;
+ 			var cyValue = ((parseInt(COORDINATE_ROW))*17.6)-8.8;
  			// Add a new interior damage ball
  			var circle= makeSVG('circle', {cx: cxValue, cy: cyValue, r:7, row:parseInt(COORDINATE_ROW), col: COORDINATE_COL, class:'toReport'});
  			$("#imageExternal").append(circle);

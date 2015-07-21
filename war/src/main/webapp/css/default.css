@@ -1296,6 +1296,10 @@ svg {
 	margin-right: auto;
 }
 
+#svgContainer {
+  padding-left: 0 !important;
+}
+
 
 rect {
 	/* fill: red; */

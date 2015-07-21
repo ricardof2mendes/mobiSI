@@ -81,18 +81,18 @@
 						<li class="detail white">
 							<div id="svgContainer">
 							<!-- Interior -->
-							<svg id="imageInternal" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="306" height="306">
+							<svg id="imageInternal" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="300" height="300">
 								<image  class="imageDamage map" 
 									xlink:href="${contextPath}/booking/ImmediateBooking.action?getCarInternalImage=&licensePlate=${actionBean.car.licensePlate}&width=360&height=360" 
-									usemap="#damageZoneMap" width="306" height="306"/>
+									usemap="#damageZoneMap" width="300" height="300"/>
 								<!-- Draw the clickable area -->
 								<c:set var="col" value="1" scope="page" />
-								<c:forEach begin="0" end="288" step="18" var="lines">
-									<c:set var="row" value="18" scope="page" />
-									<c:forEach begin="0" end="288"  step="18" var="columns">
-								    	<rect class="interiorRect" width="17" height="17"
-								    		x="<c:out value="${lines}"/>" 
-								    		y="<c:out value="${columns}"/>"  
+								<c:forEach begin="0" end="16" step="1" var="lines">
+									<c:set var="row" value="17" scope="page" />
+									<c:forEach begin="0" end="17"  step="1" var="columns">
+								    	<rect class="interiorRect" width="17.6" height="17.6"
+								    		x="<c:out value="${lines*17.6}"/>" 
+								    		y="<c:out value="${columns*17.6}"/>"  
 								    		row="<c:out value="${row}"/>" 
 								    		col="<c:out value="${col}"/>" ></rect>	
 							    		<c:set var="row" value="${row + 1}" scope="page"/>
@@ -103,26 +103,26 @@
 								<c:forEach items="${actionBean.carDamages}" var="damages">
 									<c:if test="${damages.row > 17 }">
 							    		<circle r="7"
-							    			cx="<c:out value="${((damages.col+1)*18)-9}"/>" 
-							    			cy="<c:out value="${((damages.row-17)*18)-9}"/>"  
+							    			cx="<c:out value="${((damages.col+1)*17.6)-8.8}"/>" 
+							    			cy="<c:out value="${((damages.row-17)*17.6)-8.8}"/>"  
 							    			row="<c:out value="${damages.row}"/>" 
 							    			col="<c:out value="${damages.col}"/>"  />
 							    	</c:if>
 								</c:forEach>
 							</svg>
 							<!-- Exterior -->
-							<svg id="imageExternal" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="306" height="306">
+							<svg id="imageExternal" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="300" height="300">
 								<image  class="imageDamage map" 
 									xlink:href="${contextPath}/booking/ImmediateBooking.action?getCarExternalImage=&licensePlate=${actionBean.car.licensePlate}&width=360&height=360" 
-									usemap="#damageZoneMap" width="306" height="306"/>
+									usemap="#damageZoneMap" width="300" height="300"/>
 								<!-- Draw the clickable area -->
 								<c:set var="col" value="1" scope="page" />
-								<c:forEach begin="0" end="288" step="18" var="lines">
+								<c:forEach begin="0" end="16" step="1" var="lines">
 									<c:set var="row" value="1" scope="page" />
-									<c:forEach begin="0" end="288"  step="18" var="columns">
-								    	<rect  class="exteriorRect" width="17" height="17"
-									    	x="<c:out value="${lines}"/>" 
-									    	y="<c:out value="${columns}"/>"  
+									<c:forEach begin="0" end="17"  step="1" var="columns">
+								    	<rect class="interiorRect" width="17.6" height="17.6"
+								    		x="<c:out value="${lines*17.6}"/>" 
+								    		y="<c:out value="${columns*17.6}"/>"  
 									    	row="<c:out value="${row}"/>" 
 									    	col="<c:out value="${col}"/>" ></rect>
 								    	<c:set var="row" value="${row + 1}" scope="page"/>
@@ -133,8 +133,8 @@
 								<c:forEach items="${actionBean.carDamages}" var="damages">
 									<c:if test="${damages.row <= 17 }">
 										<circle r="7" 
-											cx="<c:out value="${((damages.col+1)*18)-9}"/>" 
-							    			cy="<c:out value="${((damages.row)*18)-9}"/>"  
+											cx="<c:out value="${((damages.col+1)*17.6)-8.8}"/>" 
+							    			cy="<c:out value="${((damages.row)*17.6)-8.8}"/>"  
 							    			row="<c:out value="${damages.row}"/>" 
 							    			col="<c:out value="${damages.col}"/>"  />
 							    	</c:if>
