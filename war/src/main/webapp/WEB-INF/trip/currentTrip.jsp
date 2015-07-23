@@ -20,6 +20,8 @@
 
 	<%--------------------------------- CCOME / InoSat -----------------------------------%>
 	
+	<span id="carShowDamageReport" class="hidden">${actionBean.current.showDamageReport}</span>
+	
   	<c:choose>
 	<c:when test="${actionBean.newDriverVersion}">
 	

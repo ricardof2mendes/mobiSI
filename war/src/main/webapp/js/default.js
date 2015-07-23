@@ -559,7 +559,7 @@ $(document).ready(function() {
 				timeout : UNLOCK_TIMEOUT_INTERVAL,
  				lockunlock: $(this).prop('href'), 
  				pooling :  CONTEXT_PATH + '/trip/Trip.action?getCurrentTrip=',
- 				carState: IN_USE,
+ 				carState: $('#carShowDamageReport').html().indexOf('true') != -1 ? IN_USE : READY,
  				redirect: CONTEXT_PATH + '/trip/Trip.action?finish=&unlockOp=true&successOp=',
  				redirectToDamageReport: CONTEXT_PATH + '/trip/DamageReport.action?finish=&unlockOp=true&successOp='
  			};
