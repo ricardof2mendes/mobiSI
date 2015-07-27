@@ -88,7 +88,7 @@
 								<!-- Draw the clickable area -->
 								<c:set var="col" value="1" scope="page" />
 								<c:forEach begin="0" end="16" step="1" var="lines">
-									<c:set var="row" value="17" scope="page" />
+									<c:set var="row" value="18" scope="page" />
 									<c:forEach begin="0" end="17"  step="1" var="columns">
 								    	<rect class="interiorRect" width="17.6" height="17.6"
 								    		x="<c:out value="${lines*17.6}"/>" 

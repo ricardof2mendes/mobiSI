@@ -780,7 +780,7 @@ $(document).ready(function() {
  		
  		if (CAR_DAMAGE_ZONE) {  
  			var cxValue = ((parseInt(COORDINATE_COL))*17.6)-8.8;
- 			var cyValue = ((parseInt(COORDINATE_ROW)-16)*17.6)-8.8;
+ 			var cyValue = ((parseInt(COORDINATE_ROW)-17)*17.6)-8.8;
  			// Add a new interior damage ball
  			var circle= makeSVG('circle', {cx: cxValue, cy: cyValue, r:7, row:COORDINATE_ROW, col: COORDINATE_COL, class:'toReport'});
  			$("#imageInternal").append(circle);
@@ -990,10 +990,6 @@ $(document).ready(function() {
 				timeout : UNLOCK_TIMEOUT_INTERVAL,
  				lockunlock: $(this).prop('href'), 
 				call: CONTEXT_PATH + '/trip/DamageReport.action?validation&pin=' + $('#pin').val() + "&licensePlate="+$("input[name=licensePlate]").val(),
-				pooling : CONTEXT_PATH + '/trip/DamageReport.action?getCarState=',
- 				carState: READY,
- 				redirect: CONTEXT_PATH + '/trip/Trip.action',
- 				resultAction: 'TIMEOUT'
  			};
  		$.get(url.call, 
 				function(data, textStatus, jqXHR){
@@ -1017,7 +1013,6 @@ $(document).ready(function() {
 					 		$('#sendingReport').show();
 							$('input[name=submitDamageReport]').trigger('click');
 							sessionStorage.clear();
-							validateCarState(url);
 						} else {
 							$('#errorForm').html("<section class=\"errors\"><div><strong>Pin Inválido</strong></div></section>");
 				 			$('html,body').animate({scrollTop: $("#errorForm").offset().top}, 'slow');
@@ -1028,7 +1023,6 @@ $(document).ready(function() {
 					}
  		});
  	});
- 	
  	
  	$('.removeLastDamage').on('click', function(e){
  		e.preventDefault();
@@ -1198,21 +1192,27 @@ function validateCarState(url) {
 	// show message
 	//$('#unlocking').show();
 	// do active pooling
-	$.get(url.pooling, 
+	$.get(url.call, 
 		function(data, textStatus, jqXHR){
 			dataLU = data;
 			textStatusLU = textStatus;
 			jqXHRLU = jqXHR;
 			if (jqXHR.getResponseHeader('Stripes-Success') === 'OK') {
 				
-				var result = eval(dataLU);	
-				if (urlLU.carState && (urlLU.carState.indexOf(result) > -1)) {
-		 			clearInterval(timerVarLU);
-		 			window.location.href = urlLU.redirect;
-		 			
-		 		} else  {
-		 			retriesLU = Math.floor(urlLU.timeout / smallAttemptIntervalLU) + ATTEMPT_FRACTION - 1;
-					timerVarLU = setInterval( validateCarState , smallAttemptIntervalLU);
+				var result = eval(dataLU);
+
+				if (result.indexOf("PIN_OK") > -1) {
+					retriesLU = Math.floor(urlLU.timeout / smallAttemptIntervalLU) + ATTEMPT_FRACTION - 1;
+					timerVarLU = setInterval( lockUnlockProcess , smallAttemptIntervalLU);
+				} else if (result.indexOf("PIN_ERROR") > -1) {
+					$('body').removeClass('confirmation');
+		 			$('#unlocking').hide();
+					if (navigator.language.indexOf("en") > -1) {
+						$('.globalErrors').html("<section class=\"errors\"><div><strong>Unable to submit.</strong></div><ul><li>Invalid Pin</li></ul></section>");
+					} else {
+						$('.globalErrors').html("<section class=\"errors\"><div><strong>Erro.</strong></div><ul><li>Pin Inválido</li></ul></section>");
+					}
+					return false;
 				}
 	        } else {
 	            console.log('An error has occurred or the user\'s session has expired!');
