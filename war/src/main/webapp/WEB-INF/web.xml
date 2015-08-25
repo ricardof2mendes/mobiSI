@@ -143,6 +143,11 @@
 
     <session-config>
         <session-timeout>90</session-timeout>
+        <cookie-config>
+            <http-only>true</http-only>
+            <secure>false</secure>
+        </cookie-config>
+        <tracking-mode>COOKIE</tracking-mode>
     </session-config>
 
     <welcome-file-list>
@@ -178,45 +183,5 @@
         <error-code>503</error-code>
         <location>/Error.action?httpError=503</location>
     </error-page>
-<!-- 
-    <security-constraint>
-        <web-resource-collection>
-            <web-resource-name>Restricted</web-resource-name>
-            <url-pattern>*.action</url-pattern>
-            <url-pattern>*.jsp</url-pattern>
-        </web-resource-collection>
-        <auth-constraint>
-            <role-name>frameworkuser</role-name>
-        </auth-constraint>
-        <user-data-constraint>
-            <transport-guarantee>NONE</transport-guarantee>
-        </user-data-constraint>
-    </security-constraint>
-
-    <security-constraint>
-        <web-resource-collection>
-            <web-resource-name>Open</web-resource-name>
-            <url-pattern>/Login.action</url-pattern>
-            <url-pattern>/WEB-INF/error.jsp</url-pattern>
-        </web-resource-collection>
-        <user-data-constraint>
-            <transport-guarantee>NONE</transport-guarantee>
-        </user-data-constraint>
-    </security-constraint>
-
-    <login-config>
-        <auth-method>FORM</auth-method>
-        <realm-name>frameworkRealm</realm-name>
-        <form-login-config>
-            <form-login-page>/Login.action</form-login-page>
-            <form-error-page>/Login.action?error=true</form-error-page>
-        </form-login-config>
-    </login-config>
-
-    <security-role>
-        <role-name>frameworkuser</role-name>
-    </security-role>
-    
-     -->
     
 </web-app>
