@@ -1829,85 +1829,19 @@ input.autocomplete {
 
 .pink,
 .pink .loginBtn {
-    background-color: #cc00cc
+    background-color: #cc00cc !important;
 }
 
 .darkgray,
 .darkgray .loginBtn {
-    background-color: #1a1a1a
+    background-color: #1a1a1a !important;
 }
 
-/*****/
-
-.warmdarkred,
-.warmdarkred .loginBtn {
-	background-size: 320px 410px;
-	background: #660000 url(../img/theme/660000/webapp-splash-gradient-normal-660000.png) no-repeat 50% 0;
-	background-size: 100%;
+.yellow,
+.yellow .loginBtn {
+    background-color: #FFF229
 }
 
-.warmred,
-.warmred .loginBtn {
-	background-size: 320px 410px;
-    background: #cc1a1a url(../img/theme/cc1a1a/webapp-splash-gradient-normal-cc1a1a.png) no-repeat 50% 0;
-    background-size: 100%;
-}
-
-.warmorange,
-.warmorange .loginBtn {
-	background-size: 320px 410px;
-	background: #f09000 url(../img/theme/f09000/webapp-splash-gradient-normal-f09000.png) no-repeat 50% 0;
-	background-size: 100%;
-}
-
-.warmlightgreen,
-.warmlightgreen .loginBtn {
-	background-size: 320px 410px;
-	background: #78cc0a url(../img/theme/78cc0a/webapp-splash-gradient-normal-78cc0a.png) no-repeat 50% 0;
-    background-size: 100%;
-}
-
-.warmdarkgreen,
-.warmdarkgreen .loginBtn {
-	background-size: 320px 410px;
-	background: #095909 url(../img/theme/095909/webapp-splash-gradient-normal-095909.png) no-repeat 50% 0;
-	background-size: 100%;
-}
-
-.warmlightblue,
-.warmlightblue .loginBtn {
-	background-size: 320px 410px;
-	background: #008be8 url(../img/theme/008be8/webapp-splash-gradient-normal-008be8.png) no-repeat 50% 0;
-	background-size: 100%;
-}
-
-.warmdarkblue,
-.warmdarkblue .loginBtn {
-	background-size: 320px 410px;
-	background: #161694 url(../img/theme/161694/webapp-splash-gradient-normal-161694.png) no-repeat 50% 0;
-	background-size: 100%;
-}
-
-.warmpurple,
-.warmpurple .loginBtn {
-	background-size: 320px 410px;
-	background: #4a0d86 url(../img/theme/4a0d86/webapp-splash-gradient-normal-4a0d86.png) no-repeat 50% 0;
-	background-size: 100%;
-}
-
-.warmpink,
-.warmpink .loginBtn {
-	background-size: 320px 410px;
-	background: #cc00cc url(../img/theme/cc00cc/webapp-splash-gradient-normal-cc00cc.png) no-repeat 50% 0;
-	background-size: 100%;
-}
-
-.warmdarkgray,
-.warmdarkgray .loginBtn {
-	background-size: 320px 410px;
-	background: #1a1a1a url(../img/theme/1a1a1a/webapp-splash-gradient-normal-1a1a1a.png) no-repeat 50% 0;
-	background-size: 100%;
-}
 
 /* Contacts image theme */
 

@@ -10,12 +10,6 @@ import java.rmi.RemoteException;
 
 import javax.activation.DataHandler;
 
-import net.sourceforge.stripes.action.ActionBean;
-import net.sourceforge.stripes.action.ActionBeanContext;
-import net.sourceforge.stripes.action.Resolution;
-import net.sourceforge.stripes.action.StreamingResolution;
-import net.sourceforge.stripes.action.StrictBinding;
-
 import org.apache.axis2.AxisFault;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +24,12 @@ import com.criticalsoftware.mobics.proxy.carclub.CarClubWSService;
 import com.criticalsoftware.mobics.proxy.carclub.CarClubWSServiceStub;
 import com.criticalsoftware.mobics.proxy.carclub.CarClubWebSiteURLNotFoundExceptionException;
 import com.criticalsoftware.mobics.proxy.fleet.FleetWSServiceStub;
+
+import net.sourceforge.stripes.action.ActionBean;
+import net.sourceforge.stripes.action.ActionBeanContext;
+import net.sourceforge.stripes.action.Resolution;
+import net.sourceforge.stripes.action.StreamingResolution;
+import net.sourceforge.stripes.action.StrictBinding;
 
 /**
  * Base ActionBean class.
@@ -103,7 +103,7 @@ public abstract class BaseActionBean implements ActionBean {
 
         if (carClubCode != null && !carClubCode.isEmpty() && !carClubCode.equals("null")) {
             carClubSimpleDTO = new CarClubWSServiceStub(Configuration.INSTANCE.getCarClubEndpoint())
-            .getCarClubByCarClubCode(carClubCode.toUpperCase());
+                    .getCarClubByCarClubCode(carClubCode.toUpperCase());
 
             if (getContext().getCarClub() == null) {
                 getContext().setCarClub(
@@ -113,7 +113,7 @@ public abstract class BaseActionBean implements ActionBean {
         } else {
             try {
                 carClubSimpleDTO = new CarClubWSServiceStub(Configuration.INSTANCE.getCarClubEndpoint())
-                .getCarClubSimpleByURL(builder.toString());
+                        .getCarClubSimpleByURL(builder.toString());
 
                 if (carClubSimpleDTO != null) {
                     if (getContext().getCarClub() == null) {
@@ -131,13 +131,9 @@ public abstract class BaseActionBean implements ActionBean {
         // TODO parece que não está a devolver a cor correcta
         String style = new StringBuilder((carClubSimpleDTO != null ? carClubSimpleDTO.getCarClubColorScheme()
                 : Configuration.INSTANCE.getDefaultThemeStyle()).replaceAll("_", ""))
-        .append(" ")
-        .append((carClubSimpleDTO != null ? carClubSimpleDTO.getCarClubTheme() : Configuration.INSTANCE
-                .getDefaultThemeColor()).replaceAll("_", "")).toString();
-
-        if (style.indexOf(Configuration.INSTANCE.getDefaultThemeWarmWord()) > 0) {
-            style.replaceAll(" ", "");
-        }
+                .append(" ")
+                .append((carClubSimpleDTO != null ? "" : Configuration.INSTANCE
+                        .getDefaultThemeColor()).replaceAll("_", "")).toString();
 
         return style.toLowerCase();
     }

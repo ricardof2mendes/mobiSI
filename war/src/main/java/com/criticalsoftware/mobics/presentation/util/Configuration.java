@@ -28,7 +28,7 @@ import com.criticalsoftware.www.mobios.country.configuration.CountryConfiguratio
 public class Configuration implements Serializable{
     /**
      * Application state
-     * 
+     *
      * @author ltiago
      * @version $Revision: $
      */
@@ -42,21 +42,21 @@ public class Configuration implements Serializable{
     private static final Logger LOGGER = LoggerFactory.getLogger(Configuration.class);
 
     public static final String CCOM_CLASS = "com.criticalsoftware.mobios.hal.drivers.obsconvadis.ConvadisDriverProvider";
-        
+
     /**
      * The Configuration instance property.
      */
     public static final Configuration INSTANCE = new Configuration();
-    
+
     /** Application state */
     private final ApplicationState applicationState = ApplicationState.DEVELOPMENT_WITH_JREBEL;
 
     /** Application Encoding **/
     private final String uriEnconding = "UTF-8";
-    
+
     /** Zip Code Pattern **/
     private final String zipCodePattern = "^[0-9]{4}-[0-9]{3}$";
-    
+
     /** Meter Pattern **/
     private final String meterPattern = "#";
 
@@ -71,13 +71,13 @@ public class Configuration implements Serializable{
 
     /** Date time Pattern **/
     private final String dateTimePattern = "dd/MM/yyyy HH:mm";
-    
+
     /** Date time Pattern **/
     private final String timePattern = "HH:mm";
 
     /** Javascript date time pattern moment.js**/
     private final String jsDateTimePattern = "DD/MM/YYYY HH:mm";
-    
+
     /** Javascript date pattern **/
     private final String jsDatePattern = "dd/mm/yy";
 
@@ -90,10 +90,10 @@ public class Configuration implements Serializable{
     private final String authenticationFailureString = "Failed Authentication";
 
     private final String backofficeHost = "mobics.mobiag.com";
-    
+
     /** Car Club Endpoint **/
     private final String carClubEndpoint = "http://" + backofficeHost + "/mobics-webservices/CarClub";
-    
+
     /** Car Endpoint **/
     private final String carEndpoint = "http://" + backofficeHost + "/mobics-webservices/Car";
 
@@ -109,7 +109,7 @@ public class Configuration implements Serializable{
     /** Miscellaneous Endpoint **/
     private final String miscellaneousEnpoint = "http://" + backofficeHost + "/mobics-webservices/Miscellaneous";
 
-    /** Billing Endpoint **/ 
+    /** Billing Endpoint **/
     private final String billingEndpoint = "http://" + backofficeHost + "/mobics-webservices/Billing";
 
     /** Geolocation servce **/
@@ -117,47 +117,47 @@ public class Configuration implements Serializable{
 
     /** Max results **/
     private final int maxResults = 99;
-    
+
     /** Default theme warm word **/
     private final String defaultThemeWarmWord = "warm";
-    
+
     /** Default theme style **/
     private final String defaultThemeStyle = "solid";
 
     /** Default theme color **/
     private final String defaultThemeColor = "lightblue";
-    
+
     /** Allowed countries on search location server **/
     private final String geolocationServerAllowedCountries = "pt";
-    
+
     /** Any distance for radius **/
     private final int anyDistance = 9999999;
-    
+
     /** State polling interval in milliseconds **/
     private final int pollingIntervalMilliseconds = 15000;
-    
+
     /** State polling timeout in milliseconds **/
     private final int statePollingTimeoutMilliseconds = 120000;
-    
+
     /** State polling timeout in milliseconds **/
     private final int unlockPollingTimeoutMilliseconds = 60000;
-    
+
     /** State polling timeout in milliseconds **/
     private final int lockEndPollingTimeoutMilliseconds = 60000;
 
-    private Map<String, String> carClubConfiguration = new HashMap<String, String>();
+    private final Map<String, String> carClubConfiguration = new HashMap<String, String>();
 
     public void setCarClubConfiguration(CountryConfiguration carClubConfiguration){
         this.carClubConfiguration.put("mobics.config.zipcode.pattern", carClubConfiguration.getPatterns().getPostalCodeValidatorPattern());
-        
+
         this.carClubConfiguration.put("mobics.config.meter.pattern", carClubConfiguration.getPatterns().getShortDistancePattern());
         this.carClubConfiguration.put("mobics.config.meter.string.pattern",
-                                      carClubConfiguration.getPatterns().getShortDistanceConversionPattern());
+                carClubConfiguration.getPatterns().getShortDistanceConversionPattern());
 
         this.carClubConfiguration.put("mobics.config.kilometer.pattern", carClubConfiguration.getPatterns().getDistancePattern());
         this.carClubConfiguration.put("mobics.config.kilometer.string.pattern",
-                                      carClubConfiguration.getPatterns().getDistanceConversionPattern());
-        
+                carClubConfiguration.getPatterns().getDistanceConversionPattern());
+
         this.carClubConfiguration.put("mobics.config.kilometer.decimal.string.pattern",
                 carClubConfiguration.getPatterns().getDistanceDecimalConversionPattern());
 
@@ -175,7 +175,7 @@ public class Configuration implements Serializable{
     }
 
     public Map<String, String> getCarClubConfiguration(){
-        return this.carClubConfiguration;
+        return carClubConfiguration;
     }
 
     /**
@@ -184,7 +184,7 @@ public class Configuration implements Serializable{
     public String getUriEnconding() {
         return getValue("org.apache.catalina.connector.URI_ENCODING", uriEnconding);
     }
-    
+
     /**
      * @return the applicationState
      */
@@ -198,7 +198,7 @@ public class Configuration implements Serializable{
     public String getZipCodePattern() {
         return getPattern("mobics.config.zipcode.pattern", zipCodePattern);
     }
-    
+
     /**
      * @return the meterPattern
      */
@@ -241,7 +241,7 @@ public class Configuration implements Serializable{
     public String getCarClubEndpoint() {
         return getValue("mobics.config.endpoint.carclub", carClubEndpoint);
     }
-    
+
     /**
      * @return the carEndpoint
      */
@@ -304,7 +304,7 @@ public class Configuration implements Serializable{
     public String getJsDatePattern() {
         return getPattern("mobics.config.js.date.pattern", jsDatePattern);
     }
-    
+
     /**
      * @return the dateTimePattern
      */
@@ -332,9 +332,9 @@ public class Configuration implements Serializable{
     public String getDatePattern() {
         return getPattern("mobics.config.date.pattern", datePattern);
     }
-    
+
     /**
-     * 
+     *
      * @return the defaultThemeStyle
      */
     public String getDefaultThemeStyle() {
@@ -342,7 +342,7 @@ public class Configuration implements Serializable{
     }
 
     /**
-     * 
+     *
      * @return the defaultThemeColor
      */
     public String getDefaultThemeColor() {
@@ -350,21 +350,12 @@ public class Configuration implements Serializable{
     }
 
     /**
-     * 
-     * @return the defaultThemeStyle
-     */
-    public String getDefaultThemeWarmWord() {
-        return getValue("mobics.config.default.theme.warm.word", defaultThemeWarmWord);
-    }
-    
-
-    /**
      * @return the geolocationServerAllowedCountries
      */
     public String getGeolocationServerAllowedCountries() {
         return getValue("mobics.config.geolocation.server.allowed.countries", geolocationServerAllowedCountries);
     }
-    
+
     /**
      * @return the timePattern
      */
@@ -378,7 +369,7 @@ public class Configuration implements Serializable{
     public int getAnyDistance() {
         return Integer.valueOf(getValue("mobics.config.radius.any.distance", anyDistance));
     }
-    
+
     /**
      * @return the pollingIntervalMilliseconds
      */
@@ -392,7 +383,7 @@ public class Configuration implements Serializable{
     public int getStatePollingTimeoutMilliseconds() {
         return Integer.valueOf(getValue("mobics.config.state.polling.timeout.milliseconds", statePollingTimeoutMilliseconds));
     }
-    
+
     /**
      * @return the unlockPollingTimeoutMilliseconds
      */
