@@ -224,7 +224,8 @@ $(document).ready(function() {
  	 */
  	if($('#startDate').length > 0){
  		var initialDate = null;
- 		var now = new Date();
+ 		var now = new Date( $("#startDate").val().replace( /(\d{2})-(\d{2})-(\d{4}) (\d{2}):(\d{2})/, "$2/$1/$3 /$4:/$5") );
+
 	    $('#startDate').mobiscroll().datetime({
 	    	setText: OK_LABEL,
 	    	minuteText: MINUTES_LABEL,
@@ -232,7 +233,7 @@ $(document).ready(function() {
 	    	dateOrder: 'ddmmyy',
 	    	timeFormat: TIME_PATTERN,
 	    	timeWheels: 'HHii',
-	        minDate: now,
+	        minDate: new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours()-1, now.getMinutes(), now.getSeconds(), now.getMilliseconds()),
 	        display: 'modal',
 	        mode: 'scroller',
 	        width: 42,
@@ -255,7 +256,7 @@ $(document).ready(function() {
  	
  	
  	if($('#endDate').length > 0){
- 		var now = new Date();
+ 		var now = new Date( $("#endDate").val().replace( /(\d{2})-(\d{2})-(\d{4}) (\d{2}):(\d{2})/, "$2/$1/$3 /$4:/$5") );
  		$('#endDate').mobiscroll().datetime({
 	    	setText: OK_LABEL,
 	    	minuteText: MINUTES_LABEL,

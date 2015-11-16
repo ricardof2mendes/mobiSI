@@ -19,23 +19,24 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import net.sourceforge.stripes.action.DefaultHandler;
-import net.sourceforge.stripes.action.ForwardResolution;
-import net.sourceforge.stripes.action.RedirectResolution;
-import net.sourceforge.stripes.action.Resolution;
-import net.sourceforge.stripes.validation.Validate;
-
 import com.criticalsoftware.mobics.booking.TripDetailsDTO;
 import com.criticalsoftware.mobics.presentation.action.recent.RecentActivitiesActionBean;
 import com.criticalsoftware.mobics.presentation.security.AuthenticationUtil;
 import com.criticalsoftware.mobics.presentation.security.MobiCSSecure;
 import com.criticalsoftware.mobics.presentation.util.Configuration;
+import com.criticalsoftware.mobics.presentation.util.DataConversionUtils;
 import com.criticalsoftware.mobics.proxy.booking.BookingNotFoundExceptionException;
 import com.criticalsoftware.mobics.proxy.booking.BookingValidationExceptionException;
 import com.criticalsoftware.mobics.proxy.booking.BookingWSServiceStub;
 import com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException;
 import com.criticalsoftware.mobics.proxy.booking.CustomerNotFoundExceptionException;
 import com.criticalsoftware.mobics.proxy.booking.InvalidCustomerPinExceptionException;
+
+import net.sourceforge.stripes.action.DefaultHandler;
+import net.sourceforge.stripes.action.ForwardResolution;
+import net.sourceforge.stripes.action.RedirectResolution;
+import net.sourceforge.stripes.action.Resolution;
+import net.sourceforge.stripes.validation.Validate;
 
 /**
  * @author ltiago
@@ -69,17 +70,18 @@ public class EditAvanceBookingActionBean extends AdvanceBookingActionBean {
         final BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
                 Configuration.INSTANCE.getBookingEndpoint());
         bookingWSServiceStub._getServiceClient().addHeader(
-                AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this.getContext().getUser()
+                AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
                         .getPassword()));
-        this.trip = bookingWSServiceStub.getTripDetails(this.activityCode);
+        trip = bookingWSServiceStub.getTripDetails(activityCode);
 
-        final long time = bookingWSServiceStub.getNextAdvanceBooking(this.activityCode);
+        final long time = bookingWSServiceStub.getNextAdvanceBooking(activityCode);
         Calendar c = null;
         if(time > 0) {
             c = Calendar.getInstance();
             c.setTimeInMillis(time);
         }
-        this.extendBookingDate = (c == null ? null : c.getTime());
+        DataConversionUtils dataConversionUtils = new DataConversionUtils(getContext());
+        extendBookingDate = c == null ? null : dataConversionUtils.fromUTC(c.getTime());
 
         return new ForwardResolution("/WEB-INF/recent/editAdvanceBookingDetails.jsp");
     }
@@ -101,14 +103,15 @@ public class EditAvanceBookingActionBean extends AdvanceBookingActionBean {
         final BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
                 Configuration.INSTANCE.getBookingEndpoint());
         bookingWSServiceStub._getServiceClient().addHeader(
-                AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this.getContext().getUser()
+                AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext().getUser()
                         .getPassword()));
         final Calendar c = Calendar.getInstance();
-        c.setTime(this.endDate);
-        bookingWSServiceStub.extendAdvanceBooking(this.activityCode, c.getTimeInMillis());
+        DataConversionUtils dataConversionUtils = new DataConversionUtils(getContext());
+        c.setTime(dataConversionUtils.toUTC(endDate));
+        bookingWSServiceStub.extendAdvanceBooking(activityCode, c.getTimeInMillis());
 
         final Map<String, String> parameters = new HashMap<String, String>();
-        parameters.put("activityCode", this.activityCode);
+        parameters.put("activityCode", activityCode);
         parameters.put("extended", "true");
 
         return new RedirectResolution(RecentActivitiesActionBean.class, "advanceBookingDetails").addParameters(parameters).flash(this);
@@ -119,7 +122,7 @@ public class EditAvanceBookingActionBean extends AdvanceBookingActionBean {
      */
     @Override
     public Date getEndDate() {
-        return this.endDate;
+        return endDate;
     }
 
     /**
@@ -134,21 +137,21 @@ public class EditAvanceBookingActionBean extends AdvanceBookingActionBean {
      * @return the trip
      */
     public TripDetailsDTO getTrip() {
-        return this.trip;
+        return trip;
     }
 
     /**
      * @return the extendBookingDate
      */
     public Date getExtendBookingDate() {
-        return this.extendBookingDate;
+        return extendBookingDate;
     }
 
     /**
      * @return the activityCode
      */
     public String getActivityCode() {
-        return this.activityCode;
+        return activityCode;
     }
 
     /**

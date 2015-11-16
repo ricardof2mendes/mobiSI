@@ -22,19 +22,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import net.sourceforge.stripes.action.DefaultHandler;
-import net.sourceforge.stripes.action.DontValidate;
-import net.sourceforge.stripes.action.ForwardResolution;
-import net.sourceforge.stripes.action.LocalizableMessage;
-import net.sourceforge.stripes.action.RedirectResolution;
-import net.sourceforge.stripes.action.Resolution;
-import net.sourceforge.stripes.ajax.JavaScriptResolution;
-import net.sourceforge.stripes.validation.LocalizableError;
-import net.sourceforge.stripes.validation.Validate;
-import net.sourceforge.stripes.validation.ValidationErrors;
-import net.sourceforge.stripes.validation.ValidationMethod;
-import net.sourceforge.stripes.validation.ValidationState;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -50,6 +37,7 @@ import com.criticalsoftware.mobics.presentation.security.AuthenticationUtil;
 import com.criticalsoftware.mobics.presentation.security.MobiCSSecure;
 import com.criticalsoftware.mobics.presentation.util.Configuration;
 import com.criticalsoftware.mobics.presentation.util.CoordinateZonesDTO;
+import com.criticalsoftware.mobics.presentation.util.DataConversionUtils;
 import com.criticalsoftware.mobics.proxy.booking.BookingWSServiceStub;
 import com.criticalsoftware.mobics.proxy.booking.CarNotAvailableForBookingExceptionException;
 import com.criticalsoftware.mobics.proxy.booking.ForbiddenZoneExceptionException;
@@ -66,6 +54,19 @@ import com.criticalsoftware.mobics.proxy.fleet.CarNotFoundExceptionException;
 import com.criticalsoftware.mobics.proxy.fleet.CustomerNotFoundExceptionException;
 import com.criticalsoftware.mobics.proxy.fleet.FleetWSServiceStub;
 import com.criticalsoftware.mobics.proxy.fleet.IllegalDateExceptionException;
+
+import net.sourceforge.stripes.action.DefaultHandler;
+import net.sourceforge.stripes.action.DontValidate;
+import net.sourceforge.stripes.action.ForwardResolution;
+import net.sourceforge.stripes.action.LocalizableMessage;
+import net.sourceforge.stripes.action.RedirectResolution;
+import net.sourceforge.stripes.action.Resolution;
+import net.sourceforge.stripes.ajax.JavaScriptResolution;
+import net.sourceforge.stripes.validation.LocalizableError;
+import net.sourceforge.stripes.validation.Validate;
+import net.sourceforge.stripes.validation.ValidationErrors;
+import net.sourceforge.stripes.validation.ValidationMethod;
+import net.sourceforge.stripes.validation.ValidationState;
 
 /**
  * Booking action bean
@@ -110,9 +111,18 @@ public class AdvanceBookingActionBean extends BookingActionBean {
         // aux.set(Calendar.MINUTE, 0);
         aux.set(Calendar.MILLISECOND, 0);
 
-        this.startDate = new Date(aux.getTimeInMillis());
-        aux.add(Calendar.HOUR_OF_DAY, 1);
-        this.endDate = new Date(aux.getTimeInMillis());
+        try {
+            DataConversionUtils dataConversionUtils = new DataConversionUtils(getContext());
+            startDate = dataConversionUtils.fromUTC(new Date(aux.getTimeInMillis()));
+            aux.add(Calendar.HOUR_OF_DAY, 1);
+            endDate = dataConversionUtils.fromUTC(new Date(aux.getTimeInMillis()));
+
+
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
 
         return new ForwardResolution("/WEB-INF/book/searchAdvance.jsp");
     }
@@ -131,24 +141,24 @@ public class AdvanceBookingActionBean extends BookingActionBean {
      * @throws CarClubCodeNotFoundExceptionException
      */
     public Resolution searchCarsAdvance() throws RemoteException, CustomerNotFoundExceptionException,
-            IllegalDateExceptionException, CarLicensePlateNotFoundExceptionException,
-            CarClubCodeNotFoundExceptionException, UnsupportedEncodingException,
-            com.criticalsoftware.mobics.proxy.fleet.LocationCodeNotFoundExceptionException {
+    IllegalDateExceptionException, CarLicensePlateNotFoundExceptionException,
+    CarClubCodeNotFoundExceptionException, UnsupportedEncodingException,
+    com.criticalsoftware.mobics.proxy.fleet.LocationCodeNotFoundExceptionException {
         ForwardResolution resolution = new ForwardResolution("/WEB-INF/book/carListAdvance.jsp");
         final Calendar start = Calendar.getInstance(), end = Calendar.getInstance();
-        start.setTime(this.startDate);
-        end.setTime(this.endDate);
+        start.setTime(startDate);
+        end.setTime(endDate);
         final FleetWSServiceStub stub = new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint());
         stub._getServiceClient().addHeader(
-                AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this.getContext()
+                AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext()
                         .getUser().getPassword()));
-        this.cars = stub.getCarsForAdvanceBooking(this.getContext().getUser().getCarClub().getCarClubCode(), this.zone,
-                this.location, start.getTimeInMillis(), end.getTimeInMillis());
+        cars = stub.getCarsForAdvanceBooking(getContext().getUser().getCarClub().getCarClubCode(), zone,
+                location, start.getTimeInMillis(), end.getTimeInMillis());
 
-        if ((this.cars == null) || (this.cars.length == 0)) {
-            this.next = stub.getNextAvailableCarForAdvanceBooking(this.getContext().getUser().getCarClub()
-                    .getCarClubCode(), this.location, start.getTimeInMillis(), end.getTimeInMillis());
-            if (this.next != null) {
+        if (cars == null || cars.length == 0) {
+            next = stub.getNextAvailableCarForAdvanceBooking(getContext().getUser().getCarClub()
+                    .getCarClubCode(), location, start.getTimeInMillis(), end.getTimeInMillis());
+            if (next != null) {
                 resolution = new ForwardResolution("/WEB-INF/book/searchAdvance.jsp").addParameter("next", true);
             }
         }
@@ -157,20 +167,20 @@ public class AdvanceBookingActionBean extends BookingActionBean {
     }
 
     public Resolution nextAvailableCar() throws RemoteException, UnsupportedEncodingException,
-            IllegalDateExceptionException,
-            com.criticalsoftware.mobics.proxy.fleet.LocationCodeNotFoundExceptionException,
-            CarLicensePlateNotFoundExceptionException, CarClubCodeNotFoundExceptionException,
-            CustomerNotFoundExceptionException {
+    IllegalDateExceptionException,
+    com.criticalsoftware.mobics.proxy.fleet.LocationCodeNotFoundExceptionException,
+    CarLicensePlateNotFoundExceptionException, CarClubCodeNotFoundExceptionException,
+    CustomerNotFoundExceptionException {
 
         final Calendar start = Calendar.getInstance(), end = Calendar.getInstance();
-        start.setTime(this.startDate);
-        end.setTime(this.endDate);
+        start.setTime(startDate);
+        end.setTime(endDate);
         final FleetWSServiceStub stub = new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint());
         stub._getServiceClient().addHeader(
-                AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this.getContext()
+                AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext()
                         .getUser().getPassword()));
-        this.next = stub.getNextAvailableCarForAdvanceBooking(
-                this.getContext().getUser().getCarClub().getCarClubCode(), this.location, start.getTimeInMillis(),
+        next = stub.getNextAvailableCarForAdvanceBooking(
+                getContext().getUser().getCarClub().getCarClubCode(), location, start.getTimeInMillis(),
                 end.getTimeInMillis());
 
         return new ForwardResolution("/WEB-INF/book/nextAvailableCar.jsp");
@@ -219,27 +229,30 @@ public class AdvanceBookingActionBean extends BookingActionBean {
      */
     @Override
     public Resolution book() throws RemoteException, UnsupportedEncodingException,
-            InvalidCustomerPinExceptionException,
-            com.criticalsoftware.mobics.proxy.booking.CarNotFoundExceptionException,
-            CarNotAvailableForBookingExceptionException, ForbiddenZoneExceptionException,
-            com.criticalsoftware.mobics.proxy.booking.IllegalDateExceptionException,
-            UnauthorizedCustomerExceptionException,
+    InvalidCustomerPinExceptionException,
+    com.criticalsoftware.mobics.proxy.booking.CarNotFoundExceptionException,
+    CarNotAvailableForBookingExceptionException, ForbiddenZoneExceptionException,
+    com.criticalsoftware.mobics.proxy.booking.IllegalDateExceptionException,
+    UnauthorizedCustomerExceptionException,
     com.criticalsoftware.mobics.proxy.booking.CarLicensePlateNotFoundExceptionException,
-            OverlappedCarBookingExceptionException, OverlappedCustomerBookingExceptionException,
-            InvalidCarBookingExceptionException {
+    OverlappedCarBookingExceptionException, OverlappedCustomerBookingExceptionException,
+    InvalidCarBookingExceptionException {
         final Calendar start = Calendar.getInstance(), end = Calendar.getInstance();
-        start.setTimeInMillis(this.startDate.getTime());
-        end.setTimeInMillis(this.endDate.getTime());
+        DataConversionUtils dataConversionUtils = new DataConversionUtils(getContext());
+
+
+        start.setTimeInMillis(dataConversionUtils.toUTC(startDate).getTime());
+        end.setTimeInMillis(dataConversionUtils.toUTC(endDate).getTime());
 
         final BookingWSServiceStub bookingWSServiceStub = new BookingWSServiceStub(
                 Configuration.INSTANCE.getBookingEndpoint());
         bookingWSServiceStub._getServiceClient().addHeader(
-                AuthenticationUtil.getAuthenticationHeader(this.getContext().getUser().getUsername(), this.getContext()
+                AuthenticationUtil.getAuthenticationHeader(getContext().getUser().getUsername(), getContext()
                         .getUser().getPassword()));
-        bookingWSServiceStub.createAdvanceBookingWithCustomerPin(this.licensePlate, String.valueOf(this.pin),
+        bookingWSServiceStub.createAdvanceBookingWithCustomerPin(licensePlate, String.valueOf(pin),
                 start.getTimeInMillis(), end.getTimeInMillis());
 
-        this.getContext().getMessages().add(new LocalizableMessage("car.details.advance.book.done"));
+        getContext().getMessages().add(new LocalizableMessage("car.details.advance.book.done"));
         return new RedirectResolution(RecentActivitiesActionBean.class).flash(this);
     }
 
@@ -262,7 +275,7 @@ public class AdvanceBookingActionBean extends BookingActionBean {
      * @return the map page
      */
     public Resolution parkLocation() {
-        return new ForwardResolution("/WEB-INF/map/mapFullWidth.jsp").addParameter("licensePlate", this.licensePlate);
+        return new ForwardResolution("/WEB-INF/map/mapFullWidth.jsp").addParameter("licensePlate", licensePlate);
     }
 
     /**
@@ -277,8 +290,8 @@ public class AdvanceBookingActionBean extends BookingActionBean {
         final FleetWSServiceStub fleet = new FleetWSServiceStub(Configuration.INSTANCE.getFleetEndpoint());
         ZoneWithPolygonDTO[] zones = null;
         try {
-            zones = fleet.getCarZonesWithPolygons(this.licensePlate);
-            this.getContext().getResponse().setHeader("Stripes-Success", "OK");
+            zones = fleet.getCarZonesWithPolygons(licensePlate);
+            getContext().getResponse().setHeader("Stripes-Success", "OK");
         } catch (final com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException e) {
             LOGGER.error("License plate not found", e);
         }
@@ -293,7 +306,7 @@ public class AdvanceBookingActionBean extends BookingActionBean {
             priority = 2)
     public void validateCarType(final ValidationErrors errors) throws RemoteException,
     com.criticalsoftware.mobics.proxy.fleet.CarLicensePlateNotFoundExceptionException {
-        if (!CarTypeEnum.SCHEDULE_BOOKING.equals(this.car.getCarType())) {
+        if (!CarTypeEnum.SCHEDULE_BOOKING.equals(car.getCarType())) {
             errors.addGlobalError(new LocalizableError("car.details.validation.car.not.available"));
         }
     }
@@ -307,7 +320,7 @@ public class AdvanceBookingActionBean extends BookingActionBean {
     public Collection<LocationDTO> getLocations() throws RemoteException {
         final Map<String, LocationDTO> mapLocations = new HashMap<String, LocationDTO>();
         final LocationDTO[] locations = new CarClubWSServiceStub(Configuration.INSTANCE.getCarClubEndpoint())
-        .getLocationsByCarClubCode(this.getContext().getUser().getCarClub().getCarClubCode());
+                .getLocationsByCarClubCode(getContext().getUser().getCarClub().getCarClubCode());
 
         for (final LocationDTO l : locations) {
             if (!mapLocations.containsKey(l.getCode())) {
@@ -329,8 +342,8 @@ public class AdvanceBookingActionBean extends BookingActionBean {
         final Set<String> fileredZones = new HashSet<String>();
         try {
             zones = new CarClubWSServiceStub(Configuration.INSTANCE.getCarClubEndpoint())
-            .getParksByCarClubCodeAndLocationCode(this.getContext().getUser().getCarClub().getCarClubCode(),
-                    this.location);
+                    .getParksByCarClubCodeAndLocationCode(getContext().getUser().getCarClub().getCarClubCode(),
+                            location);
 
             for (final ZoneDTO zone : zones) {
                 if (!fileredZones.contains(zone.getZone())) {
@@ -343,7 +356,7 @@ public class AdvanceBookingActionBean extends BookingActionBean {
         } catch (final com.criticalsoftware.mobics.proxy.carclub.CarClubCodeNotFoundExceptionException e) {
             LOGGER.warn("Zones not found due to car clube code.", e.getLocalizedMessage());
         }
-        this.getContext().getResponse().setHeader("Stripes-Success", "OK");
+        getContext().getResponse().setHeader("Stripes-Success", "OK");
         return new JavaScriptResolution(fileredZones);
     }
 
@@ -351,7 +364,7 @@ public class AdvanceBookingActionBean extends BookingActionBean {
      * @return the zone
      */
     public String getZone() {
-        return this.zone;
+        return zone;
     }
 
     /**
@@ -365,7 +378,7 @@ public class AdvanceBookingActionBean extends BookingActionBean {
      * @return the location
      */
     public String getLocation() {
-        return this.location;
+        return location;
     }
 
     /**
@@ -379,7 +392,7 @@ public class AdvanceBookingActionBean extends BookingActionBean {
      * @return the startDate
      */
     public Date getStartDate() {
-        return this.startDate;
+        return startDate;
     }
 
     /**
@@ -393,7 +406,7 @@ public class AdvanceBookingActionBean extends BookingActionBean {
      * @return the endDate
      */
     public Date getEndDate() {
-        return this.endDate;
+        return endDate;
     }
 
     /**
@@ -407,7 +420,7 @@ public class AdvanceBookingActionBean extends BookingActionBean {
      * @return the cars
      */
     public CarDTO[] getCars() {
-        return this.cars;
+        return cars;
     }
 
     /**
@@ -423,6 +436,6 @@ public class AdvanceBookingActionBean extends BookingActionBean {
      * @return next car
      */
     public NextAvailableCarDTO getNext() {
-        return this.next;
+        return next;
     }
 }
