@@ -16,11 +16,10 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 import com.criticalsoftware.mobics.fleet.CarDTO;
-import com.criticalsoftware.mobics.format.FormatUtils;
 
 /**
  * DTO to be used in javascript It has values allready formatted to be displayed directlly on content
- * 
+ *
  * @author ltiago
  * @version $Revision: $
  */
@@ -29,14 +28,14 @@ public class CarFormattedDTO extends CarDTO {
     /** */
     private static final long serialVersionUID = 6204466593688687576L;
 
-    private String formattedPrice;
+    private final String formattedPrice;
 
-    private String formattedDistance;
+    private final String formattedDistance;
 
-    private String formattedFuel;
+    private final String formattedFuel;
 
     /**
-     * 
+     *
      */
     public CarFormattedDTO(CarDTO carDTO, Locale locale) {
         super();
@@ -49,11 +48,11 @@ public class CarFormattedDTO extends CarDTO {
         super.setAddOns(carDTO.getAddOns());
         super.setPromotions(carDTO.getPromotions());
 
-        this.formattedPrice = carDTO.getPriceBookedPerMinute() != null ? FormatUtils.format(FormatUtils.CURRENCY_HOUR,
+        formattedPrice = carDTO.getPriceBookedPerMinute() != null ? FormatUtils.format(FormatUtils.CURRENCY_HOUR,
                 carDTO.getPriceBookedPerMinute(), locale, Configuration.INSTANCE.getCarClubConfiguration()) : "";
-        this.formattedDistance = carDTO.getDistance() != null ? FormatUtils.format(FormatUtils.DISTANCE, carDTO
+        formattedDistance = carDTO.getDistance() != null ? FormatUtils.format(FormatUtils.DISTANCE, carDTO
                 .getDistance(), locale, Configuration.INSTANCE.getCarClubConfiguration()) : "";
-        this.formattedFuel = ResourceBundle.getBundle("StripesResources", locale).getString(
+        formattedFuel = ResourceBundle.getBundle("StripesResources", locale).getString(
                 "FuelType." + carDTO.getFuelType().getName());
     }
 

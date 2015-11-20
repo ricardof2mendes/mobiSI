@@ -10,7 +10,7 @@
  * Last changed on: $Date: $
  * Last changed by: $Author: $
  */
-package com.criticalsoftware.mobics.format;
+package com.criticalsoftware.mobics.presentation.util;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Formats distance, prices
- * 
+ *
  * @author ltiago
  * @version $Revision: $
  */
@@ -50,6 +50,7 @@ public class FormatMobics extends BodyTagSupport {
         value = type = null;
     }
 
+    @Override
     public int doEndTag() throws JspException {
         String formatted;
         Map<String, String> patterns = (Map<String, String>) pageContext.getServletContext().getAttribute(
@@ -88,7 +89,7 @@ public class FormatMobics extends BodyTagSupport {
             formatted = FormatUtils.format(type, value, locale, patterns);
             if(formatted == null) {
                 return EVAL_PAGE;
-            }            
+            }
         } else {
             // no formatting locale available, use toString()
             formatted = value.toString();

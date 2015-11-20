@@ -10,7 +10,7 @@
 	<tag>
 		<description>Formats a numeric value as a currency, or distance</description>
 		<name>formatMobics</name>
-		<tag-class>com.criticalsoftware.mobics.format.FormatMobics</tag-class>
+		<tag-class>com.criticalsoftware.mobics.presentation.util.FormatMobics</tag-class>
 		<body-content>JSP</body-content>
 		<attribute>
 			<description>Numeric value to be formatted.</description>
