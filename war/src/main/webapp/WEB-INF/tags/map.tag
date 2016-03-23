@@ -19,11 +19,11 @@
         <title>${title}</title>
 
         <!-- Link Tags -->
-        <link rel="icon" sizes="16x16" href="${contextPath}/favicon16.png" />
+        <link rel="icon" sizes="16x16" href="${contextPath}/favicon.png" />
         <link rel="icon" sizes="32x32" href="${contextPath}/favicon32.png" />
         
 		<!-- For non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
-		<link rel="apple-touch-icon-precomposed" href="${contextPath}/favicon16.png">
+		<link rel="apple-touch-icon-precomposed" href="${contextPath}/favicon.png">
         <link rel="apple-touch-icon-precomposed" sizes="32x32" href="${contextPath}/favicon32.png" />
 		<!-- For first- and second-generation iPad: -->
 		<link rel="apple-touch-icon-precomposed" sizes="57x57" href="${contextPath}/favicon57.png">
